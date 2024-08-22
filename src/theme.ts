@@ -36,6 +36,14 @@ const theme = createTheme({
       lineHeight: '18.77px',
       fontWeight: '500',
     }
+  },
+  palette: {
+    primary: {
+      main: '#FE645E',
+    },
+    secondary: {
+      main: '#6E314A',
+    }
   }
 });
 
