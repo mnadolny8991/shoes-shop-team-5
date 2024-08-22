@@ -38,6 +38,10 @@ const theme = createTheme({
     }
   },
   palette: {
+    text: {
+      primary: '#000000',
+      secondary: '#5C5C5C',
+    },
     primary: {
       main: '#FE645E',
     },
