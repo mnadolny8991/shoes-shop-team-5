@@ -25,6 +25,7 @@ const theme = createTheme({
     body2: {
       fontSize: 15,
       lineHeight: '17.6px',
+      fontWeight: '300',
     },
     caption: {
       fontSize: 15,
@@ -35,9 +36,12 @@ const theme = createTheme({
       fontSize: 16,
       lineHeight: '18.77px',
       fontWeight: '500',
-    }
+    },
   },
   palette: {
+    error: {
+      main: '#FE645E',
+    },
     text: {
       primary: '#000000',
       secondary: '#5C5C5C',
