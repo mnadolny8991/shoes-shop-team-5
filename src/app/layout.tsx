@@ -20,7 +20,6 @@ export default function RootLayout({
       <body>
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
-            <Typography variant="h1" color="textSecondary">Some Text</Typography>
             {children}
           </ThemeProvider>
         </AppRouterCacheProvider>
