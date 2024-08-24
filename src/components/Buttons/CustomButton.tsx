@@ -2,11 +2,11 @@
 import { Button, ButtonProps, Typography } from "@mui/material";
 
 const buttonSizes = {
-  xs: "30px",
-  s: "34px",
-  m: "40px",
-  l: "48px",
-  xl: "61px",
+  xs: { height: "30px", fontSize: "12.32px" },
+  s: { height: "34px", fontSize: "11.15px" },
+  m: { height: "40px", fontSize: "16px" },
+  l: { height: "48px", fontSize: "16px" },
+  xl: { height: "61px", fontSize: "16px" },
 };
 
 interface CustomButtonProps extends Omit<ButtonProps, "size"> {
@@ -21,13 +21,15 @@ export default function CustomButton({
 }: CustomButtonProps) {
   return (
     <Button
-      sx={{ height: buttonSizes[size] }}
+      sx={{ height: buttonSizes[size].height }}
       color="primary"
       fullWidth={true}
       variant={variant}
       onClick={(e) => (props.onClick ? props.onClick(e) : null)}
     >
-      <Typography variant="button">{children}</Typography>
+      <Typography fontSize={buttonSizes[size].fontSize} variant="button">
+        {children}
+      </Typography>
     </Button>
   );
 }

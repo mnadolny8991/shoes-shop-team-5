@@ -33,7 +33,6 @@ const theme = createTheme({
       fontWeight: "500",
     },
     button: {
-      fontSize: 16,
       lineHeight: "18.77px",
       fontWeight: "500",
       textTransform: "none",
