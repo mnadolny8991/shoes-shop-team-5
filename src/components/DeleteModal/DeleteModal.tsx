@@ -12,17 +12,45 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import CustomButton from "../Buttons/CustomButton";
 import theme from "@/theme";
+import { Dispatch, SetStateAction } from "react";
 
-export default function DeleteModal() {
+type Props = {
+  isOpen: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  onDelete: () => void;
+};
+
+export default function DeleteModal({ isOpen, setIsOpen }: Props) {
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
+  const handleClose = () => {
+    setIsOpen(false);
+  };
+
   return (
-    <Dialog open={true}>
+    <Dialog
+      open={isOpen}
+      onClose={handleClose}
+      sx={{
+        "& .MuiDialog-container": {
+          "& .MuiPaper-root": {
+            width: "100%",
+            maxWidth: isMobile ? "320px" : "656px",
+          },
+        },
+      }}
+    >
       <DialogTitle>
-        <Typography variant="h2" fontWeight="500" fontSize="45px">
+        <Typography
+          fontWeight="500"
+          fontSize={isMobile ? "30px" : "45px"}
+          lineHeight={isMobile ? "35px" : "53px"}
+        >
           Are you sure to delete selected item
         </Typography>
       </DialogTitle>
       <IconButton
-        onClick={() => null}
+        onClick={handleClose}
         sx={{
           position: "absolute",
           right: 8,
@@ -41,10 +69,14 @@ export default function DeleteModal() {
         </Typography>
       </DialogContent>
       <DialogActions sx={{ padding: "20px 24px" }}>
-        <CustomButton size="xl" variant="outlined">
+        <CustomButton
+          size={isMobile ? "m" : "xl"}
+          variant="outlined"
+          onClick={handleClose}
+        >
           Cancel
         </CustomButton>
-        <CustomButton size="xl" variant="contained">
+        <CustomButton size={isMobile ? "m" : "xl"} variant="contained">
           Delete
         </CustomButton>
       </DialogActions>
