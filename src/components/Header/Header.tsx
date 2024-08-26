@@ -7,29 +7,12 @@ import {
   AppBar,
   Toolbar,
   Box,
+  Avatar,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Image from "next/image";
 import useMediaQuery from '@mui/material/useMediaQuery';
-
-type HeaderProps = {
-  signedIn: boolean;
-}
-
-const NavbarContainer = styled(Toolbar)(({ theme }) => ({
-  width: "100%",
-  display: "flex",
-  justifyContent: "space-between",
-  height: 120,
-  padding: 0,
-  marginLeft: 40,
-  marginRight: 40,
-  [theme.breakpoints.down('sm')]: {
-    height: 58.87,
-    marginLeft: 20,
-    marginRight: 20,
-  }
-}));
+import SearchBar from '../SearchBar/SearchBar';
 
 export default function Header() {
   const theme = useTheme();
@@ -46,6 +29,7 @@ export default function Header() {
             margin: 0,
             height: isAboveSm ? 120 : 59,
             px: isAboveSm ? "40px" : "20px",
+            justifyContent: "space-between",
           }}>
           <NavLeft />
           <NavRight />
@@ -60,13 +44,12 @@ function NavLeft() {
   const isAboveSm = useMediaQuery(theme.breakpoints.up('sm'));
 
   return (
-    <Container
+    <Box
       sx={{
         display: "flex",
         alignItems: "center",
         gap: "44px"
-      }}
-      disableGutters={true}>
+      }}>
       <Image
         src="/logo.svg"
         width={isAboveSm ? 40 : 35}
@@ -81,27 +64,38 @@ function NavLeft() {
           Products
         </Typography>
       }
-    </Container>
+    </Box>
   );
 }
 
 function NavRight() {
   const theme = useTheme();
   const isAboveSm = useMediaQuery(theme.breakpoints.up('sm'));
+  const signedIn = true; // auth context here
 
   return (
-    <Container
+    <Box
       sx={{
         display: "flex",
         alignItems: "center",
         flexDirection: "row-reverse",
-      }}
-      disableGutters={true}>
-      <Image
-        src="/bag.svg"
-        width={isAboveSm ? 24 : 20}
-        height={isAboveSm ? 24 : 20} 
-        alt="website logo"/>
-    </Container>
+        gap: "40px"
+      }}>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          flexDirection: "row-reverse",
+          gap: "16px"
+        }}>
+        { signedIn && <Avatar alt="Remy Sharp" src="/avatar.svg" sx={{ width: 24, height: 24 }}/> }
+        <Image
+          src="/bag.svg"
+          width={isAboveSm ? 24 : 20}
+          height={isAboveSm ? 24 : 20} 
+          alt="website logo"/>
+      </Box>
+      <SearchBar />
+    </Box>
   );
 }
