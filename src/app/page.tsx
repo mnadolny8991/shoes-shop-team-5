@@ -3,13 +3,13 @@ import TextField from "@/components/InputField/TextField";
 export default function Home() {
   return (
     <>
-      <TextField 
+      {/* <TextField 
         required={true} 
         name="input" 
         id="input" 
         label="Label Text"
         min={8}
-        error="Message under the input field" />
+        error="Message under the input field" /> */}
     </>
   );
 }

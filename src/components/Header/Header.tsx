@@ -1,26 +1,27 @@
 "use client";
 import { useTheme } from '@mui/material/styles';
-import {
-  AppBar, 
+import { 
   Typography, 
   Divider, 
   Container,
-  alpha,
+  AppBar,
+  Toolbar,
+  Box,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Image from "next/image";
 import useMediaQuery from '@mui/material/useMediaQuery';
-import SearchIcon from '@mui/icons-material/Search';
-import InputBase from '@mui/material/InputBase';
 
 type HeaderProps = {
   signedIn: boolean;
 }
 
-const NavbarContainer = styled(Container)(({ theme }) => ({
+const NavbarContainer = styled(Toolbar)(({ theme }) => ({
+  width: "100%",
   display: "flex",
   justifyContent: "space-between",
   height: 120,
+  padding: 0,
   marginLeft: 40,
   marginRight: 40,
   [theme.breakpoints.down('sm')]: {
@@ -31,15 +32,26 @@ const NavbarContainer = styled(Container)(({ theme }) => ({
 }));
 
 export default function Header() {
+  const theme = useTheme();
+  const isAboveSm = useMediaQuery(theme.breakpoints.up('sm'));
+
   return (
-    <header>
-      <NavbarContainer
-        disableGutters={true}>
-        <NavLeft />
-        <NavRight />
-      </NavbarContainer>
-      <Divider sx={{ color: "#EAECF0" }}/>
-    </header>
+    <>
+      <AppBar 
+        position="static"
+        color="transparent">
+        <Toolbar 
+          disableGutters={true}
+          sx={{
+            margin: 0,
+            height: isAboveSm ? 120 : 59,
+            px: isAboveSm ? "40px" : "20px",
+          }}>
+          <NavLeft />
+          <NavRight />
+        </Toolbar>
+      </AppBar>
+    </>
   );
 }
 
@@ -74,14 +86,22 @@ function NavLeft() {
 }
 
 function NavRight() {
+  const theme = useTheme();
+  const isAboveSm = useMediaQuery(theme.breakpoints.up('sm'));
+
   return (
     <Container
       sx={{
         display: "flex",
-        alignItems: "center"
+        alignItems: "center",
+        flexDirection: "row-reverse",
       }}
       disableGutters={true}>
-
+      <Image
+        src="/bag.svg"
+        width={isAboveSm ? 24 : 20}
+        height={isAboveSm ? 24 : 20} 
+        alt="website logo"/>
     </Container>
   );
 }
