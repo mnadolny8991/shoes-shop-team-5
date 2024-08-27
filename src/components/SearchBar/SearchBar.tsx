@@ -5,23 +5,26 @@ const Outline = styled("div")(( { theme }) => ({
   ...theme.typography.caption,
   color: theme.palette.text.secondary,
   width: "320px",
-  height: "48px",
   padding: "15px 19px",
   px: "20px",
   borderRadius: "42px",
   border: "1px solid #494949",
+  [theme.breakpoints.down("md")]: {
+    padding: "6.92px 11px",
+  }
 }));
 
 const Input = styled("input")(({ theme }) => ({
+  all: "unset",
   ...theme.typography.caption,
   color: theme.palette.text.secondary,
-  outline: "none",
-  border: "none",
 }));
 
 const Submit = styled("button")(({ theme }) => ({
-  all: "unset",
-  height: "fit-content",
+  padding: "0",
+  margin: "0",
+  border: "none",
+  background: "transparent",
   cursor: "pointer",
 }));
 
@@ -40,8 +43,8 @@ export default function SearchBar() {
           <Submit>
             <Image
               src="/search-normal.svg"
-              width={17}
-              height={17} 
+              width={isMobile ? 11.16 : 17}
+              height={isMobile ? 11.16 : 17} 
               alt="website logo"/>
           </Submit>
           <Input placeholder="Search"></Input>

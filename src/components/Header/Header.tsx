@@ -80,26 +80,38 @@ function NavRight() {
         display: "flex",
         alignItems: "center",
         flexDirection: "row-reverse",
-        gap: "40px"
+        gap: isMobile ? "20px" : "40px"
       }}>
+      { isMobile && 
+        <Image
+          src="/hamburger-icon.svg"
+          width={20}
+          height={20} 
+          alt="menu icon"/> 
+      }
       <Box
         sx={{
           display: "flex",
           alignItems: "center",
-          flexDirection: "row-reverse",
+          flexDirection: isMobile ? "row" : "row-reverse",
           gap: "16px"
         }}>
-        { signedIn && <Avatar alt="Remy Sharp" src="/avatar.svg" sx={{ width: 24, height: 24 }}/> }
+        { (signedIn && !isMobile) && <Avatar alt="Remy Sharp" src="/avatar.svg" sx={{ width: 24, height: 24 }}/> }
         <Image
           src="/bag.svg"
           width={isMobile ? 20 : 24}
           height={isMobile ? 20 : 24} 
-          alt="website logo"/>
+          alt="bag icon"/>
       </Box>
-      <SearchBar />
-      <CustomButton size="l" variant="outlined" fullWidth={false} sx={{
+      { isMobile ? 
+        <Image
+          src="/search-normal.svg"
+          width={20}
+          height={20} 
+          alt="website logo"/> : <SearchBar />}
+      {(!signedIn && !isMobile) && <CustomButton size="l" variant="outlined" fullWidth={false} sx={{
         width: "145px",
-      }}>Sign In</CustomButton>
+      }}>Sign In</CustomButton>}
     </Box>
   );
 }

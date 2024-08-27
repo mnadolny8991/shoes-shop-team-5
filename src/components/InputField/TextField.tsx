@@ -53,7 +53,12 @@ export default function TextField({ required, name, id, label, min, error }: Tex
             *
           </Typography>}
       </Typography>
-      <CustomInput name={name} id={id} placeholder={`at least ${min} characters`} error={error}></CustomInput>
+      <CustomInput 
+        name={name} 
+        id={id} 
+        placeholder={`at least ${min} characters`} 
+        error={error} >
+      </CustomInput>
       { 
       error && 
         <Box 
