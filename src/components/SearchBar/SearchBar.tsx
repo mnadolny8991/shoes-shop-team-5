@@ -1,5 +1,6 @@
 import { Box, styled, useMediaQuery, useTheme } from "@mui/material"
 import Image from "next/image";
+import IconButton from "@/components/Buttons/IconButton";
 
 const Outline = styled("div")(( { theme }) => ({
   ...theme.typography.caption,
@@ -20,14 +21,6 @@ const Input = styled("input")(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-const Submit = styled("button")(({ theme }) => ({
-  padding: "0",
-  margin: "0",
-  border: "none",
-  background: "transparent",
-  cursor: "pointer",
-}));
-
 export default function SearchBar() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -40,13 +33,13 @@ export default function SearchBar() {
           alignItems: "center",
           gap: "12px",
         }}>
-          <Submit>
+          <IconButton>
             <Image
               src="/search-normal.svg"
               width={isMobile ? 11.16 : 17}
               height={isMobile ? 11.16 : 17} 
               alt="website logo"/>
-          </Submit>
+          </IconButton>
           <Input placeholder="Search"></Input>
         </Box>
       </Outline>
