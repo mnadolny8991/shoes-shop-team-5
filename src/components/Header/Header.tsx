@@ -13,10 +13,11 @@ import { styled } from "@mui/material/styles";
 import Image from "next/image";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import SearchBar from '../SearchBar/SearchBar';
+import CustomButton from '../Buttons/CustomButton';
 
 export default function Header() {
   const theme = useTheme();
-  const isAboveSm = useMediaQuery(theme.breakpoints.up('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <>
@@ -27,8 +28,8 @@ export default function Header() {
           disableGutters={true}
           sx={{
             margin: 0,
-            height: isAboveSm ? 120 : 59,
-            px: isAboveSm ? "40px" : "20px",
+            height: isMobile ? "59px" : "120px",
+            px: isMobile ? "20px" : "40px",
             justifyContent: "space-between",
           }}>
           <NavLeft />
@@ -41,7 +42,7 @@ export default function Header() {
 
 function NavLeft() {
   const theme = useTheme();
-  const isAboveSm = useMediaQuery(theme.breakpoints.up('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <Box
@@ -52,10 +53,10 @@ function NavLeft() {
       }}>
       <Image
         src="/logo.svg"
-        width={isAboveSm ? 40 : 35}
-        height={isAboveSm ? 30 : 26.5} 
+        width={isMobile ? 35 : 40}
+        height={isMobile ? 26.5 : 30} 
         alt="website logo"/>
-      { isAboveSm && 
+      { !isMobile && 
         <Typography sx={{
           fontSize: 16,
           fontWeight: "500",
@@ -70,7 +71,7 @@ function NavLeft() {
 
 function NavRight() {
   const theme = useTheme();
-  const isAboveSm = useMediaQuery(theme.breakpoints.up('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const signedIn = true; // auth context here
 
   return (
@@ -91,11 +92,14 @@ function NavRight() {
         { signedIn && <Avatar alt="Remy Sharp" src="/avatar.svg" sx={{ width: 24, height: 24 }}/> }
         <Image
           src="/bag.svg"
-          width={isAboveSm ? 24 : 20}
-          height={isAboveSm ? 24 : 20} 
+          width={isMobile ? 20 : 24}
+          height={isMobile ? 20 : 24} 
           alt="website logo"/>
       </Box>
       <SearchBar />
+      <CustomButton size="l" variant="outlined" fullWidth={false} sx={{
+        width: "145px",
+      }}>Sign In</CustomButton>
     </Box>
   );
 }

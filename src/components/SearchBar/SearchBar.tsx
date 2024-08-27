@@ -1,4 +1,4 @@
-import { Box, styled } from "@mui/material"
+import { Box, styled, useMediaQuery, useTheme } from "@mui/material"
 import Image from "next/image";
 
 const Outline = styled("div")(( { theme }) => ({
@@ -21,10 +21,14 @@ const Input = styled("input")(({ theme }) => ({
 
 const Submit = styled("button")(({ theme }) => ({
   all: "unset",
+  height: "fit-content",
   cursor: "pointer",
 }));
 
 export default function SearchBar() {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
   return (
     <form>
       <Outline>
