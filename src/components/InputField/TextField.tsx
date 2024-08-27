@@ -1,6 +1,6 @@
 "use client";
-import { Container, styled, Typography } from "@mui/material";
-import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
+import { Box, styled, Typography, useMediaQuery, useTheme } from "@mui/material";
+import WarningAmberRoundedIcon from "@mui/icons-material/WarningAmberRounded";
 
 type TextFieldInput = {
   required: boolean;
@@ -11,63 +11,76 @@ type TextFieldInput = {
   error?: string;
 };
 
-interface CustomInputProps extends React.ComponentPropsWithoutRef<'input'> {
+interface CustomInputProps extends React.ComponentPropsWithoutRef<"input"> {
   error?: string;
 }
 
-const CustomInput = styled('input')<CustomInputProps>(({ theme, error }) => ({
+const CustomInput = styled("input")<CustomInputProps>(({ theme, error }) => ({
   ...theme.typography.body2,
-  padding: '15px',
-  borderRadius: '8px',
-  border: `1px solid ${error ? theme.palette.error.main : '#494949'}`,
-  outline: 'none',
-  width: '100%',
+  padding: "15px",
+  borderRadius: "8px",
+  border: `1px solid ${error ? theme.palette.error.main : "#494949"}`,
+  outline: "none",
+  width: "100%",
+  [theme.breakpoints.down("md")]: {
+    ...theme.typography.body2,
+    padding: "11.76px 10.34px", 
+  },
 
-  '&:focus': {
+  "&:focus": {
     borderColor: theme.palette.secondary.main,
   },
 }));
 
 export default function TextField({ required, name, id, label, min, error }: TextFieldInput) {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
   return (
-    <Container 
+    <Box 
       sx={{ 
-        display: 'flex', 
-        flexDirection: 'column',
-        width: '436px',
-        gap: '8px',
-      }}
-      disableGutters={true}
-      fixed>
+        display: "flex", 
+        flexDirection: "column",
+        width: isMobile ? "320px" : "436px",
+        gap: isMobile ? "4.92px" : "8px",
+      }}>
       <Typography variant="caption" component="label" htmlFor={id}>
         {label} {required && 
           <Typography 
             variant="caption" 
             component="span" 
-            sx={{ color: 'primary.main' }}>
+            sx={{ color: "primary.main" }}>
             *
           </Typography>}
       </Typography>
-      <CustomInput name={name} id={id} placeholder={`at least ${min} characters`} error={error}></CustomInput>
+      <CustomInput 
+        name={name} 
+        id={id} 
+        placeholder={`at least ${min} characters`} 
+        error={error} >
+      </CustomInput>
       { 
       error && 
-        <Container 
+        <Box 
           sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            gap: '4px'
-          }}
-        disableGutters={true}>
-          <WarningAmberRoundedIcon sx={{ width: '16px', height: '16px', color: 'error.main' }} />
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            gap: "4px"
+          }}>
+          <WarningAmberRoundedIcon sx={{ 
+            width: isMobile ? "12px" : "16px", 
+            height: isMobile ? "12px" : "16px", 
+            color: "error.main" 
+          }} />
           <Typography component="small" sx={{
-            fontSize: '12px',
-            color: 'error.main',
-            lineHeight: '16px',
-            fontWeight: '400'
+            fontSize: isMobile ? "10px" : "12px",
+            color: "error.main",
+            lineHeight: "14px",
+            fontWeight: "400"
           }}>{error}</Typography>
-        </Container>
+        </Box>
       }
-    </Container>
+    </Box>
   );
 }
