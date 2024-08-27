@@ -16,21 +16,25 @@ import { Dispatch, SetStateAction } from "react";
 
 type Props = {
   isOpen: boolean;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  onClose: () => void;
   onDelete: () => void;
+  title: string;
+  bodyText: string;
 };
 
-export default function DeleteModal({ isOpen, setIsOpen }: Props) {
+export default function DeleteModal({
+  isOpen,
+  onClose,
+  onDelete,
+  title,
+  bodyText,
+}: Props) {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-
-  const handleClose = () => {
-    setIsOpen(false);
-  };
 
   return (
     <Dialog
       open={isOpen}
-      onClose={handleClose}
+      onClose={onClose}
       sx={{
         "& .MuiDialog-container": {
           "& .MuiPaper-root": {
@@ -46,11 +50,11 @@ export default function DeleteModal({ isOpen, setIsOpen }: Props) {
           fontSize={isMobile ? "30px" : "45px"}
           lineHeight={isMobile ? "35px" : "53px"}
         >
-          Are you sure to delete selected item
+          {title}
         </Typography>
       </DialogTitle>
       <IconButton
-        onClick={handleClose}
+        onClick={onClose}
         sx={{
           position: "absolute",
           right: 8,
@@ -62,21 +66,25 @@ export default function DeleteModal({ isOpen, setIsOpen }: Props) {
       </IconButton>
       <DialogContent>
         <Typography variant="body2" color={theme.palette.text.secondary}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis
-          perspiciatis in a quas doloribus impedit esse assumenda ut ratione,
-          asperiores fuga maiores tempora ad atque inventore dolore consequatur
-          soluta recusandae.
+          {bodyText}
         </Typography>
       </DialogContent>
       <DialogActions sx={{ padding: "20px 24px" }}>
         <CustomButton
           size={isMobile ? "m" : "xl"}
           variant="outlined"
-          onClick={handleClose}
+          onClick={onClose}
         >
           Cancel
         </CustomButton>
-        <CustomButton size={isMobile ? "m" : "xl"} variant="contained">
+        <CustomButton
+          size={isMobile ? "m" : "xl"}
+          variant="contained"
+          onClick={() => {
+            onDelete();
+            onClose();
+          }}
+        >
           Delete
         </CustomButton>
       </DialogActions>

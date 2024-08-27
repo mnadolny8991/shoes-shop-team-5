@@ -27,8 +27,13 @@ export default function Home() {
       </CustomButton>
       <DeleteModal
         isOpen={isOpen}
-        setIsOpen={setIsOpen}
+        onClose={() => setIsOpen(false)}
         onDelete={() => null}
+        title="Are you sure to delete selected item"
+        bodyText="Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis
+          perspiciatis in a quas doloribus impedit esse assumenda ut ratione,
+          asperiores fuga maiores tempora ad atque inventore dolore consequatur
+          soluta recusandae."
       />
     </>
   );
