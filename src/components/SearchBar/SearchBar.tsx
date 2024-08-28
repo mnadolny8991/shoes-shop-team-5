@@ -1,6 +1,6 @@
 import { Box, styled, useMediaQuery, useTheme } from "@mui/material"
 import Image from "next/image";
-import IconButton from "@/components/Buttons/IconButton";
+import IconButton from "@mui/material/IconButton";
 
 const Outline = styled("div")(( { theme }) => ({
   ...theme.typography.caption,
