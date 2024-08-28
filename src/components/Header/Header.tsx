@@ -6,13 +6,15 @@ import {
   Toolbar,
   Box,
   Avatar,
+  IconButton,
 } from "@mui/material";
 import Image from "next/image";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import SearchBar from '../SearchBar/SearchBar';
 import CustomButton from '../Buttons/CustomButton';
-import IconButton from "@/components/Buttons/IconButton";
-import Link from 'next/link';
+import Link from "next/link";
+import { useState } from "react";
+import PopupMenu from "./PopupMenu";
 
 export default function Header() {
   const theme = useTheme();
@@ -73,9 +75,11 @@ function NavLeft() {
 }
 
 function NavRight() {
+  const [showMenu, setShowMenu] = useState(false);
+
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const signedIn = true; // auth context here
+  const signedIn = false; // auth context here
 
   return (
     <Box
@@ -85,14 +89,15 @@ function NavRight() {
         flexDirection: "row-reverse",
         gap: isMobile ? "20px" : "40px"
       }}>
-      { isMobile && 
-        <IconButton>
-          <Image
-            src="/hamburger-icon.svg"
-            width={20}
-            height={20} 
-            alt="menu icon"/> 
-        </IconButton>
+      { 
+        isMobile && 
+          <IconButton onClick={() => setShowMenu(true)}>
+            <Image
+              src="/hamburger-icon.svg"
+              width={20}
+              height={20} 
+              alt="menu icon"/> 
+          </IconButton>
       }
       <Box
         sx={{
@@ -101,8 +106,11 @@ function NavRight() {
           flexDirection: isMobile ? "row" : "row-reverse",
           gap: "16px"
         }}>
-        { (signedIn && !isMobile) && 
-          <IconButton><Avatar alt="Remy Sharp" src="/avatar.svg" sx={{ width: 24, height: 24 }}/></IconButton>
+        { 
+          (signedIn && !isMobile) && 
+            <IconButton>
+              <Avatar alt="Remy Sharp" src="/avatar.svg" sx={{ width: 24, height: 24 }}/>
+            </IconButton>
         }
         <IconButton>
           <Image
@@ -112,19 +120,37 @@ function NavRight() {
             alt="bag icon"/>
         </IconButton>
       </Box>
-      { isMobile ? 
-        <IconButton>
-          <Image
-            src="/search-normal.svg"
-            width={20}
-            height={20} 
-            alt="website logo"/> 
-        </IconButton>
-          : 
-        <SearchBar />}
-      {(!signedIn && !isMobile) && <CustomButton size="l" variant="outlined" fullWidth={false} sx={{
-        width: "145px",
-      }}>Sign In</CustomButton>}
+      { 
+        isMobile ? 
+          <IconButton>
+            <Image
+              src="/search-normal.svg"
+              width={20}
+              height={20} 
+              alt="website logo"/> 
+          </IconButton>
+            : 
+          <SearchBar />
+      }
+      {
+        (!signedIn && !isMobile) && 
+          <CustomButton 
+            size="l" 
+            variant="outlined" 
+            fullWidth={false} 
+            sx={{
+              width: "145px",
+            }}>
+            Sign In
+          </CustomButton>
+      }
+      {
+        (isMobile && showMenu) &&
+          <PopupMenu 
+            signedIn 
+            showMenu 
+            onMenuClose={() => setShowMenu(false)} />
+      }
     </Box>
   );
 }
