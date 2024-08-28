@@ -1,5 +1,11 @@
 "use client";
-import { Container, styled, Typography } from "@mui/material";
+import {
+  Box,
+  styled,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import WarningAmberRoundedIcon from "@mui/icons-material/WarningAmberRounded";
 
 type TextFieldInput = {
@@ -22,6 +28,10 @@ const CustomInput = styled("input")<CustomInputProps>(({ theme, error }) => ({
   border: `1px solid ${error ? theme.palette.error.main : "#494949"}`,
   outline: "none",
   width: "100%",
+  [theme.breakpoints.down("md")]: {
+    ...theme.typography.body2,
+    padding: "11.76px 10.34px",
+  },
 
   "&:focus": {
     borderColor: theme.palette.secondary.main,
@@ -36,15 +46,17 @@ export default function TextField({
   min,
   error,
 }: TextFieldInput) {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
   return (
-    <Container
+    <Box
       sx={{
         display: "flex",
         flexDirection: "column",
-        gap: "8px",
+        width: isMobile ? "320px" : "436px",
+        gap: isMobile ? "4.92px" : "8px",
       }}
-      disableGutters={true}
-      fixed
     >
       <Typography variant="caption" component="label" htmlFor={id}>
         {label}{" "}
@@ -65,31 +77,34 @@ export default function TextField({
         error={error}
       ></CustomInput>
       {error && (
-        <Container
+        <Box
           sx={{
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
             gap: "4px",
           }}
-          disableGutters={true}
         >
           <WarningAmberRoundedIcon
-            sx={{ width: "16px", height: "16px", color: "error.main" }}
+            sx={{
+              width: isMobile ? "12px" : "16px",
+              height: isMobile ? "12px" : "16px",
+              color: "error.main",
+            }}
           />
           <Typography
             component="small"
             sx={{
-              fontSize: "12px",
+              fontSize: isMobile ? "10px" : "12px",
               color: "error.main",
-              lineHeight: "16px",
+              lineHeight: "14px",
               fontWeight: "400",
             }}
           >
             {error}
           </Typography>
-        </Container>
+        </Box>
       )}
-    </Container>
+    </Box>
   );
 }
