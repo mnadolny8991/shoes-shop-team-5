@@ -1,10 +1,12 @@
 "use client";
 
-import { Box } from "@mui/material";
-import Image from "next/image";
+import { Box, Typography } from "@mui/material";
 import backgroundImage from "../../../public/reset-password-backgroound.png";
 import CustomButton from "@/components/Buttons/CustomButton";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import theme from "@/theme";
+import TextField from "@/components/InputField/TextField";
+import Link from "next/link";
 
 export default function ResetPassword() {
   return (
@@ -20,12 +22,36 @@ export default function ResetPassword() {
         >
           <Box
             sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "15px",
               width: "436px",
             }}
           >
+            <Typography variant="h1">Reset password</Typography>
+            <Typography variant="body2" color={theme.palette.text.secondary}>
+              Please create new password here
+            </Typography>
+            <TextField
+              required={true}
+              name="password"
+              id="password"
+              label="Password"
+              min={8}
+            />
+            <TextField
+              required={true}
+              name="confirm-password"
+              id="confirm-password"
+              label="Confirm password"
+              min={8}
+            />
             <CustomButton size="l" variant="contained">
               Reset Password
             </CustomButton>
+            <Typography variant="caption" textAlign="center">
+              <Link href="/login">Back to log in</Link>
+            </Typography>
           </Box>
         </Box>
       </Grid2>
