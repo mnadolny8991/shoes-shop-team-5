@@ -34,11 +34,11 @@ export default function SignIn() {
                         maxWidth={isMobile ? 320 : 436}
                         align="center"
                         variant="body2"
-                    >Don't have an account? <Link href="/sign_up">Sign up</Link></Typography>
+                    >Don't have an account? <Link href="/sign-up">Sign up</Link></Typography>
                 </Box>
             </Box>
             {!isMobile &&
-                <Box sx={{ 'flex': 1}}>
+                <Box sx={{ 'flex': 1 }}>
                     <Image
                         alt="pexels-melvin-buezo"
                         src="/pexels-melvin-buezo-2529148.png"
