@@ -54,6 +54,17 @@ theme = createTheme({
         lineHeight: "14.45px"
       }
     },
+    subtitle2: {
+      fontSize: 15,
+      lineHeight: "17.6px",
+      fontWeight: "300",
+      textTransform: "none",
+      color: "#5C5C5C",
+      [theme.breakpoints.down("md")]: {
+        fontSize: "12px",
+        lineHeight: "14.08px"
+      }
+    },
   },
   palette: {
     error: {
@@ -71,6 +82,13 @@ theme = createTheme({
       main: "#6E314A",
     },
   },
+  components:{
+    MuiLink:{
+      defaultProps:{
+        underline: 'none'
+      }
+    }
+  }
 });
 
 export default theme;
