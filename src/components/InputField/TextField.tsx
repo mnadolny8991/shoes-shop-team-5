@@ -8,6 +8,7 @@ type TextFieldInput = {
   id: string;
   label: string;
   min: number;
+  password?: boolean;
   error?: string;
 };
 
@@ -32,7 +33,7 @@ const CustomInput = styled("input")<CustomInputProps>(({ theme, error }) => ({
   },
 }));
 
-export default function TextField({ required, name, id, label, min, error }: TextFieldInput) {
+export default function TextField({ required, name, id, label, min, error, password }: TextFieldInput) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -54,6 +55,7 @@ export default function TextField({ required, name, id, label, min, error }: Tex
           </Typography>}
       </Typography>
       <CustomInput 
+        type={password ? "password" : "text"}
         name={name} 
         id={id} 
         placeholder={`at least ${min} characters`} 

@@ -10,7 +10,7 @@ export default function SignInForm(){
     <Box maxWidth={isMobile ? 320 : 436}>
         <Stack spacing={2} mt={isMobile ? '25px' : '48px'}>
             <TextField required name="email" id="email" label="Email" min={8}/>
-            <TextField required name="password" id="password" label="Password" min={8}/>
+            <TextField required password name="password" id="password" label="Password" min={8}/>
         </Stack>
         <Box sx={{
             'display': 'flex',
