@@ -1,5 +1,11 @@
 "use client";
-import { Box, styled, Typography, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Box,
+  styled,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import WarningAmberRoundedIcon from "@mui/icons-material/WarningAmberRounded";
 
 type TextFieldInput = {
@@ -24,7 +30,7 @@ const CustomInput = styled("input")<CustomInputProps>(({ theme, error }) => ({
   width: "100%",
   [theme.breakpoints.down("md")]: {
     ...theme.typography.body2,
-    padding: "11.76px 10.34px", 
+    padding: "11.76px 10.34px",
   },
 
   "&:focus": {
@@ -32,55 +38,73 @@ const CustomInput = styled("input")<CustomInputProps>(({ theme, error }) => ({
   },
 }));
 
-export default function TextField({ required, name, id, label, min, error }: TextFieldInput) {
+export default function TextField({
+  required,
+  name,
+  id,
+  label,
+  min,
+  error,
+}: TextFieldInput) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
-    <Box 
-      sx={{ 
-        display: "flex", 
+    <Box
+      sx={{
+        display: "flex",
         flexDirection: "column",
         width: isMobile ? "320px" : "436px",
         gap: isMobile ? "4.92px" : "8px",
-      }}>
+      }}
+    >
       <Typography variant="caption" component="label" htmlFor={id}>
-        {label} {required && 
-          <Typography 
-            variant="caption" 
-            component="span" 
-            sx={{ color: "primary.main" }}>
+        {label}{" "}
+        {required && (
+          <Typography
+            variant="caption"
+            component="span"
+            sx={{ color: "primary.main" }}
+          >
             *
-          </Typography>}
+          </Typography>
+        )}
       </Typography>
-      <CustomInput 
-        name={name} 
-        id={id} 
-        placeholder={`at least ${min} characters`} 
-        error={error} >
-      </CustomInput>
-      { 
-      error && 
-        <Box 
+      <CustomInput
+        name={name}
+        id={id}
+        placeholder={`at least ${min} characters`}
+        error={error}
+      ></CustomInput>
+      {error && (
+        <Box
           sx={{
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
-            gap: "4px"
-          }}>
-          <WarningAmberRoundedIcon sx={{ 
-            width: isMobile ? "12px" : "16px", 
-            height: isMobile ? "12px" : "16px", 
-            color: "error.main" 
-          }} />
-          <Typography component="small" sx={{
-            fontSize: isMobile ? "10px" : "12px",
-            color: "error.main",
-            lineHeight: "14px",
-            fontWeight: "400"
-          }}>{error}</Typography>
+            gap: "4px",
+          }}
+        >
+          <WarningAmberRoundedIcon
+            sx={{
+              width: isMobile ? "12px" : "16px",
+              height: isMobile ? "12px" : "16px",
+              color: "error.main",
+            }}
+          />
+          <Typography
+            component="small"
+            sx={{
+              fontSize: isMobile ? "10px" : "12px",
+              color: "error.main",
+              lineHeight: "14px",
+              fontWeight: "400",
+            }}
+          >
+            {error}
+          </Typography>
         </Box>
-      }
+      )}
     </Box>
   );
 }
