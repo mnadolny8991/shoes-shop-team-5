@@ -1,15 +1,17 @@
+"use client";
+
 import React from "react";
-import { Container, Typography, Box, Grid, CssBaseline } from "@mui/material";
+import { Container, Typography, Box, Grid } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Link from "next/link";
 import Image from "next/image";
 import theme from "@/theme";
-import CustomTextField from "../components/InputField/TextField";
-import CustomButton from "../components/Buttons/CustomButton";
+import CustomTextField from "../../components/InputField/TextField";
+import CustomButton from "../../components/Buttons/CustomButton";
 
 const Logo = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-
+  
   return (
     <Box
       sx={{
@@ -32,7 +34,6 @@ const Logo = () => {
 const ForgotPassword: React.FC = () => {
   return (
     <>
-      <CssBaseline />
       <Grid container sx={{ height: "100vh" }}>
         <Grid
           item
