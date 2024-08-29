@@ -100,7 +100,7 @@ export default function TextField({ required, name, id, label, min, error, passw
             {error}
           </Typography>
         </Box>
-      )}
+      }
     </Box>
   );
 }
