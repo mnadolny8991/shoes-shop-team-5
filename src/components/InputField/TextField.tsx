@@ -19,6 +19,7 @@ type TextFieldInput = {
   min?: number;
   password?: boolean;
   error?: string;
+  width?: string | number;
 };
 
 interface CustomInputProps extends React.ComponentPropsWithoutRef<"input"> {
