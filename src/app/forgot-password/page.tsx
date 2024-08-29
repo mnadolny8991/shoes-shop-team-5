@@ -8,6 +8,7 @@ import Image from "next/image";
 import theme from "@/theme";
 import TextField from "../../components/InputField/TextField";
 import CustomButton from "../../components/Buttons/CustomButton";
+import { useState } from "react";
 
 const Logo = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -33,6 +34,8 @@ const Logo = () => {
 
 const ForgotPassword: React.FC = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const [password, setPassword] = useState("");
+
   return (
     <>
       <Grid container sx={{ height: "100vh" }}>
@@ -73,6 +76,8 @@ const ForgotPassword: React.FC = () => {
               </Typography>
 
               <TextField
+                value={password}
+                onChange={(val: string) => setPassword(val)}
                 required
                 name="email"
                 id="email"
