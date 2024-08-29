@@ -13,7 +13,10 @@ type TextFieldInput = {
   name: string;
   id: string;
   label: string;
-  min: number;
+  value: string;
+  onChange: (val: string) => void;
+  placeholder?: string;
+  min?: number;
   password?: boolean;
   error?: string;
 };
@@ -39,7 +42,17 @@ const CustomInput = styled("input")<CustomInputProps>(({ theme, error }) => ({
   },
 }));
 
-export default function TextField({ required, name, id, label, min, error, password }: TextFieldInput) {
+export default function TextField({ 
+  required, 
+  name, 
+  id, 
+  label, 
+  min, 
+  error, 
+  password, 
+  placeholder,
+  value,
+  onChange }: TextFieldInput) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -65,10 +78,12 @@ export default function TextField({ required, name, id, label, min, error, passw
         )}
       </Typography>
       <CustomInput 
+        value={value}
+        onChange={(e: any) => onChange(e.target.value)}
         type={password ? "password" : "text"}
         name={name} 
         id={id} 
-        placeholder={`at least ${min} characters`} 
+        placeholder={placeholder ? placeholder : `at least ${min} characters`} 
         error={error} >
       </CustomInput>
       { 

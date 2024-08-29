@@ -7,9 +7,12 @@ import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import theme from "@/theme";
 import TextField from "@/components/InputField/TextField";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function ResetPassword() {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const [password, setPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
 
   return (
     <Grid2 container style={{ height: "100vh" }}>
@@ -37,6 +40,8 @@ export default function ResetPassword() {
               Please create new password here
             </Typography>
             <TextField
+              value={password}
+              onChange={(val: string) => setPassword(val)}
               required
               name="password"
               id="password"
@@ -44,6 +49,8 @@ export default function ResetPassword() {
               min={8}
             />
             <TextField
+              value={confirm}
+              onChange={(val: string) => setConfirm(val)}
               required
               password
               name="confirm-password"
