@@ -1,17 +1,17 @@
 "use client";
 
 import React from "react";
-import { Container, Typography, Box, Grid } from "@mui/material";
+import { Typography, Box, Grid } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Link from "next/link";
 import Image from "next/image";
 import theme from "@/theme";
-import CustomTextField from "../../components/InputField/TextField";
+import TextField from "../../components/InputField/TextField";
 import CustomButton from "../../components/Buttons/CustomButton";
 
 const Logo = () => {
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
   return (
     <Box
       sx={{
@@ -32,6 +32,7 @@ const Logo = () => {
 };
 
 const ForgotPassword: React.FC = () => {
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   return (
     <>
       <Grid container sx={{ height: "100vh" }}>
@@ -44,97 +45,55 @@ const ForgotPassword: React.FC = () => {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            p: 4,
+            gap: "15px",
           }}
         >
           <Logo />
-          <Container maxWidth="xs">
-            <Typography
-              component="h1"
-              variant="h1"
-              sx={{
-                mb: {
-                  xs: 1.5,
-                  sm: 2,
-                },
-                fontSize: {
-                  xs: "30px",
-                  sm: "45px",
-                },
-              }}
-            >
-              Forgot password?
-            </Typography>
-
-            <Typography
-              component="p"
-              variant="body2"
-              sx={{
-                mb: {
-                  xs: 4,
-                  sm: 6,
-                },
-                color: "text.secondary",
-                fontSize: {
-                  xs: "12px",
-                  sm: "15px",
-                },
-              }}
-            >
-              Don’t worry, we’ll send you reset instructions.
-            </Typography>
+          <Box
+            sx={{
+              alignItems: "center",
+              display: "flex",
+              justifyContent: "center",
+              height: "100%",
+            }}
+          >
             <Box
               sx={{
-                mt: 3,
                 display: "flex",
-                alignItems: "center",
                 flexDirection: "column",
-                width: "100%",
+                gap: "15px",
+                width: isMobile ? "320px" : "436px",
               }}
             >
-              <CustomTextField
-                required={false}
+              <Typography variant="h1" fontSize={isMobile ? "30px" : "45px"}>
+                Forgot password?
+              </Typography>
+              <Typography variant="body2" color={theme.palette.text.secondary}>
+                Don’t worry, we’ll send you reset instructions.
+              </Typography>
+
+              <TextField
+                required
                 name="email"
                 id="email"
                 label="Email"
                 min={5}
                 error={undefined}
-                width="100%"
               />
 
-              <CustomButton
-                size="l"
-                sx={{
-                  mb: 2.5,
-                  mt: 2.5,
-                  background: theme.palette.primary.main,
-                  color: theme.palette.primary.contrastText,
-                  "&:hover": {
-                    backgroundColor: theme.palette.primary.main,
-                    color: theme.palette.primary.contrastText,
-                  },
-                }}
-              >
-                Reset password
+              <CustomButton size={isMobile ? "s" : "l"} variant="contained">
+                Reset Password
               </CustomButton>
 
-              <Link href="/log-in" style={{ textDecoration: "none" }}>
-                <Typography
-                  component="p"
-                  variant="caption"
-                  sx={{
-                    color: "#494949",
-                    fontSize: {
-                      xs: "10px",
-                      sm: "15px",
-                    },
-                  }}
-                >
-                  Back to log in
-                </Typography>
-              </Link>
+              <Typography
+                variant="caption"
+                fontSize={isMobile ? "11.15px" : "15px"}
+                textAlign="center"
+              >
+                <Link href="/login">Back to log in</Link>
+              </Typography>
             </Box>
-          </Container>
+          </Box>
         </Grid>
 
         <Grid
