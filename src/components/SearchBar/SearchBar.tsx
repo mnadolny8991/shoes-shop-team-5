@@ -5,12 +5,13 @@ import IconButton from "@mui/material/IconButton";
 const Outline = styled("div")(( { theme }) => ({
   ...theme.typography.caption,
   color: theme.palette.text.secondary,
-  width: "320px",
-  padding: "15px 19px",
+  width: "100%",
+  height: "100%",
+  display: "flex",
+  paddingInline: "4%",
   borderRadius: "42px",
   border: "1px solid #494949",
   [theme.breakpoints.down("md")]: {
-    padding: "6.92px 11px",
   }
 }));
 
@@ -18,26 +19,33 @@ const Input = styled("input")(({ theme }) => ({
   all: "unset",
   ...theme.typography.caption,
   color: theme.palette.text.secondary,
+  width: "100%",
 }));
 
 type SearchBarProps = {
   value: string;
   onChange: (val: string) => void;
+  width: number | string,
+  height: number | string,
 }
 
-export default function SearchBar({ value, onChange }: SearchBarProps) {
+export default function SearchBar({ value, onChange, width, height }: SearchBarProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
     <form>
-      <Outline>
+      <Outline sx={{
+        width: width,
+        height: height
+      }}>
         <Box sx={{
           display: "flex",
           alignItems: "center",
           gap: "12px",
+          width: "100%",
         }}>
-          <IconButton>
+          <IconButton type="submit">
             <Image
               src="/search-normal.svg"
               width={isMobile ? 11.16 : 17}

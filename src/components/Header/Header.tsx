@@ -8,7 +8,6 @@ import {
   Avatar,
   IconButton,
   Drawer,
-  Container,
 } from "@mui/material";
 import Image from "next/image";
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -18,6 +17,7 @@ import Link from "next/link";
 import { useState } from "react";
 import PopupMenu from "./PopupMenu";
 import CloseIcon from "@mui/icons-material/Close";
+import SearchPopup from './SearchPopup';
 
 export default function Header() {
   const theme = useTheme();
@@ -136,49 +136,18 @@ function NavRight() {
                 alt="website logo"/> 
             </IconButton>
             : 
-            <SearchBar value={searchText} onChange={(val: string) => setSearchText(val)}/>
+            <SearchBar 
+              value={searchText} 
+              onChange={(val: string) => setSearchText(val)}
+              width={424}
+              height={48}/>
         }
       </Box>
-      <Drawer
-        anchor="top"
-        open={showSearchPopup}
-        sx={{
-          "& .MuiDrawer-paper": {
-            width: "100%",
-            height: "419px"
-          }
-      }}>
-        <IconButton
-          onClick={() => setShowSearchPopup(false)}
-          sx={{
-            zIndex: 10,
-            position: "absolute",
-            right: 24,
-            top: 24,
-            color: "#494949",
-          }}>
-          <CloseIcon sx={{ width: "20px", height: "20px" }}/>
-        </IconButton>
-        <IconButton sx={{
-          position: "absolute",
-          left: 24,
-          top: 24,
-        }}>
-          <Image
-            src="/logo.svg"
-            width={isMobile ? 35 : 40}
-            height={isMobile ? 26.5 : 30} 
-            alt="website logo"/>
-        </IconButton>
-        <Box sx={{
-          position: "absolute",
-          top: 45,
-          left: "50%",
-          transform: "translateX(-50%)",
-        }}>
-          <SearchBar value={searchText} onChange={(val: string) => setSearchText(val)}/>
-        </Box>
-      </Drawer>
+      <SearchPopup 
+        show={showSearchPopup}
+        close={() => setShowSearchPopup(false)}
+        searchText={searchText}
+        onTextChange={(val: string) => setSearchText(val)}/>
       {
         (!signedIn && !isMobile) && 
           <CustomButton 
