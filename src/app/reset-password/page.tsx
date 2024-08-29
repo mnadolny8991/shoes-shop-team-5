@@ -37,14 +37,15 @@ export default function ResetPassword() {
               Please create new password here
             </Typography>
             <TextField
-              required={true}
+              required
               name="password"
               id="password"
               label="Password"
               min={8}
             />
             <TextField
-              required={true}
+              required
+              password
               name="confirm-password"
               id="confirm-password"
               label="Confirm password"
