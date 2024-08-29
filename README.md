@@ -23,8 +23,8 @@ TBA
 * Github
 * Jira
 ## Contributors
-* @Fabi0o
-* @ruslanvasylyshyn
-* @sambuka-a
-* @serhiiLamanov
-* @mnadolny8991
+* [@Fabi0o](https://github.com/Fabi0o)
+* [@ruslanvasylyshyn](https://github.com/ruslanvasylyshyn)
+* [@sambuka-a](https://github.com/sambuka-a)
+* [@serhiiLamanov](https://github.com/serhiiLamanov)
+* [@mnadolny8991](https://github.com/mnadolny8991)
