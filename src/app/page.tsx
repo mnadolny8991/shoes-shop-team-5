@@ -1,15 +1,11 @@
 import TextField from "@/components/InputField/TextField";
+import SignupForm from "@/components/SignupForm/SignupForm";
 
 export default function Home() {
+
   return (
     <>
-      <TextField 
-        required={true} 
-        name="input" 
-        id="input" 
-        label="Label Text"
-        min={8}
-        error="Message under the input field" />
+      <SignupForm />
     </>
   );
 }

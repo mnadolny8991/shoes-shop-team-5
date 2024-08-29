@@ -17,14 +17,16 @@ export default function CustomButton({
   children,
   size,
   variant,
+  sx,
   ...props
 }: CustomButtonProps) {
   return (
     <Button
-      sx={{ height: buttonSizes[size].height }}
+      sx={{ ...sx, height: buttonSizes[size].height }}
       color="primary"
       fullWidth={true}
       variant={variant}
+      type={props.type}
       onClick={(e) => (props.onClick ? props.onClick(e) : null)}
     >
       <Typography fontSize={buttonSizes[size].fontSize} variant="button">
