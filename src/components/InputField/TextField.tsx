@@ -16,6 +16,7 @@ type TextFieldInput = {
   min: number;
   password?: boolean;
   error?: string;
+  width?: string | number;
 };
 
 interface CustomInputProps extends React.ComponentPropsWithoutRef<"input"> {
@@ -38,7 +39,6 @@ const CustomInput = styled("input")<CustomInputProps>(({ theme, error }) => ({
     borderColor: theme.palette.secondary.main,
   },
 }));
-
 export default function TextField({ required, name, id, label, min, error, password }: TextFieldInput) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
