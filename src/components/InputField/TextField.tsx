@@ -9,6 +9,7 @@ type TextFieldInput = {
   label: string;
   min: number;
   error?: string;
+  width?: string | number;
 };
 
 interface CustomInputProps extends React.ComponentPropsWithoutRef<'input'> {
@@ -28,13 +29,13 @@ const CustomInput = styled('input')<CustomInputProps>(({ theme, error }) => ({
   },
 }));
 
-export default function TextField({ required, name, id, label, min, error }: TextFieldInput) {
+export default function TextField({ required, name, id, label, min, error, width = '436px' }: TextFieldInput) {
   return (
     <Container 
       sx={{ 
         display: 'flex', 
         flexDirection: 'column',
-        width: '436px',
+        width: width,
         gap: '8px',
       }}
       disableGutters={true}
