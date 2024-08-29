@@ -7,7 +7,6 @@ const Outline = styled("div")(( { theme }) => ({
   color: theme.palette.text.secondary,
   width: "320px",
   padding: "15px 19px",
-  px: "20px",
   borderRadius: "42px",
   border: "1px solid #494949",
   [theme.breakpoints.down("md")]: {
@@ -21,7 +20,12 @@ const Input = styled("input")(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export default function SearchBar() {
+type SearchBarProps = {
+  value: string;
+  onChange: (val: string) => void;
+}
+
+export default function SearchBar({ value, onChange }: SearchBarProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -40,7 +44,7 @@ export default function SearchBar() {
               height={isMobile ? 11.16 : 17} 
               alt="website logo"/>
           </IconButton>
-          <Input placeholder="Search"></Input>
+          <Input placeholder="Search" value={value} onChange={(e: any) => onChange(e.target.value)}></Input>
         </Box>
       </Outline>
     </form>

@@ -7,6 +7,8 @@ import {
   Box,
   Avatar,
   IconButton,
+  Drawer,
+  Container,
 } from "@mui/material";
 import Image from "next/image";
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -15,6 +17,7 @@ import CustomButton from '../Buttons/CustomButton';
 import Link from "next/link";
 import { useState } from "react";
 import PopupMenu from "./PopupMenu";
+import CloseIcon from "@mui/icons-material/Close";
 
 export default function Header() {
   const theme = useTheme();
@@ -76,6 +79,8 @@ function NavLeft() {
 
 function NavRight() {
   const [showMenu, setShowMenu] = useState(false);
+  const [searchText, setSearchText] = useState("");
+  const [showSearchPopup, setShowSearchPopup] = useState(false);
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -120,18 +125,60 @@ function NavRight() {
             alt="bag icon"/>
         </IconButton>
       </Box>
-      { 
-        isMobile ? 
-          <IconButton>
-            <Image
-              src="/search-normal.svg"
-              width={20}
-              height={20} 
-              alt="website logo"/> 
-          </IconButton>
+      <Box onClick={() => setShowSearchPopup(true)}>
+        { 
+          isMobile ? 
+            <IconButton>
+              <Image
+                src="/search-normal.svg"
+                width={20}
+                height={20} 
+                alt="website logo"/> 
+            </IconButton>
             : 
-          <SearchBar />
-      }
+            <SearchBar value={searchText} onChange={(val: string) => setSearchText(val)}/>
+        }
+      </Box>
+      <Drawer
+        anchor="top"
+        open={showSearchPopup}
+        sx={{
+          "& .MuiDrawer-paper": {
+            width: "100%",
+            height: "419px"
+          }
+      }}>
+        <IconButton
+          onClick={() => setShowSearchPopup(false)}
+          sx={{
+            zIndex: 10,
+            position: "absolute",
+            right: 24,
+            top: 24,
+            color: "#494949",
+          }}>
+          <CloseIcon sx={{ width: "20px", height: "20px" }}/>
+        </IconButton>
+        <IconButton sx={{
+          position: "absolute",
+          left: 24,
+          top: 24,
+        }}>
+          <Image
+            src="/logo.svg"
+            width={isMobile ? 35 : 40}
+            height={isMobile ? 26.5 : 30} 
+            alt="website logo"/>
+        </IconButton>
+        <Box sx={{
+          position: "absolute",
+          top: 45,
+          left: "50%",
+          transform: "translateX(-50%)",
+        }}>
+          <SearchBar value={searchText} onChange={(val: string) => setSearchText(val)}/>
+        </Box>
+      </Drawer>
       {
         (!signedIn && !isMobile) && 
           <CustomButton 
