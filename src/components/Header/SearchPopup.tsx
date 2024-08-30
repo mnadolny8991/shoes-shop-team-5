@@ -10,12 +10,12 @@ type SearchPopupProps = {
   onTextChange: (val: string) => void;
 };
 
-export default function SearchPopup({ 
+export default function SearchPopup({
   show,
   close,
   searchText,
   onTextChange
- }: SearchPopupProps) {
+}: SearchPopupProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -26,42 +26,40 @@ export default function SearchPopup({
       sx={{
         "& .MuiDrawer-paper": {
           width: "100%",
-          height: "419px"
+          height: isMobile ? "196px" : "419px",
         }
       }}>
-      <IconButton
-        onClick={close}
-        sx={{
-          zIndex: 10,
-          position: "absolute",
-          right: 24,
-          top: 24,
-          color: "#494949",
-        }}>
-        <CloseIcon sx={{ width: "20px", height: "20px" }} />
-      </IconButton>
-      <IconButton sx={{
-        position: "absolute",
-        left: 24,
-        top: 24,
-      }}>
-        <Image
-          src="/logo.svg"
-          width={isMobile ? 35 : 40}
-          height={isMobile ? 26.5 : 30}
-          alt="website logo" />
-      </IconButton>
       <Box sx={{
-        position: "absolute",
-        top: 45,
-        left: "50%",
-        transform: "translateX(-50%)",
+        display: "flex",
+        flexDirection: "row",
+        width: "100%",
+        justifyContent: "space-between",
+        padding: "20px",
+        alignItems: isMobile ? "center" : "start",
       }}>
+        {
+          !isMobile &&
+          <IconButton>
+            <Image
+              src="/logo.svg"
+              width={40}
+              height={30}
+              alt="website logo" />
+          </IconButton>
+        }
         <SearchBar
           value={searchText}
           onChange={(val: string) => onTextChange(val)}
-          width={isMobile ? 290 : 1071}
-          height={isMobile ? 25 : 79} />
+          width={isMobile ? "290px" : "700px"}
+          height={isMobile ? "25px" : "79px"}
+          variant={isMobile ? "popupMobile" : "popupLarge"} />
+        <IconButton
+          onClick={close}
+          sx={{
+            color: "#494949",
+          }}>
+          <CloseIcon sx={{ width: "15px", height: "15px" }} />
+        </IconButton>
       </Box>
     </Drawer>
   );

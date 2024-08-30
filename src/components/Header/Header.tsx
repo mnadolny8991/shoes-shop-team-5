@@ -140,7 +140,8 @@ function NavRight() {
               value={searchText} 
               onChange={(val: string) => setSearchText(val)}
               width={424}
-              height={48}/>
+              height={48}
+              variant="header"/>
         }
       </Box>
       <SearchPopup 
