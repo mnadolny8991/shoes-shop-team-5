@@ -2,7 +2,7 @@ import { Box, Drawer, IconButton, List, ListItem, Stack, Typography, useMediaQue
 import CloseIcon from "@mui/icons-material/Close";
 import Image from "next/image";
 import SearchBar from "../SearchBar/SearchBar";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 const popularSearchTerms = [
   {
@@ -34,6 +34,16 @@ export default function SearchPopup({
 }: SearchPopupProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const searchRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (show) {
+      var i = setTimeout(() => searchRef.current?.focus(), 100);
+    }
+    return () => {
+      clearTimeout(i);
+    }
+  }, [show]);
 
   return (
     <Drawer
@@ -66,6 +76,8 @@ export default function SearchPopup({
         }
         <Stack gap="40px">
           <SearchBar
+            withErase
+            ref={searchRef}
             value={searchText}
             onChange={(val: string) => onTextChange(val)}
             width={isMobile ? "290px" : "700px"}
@@ -79,8 +91,17 @@ export default function SearchPopup({
               {
                 popularSearchTerms.map(term => 
                   <Typography 
+                    onClick={() => {
+                      onTextChange(term.value);
+                      searchRef.current?.focus();
+                    }}
                     key={term.id}
-                    sx={{ fontWeight: "500", fontSize: "22px", lineHeight: "25.81px", color: "text.primary" }}>
+                    sx={{ 
+                      fontWeight: "500", 
+                      fontSize: "22px", 
+                      lineHeight: "25.81px", 
+                      color: "text.primary",
+                      cursor: "pointer" }}>
                     {term.value}
                   </Typography>
                 )

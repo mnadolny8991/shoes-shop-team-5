@@ -1,6 +1,8 @@
 import { Box, styled, useMediaQuery, useTheme } from "@mui/material"
 import Image from "next/image";
 import IconButton from "@mui/material/IconButton";
+import { forwardRef, useRef } from "react";
+import CloseIcon from "@mui/icons-material/Close";
 
 const variants = {
   header: {
@@ -59,11 +61,13 @@ type SearchBarProps = {
   width: number | string,
   height: number | string,
   variant: keyof typeof variants,
+  withErase?: boolean,
 }
 
-export default function SearchBar({ value, onChange, width, height, variant }: SearchBarProps) {
+const SearchBar = forwardRef<HTMLInputElement, SearchBarProps>(({ value, onChange, width, height, variant, withErase }: SearchBarProps, ref) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const inputRef = useRef<HTMLInputElement>(null);
 
   return (
     <form>
@@ -85,6 +89,7 @@ export default function SearchBar({ value, onChange, width, height, variant }: S
               alt="website logo"/>
           </IconButton>
           <Input 
+            ref={ref}
             placeholder="Search" 
             value={value} 
             onChange={(e: any) => onChange(e.target.value)} 
@@ -93,8 +98,23 @@ export default function SearchBar({ value, onChange, width, height, variant }: S
               fontWeight: variants[variant].fontWeight,
               lineHeight: variants[variant].lineHeight,
             }} />
+          {
+            withErase &&
+            <IconButton
+              onClick={() => {
+                onChange("");
+                setTimeout(() => inputRef.current?.focus(), 100);
+              }}
+              sx={{
+                color: "#494949",
+              }}>
+            <CloseIcon sx={{ width: isMobile ? "15px" : "24px", height: isMobile ? "15px" : "24px" }} />
+          </IconButton>
+          }
         </Box>
       </Outline>
     </form>
   )
-}
+});
+
+export default SearchBar;
