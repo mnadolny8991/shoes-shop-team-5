@@ -43,6 +43,7 @@ const Outline = styled("div")(( { theme }) => ({
   borderRadius: "42px",
   border: "1px solid #494949",
   [theme.breakpoints.down("md")]: {
+    paddingInline: "2%",
   }
 }));
 

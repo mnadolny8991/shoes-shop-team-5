@@ -2,6 +2,7 @@ import { Box, Drawer, IconButton, List, ListItem, Stack, Typography, useMediaQue
 import CloseIcon from "@mui/icons-material/Close";
 import Image from "next/image";
 import SearchBar from "../SearchBar/SearchBar";
+import { useRef } from "react";
 
 const popularSearchTerms = [
   {

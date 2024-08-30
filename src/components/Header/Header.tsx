@@ -18,6 +18,7 @@ import { useState } from "react";
 import PopupMenu from "./PopupMenu";
 import CloseIcon from "@mui/icons-material/Close";
 import SearchPopup from './SearchPopup';
+import { useRouter } from 'next/navigation';
 
 export default function Header() {
   const theme = useTheme();
@@ -63,7 +64,7 @@ function NavLeft() {
           alt="website logo"/>
       </IconButton>
       { !isMobile && 
-        <Link href="/" style={{ textDecoration: "none", color: theme.palette.text.primary }}>
+        <Link href="/products" style={{ textDecoration: "none", color: theme.palette.text.primary }}>
           <Typography sx={{
             fontSize: 16,
             fontWeight: "500",
@@ -81,10 +82,11 @@ function NavRight() {
   const [showMenu, setShowMenu] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [showSearchPopup, setShowSearchPopup] = useState(false);
+  const router = useRouter();
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const signedIn = false; // auth context here
+  const signedIn = true; // auth context here
 
   return (
     <Box
@@ -113,7 +115,7 @@ function NavRight() {
         }}>
         { 
           (signedIn && !isMobile) && 
-            <IconButton>
+            <IconButton onClick={() => router.push("/edit-profile")}>
               <Avatar alt="Remy Sharp" src="/avatar.svg" sx={{ width: 24, height: 24 }}/>
             </IconButton>
         }
