@@ -2,9 +2,8 @@
 
 import { Box, Container, Stack, styled, Typography, useMediaQuery, useTheme } from "@mui/material"
 import HeaderLayout from "./(header)/layout"
-import CustomButton from "@/components/Buttons/CustomButton"
-import { useRouter } from "next/navigation"
 import Image from "next/image"
+import GoBackAndHomeButtonsStack from "@/components/Buttons/GoBackAndHomeButtonsStack"
 
 export default function NotFound() {
   const theme = useTheme()
@@ -19,14 +18,14 @@ export default function NotFound() {
             <MessageBox />
           </Container>
           <ImageBox />
-          <ButtonsStack />
+          <GoBackAndHomeButtonsStack />
         </Stack>
         :
         <Stack direction="row">
           <Box sx={{ 'flex': 1 }}>
             <Box margin={isMobile ? '0' : '30% calc((50vw - 436px) / 3)'}>
               <MessageBox />
-              <ButtonsStack />
+              <GoBackAndHomeButtonsStack />
             </Box>
           </Box>
           <ImageBox />
@@ -43,19 +42,19 @@ function ImageBox() {
 
   const StyledImageBox = styled('div')(() =>
     isMobile ? {
-      'width': '100%',
-      'borderBottomLeftRadius': 35,
-      'borderBottomRightRadius': 35,
-      'overflow': 'hidden'
+      width: '100%',
+      borderBottomLeftRadius: 35,
+      borderBottomRightRadius: 35,
+      overflow: 'hidden'
     } : {
-      'flex': 1
+      flex: 1
     }
   )
 
   return (
     <StyledImageBox>
       <Image
-        alt="pexels-rodion-kutsaiev"
+        alt="pexels rodion kutsaiev"
         src="/pexels-rodion-kutsaiev-7911758-1.png"
         sizes={isMobile ? '100vw' : '50vw'}
         width={960}
@@ -80,16 +79,5 @@ function MessageBox() {
         Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna
       </Typography>
     </Box>
-  )
-}
-
-function ButtonsStack() {
-  const router = useRouter()
-
-  return (
-    <Stack direction="row" spacing={2} width={320} mt={3}>
-      <CustomButton size="m" variant="outlined" onClick={router.back}>Go back</CustomButton>
-      <CustomButton size="m" variant="contained" onClick={() => router.push('/')}>Home</CustomButton>
-    </Stack>
   )
 }
