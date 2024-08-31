@@ -7,7 +7,7 @@ import {
   useTheme,
 } from "@mui/material";
 import WarningAmberRoundedIcon from "@mui/icons-material/WarningAmberRounded";
-import { ForwardedRef, forwardRef } from "react";
+import { ChangeEvent, ForwardedRef, forwardRef } from "react";
 
 type TextFieldInput = React.InputHTMLAttributes<HTMLInputElement> & {
   required: boolean;
@@ -80,7 +80,7 @@ const TextField = forwardRef(function TextField({
         {...props}
         ref={ref}
         value={value}
-        onChange={(e: any) => onChange(e.target.value)}
+        onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e.target.value)}
         type={password ? "password" : "text"}
         placeholder={placeholder ? placeholder : `at least ${min} characters`} 
         error={error} >
