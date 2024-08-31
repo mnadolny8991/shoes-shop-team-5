@@ -7,11 +7,10 @@ import {
   useTheme,
 } from "@mui/material";
 import WarningAmberRoundedIcon from "@mui/icons-material/WarningAmberRounded";
+import { ForwardedRef, forwardRef } from "react";
 
-type TextFieldInput = {
+type TextFieldInput = React.InputHTMLAttributes<HTMLInputElement> & {
   required: boolean;
-  name: string;
-  id: string;
   label: string;
   value: string;
   onChange: (val: string) => void;
@@ -43,17 +42,16 @@ const CustomInput = styled("input")<CustomInputProps>(({ theme, error }) => ({
   },
 }));
 
-export default function TextField({ 
+const TextField = forwardRef(function TextField({ 
   required, 
-  name, 
-  id, 
   label, 
   min, 
   error, 
   password, 
   placeholder,
   value,
-  onChange }: TextFieldInput) {
+  onChange,
+  ...props }: TextFieldInput, ref: ForwardedRef<HTMLInputElement>) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -66,7 +64,7 @@ export default function TextField({
         gap: isMobile ? "4.92px" : "8px",
       }}
     >
-      <Typography variant="caption" component="label" htmlFor={id}>
+      <Typography variant="caption" component="label" htmlFor={props.id}>
         {label}{" "}
         {required && (
           <Typography
@@ -79,11 +77,11 @@ export default function TextField({
         )}
       </Typography>
       <CustomInput 
+        {...props}
+        ref={ref}
         value={value}
         onChange={(e: any) => onChange(e.target.value)}
         type={password ? "password" : "text"}
-        name={name} 
-        id={id} 
         placeholder={placeholder ? placeholder : `at least ${min} characters`} 
         error={error} >
       </CustomInput>
@@ -119,4 +117,6 @@ export default function TextField({
       }
     </Box>
   );
-}
+});
+
+export default TextField;
