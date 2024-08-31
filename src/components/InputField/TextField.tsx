@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import {
   Box,
   styled,
@@ -21,23 +21,23 @@ type TextFieldInput = React.InputHTMLAttributes<HTMLInputElement> & {
   width?: string | number;
 };
 
-interface CustomInputProps extends React.ComponentPropsWithoutRef<"input"> {
+interface CustomInputProps extends React.ComponentPropsWithoutRef<'input'> {
   error?: string;
 }
 
-const CustomInput = styled("input")<CustomInputProps>(({ theme, error }) => ({
+const CustomInput = styled('input')<CustomInputProps>(({ theme, error }) => ({
   ...theme.typography.body2,
-  padding: "15px",
-  borderRadius: "8px",
-  border: `1px solid ${error ? theme.palette.error.main : "#494949"}`,
-  outline: "none",
-  width: "100%",
-  [theme.breakpoints.down("md")]: {
+  padding: '15px',
+  borderRadius: '8px',
+  border: `1px solid ${error ? theme.palette.error.main : '#494949'}`,
+  outline: 'none',
+  width: '100%',
+  [theme.breakpoints.down('md')]: {
     ...theme.typography.body2,
-    padding: "11.76px 10.34px",
+    padding: '11.76px 10.34px',
   },
 
-  "&:focus": {
+  '&:focus': {
     borderColor: theme.palette.secondary.main,
   },
 }));
@@ -53,15 +53,15 @@ const TextField = forwardRef(function TextField({
   onChange,
   ...props }: TextFieldInput, ref: ForwardedRef<HTMLInputElement>) {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <Box
       sx={{
-        display: "flex",
-        flexDirection: "column",
-        width: isMobile ? "320px" : "436px",
-        gap: isMobile ? "4.92px" : "8px",
+        display: 'flex',
+        flexDirection: 'column',
+        width: isMobile ? '320px' : '436px',
+        gap: isMobile ? '4.92px' : '8px',
       }}
     >
       <Typography variant="caption" component="label" htmlFor={props.id}>
@@ -70,7 +70,7 @@ const TextField = forwardRef(function TextField({
           <Typography
             variant="caption"
             component="span"
-            sx={{ color: "primary.main" }}
+            sx={{ color: 'primary.main' }}
           >
             *
           </Typography>
@@ -89,32 +89,32 @@ const TextField = forwardRef(function TextField({
       error && 
         <Box 
           sx={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            gap: "4px",
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            gap: '4px',
           }}
         >
           <WarningAmberRoundedIcon
             sx={{
-              width: isMobile ? "12px" : "16px",
-              height: isMobile ? "12px" : "16px",
-              color: "error.main",
+              width: isMobile ? '12px' : '16px',
+              height: isMobile ? '12px' : '16px',
+              color: 'error.main',
             }}
           />
           <Typography
             component="small"
             sx={{
-              fontSize: isMobile ? "10px" : "12px",
-              color: "error.main",
-              lineHeight: "14px",
-              fontWeight: "400",
+              fontSize: isMobile ? '10px' : '12px',
+              color: 'error.main',
+              lineHeight: '14px',
+              fontWeight: '400',
             }}
           >
             {error}
           </Typography>
         </Box>
-      }
+      )}
     </Box>
   );
 });
