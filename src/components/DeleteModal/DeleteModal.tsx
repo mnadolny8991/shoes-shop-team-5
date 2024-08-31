@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Dialog,
@@ -8,11 +8,11 @@ import {
   IconButton,
   Typography,
   useMediaQuery,
-} from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import CustomButton from "../Buttons/CustomButton";
-import theme from "@/theme";
-import { Dispatch, SetStateAction } from "react";
+} from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import CustomButton from '../Buttons/CustomButton';
+import theme from '@/theme';
+import { Dispatch, SetStateAction } from 'react';
 
 type Props = {
   isOpen: boolean;
@@ -29,17 +29,17 @@ export default function DeleteModal({
   title,
   bodyText,
 }: Props) {
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <Dialog
       open={isOpen}
       onClose={onClose}
       sx={{
-        "& .MuiDialog-container": {
-          "& .MuiPaper-root": {
-            width: "100%",
-            maxWidth: isMobile ? "320px" : "656px",
+        '& .MuiDialog-container': {
+          '& .MuiPaper-root': {
+            width: '100%',
+            maxWidth: isMobile ? '320px' : '656px',
           },
         },
       }}
@@ -47,8 +47,8 @@ export default function DeleteModal({
       <DialogTitle>
         <Typography
           fontWeight="500"
-          fontSize={isMobile ? "30px" : "45px"}
-          lineHeight={isMobile ? "35px" : "53px"}
+          fontSize={isMobile ? '30px' : '45px'}
+          lineHeight={isMobile ? '35px' : '53px'}
         >
           {title}
         </Typography>
@@ -56,10 +56,10 @@ export default function DeleteModal({
       <IconButton
         onClick={onClose}
         sx={{
-          position: "absolute",
+          position: 'absolute',
           right: 8,
           top: 8,
-          color: "#2F2E2D",
+          color: '#2F2E2D',
         }}
       >
         <CloseIcon />
@@ -69,16 +69,16 @@ export default function DeleteModal({
           {bodyText}
         </Typography>
       </DialogContent>
-      <DialogActions sx={{ padding: "20px 24px" }}>
+      <DialogActions sx={{ padding: '20px 24px' }}>
         <CustomButton
-          size={isMobile ? "m" : "xl"}
+          size={isMobile ? 'm' : 'xl'}
           variant="outlined"
           onClick={onClose}
         >
           Cancel
         </CustomButton>
         <CustomButton
-          size={isMobile ? "m" : "xl"}
+          size={isMobile ? 'm' : 'xl'}
           variant="contained"
           onClick={() => {
             onDelete();
