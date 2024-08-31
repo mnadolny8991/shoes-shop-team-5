@@ -7,12 +7,13 @@ import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import theme from "@/theme";
 import TextField from "@/components/InputField/TextField";
 import Link from "next/link";
-import { useState } from "react";
+import useValidate from "../Hooks/useValidate";
 
 export default function ResetPassword() {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const [password, setPassword] = useState("");
-  const [confirm, setConfirm] = useState("");
+
+  const { values, errors, handleChange, handleFirstInteraction } =
+    useValidate();
 
   return (
     <Grid2 container style={{ height: "100vh" }}>
@@ -40,25 +41,39 @@ export default function ResetPassword() {
               Please create new password here
             </Typography>
             <TextField
-              value={password}
-              onChange={(val: string) => setPassword(val)}
+              value={values.password}
+              onChange={(e) => handleChange(e)}
+              onBlur={(e) => handleFirstInteraction(e)}
               required
+              password
               name="password"
               id="password"
               label="Password"
               min={8}
+              error={errors.password!}
             />
             <TextField
-              value={confirm}
-              onChange={(val: string) => setConfirm(val)}
+              value={values.confirmPassword}
+              onChange={(e) => handleChange(e)}
+              onBlur={(e) => handleFirstInteraction(e)}
               required
               password
-              name="confirm-password"
-              id="confirm-password"
+              name="confirmPassword"
+              id="confirmPassword"
               label="Confirm password"
               min={8}
+              error={errors.confirmPassword!}
             />
-            <CustomButton size={isMobile ? "s" : "l"} variant="contained">
+            <CustomButton
+              size={isMobile ? "s" : "l"}
+              variant="contained"
+              disabled={
+                !!errors.password ||
+                !values.password ||
+                !!errors.confirmPassword ||
+                !values.confirmPassword
+              }
+            >
               Reset Password
             </CustomButton>
             <Typography

@@ -8,6 +8,10 @@ type Errors = {
   [key: string]: string | null;
 };
 
+type InteractedInputs = {
+  [key: string]: boolean;
+};
+
 const useValidate = () => {
   const [values, setValues] = useState<Values>({
     email: "",
@@ -21,7 +25,11 @@ const useValidate = () => {
     confirmPassword: null,
   });
 
-  const [isInteracted, setIsInteracted] = useState(false);
+  const [interactedInputs, setInteractedInputs] = useState<InteractedInputs>({
+    email: false,
+    password: false,
+    confirmPassword: false,
+  });
 
   const validate = (name: string, value: string) => {
     switch (name) {
@@ -55,6 +63,17 @@ const useValidate = () => {
           setErrors(newObj);
         }
         break;
+      case "confirmPassword":
+        if (value != values.password) {
+          setErrors({
+            ...errors,
+            confirmPassword: "Password should be the same",
+          });
+        } else {
+          let newObj = { ...errors, confirmPassword: null };
+          setErrors(newObj);
+        }
+        break;
 
       default:
         break;
@@ -65,7 +84,7 @@ const useValidate = () => {
     let name = event.target.name;
     let val = event.target.value;
 
-    setIsInteracted(true);
+    setInteractedInputs({ ...interactedInputs, [name]: true });
     validate(name, val);
   };
 
@@ -75,7 +94,9 @@ const useValidate = () => {
     let name = event.target.name;
     let val = event.target.value;
 
-    if (isInteracted) validate(name, val);
+    if (interactedInputs[name]) {
+      validate(name, val);
+    }
 
     setValues({
       ...values,
