@@ -5,9 +5,9 @@ import {
   Typography,
   useMediaQuery,
   useTheme,
-} from "@mui/material";
-import WarningAmberRoundedIcon from "@mui/icons-material/WarningAmberRounded";
-import { ChangeEvent, ForwardedRef, forwardRef } from "react";
+} from '@mui/material';
+import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
+import { ChangeEvent, ForwardedRef, forwardRef } from 'react';
 
 type TextFieldInput = React.InputHTMLAttributes<HTMLInputElement> & {
   required: boolean;
@@ -65,7 +65,7 @@ const TextField = forwardRef(function TextField({
       }}
     >
       <Typography variant="caption" component="label" htmlFor={props.id}>
-        {label}{" "}
+        {label}{' '}
         {required && (
           <Typography
             variant="caption"
@@ -86,7 +86,7 @@ const TextField = forwardRef(function TextField({
         error={error} >
       </CustomInput>
       { 
-      error && 
+        error && 
         <Box 
           sx={{
             display: 'flex',
@@ -114,7 +114,7 @@ const TextField = forwardRef(function TextField({
             {error}
           </Typography>
         </Box>
-      )}
+      }
     </Box>
   );
 });
