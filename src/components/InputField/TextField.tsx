@@ -5,13 +5,12 @@ import {
   Typography,
   useMediaQuery,
   useTheme,
-} from '@mui/material';
-import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
+} from "@mui/material";
+import WarningAmberRoundedIcon from "@mui/icons-material/WarningAmberRounded";
+import { ChangeEvent, ForwardedRef, forwardRef } from "react";
 
-type TextFieldInput = {
+type TextFieldInput = React.InputHTMLAttributes<HTMLInputElement> & {
   required: boolean;
-  name: string;
-  id: string;
   label: string;
   value: string;
   onChange: (val: string) => void;
@@ -43,18 +42,16 @@ const CustomInput = styled('input')<CustomInputProps>(({ theme, error }) => ({
   },
 }));
 
-export default function TextField({
-  required,
-  name,
-  id,
-  label,
-  min,
-  error,
-  password,
+const TextField = forwardRef(function TextField({ 
+  required, 
+  label, 
+  min, 
+  error, 
+  password, 
   placeholder,
   value,
   onChange,
-}: TextFieldInput) {
+  ...props }: TextFieldInput, ref: ForwardedRef<HTMLInputElement>) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -67,8 +64,8 @@ export default function TextField({
         gap: isMobile ? '4.92px' : '8px',
       }}
     >
-      <Typography variant="caption" component="label" htmlFor={id}>
-        {label}{' '}
+      <Typography variant="caption" component="label" htmlFor={props.id}>
+        {label}{" "}
         {required && (
           <Typography
             variant="caption"
@@ -79,17 +76,18 @@ export default function TextField({
           </Typography>
         )}
       </Typography>
-      <CustomInput
+      <CustomInput 
+        {...props}
+        ref={ref}
         value={value}
-        onChange={(e: any) => onChange(e.target.value)}
-        type={password ? 'password' : 'text'}
-        name={name}
-        id={id}
-        placeholder={placeholder ? placeholder : `at least ${min} characters`}
-        error={error}
-      ></CustomInput>
-      {error && (
-        <Box
+        onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e.target.value)}
+        type={password ? "password" : "text"}
+        placeholder={placeholder ? placeholder : `at least ${min} characters`} 
+        error={error} >
+      </CustomInput>
+      { 
+      error && 
+        <Box 
           sx={{
             display: 'flex',
             flexDirection: 'row',
@@ -119,4 +117,6 @@ export default function TextField({
       )}
     </Box>
   );
-}
+});
+
+export default TextField;
