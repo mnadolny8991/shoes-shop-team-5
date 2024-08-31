@@ -8,7 +8,7 @@ import Image from "next/image";
 import theme from "@/theme";
 import TextField from "../../components/InputField/TextField";
 import CustomButton from "../../components/Buttons/CustomButton";
-import { useState } from "react";
+import useValidate from "../Hooks/useValidate";
 
 const Logo = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -34,7 +34,9 @@ const Logo = () => {
 
 const ForgotPassword: React.FC = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const [password, setPassword] = useState("");
+
+  const { values, errors, handleChange, handleFirstInteraction } =
+    useValidate();
 
   return (
     <>
@@ -76,17 +78,22 @@ const ForgotPassword: React.FC = () => {
               </Typography>
 
               <TextField
-                value={password}
-                onChange={(val: string) => setPassword(val)}
+                value={values.email}
+                onChange={(e) => handleChange(e)}
+                onBlur={(e) => handleFirstInteraction(e)}
                 required
                 name="email"
                 id="email"
                 label="Email"
                 min={5}
-                error={undefined}
+                error={errors.email!}
               />
 
-              <CustomButton size={isMobile ? "s" : "l"} variant="contained">
+              <CustomButton
+                size={isMobile ? "s" : "l"}
+                variant="contained"
+                disabled={!!errors.email || !values.email}
+              >
                 Reset Password
               </CustomButton>
 
