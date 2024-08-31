@@ -15,8 +15,6 @@ import useValidate from "@/app/Hooks/useValidate";
 export default function SignInForm() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
   const { values, errors, handleChange, handleFirstInteraction } =
     useValidate();
