@@ -7,6 +7,7 @@ import {
   useTheme,
 } from "@mui/material";
 import WarningAmberRoundedIcon from "@mui/icons-material/WarningAmberRounded";
+import { ChangeEvent } from "react";
 
 type TextFieldInput = {
   required: boolean;
@@ -14,7 +15,8 @@ type TextFieldInput = {
   id: string;
   label: string;
   value: string;
-  onChange: (val: string) => void;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onBlur: (event: ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
   min?: number;
   password?: boolean;
@@ -43,17 +45,19 @@ const CustomInput = styled("input")<CustomInputProps>(({ theme, error }) => ({
   },
 }));
 
-export default function TextField({ 
-  required, 
-  name, 
-  id, 
-  label, 
-  min, 
-  error, 
-  password, 
+export default function TextField({
+  required,
+  name,
+  id,
+  label,
+  min,
+  error,
+  password,
   placeholder,
   value,
-  onChange }: TextFieldInput) {
+  onChange,
+  onBlur,
+}: TextFieldInput) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -78,18 +82,18 @@ export default function TextField({
           </Typography>
         )}
       </Typography>
-      <CustomInput 
+      <CustomInput
         value={value}
-        onChange={(e: any) => onChange(e.target.value)}
+        onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e)}
+        onBlur={(e: ChangeEvent<HTMLInputElement>) => onBlur(e)}
         type={password ? "password" : "text"}
-        name={name} 
-        id={id} 
-        placeholder={placeholder ? placeholder : `at least ${min} characters`} 
-        error={error} >
-      </CustomInput>
-      { 
-      error && 
-        <Box 
+        name={name}
+        id={id}
+        placeholder={placeholder ? placeholder : `at least ${min} characters`}
+        error={error}
+      ></CustomInput>
+      {error && (
+        <Box
           sx={{
             display: "flex",
             flexDirection: "row",
@@ -116,7 +120,7 @@ export default function TextField({
             {error}
           </Typography>
         </Box>
-      }
+      )}
     </Box>
   );
 }
