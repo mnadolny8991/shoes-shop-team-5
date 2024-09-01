@@ -9,10 +9,7 @@ import TextField from '@/components/InputField/TextField';
 import Link from 'next/link';
 import useValidate from '../Hooks/useValidate';
 import { useState } from 'react';
-import {
-  confirmPasswordValdiator,
-  passwordValidator,
-} from '@/lib/emailValidator';
+import { confirmPasswordValdiator, passwordValidator } from '@/lib/validators';
 
 export default function ResetPassword() {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));

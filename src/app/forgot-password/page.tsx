@@ -9,7 +9,7 @@ import theme from '@/theme';
 import TextField from '../../components/InputField/TextField';
 import CustomButton from '../../components/Buttons/CustomButton';
 import useValidate from '../Hooks/useValidate';
-import { emailValidator } from '@/lib/emailValidator';
+import { emailValidator } from '@/lib/validators';
 
 const Logo = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
