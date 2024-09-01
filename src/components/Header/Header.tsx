@@ -138,23 +138,24 @@ function NavRight() {
         </IconButton>
       </Box>
       <Box onClick={() => setShowSearchPopup(true)}>
-        { 
-          isMobile ? 
-            <IconButton>
-              <Image
-                src="/search-normal.svg"
-                width={20}
-                height={20} 
-                alt="website logo"/> 
-            </IconButton>
-            : 
-            <SearchBar 
-              value={searchText} 
-              onChange={(val: string) => setSearchText(val)}
-              width={424}
-              height={48}
-              variant="header"/>
-        }
+        {isMobile ? (
+          <IconButton>
+            <Image
+              src="/search-normal.svg"
+              width={20}
+              height={20}
+              alt="website logo"
+            />
+          </IconButton>
+        ) : (
+          <SearchBar
+            value={searchText}
+            onChange={(val: string) => setSearchText(val)}
+            width={424}
+            height={48}
+            variant="header"
+          />
+        )}
       </Box>
       <SearchPopup
         show={showSearchPopup}
