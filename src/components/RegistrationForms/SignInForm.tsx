@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import CustomButton from '../Buttons/CustomButton';
 import TextField from '../InputField/TextField';
-import { useState } from 'react';
+import { ChangeEvent, ChangeEventHandler, useState } from 'react';
 
 export default function SignInForm() {
   const theme = useTheme();
@@ -23,7 +23,9 @@ export default function SignInForm() {
         <Stack spacing={2} mt={isMobile ? '25px' : '48px'}>
           <TextField
             value={email}
-            onChange={(val: string) => setEmail(val)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setEmail(e.target.value)
+            }
             required
             name="email"
             id="email"
@@ -32,7 +34,9 @@ export default function SignInForm() {
           />
           <TextField
             value={password}
-            onChange={(val: string) => setPassword(val)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setPassword(e.target.value)
+            }
             required
             password
             name="password"

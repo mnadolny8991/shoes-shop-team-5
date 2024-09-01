@@ -7,7 +7,7 @@ import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import theme from '@/theme';
 import TextField from '@/components/InputField/TextField';
 import Link from 'next/link';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 export default function ResetPassword() {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -41,7 +41,7 @@ export default function ResetPassword() {
             </Typography>
             <TextField
               value={password}
-              onChange={(val: string) => setPassword(val)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
               required
               name="password"
               id="password"
@@ -50,7 +50,7 @@ export default function ResetPassword() {
             />
             <TextField
               value={confirm}
-              onChange={(val: string) => setConfirm(val)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => setConfirm(e.target.value)}
               required
               password
               name="confirm-password"

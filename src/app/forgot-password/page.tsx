@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { Typography, Box, Grid } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Link from 'next/link';
@@ -77,7 +77,7 @@ const ForgotPassword: React.FC = () => {
 
               <TextField
                 value={password}
-                onChange={(val: string) => setPassword(val)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
                 required
                 name="email"
                 id="email"
