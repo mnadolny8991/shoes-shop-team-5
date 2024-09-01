@@ -1,6 +1,6 @@
 'use client';
 
-import React, { ChangeEvent } from 'react';
+import React, { useState } from 'react';
 import { Typography, Box, Grid } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Link from 'next/link';
@@ -8,7 +8,8 @@ import Image from 'next/image';
 import theme from '@/theme';
 import TextField from '../../components/InputField/TextField';
 import CustomButton from '../../components/Buttons/CustomButton';
-import { useState } from 'react';
+import useValidate from '../../Hooks/useValidate';
+import { emailValidator } from '@/lib/validators';
 
 const Logo = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -34,7 +35,11 @@ const Logo = () => {
 
 const ForgotPassword: React.FC = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const [password, setPassword] = useState('');
+
+  const [email, setEmail] = useState('');
+  const [isFirstInteraction, setIsFirstInteraction] = useState(false);
+
+  const { error } = useValidate(email, emailValidator, isFirstInteraction);
 
   return (
     <>
@@ -76,17 +81,22 @@ const ForgotPassword: React.FC = () => {
               </Typography>
 
               <TextField
-                value={password}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                onBlur={(e) => setIsFirstInteraction(true)}
                 required
                 name="email"
                 id="email"
                 label="Email"
                 min={5}
-                error={undefined}
+                error={error}
               />
 
-              <CustomButton size={isMobile ? 's' : 'l'} variant="contained">
+              <CustomButton
+                size={isMobile ? 's' : 'l'}
+                variant="contained"
+                disabled={!!error || !email}
+              >
                 Reset Password
               </CustomButton>
 

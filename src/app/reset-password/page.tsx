@@ -7,12 +7,30 @@ import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import theme from '@/theme';
 import TextField from '@/components/InputField/TextField';
 import Link from 'next/link';
-import { ChangeEvent, useState } from 'react';
+import useValidate from '../../Hooks/useValidate';
+import { useState } from 'react';
+import { confirmPasswordValdiator, passwordValidator } from '@/lib/validators';
 
 export default function ResetPassword() {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
   const [password, setPassword] = useState('');
-  const [confirm, setConfirm] = useState('');
+  const [confPass, setConfPass] = useState('');
+
+  const [isFirstInteractionPass, setIsFirstInteractionPass] = useState(false);
+  const [isFirstInteractionConfPass, setIsFirstInteractionConfPass] =
+    useState(false);
+
+  const { error: passError } = useValidate(
+    password,
+    passwordValidator,
+    isFirstInteractionPass
+  );
+  const { error: confPassError } = useValidate(
+    confPass,
+    confirmPasswordValdiator(password),
+    isFirstInteractionConfPass
+  );
 
   return (
     <Grid2 container style={{ height: '100vh' }}>
@@ -41,24 +59,35 @@ export default function ResetPassword() {
             </Typography>
             <TextField
               value={password}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
+              onBlur={(e) => setIsFirstInteractionPass(true)}
               required
+              password
               name="password"
               id="password"
               label="Password"
               min={8}
+              error={passError!}
             />
             <TextField
-              value={confirm}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => setConfirm(e.target.value)}
+              value={confPass}
+              onChange={(e) => setConfPass(e.target.value)}
+              onBlur={(e) => setIsFirstInteractionConfPass(true)}
               required
               password
-              name="confirm-password"
-              id="confirm-password"
+              name="confirmPassword"
+              id="confirmPassword"
               label="Confirm password"
               min={8}
+              error={confPassError!}
             />
-            <CustomButton size={isMobile ? 's' : 'l'} variant="contained">
+            <CustomButton
+              size={isMobile ? 's' : 'l'}
+              variant="contained"
+              disabled={
+                !!passError || !password || !!confPassError || !confPass
+              }
+            >
               Reset Password
             </CustomButton>
             <Typography
