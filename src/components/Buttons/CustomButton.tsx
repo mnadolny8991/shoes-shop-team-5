@@ -27,6 +27,7 @@ export default function CustomButton({
       fullWidth={true}
       variant={variant}
       onClick={(e) => (props.onClick ? props.onClick(e) : null)}
+      disabled={props.disabled}
     >
       <Typography fontSize={buttonSizes[size].fontSize} variant="button">
         {children}
