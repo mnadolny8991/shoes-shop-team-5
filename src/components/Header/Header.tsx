@@ -16,6 +16,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import PopupMenu from './PopupMenu';
 import SearchPopup from './SearchPopup';
+import { useRouter } from 'next/navigation';
 
 export default function Header() {
   const theme = useTheme();
@@ -85,10 +86,11 @@ function NavRight() {
   const [showMenu, setShowMenu] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [showSearchPopup, setShowSearchPopup] = useState(false);
+  const router = useRouter();
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const signedIn = false; // auth context here
+  const signedIn = true; // auth context here
 
   return (
     <Box
@@ -136,23 +138,23 @@ function NavRight() {
         </IconButton>
       </Box>
       <Box onClick={() => setShowSearchPopup(true)}>
-        {isMobile ? (
-          <IconButton>
-            <Image
-              src="/search-normal.svg"
-              width={20}
-              height={20}
-              alt="website logo"
-            />
-          </IconButton>
-        ) : (
-          <SearchBar
-            value={searchText}
-            onChange={(val: string) => setSearchText(val)}
-            width={424}
-            height={48}
-          />
-        )}
+        { 
+          isMobile ? 
+            <IconButton>
+              <Image
+                src="/search-normal.svg"
+                width={20}
+                height={20} 
+                alt="website logo"/> 
+            </IconButton>
+            : 
+            <SearchBar 
+              value={searchText} 
+              onChange={(val: string) => setSearchText(val)}
+              width={424}
+              height={48}
+              variant="header"/>
+        }
       </Box>
       <SearchPopup
         show={showSearchPopup}

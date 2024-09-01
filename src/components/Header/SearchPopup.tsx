@@ -1,7 +1,23 @@
-import { Box, Drawer, IconButton, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Drawer, IconButton, List, ListItem, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import Image from "next/image";
 import SearchBar from "../SearchBar/SearchBar";
+import { useEffect, useRef } from "react";
+
+const popularSearchTerms = [
+  {
+    id: 1,
+    value: "Nike Air Force 1 LV8"
+  },
+  {
+    id: 2,  
+    value: "Nike Air Force 1"
+  },
+  {
+    id: 3,
+    value: "Nike Air Force 1 '07 High"
+  }
+];
 
 type SearchPopupProps = {
   show: boolean;
@@ -10,14 +26,24 @@ type SearchPopupProps = {
   onTextChange: (val: string) => void;
 };
 
-export default function SearchPopup({ 
+export default function SearchPopup({
   show,
   close,
   searchText,
   onTextChange
- }: SearchPopupProps) {
+}: SearchPopupProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const searchRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (show) {
+      var i = setTimeout(() => searchRef.current?.focus(), 100);
+    }
+    return () => {
+      clearTimeout(i);
+    }
+  }, [show]);
 
   return (
     <Drawer
@@ -26,42 +52,69 @@ export default function SearchPopup({
       sx={{
         "& .MuiDrawer-paper": {
           width: "100%",
-          height: "419px"
+          height: isMobile ? "196px" : "419px",
         }
       }}>
-      <IconButton
-        onClick={close}
-        sx={{
-          zIndex: 10,
-          position: "absolute",
-          right: 24,
-          top: 24,
-          color: "#494949",
-        }}>
-        <CloseIcon sx={{ width: "20px", height: "20px" }} />
-      </IconButton>
-      <IconButton sx={{
-        position: "absolute",
-        left: 24,
-        top: 24,
-      }}>
-        <Image
-          src="/logo.svg"
-          width={isMobile ? 35 : 40}
-          height={isMobile ? 26.5 : 30}
-          alt="website logo" />
-      </IconButton>
       <Box sx={{
-        position: "absolute",
-        top: 45,
-        left: "50%",
-        transform: "translateX(-50%)",
+        display: "flex",
+        flexDirection: "row",
+        width: "100%",
+        justifyContent: "space-between",
+        padding: "40px",
+        paddingTop: "45px",
+        alignItems: isMobile ? "center" : "start",
       }}>
-        <SearchBar
-          value={searchText}
-          onChange={(val: string) => onTextChange(val)}
-          width={isMobile ? 290 : 1071}
-          height={isMobile ? 25 : 79} />
+        {
+          !isMobile &&
+          <IconButton>
+            <Image
+              src="/logo.svg"
+              width={40}
+              height={30}
+              alt="website logo" />
+          </IconButton>
+        }
+        <Stack gap="40px">
+          <SearchBar
+            withErase
+            ref={searchRef}
+            value={searchText}
+            onChange={(val: string) => onTextChange(val)}
+            width={isMobile ? "290px" : "700px"}
+            height={isMobile ? "25px" : "79px"}
+            variant={isMobile ? "popupMobile" : "popupLarge"} />
+            { !isMobile && 
+            <Stack gap="24px">
+              <Typography sx={{ fontWeight: "500", fontSize: "20px", lineHeight: "23.5px", color: "text.secondary" }}>
+                Popular Search Terms
+              </Typography>
+              {
+                popularSearchTerms.map(term => 
+                  <Typography 
+                    onClick={() => {
+                      onTextChange(term.value);
+                      searchRef.current?.focus();
+                    }}
+                    key={term.id}
+                    sx={{ 
+                      fontWeight: "500", 
+                      fontSize: "22px", 
+                      lineHeight: "25.81px", 
+                      color: "text.primary",
+                      cursor: "pointer" }}>
+                    {term.value}
+                  </Typography>
+                )
+              }
+            </Stack>}
+        </Stack>
+        <IconButton
+          onClick={close}
+          sx={{
+            color: "#494949",
+          }}>
+          <CloseIcon sx={{ width: isMobile ? "15px" : "24px", height: isMobile ? "15px" : "24px" }} />
+        </IconButton>
       </Box>
     </Drawer>
   );
