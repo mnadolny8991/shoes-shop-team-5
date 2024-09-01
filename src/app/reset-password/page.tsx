@@ -8,12 +8,33 @@ import theme from '@/theme';
 import TextField from '@/components/InputField/TextField';
 import Link from 'next/link';
 import useValidate from '../Hooks/useValidate';
+import { useState } from 'react';
+import {
+  confirmPasswordValdiator,
+  passwordValidator,
+} from '@/lib/emailValidator';
 
 export default function ResetPassword() {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  const { values, errors, handleChange, handleFirstInteraction } =
-    useValidate();
+  const [password, setPassword] = useState('');
+  const [confPass, setConfPass] = useState('');
+
+  const [isFirstInteractionPass, setIsFirstInteractionPass] = useState(false);
+  const [isFirstInteractionConfPass, setIsFirstInteractionConfPass] =
+    useState(false);
+
+  const { error: passError } = useValidate(
+    password,
+    passwordValidator,
+    isFirstInteractionPass
+  );
+  const { error: confPassError } = useValidate(
+    password,
+    confirmPasswordValdiator,
+    isFirstInteractionConfPass,
+    confPass
+  );
 
   return (
     <Grid2 container style={{ height: '100vh' }}>
@@ -41,37 +62,34 @@ export default function ResetPassword() {
               Please create new password here
             </Typography>
             <TextField
-              value={values.password}
-              onChange={(e) => handleChange(e)}
-              onBlur={(e) => handleFirstInteraction(e)}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              onBlur={(e) => setIsFirstInteractionPass(true)}
               required
               password
               name="password"
               id="password"
               label="Password"
               min={8}
-              error={errors.password!}
+              error={passError!}
             />
             <TextField
-              value={values.confirmPassword}
-              onChange={(e) => handleChange(e)}
-              onBlur={(e) => handleFirstInteraction(e)}
+              value={confPass}
+              onChange={(e) => setConfPass(e.target.value)}
+              onBlur={(e) => setIsFirstInteractionConfPass(true)}
               required
               password
               name="confirmPassword"
               id="confirmPassword"
               label="Confirm password"
               min={8}
-              error={errors.confirmPassword!}
+              error={confPassError!}
             />
             <CustomButton
               size={isMobile ? 's' : 'l'}
               variant="contained"
               disabled={
-                !!errors.password ||
-                !values.password ||
-                !!errors.confirmPassword ||
-                !values.confirmPassword
+                !!passError || !password || !!confPassError || !confPass
               }
             >
               Reset Password

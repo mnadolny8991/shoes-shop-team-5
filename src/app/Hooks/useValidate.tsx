@@ -2,15 +2,17 @@ import { useEffect, useState } from 'react';
 
 const useValidate = (
   inputVal: string,
-  validatorFunc: (inputVal: string) => string,
-  isFirstInteraction: boolean
+  validatorFunc: (...args: string[]) => string,
+  isFirstInteraction: boolean,
+  confPass?: string
 ) => {
   const [error, setError] = useState('');
 
   useEffect(() => {
     if (!isFirstInteraction) return;
-    setError(validatorFunc(inputVal));
-  }, [inputVal, isFirstInteraction]);
+    if (confPass) setError(validatorFunc(inputVal, confPass));
+    else setError(validatorFunc!(inputVal));
+  }, [inputVal, isFirstInteraction, confPass]);
 
   return {
     error,

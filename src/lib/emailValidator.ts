@@ -10,4 +10,22 @@ const emailValidator = (inputVal: string) => {
   }
 };
 
-export { emailValidator };
+const passwordValidator = (inputVal: string) => {
+  if (
+    !new RegExp(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/).test(inputVal)
+  ) {
+    return 'Password should contains atleast 8 charaters and containing uppercase,lowercase and numbers';
+  } else {
+    return '';
+  }
+};
+
+const confirmPasswordValdiator = (inputVal: string, firstPass: string) => {
+  if (inputVal != firstPass) {
+    return 'Passwords should be the same';
+  } else {
+    return '';
+  }
+};
+
+export { emailValidator, passwordValidator, confirmPasswordValdiator };
