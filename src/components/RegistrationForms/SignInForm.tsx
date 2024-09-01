@@ -11,39 +11,56 @@ import CustomButton from '../Buttons/CustomButton';
 import TextField from '../InputField/TextField';
 import { useState } from 'react';
 import useValidate from '@/app/Hooks/useValidate';
+import { emailValidator, passwordValidator } from '@/lib/validators';
 
 export default function SignInForm() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  const { values, errors, handleChange, handleFirstInteraction } =
-    useValidate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const [isFirstInteractionEmail, setIsFirstInteractionEmail] = useState(false);
+  const [isFirstInteractionPassword, setIsFirstInteractionPass] =
+    useState(false);
+
+  const { error: emailError } = useValidate(
+    email,
+    emailValidator,
+    isFirstInteractionEmail
+  );
+  const { error: passwordError } = useValidate(
+    password,
+    passwordValidator,
+    isFirstInteractionPassword
+  );
 
   return (
     <form>
       <Box maxWidth={isMobile ? 320 : 436}>
         <Stack spacing={2} mt={isMobile ? '25px' : '48px'}>
           <TextField
-            value={values.email}
-            onBlur={(e) => handleFirstInteraction(e)}
-            onChange={(e) => handleChange(e)}
+            value={email}
+            onBlur={(e) => setIsFirstInteractionEmail(true)}
+            onChange={(e) => setEmail(e.target.value)}
             required
             name="email"
             id="email"
             label="Email"
             min={8}
-            error={errors.email!}
+            error={emailError!}
           />
           <TextField
-            value={values.password}
-            onBlur={(e) => handleFirstInteraction(e)}
-            onChange={(e) => handleChange(e)}
+            value={password}
+            onBlur={(e) => setIsFirstInteractionPass(true)}
+            onChange={(e) => setPassword(e.target.value)}
             required
             password
             name="password"
             id="password"
             label="Password"
             min={8}
+            error={passwordError}
           />
         </Stack>
         <Box
@@ -67,12 +84,7 @@ export default function SignInForm() {
         <CustomButton
           size={isMobile ? 's' : 'l'}
           variant="contained"
-          disabled={
-            !!errors.email ||
-            !values.email ||
-            !!errors.password ||
-            !values.password
-          }
+          disabled={!!emailError || !email || !!passwordError || !password}
         >
           Sign in
         </CustomButton>
