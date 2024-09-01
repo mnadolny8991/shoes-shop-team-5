@@ -10,7 +10,7 @@ import {
 import CustomButton from '../Buttons/CustomButton';
 import TextField from '../InputField/TextField';
 import { useState } from 'react';
-import useValidate from '@/app/Hooks/useValidate';
+import useValidate from '@/Hooks/useValidate';
 import { emailValidator, passwordValidator } from '@/lib/validators';
 
 export default function SignInForm() {

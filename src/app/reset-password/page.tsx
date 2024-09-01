@@ -7,7 +7,7 @@ import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import theme from '@/theme';
 import TextField from '@/components/InputField/TextField';
 import Link from 'next/link';
-import useValidate from '../Hooks/useValidate';
+import useValidate from '../../Hooks/useValidate';
 import { useState } from 'react';
 import { confirmPasswordValdiator, passwordValidator } from '@/lib/validators';
 
