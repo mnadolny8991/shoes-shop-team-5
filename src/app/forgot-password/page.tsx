@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Typography, Box, Grid } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Link from 'next/link';
@@ -9,6 +9,7 @@ import theme from '@/theme';
 import TextField from '../../components/InputField/TextField';
 import CustomButton from '../../components/Buttons/CustomButton';
 import useValidate from '../Hooks/useValidate';
+import { emailValidator } from '@/lib/emailValidator';
 
 const Logo = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -35,8 +36,10 @@ const Logo = () => {
 const ForgotPassword: React.FC = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  const { values, errors, handleChange, handleFirstInteraction } =
-    useValidate();
+  const [email, setEmail] = useState('');
+  const [isFirstInteraction, setIsFirstInteraction] = useState(false);
+
+  const { error } = useValidate(email, emailValidator, isFirstInteraction);
 
   return (
     <>
@@ -78,21 +81,21 @@ const ForgotPassword: React.FC = () => {
               </Typography>
 
               <TextField
-                value={values.email}
-                onChange={(e) => handleChange(e)}
-                onBlur={(e) => handleFirstInteraction(e)}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                onBlur={(e) => setIsFirstInteraction(true)}
                 required
                 name="email"
                 id="email"
                 label="Email"
                 min={5}
-                error={errors.email!}
+                error={error}
               />
 
               <CustomButton
                 size={isMobile ? 's' : 'l'}
                 variant="contained"
-                disabled={!!errors.email || !values.email}
+                disabled={!!error || !email}
               >
                 Reset Password
               </CustomButton>
