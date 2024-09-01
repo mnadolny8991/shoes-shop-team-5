@@ -42,16 +42,20 @@ const CustomInput = styled('input')<CustomInputProps>(({ theme, error }) => ({
   },
 }));
 
-const TextField = forwardRef(function TextField({ 
-  required, 
-  label, 
-  min, 
-  error, 
-  password, 
-  placeholder,
-  value,
-  onChange,
-  ...props }: TextFieldInput, ref: ForwardedRef<HTMLInputElement>) {
+const TextField = forwardRef(function TextField(
+  {
+    required,
+    label,
+    min,
+    error,
+    password,
+    placeholder,
+    value,
+    onChange,
+    ...props
+  }: TextFieldInput,
+  ref: ForwardedRef<HTMLInputElement>
+) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -76,18 +80,19 @@ const TextField = forwardRef(function TextField({
           </Typography>
         )}
       </Typography>
-      <CustomInput 
+      <CustomInput
         {...props}
         ref={ref}
         value={value}
-        onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e.target.value)}
-        type={password ? "password" : "text"}
-        placeholder={placeholder ? placeholder : `at least ${min} characters`} 
-        error={error} >
-      </CustomInput>
-      { 
-        error && 
-        <Box 
+        onChange={(e: ChangeEvent<HTMLInputElement>) =>
+          onChange(e.target.value)
+        }
+        type={password ? 'password' : 'text'}
+        placeholder={placeholder ? placeholder : `at least ${min} characters`}
+        error={error}
+      ></CustomInput>
+      {error && (
+        <Box
           sx={{
             display: 'flex',
             flexDirection: 'row',
@@ -114,7 +119,7 @@ const TextField = forwardRef(function TextField({
             {error}
           </Typography>
         </Box>
-      }
+      )}
     </Box>
   );
 });
