@@ -20,12 +20,14 @@ const passwordValidator = (inputVal: string) => {
   }
 };
 
-const confirmPasswordValdiator = (inputVal: string, firstPass: string) => {
-  if (inputVal != firstPass) {
-    return 'Passwords should be the same';
-  } else {
-    return '';
-  }
+const confirmPasswordValdiator = (firstPass: string) => {
+  return (inputVal: string) => {
+    if (inputVal != firstPass) {
+      return 'Passwords should be the same';
+    } else {
+      return '';
+    }
+  };
 };
 
 export { emailValidator, passwordValidator, confirmPasswordValdiator };

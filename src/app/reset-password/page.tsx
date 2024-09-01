@@ -27,10 +27,9 @@ export default function ResetPassword() {
     isFirstInteractionPass
   );
   const { error: confPassError } = useValidate(
-    password,
-    confirmPasswordValdiator,
-    isFirstInteractionConfPass,
-    confPass
+    confPass,
+    confirmPasswordValdiator(password),
+    isFirstInteractionConfPass
   );
 
   return (
