@@ -7,10 +7,10 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import CustomButton from '../Buttons/CustomButton';
-import TextField from '../InputField/TextField';
+import CustomButton from '../buttons/CustomButton';
+import TextField from '../input/TextField';
 import { useState } from 'react';
-import useValidate from '@/Hooks/useValidate';
+import useValidate from '@/hooks/useValidate';
 import { emailValidator, passwordValidator } from '@/lib/validators';
 
 export default function SignInForm() {

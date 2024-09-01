@@ -6,9 +6,9 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import Link from 'next/link';
 import Image from 'next/image';
 import theme from '@/theme';
-import TextField from '../../components/InputField/TextField';
-import CustomButton from '../../components/Buttons/CustomButton';
-import useValidate from '../../Hooks/useValidate';
+import TextField from '../../components/input/TextField';
+import CustomButton from '../../components/buttons/CustomButton';
+import useValidate from '../../hooks/useValidate';
 import { emailValidator } from '@/lib/validators';
 
 const Logo = () => {

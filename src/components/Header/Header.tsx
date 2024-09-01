@@ -10,8 +10,8 @@ import {
 } from '@mui/material';
 import Image from 'next/image';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import SearchBar from '../SearchBar/SearchBar';
-import CustomButton from '../Buttons/CustomButton';
+import SearchBar from '../input/SearchBar';
+import CustomButton from '../buttons/CustomButton';
 import Link from 'next/link';
 import { useState } from 'react';
 import PopupMenu from './PopupMenu';

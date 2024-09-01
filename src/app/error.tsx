@@ -1,6 +1,6 @@
 'use client';
 
-import GoBackAndHomeButtonsStack from '@/components/Buttons/GoBackAndHomeButtonsStack';
+import GoBackAndHomeButtonsStack from '@/components/buttons/GoBackAndHomeButtonsStack';
 import {
   Stack,
   styled,

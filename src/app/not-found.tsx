@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import HeaderLayout from './(header)/layout';
 import Image from 'next/image';
-import GoBackAndHomeButtonsStack from '@/components/Buttons/GoBackAndHomeButtonsStack';
+import GoBackAndHomeButtonsStack from '@/components/buttons/GoBackAndHomeButtonsStack';
 
 export default function NotFound() {
   const theme = useTheme();

@@ -2,12 +2,12 @@
 
 import { Box, Typography, useMediaQuery } from '@mui/material';
 import backgroundImage from '../../../public/reset-password-backgroound.png';
-import CustomButton from '@/components/Buttons/CustomButton';
+import CustomButton from '@/components/buttons/CustomButton';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import theme from '@/theme';
-import TextField from '@/components/InputField/TextField';
+import TextField from '@/components/input/TextField';
 import Link from 'next/link';
-import useValidate from '../../Hooks/useValidate';
+import useValidate from '../../hooks/useValidate';
 import { useState } from 'react';
 import { confirmPasswordValdiator, passwordValidator } from '@/lib/validators';
 

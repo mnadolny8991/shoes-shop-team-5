@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/image';
-import SignInForm from '@/components/RegistrationForms/SignInForm';
+import SignInForm from '@/components/forms/SignInForm';
 import {
   Box,
   Divider,
