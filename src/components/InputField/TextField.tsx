@@ -12,8 +12,6 @@ import { ChangeEvent, ForwardedRef, forwardRef } from 'react';
 type TextFieldInput = React.InputHTMLAttributes<HTMLInputElement> & {
   required: boolean;
   label: string;
-  value: string;
-  placeholder?: string;
   min?: number;
   password?: boolean;
   error?: string;
@@ -87,6 +85,7 @@ const TextField = forwardRef(function TextField(
         type={password ? 'password' : 'text'}
         name={name}
         id={id}
+        onChange={onChange}
         placeholder={placeholder ? placeholder : `at least ${min} characters`}
         error={error}
       ></CustomInput>
