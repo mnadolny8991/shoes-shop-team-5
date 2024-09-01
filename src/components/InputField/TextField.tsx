@@ -13,8 +13,6 @@ type TextFieldInput = React.InputHTMLAttributes<HTMLInputElement> & {
   required: boolean;
   label: string;
   value: string;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  onBlur: (event: ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
   min?: number;
   password?: boolean;
@@ -54,8 +52,6 @@ const TextField = forwardRef(function TextField(
     password,
     placeholder,
     value,
-    onChange,
-    onBlur,
     ...props
   }: TextFieldInput,
   ref: ForwardedRef<HTMLInputElement>
@@ -72,8 +68,8 @@ const TextField = forwardRef(function TextField(
         gap: isMobile ? '4.92px' : '8px',
       }}
     >
-      <Typography variant="caption" component="label" htmlFor={props.id}>
-        {label}{' '}
+      <Typography variant="caption" component="label" htmlFor={id}>
+        {label}
         {required && (
           <Typography
             variant="caption"
@@ -88,8 +84,6 @@ const TextField = forwardRef(function TextField(
         {...props}
         ref={ref}
         value={value}
-        onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e)}
-        onBlur={(e: ChangeEvent<HTMLInputElement>) => onBlur(e)}
         type={password ? 'password' : 'text'}
         name={name}
         id={id}
