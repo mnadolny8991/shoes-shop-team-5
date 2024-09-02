@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import TextField from "@/components/InputField/TextField";
-import CustomButton from "@/components/Buttons/CustomButton";
-import { Container } from "@mui/material";
-import DeleteModal from "@/components/DeleteModal/DeleteModal";
-import { useState } from "react";
+import TextField from '@/components/input/TextField';
+import CustomButton from '@/components/buttons/CustomButton';
+import { Container } from '@mui/material';
+import DeleteModal from '@/components/modals/DeleteModal';
+import { useState } from 'react';
 
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
