@@ -4,6 +4,7 @@ import { SyntheticEvent, useState } from 'react';
 import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined';
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
 
+// To be fetched
 const images = [
   {
     id: '1223',
@@ -61,11 +62,23 @@ export default function ShoeImageSlider({ shoeId }: ShoeImageSliderProps) {
     };
   }
 
+  function handleRightClick() {
+    const imageIdx = images.findIndex(i => i.id === choosenImageId)!;
+    setChoosenImageId(images[(imageIdx + 1) % images.length].id)
+  }
+
+  function handleLeftClick() {
+    const imageIdx = images.findIndex(i => i.id === choosenImageId)!;
+    setChoosenImageId(images[(imageIdx - 1) % images.length].id)
+  }
+
   return (
     <Stack direction="row" gap="14px" sx={{ height: 628 }}>
-      <Stack gap="16px" sx={{ overflow: 'scroll' }}>
+      <Stack gap="16px" sx={{ overflowY: 'scroll' }}>
         {images.map((img) => (
           <Image
+            style={{ cursor: 'pointer' }}
+            onClick={() => setChoosenImageId(img.id)}
             key={img.id}
             src={img.url}
             alt={img.alt}
@@ -99,6 +112,8 @@ export default function ShoeImageSlider({ shoeId }: ShoeImageSliderProps) {
             right: 24,
             bottom: 24,
           }}
+          onLeftClick={handleLeftClick}
+          onRightClick={handleRightClick}
         />
       </Box>
     </Stack>
