@@ -1,4 +1,11 @@
-import { Box, IconButton, ImageList, ImageListItem, Stack, styled } from '@mui/material';
+import {
+  Box,
+  IconButton,
+  ImageList,
+  ImageListItem,
+  Stack,
+  styled,
+} from '@mui/material';
 import Image from 'next/image';
 import { SyntheticEvent, useState } from 'react';
 import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined';
@@ -69,22 +76,23 @@ export default function ShoeImageSlider({ shoeId }: ShoeImageSliderProps) {
 
   return (
     <Stack direction="row" gap="14px" sx={{ height: 628 }}>
-      <ImageList 
+      <ImageList
         sx={{
           width: 76,
           height: 628,
         }}
         gap={16}
         cols={1}
-        rowHeight={76}>
+        rowHeight={76}
+      >
         {images.map((img) => (
-          <ImageListItem 
+          <ImageListItem
             sx={{
               cursor: 'pointer',
-              backgroundColor: 'red',
             }}
             key={img.id}
-            onClick={() => setChoosenImageId(img.id)}>
+            onClick={() => setChoosenImageId(img.id)}
+          >
             <Image
               width={76}
               height={76}
@@ -94,24 +102,9 @@ export default function ShoeImageSlider({ shoeId }: ShoeImageSliderProps) {
               blurDataURL="https://placehold.co/76x76"
               onError={placeholder(76, 76)}
             />
-          </ImageListItem>))}
+          </ImageListItem>
+        ))}
       </ImageList>
-      {/* <Stack gap="16px" sx={{ overflowY: 'scroll' }}>
-        {images.map((img) => (
-          <Image
-            onClick={() => setChoosenImageId(img.id)}
-            key={img.id}
-            style={{
-            }}
-            width={76}
-            height={76}
-            src={img.url}
-            alt={img.alt}
-            placeholder="blur"
-            blurDataURL="https://placehold.co/76x76"
-            onError={placeholder(76, 76)}
-          />))}
-      </Stack> */}
       <Box
         sx={{
           position: 'relative',
