@@ -2,9 +2,9 @@
 
 import TextField from '@/components/input/TextField';
 import CustomButton from '@/components/buttons/CustomButton';
-import { Container } from '@mui/material';
 import DeleteModal from '@/components/modals/DeleteModal';
 import { useState } from 'react';
+import ShoeImageSlider from '@/components/sliders/shoeImageSlider/ShoeImageSlider';
 
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
@@ -35,6 +35,7 @@ export default function Home() {
           asperiores fuga maiores tempora ad atque inventore dolore consequatur
           soluta recusandae."
       />
+      <ShoeImageSlider shoeId="1234"/>
     </>
   );
 }

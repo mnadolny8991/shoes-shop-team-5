@@ -81,6 +81,9 @@ theme = createTheme({
     secondary: {
       main: '#6E314A',
     },
+    common: {
+      white: '#FFFFFF',
+    },
   },
   components: {
     MuiLink: {
