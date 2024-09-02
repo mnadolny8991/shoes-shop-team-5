@@ -1,4 +1,4 @@
-import { Box, IconButton, Stack, styled } from '@mui/material';
+import { Box, IconButton, ImageList, ImageListItem, Stack, styled } from '@mui/material';
 import Image from 'next/image';
 import { SyntheticEvent, useState } from 'react';
 import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined';
@@ -41,11 +41,6 @@ const images = [
     url: '/abba.svg',
     alt: 'shoe image',
   },
-  {
-    id: '1230',
-    url: '/abba.svg',
-    alt: 'shoe image',
-  },
 ];
 
 type ShoeImageSliderProps = {
@@ -63,33 +58,60 @@ export default function ShoeImageSlider({ shoeId }: ShoeImageSliderProps) {
   }
 
   function handleRightClick() {
-    const imageIdx = images.findIndex(i => i.id === choosenImageId)!;
-    setChoosenImageId(images[(imageIdx + 1) % images.length].id)
+    const imageIdx = images.findIndex((i) => i.id === choosenImageId)!;
+    setChoosenImageId(images[(imageIdx + 1) % images.length].id);
   }
 
   function handleLeftClick() {
-    const imageIdx = images.findIndex(i => i.id === choosenImageId)!;
-    setChoosenImageId(images[(imageIdx - 1) % images.length].id)
+    const imageIdx = images.findIndex((i) => i.id === choosenImageId)!;
+    setChoosenImageId(images[(imageIdx - 1) % images.length].id);
   }
 
   return (
     <Stack direction="row" gap="14px" sx={{ height: 628 }}>
-      <Stack gap="16px" sx={{ overflowY: 'scroll' }}>
+      <ImageList 
+        sx={{
+          width: 76,
+          height: 628,
+        }}
+        gap={16}
+        cols={1}
+        rowHeight={76}>
+        {images.map((img) => (
+          <ImageListItem 
+            sx={{
+              cursor: 'pointer',
+              backgroundColor: 'red',
+            }}
+            key={img.id}
+            onClick={() => setChoosenImageId(img.id)}>
+            <Image
+              width={76}
+              height={76}
+              src={img.url}
+              alt={img.alt}
+              placeholder="blur"
+              blurDataURL="https://placehold.co/76x76"
+              onError={placeholder(76, 76)}
+            />
+          </ImageListItem>))}
+      </ImageList>
+      {/* <Stack gap="16px" sx={{ overflowY: 'scroll' }}>
         {images.map((img) => (
           <Image
-            style={{ cursor: 'pointer' }}
             onClick={() => setChoosenImageId(img.id)}
             key={img.id}
-            src={img.url}
-            alt={img.alt}
+            style={{
+            }}
             width={76}
             height={76}
+            src={img.url}
+            alt={img.alt}
             placeholder="blur"
             blurDataURL="https://placehold.co/76x76"
             onError={placeholder(76, 76)}
-          />
-        ))}
-      </Stack>
+          />))}
+      </Stack> */}
       <Box
         sx={{
           position: 'relative',
@@ -98,7 +120,7 @@ export default function ShoeImageSlider({ shoeId }: ShoeImageSliderProps) {
         }}
       >
         <Image
-          src={images.find(i => i.id === choosenImageId)!.url}
+          src={images.find((i) => i.id === choosenImageId)!.url}
           alt="shoe image"
           width={588}
           height={628}

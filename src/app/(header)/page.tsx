@@ -35,7 +35,6 @@ export default function Home() {
           asperiores fuga maiores tempora ad atque inventore dolore consequatur
           soluta recusandae."
       />
-      <ShoeImageSlider shoeId="1234"/>
     </>
   );
 }
