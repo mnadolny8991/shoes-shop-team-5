@@ -1,6 +1,7 @@
 "use client";
 
 import { Box, Typography, Rating } from "@mui/material";
+import theme from "@/theme";
 
 export default function SignupSlider() {
 
@@ -10,10 +11,7 @@ export default function SignupSlider() {
         display: 'flex',
         maxWidth: '756px',
         gap: '10px',
-        border: '2px solid',
-        borderImageSource: `
-          linear-gradient(180deg, rgba(0, 0, 0, 0.074) 0%, rgba(0, 0, 0, 0) 23.44%, rgba(0, 0, 0, 0.086) 43.75%, rgba(0, 0, 0, 0) 79.17%, rgba(0, 0, 0, 0) 96.35%)
-        `,
+        border: '2px solid #d7d2d5',
         borderImageSlice: 1,
         borderRadius: '32px',
         background: `

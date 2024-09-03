@@ -1,7 +1,7 @@
 "use client";
 
 import theme from "@/theme";
-import { Grid, Box, Typography, useMediaQuery } from "@mui/material";
+import { Grid, Box, Typography, Divider, useMediaQuery } from "@mui/material";
 import Image from 'next/image'
 import SignupForm from "@/components/forms/SignupForm";
 import SignupSlider from "@/components/sliders/SignupSlider";
@@ -16,6 +16,10 @@ export default function Signup() {
         width={isMobile ? 35 : 40}
         height={isMobile ? 26.5 : 30}
         alt="shoes shop logo"
+        style={{
+          marginTop: isMobile ? '20px' : '50px',
+          marginLeft: isMobile ? '20px' : '40px'
+        }}
       />
     )
   }
@@ -31,12 +35,20 @@ export default function Signup() {
         }}>
         <Box
           sx={{
+            width: '100%',
             position: 'absolute',
-            top: isMobile ? '20px' : '50px',
-            left: isMobile ? '20px' : '40px',
+            top: 0,
+            left: 0,
           }}
         >
           <Logo />
+          {isMobile && (
+            <Divider
+              sx={{
+                marginTop: '10px',
+              }}
+            />
+          )}
         </Box>
         <Box
           sx={{
@@ -46,7 +58,7 @@ export default function Signup() {
             width: isMobile ? '320px' : '436px',
           }}
         >
-          <Typography variant="h1" fontSize={isMobile ? "30px" : "45px"}>
+          <Typography variant="h1">
             Create an account
           </Typography>
           <Typography variant="subtitle2">
