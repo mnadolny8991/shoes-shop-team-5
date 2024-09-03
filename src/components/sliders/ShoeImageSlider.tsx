@@ -75,7 +75,12 @@ import {
     }
   
     return (
-      <Stack direction="row" gap="14px" sx={{ height: 628 }}>
+      <Stack 
+        direction="row" 
+        gap="14px" 
+        sx={{ 
+          height: 628 
+        }}>
         <ImageList
           sx={{
             width: 76,

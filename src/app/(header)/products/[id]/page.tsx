@@ -69,7 +69,8 @@ const sizes = [
 ];
 
 export default function Page({ params }: { params: { id: string } }) {
-  const [color, setColor] = useState('');
+  const [color, setColor] = useState(1);
+  const [size, setSize] = useState(1);
   const theme = useTheme();
   const gender = 'woman';
 
@@ -81,7 +82,8 @@ export default function Page({ params }: { params: { id: string } }) {
       gap="auto"
       sx={{
         width: '85%',
-        justifyContent: 'space-between',
+        gap: '102px',
+        justifyContent: 'center',
         margin: 'auto',
         my: '100px',
         [theme.breakpoints.down('lg')]: {
@@ -123,8 +125,13 @@ export default function Page({ params }: { params: { id: string } }) {
           {colors.map((c) => (
             <Chip
               key={c.id}
+              disabled={!c.avaliable}
               label={c.color}
               variant={c.avaliable ? 'outlined' : 'filled'}
+              onClick={() => setColor(c.id)}
+              sx={ (theme) => ({
+                border: color === c.id ? `1px solid ${theme.palette.secondary.main}` : '',
+              })}
             />
           ))}
         </Stack>
@@ -139,33 +146,27 @@ export default function Page({ params }: { params: { id: string } }) {
         >
           Select Size
         </Typography>
-        <Grid
-          justifyContent="space-between"
-          container
-          width={522}
-          columns={10}
-          spacing={2}
+        <Stack 
           direction="row"
-          sx={{
-            mt: 0,
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
+          useFlexGap
+          spacing="24px"
+          flexWrap="wrap"
+          marginTop="23px">
           {sizes.map((s) => (
-            <Grid item xs={2} key={s.id}>
-              <Chip
-                label={'EU-' + s.value}
-                variant="outlined"
-                sx={{
-                  width: '85px',
-                  height: '55px',
-                  borderRadius: '8px',
-                }}
-              />
-            </Grid>
+            <Chip
+              key={s.id}
+              label={'EU-' + s.value}
+              variant="outlined"
+              onClick={() => setSize(s.id)}
+              sx={(theme) => ({
+                width: '85px',
+                height: '55px',
+                border: size === s.id ? `1 px solid ${theme.palette.secondary.main}` : '',
+                borderRadius: '8px',
+              })}
+            />
           ))}
-        </Grid>
+        </Stack>
         <Stack direction="row" spacing="26px" width={522} mt="35px">
           <CustomButton size="xl" variant="outlined">
             Favorite
