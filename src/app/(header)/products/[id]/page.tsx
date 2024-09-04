@@ -5,7 +5,7 @@ import CustomButton from '@/components/buttons/CustomButton';
 import DeleteModal from '@/components/modals/DeleteModal';
 import { useState } from 'react';
 import ShoeImageSlider from '@/components/sliders/ShoeImageSlider';
-import { Box, Chip, Container, Grid, Stack, Typography, useTheme } from '@mui/material';
+import { Box, Chip, Container, Grid, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 
 const colors = [
   {
@@ -72,6 +72,7 @@ export default function Page({ params }: { params: { id: string } }) {
   const [color, setColor] = useState(1);
   const [size, setSize] = useState(1);
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const gender = 'woman';
 
   function handleChipClick() {}
@@ -81,17 +82,17 @@ export default function Page({ params }: { params: { id: string } }) {
       direction={"row"} 
       gap="auto"
       sx={{
-        width: '85%',
-        gap: '102px',
+        width: isMobile ? '320px' : '85%',
+        gap: isMobile ? '20px' : '102px',
         justifyContent: 'center',
         margin: 'auto',
-        my: '100px',
+        my: isMobile ? '50px' : '100px',
         [theme.breakpoints.down('lg')]: {
           flexDirection: 'column-reverse',
         },
       }}>
       <ShoeImageSlider shoeId={params.id} />
-      <Box sx={{ width: '522px' }}>
+      <Box sx={{ width: isMobile ? '320px' : '522px' }}>
         <Box
           sx={{
             display: 'flex',
@@ -149,9 +150,10 @@ export default function Page({ params }: { params: { id: string } }) {
         <Stack 
           direction="row"
           useFlexGap
-          spacing="24px"
+          spacing={isMobile ? "5px" : "24px"}
           flexWrap="wrap"
-          marginTop="23px">
+          marginTop={isMobile ? "13px" : "23px"}
+        >
           {sizes.map((s) => (
             <Chip
               key={s.id}
@@ -159,19 +161,24 @@ export default function Page({ params }: { params: { id: string } }) {
               variant="outlined"
               onClick={() => setSize(s.id)}
               sx={(theme) => ({
-                width: '85px',
-                height: '55px',
+                width: isMobile ? '60px' : '85px',
+                height: isMobile ? '50px' : '55px',
                 border: size === s.id ? `1 px solid ${theme.palette.secondary.main}` : '',
                 borderRadius: '8px',
+                fontSize: isMobile ? '10px' : '12px'
               })}
             />
           ))}
         </Stack>
-        <Stack direction="row" spacing="26px" width={522} mt="35px">
-          <CustomButton size="xl" variant="outlined">
+        <Stack 
+          direction={isMobile ? "column" : "row"} 
+          spacing={isMobile ? "10px" : "26px"} 
+          width={isMobile ? '320px' : '522px'} 
+          mt="35px">
+          <CustomButton size={isMobile ? "m" : "xl"} variant="outlined">
             Favorite
           </CustomButton>
-          <CustomButton size="xl" variant="contained">
+          <CustomButton size={isMobile ? "m" : "xl"} variant="contained">
             Add to Bag
           </CustomButton>
         </Stack>
@@ -182,7 +189,7 @@ export default function Page({ params }: { params: { id: string } }) {
               fontWeight: '500',
               lineHeight: '23.46px',
               color: '#494949',
-              mt: '65px',
+              mt: isMobile ? '25px' : '65px',
             }}
           >
             Description

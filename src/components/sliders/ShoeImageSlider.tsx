@@ -1,3 +1,5 @@
+'use client';
+
 import {
     Box,
     IconButton,
@@ -5,6 +7,8 @@ import {
     ImageListItem,
     Stack,
     styled,
+    useMediaQuery,
+    useTheme,
   } from '@mui/material';
   import Image from 'next/image';
   import { SyntheticEvent, useState } from 'react';
@@ -56,6 +60,8 @@ import {
   
   export default function ShoeImageSlider({ shoeId }: ShoeImageSliderProps) {
     const [choosenImageId, setChoosenImageId] = useState<string>(images[0].id);
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   
     function placeholder(width: number, height: number) {
       return (e: SyntheticEvent<HTMLImageElement, Event>) => {
@@ -77,18 +83,19 @@ import {
     return (
       <Stack 
         direction="row" 
-        gap="14px" 
+        gap={isMobile ? "5px" : "14px"} 
         sx={{ 
-          height: 628 
+          height: isMobile ? 320 : 628,
+          width: isMobile ? 320 : '100%',
         }}>
         <ImageList
           sx={{
-            width: 76,
-            height: 628,
+            width: isMobile ? 40 : 76,
+            height: isMobile ? 320 : 628,
           }}
-          gap={16}
+          gap={isMobile ? 3 : 16}
           cols={1}
-          rowHeight={76}
+          rowHeight={isMobile ? 40 : 76}
         >
           {images.map((img) => (
             <ImageListItem
@@ -99,13 +106,13 @@ import {
               onClick={() => setChoosenImageId(img.id)}
             >
               <Image
-                width={76}
-                height={76}
+                width={isMobile ? 40 : 76}
+                height={isMobile ? 40 : 76}
                 src={img.url}
                 alt={img.alt}
                 placeholder="blur"
-                blurDataURL="https://placehold.co/76x76"
-                onError={placeholder(76, 76)}
+                blurDataURL={`https://placehold.co/${isMobile ? 40 : 76}x${isMobile ? 40 : 76}`}
+                onError={placeholder(isMobile ? 40 : 76, isMobile ? 40 : 76)}
               />
             </ImageListItem>
           ))}
@@ -120,11 +127,11 @@ import {
           <Image
             src={images.find((i) => i.id === choosenImageId)!.url}
             alt="shoe image"
-            width={588}
-            height={628}
+            width={isMobile ? 275 : 588}
+            height={isMobile ? 320 : 628}
             placeholder="blur"
-            blurDataURL="https://placehold.co/588x628"
-            onError={placeholder(588, 628)}
+            blurDataURL={`https://placehold.co/${isMobile ? 275 : 588}x${isMobile ? 320 : 628}`}
+            onError={placeholder(isMobile ? 275 : 588, isMobile ? 320 : 628)}
           />
           <Slider
             sx={{
