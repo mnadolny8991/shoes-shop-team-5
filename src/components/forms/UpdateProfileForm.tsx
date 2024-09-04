@@ -1,10 +1,10 @@
 "use client";
 
-import { Box, Typography, Link, useTheme, useMediaQuery } from "@mui/material";
+import { Box, useTheme, useMediaQuery } from "@mui/material";
 import TextField from "../input/TextField";
 import CustomButton from "../buttons/CustomButton";
 
-export default function SignupForm() {
+export default function UpdateProfileForm() {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 
