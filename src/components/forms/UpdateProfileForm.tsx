@@ -41,14 +41,12 @@ export default function UpdateProfileForm() {
 
         <Box
           sx={{
-            marginTop: isMobile ? '29px' : '68px',
+            marginTop: isMobile ? '7px' : '34px',
             display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '16px',
+            justifyContent: 'flex-end',
           }}
         >
-          <CustomButton size={isMobile ? 's' : 'l'} variant='contained' type='submit'>
+          <CustomButton size={isMobile ? 's' : 'm'} variant='contained' type='submit' sx={{ maxWidth: '150px', borderRadius: '8px' }}>
             Save Changes
           </CustomButton>
         </Box>

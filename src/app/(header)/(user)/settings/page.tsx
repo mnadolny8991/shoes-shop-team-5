@@ -28,10 +28,11 @@ export default function UserSettings() {
     <>
       <Box
         sx={{
-          height: '100vh',
           maxWidth: "460px",
           display: 'flex',
           flexDirection: 'column',
+          marginLeft: isMobile ? '26px' : '60px',
+          marginTop: isMobile ? '25px' : 0,
         }}
       >
         <Typography variant="h1">
@@ -40,8 +41,11 @@ export default function UserSettings() {
         <Box
           sx={{
             display: 'flex',
-            justifyContent: 'flex-start',
+            justifyContent: 'space-between',
             alignItems: 'center',
+            marginTop: isMobile ? '10px' : '33px',
+            marginBottom: isMobile ? '10px' : '47px',
+            maxWidth: isMobile ? '245px' : '370px',
           }}>
           <Avatar
             alt="Jane Meldrum"
@@ -58,17 +62,23 @@ export default function UserSettings() {
               flexDirection: 'column',
               justifyContent: 'center',
               alignItems: 'center',
+              gap: isMobile ? '15px' : '23px',
             }}
           >
-            <CustomButton size={isMobile ? 's' : 'l'} variant='contained'>
+            <CustomButton size={isMobile ? 's' : 'm'} variant='outlined' sx={{ borderRadius: '8px' }}>
               Change photo
             </CustomButton>
-            <CustomButton size={isMobile ? 's' : 'l'} variant='contained'>
+            <CustomButton size={isMobile ? 's' : 'm'} variant='contained' sx={{ borderRadius: '8px' }}>
               Delete
             </CustomButton>
           </Box>
         </Box>
-        <Typography variant="subtitle2">
+        <Typography
+          variant="subtitle2"
+          sx={{
+            marginBottom: isMobile ? '0px' : '23px',
+          }}
+        >
           Welcome back! Please enter your details to log into your account.
         </Typography>
         <UpdateProfileForm />
