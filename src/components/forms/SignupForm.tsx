@@ -3,10 +3,16 @@
 import { Box, Typography, Link, useTheme, useMediaQuery } from "@mui/material";
 import TextField from "../input/TextField";
 import CustomButton from "../buttons/CustomButton";
+import { useState } from "react";
 
 export default function SignupForm() {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
+
+  const[name, setName] = useState("")
+  const[email,setEmail] = useState("")
+  const [ password, setPassword] = useState("")
+  const [ confPass, setConfPass] = useState("")
 
 
   return (
@@ -19,10 +25,10 @@ export default function SignupForm() {
           gap: '22px',
         }}
       >
-        <TextField required name='name' id='name' label='Name' min={8} value={''} onChange={() => { }} />
-        <TextField required name='email' id='email' label='Email' min={8} value={''} onChange={() => { }} />
-        <TextField required name='password' id='password' label='Password' min={8} value={''} onChange={() => { }} />
-        <TextField required name='confirm-password' id='confirm-password' label='Confirm password' min={8} value={''} onChange={() => { }} />
+        <TextField required name='name' id='name' label='Name' min={8} value={name} onChange={(e) => setName(e.target.value)} />
+        <TextField required name='email' id='email' label='Email' min={8} value={email} onChange={(e) =>  setEmail(e.target.value)} />
+        <TextField required name='password' id='password' label='Password' min={8} value={password} onChange={(e) => setPassword(e.target.value)} />
+        <TextField required name='confirm-password' id='confirm-password' label='Confirm password' min={8} value={confPass} onChange={(e) => setConfPass(e.target.value)} />
 
         <Box
           sx={{
