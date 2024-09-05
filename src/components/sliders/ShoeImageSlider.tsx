@@ -11,45 +11,46 @@ import {
     useTheme,
   } from '@mui/material';
   import Image from 'next/image';
-  import { SyntheticEvent, useState } from 'react';
+  import { SyntheticEvent, useEffect, useState } from 'react';
   import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined';
   import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
+import ImageContainer from '../containers/ImageContainer';
   
   // To be fetched
   const images = [
     {
       id: '1223',
-      url: '/abba.svg',
+      url: 'https://placehold.co/300x300',
       alt: 'shoe image',
     },
     {
       id: '1224',
-      url: '/abba.svg',
+      url: 'https://placehold.co/300x300',
       alt: 'shoe image',
     },
     {
       id: '1225',
-      url: '/abba.svg',
+      url: 'https://placehold.co/300x300',
       alt: 'shoe image',
     },
     {
       id: '1226',
-      url: '/abba.svg',
+      url: 'https://placehold.co/300x300',
       alt: 'shoe image',
     },
     {
       id: '1227',
-      url: '/abba.svg',
+      url: 'https://placehold.co/300x300',
       alt: 'shoe image',
     },
     {
       id: '1228',
-      url: '/abba.svg',
+      url: 'https://placehold.co/300x300',
       alt: 'shoe image',
     },
     {
       id: '1229',
-      url: '/abba.svg',
+      url: 'https://placehold.co/300x300',
       alt: 'shoe image',
     },
   ];
@@ -62,13 +63,25 @@ import {
     const [choosenImageId, setChoosenImageId] = useState<string>(images[0].id);
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+    const [smallImageSize, setSmallImageSize] = useState({ width: 76, height: 76 });
+    const [bigImageSize, setBigImageSize] = useState({ width: 588, height: 628 });
+
+    useEffect(() => {
+      if (isMobile) {
+        setSmallImageSize({ width: 40, height: 40 });
+        setBigImageSize({ width: 275, height: 320 });
+      } else {
+        setSmallImageSize({ width: 76, height: 76 });
+        setBigImageSize({ width: 588, height: 628 });
+      }
+    }, [isMobile]);
   
-    function placeholder(width: number, height: number) {
-      return (e: SyntheticEvent<HTMLImageElement, Event>) => {
+    function onError(e: SyntheticEvent<HTMLImageElement, Event>, w: number, h: number) {
         (e.target as HTMLImageElement).src =
-          `https://placehold.co/${width}x${height}`;
-      };
-    }
+          `https://placehold.co/${w}x${h}`;
+        console.log('working');
+    };
   
     function handleRightClick() {
       const imageIdx = images.findIndex((i) => i.id === choosenImageId)!;
@@ -86,37 +99,27 @@ import {
         gap={isMobile ? "5px" : "14px"} 
         sx={{ 
           height: isMobile ? 320 : 628,
-          width: isMobile ? 320 : '100%',
+          width: isMobile ? 320 : 678,
         }}>
-        <ImageList
+        <Stack
           sx={{
             width: isMobile ? 40 : 76,
             height: isMobile ? 320 : 628,
           }}
-          gap={isMobile ? 3 : 16}
-          cols={1}
-          rowHeight={isMobile ? 40 : 76}
+          justifyContent="space-between"
+          direction="column"
         >
           {images.map((img) => (
-            <ImageListItem
-              sx={{
-                cursor: 'pointer',
-              }}
+            <ImageContainer
               key={img.id}
+              src={img.url}
+              alt={img.alt}
+              width={smallImageSize.width}
+              height={smallImageSize.height}
               onClick={() => setChoosenImageId(img.id)}
-            >
-              <Image
-                width={isMobile ? 40 : 76}
-                height={isMobile ? 40 : 76}
-                src={img.url}
-                alt={img.alt}
-                placeholder="blur"
-                blurDataURL={`https://placehold.co/${isMobile ? 40 : 76}x${isMobile ? 40 : 76}`}
-                onError={placeholder(isMobile ? 40 : 76, isMobile ? 40 : 76)}
-              />
-            </ImageListItem>
+            />
           ))}
-        </ImageList>
+        </Stack>
         <Box
           sx={{
             position: 'relative',
@@ -124,14 +127,11 @@ import {
             height: 'fit-content',
           }}
         >
-          <Image
+          <ImageContainer 
             src={images.find((i) => i.id === choosenImageId)!.url}
             alt="shoe image"
-            width={isMobile ? 275 : 588}
-            height={isMobile ? 320 : 628}
-            placeholder="blur"
-            blurDataURL={`https://placehold.co/${isMobile ? 275 : 588}x${isMobile ? 320 : 628}`}
-            onError={placeholder(isMobile ? 275 : 588, isMobile ? 320 : 628)}
+            width={bigImageSize.width}
+            height={bigImageSize.height}
           />
           <Slider
             sx={{

@@ -79,14 +79,14 @@ export default function Page({ params }: { params: { id: string } }) {
 
   return (
     <Stack 
-      direction={"row"} 
-      gap="auto"
+      direction="row"
       sx={{
         width: isMobile ? '320px' : '85%',
-        gap: isMobile ? '20px' : '102px',
+        gap: isMobile ? '20px' : '50px',
         justifyContent: 'center',
+        alignItems: 'center',
         margin: 'auto',
-        my: isMobile ? '50px' : '100px',
+        my: isMobile ? '35px' : '100px',
         [theme.breakpoints.down('lg')]: {
           flexDirection: 'column-reverse',
         },
