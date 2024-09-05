@@ -3,10 +3,29 @@
 import { Box, Typography, Link, useTheme, useMediaQuery } from "@mui/material";
 import TextField from "../input/TextField";
 import CustomButton from "../buttons/CustomButton";
+import { useState } from "react";
+import useValidate from "@/hooks/useValidate";
+import { confirmPasswordValdiator, emailValidator, nameValidator, passwordValidator } from "@/lib/validators";
 
 export default function SignupForm() {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
+
+  const[name, setName] = useState("")
+  const[email,setEmail] = useState("")
+  const [ password, setPassword] = useState("")
+  const [ confPass, setConfPass] = useState("")
+
+  const [isFirstInteractionName, setIsFirstInteractionName] = useState(false)
+  const [isFirstInteractionEmail, setIsFirstInteractionEmail] = useState(false)
+  const [isFirstInteractionPassword, setIsFirstInteractionPassword] = useState(false)
+  const [isFirstInteractionConfPass, setIsFirstInteractionConfPass] = useState(false)
+
+  const {error:nameError} = useValidate(name, nameValidator, isFirstInteractionName)
+  const {error:emailError} = useValidate(email, emailValidator, isFirstInteractionEmail)
+  const {error:passwordError} = useValidate(password, passwordValidator, isFirstInteractionPassword)
+  const {error:confPassError} = useValidate(confPass, confirmPasswordValdiator(password), isFirstInteractionConfPass)
+
 
 
   return (
@@ -19,10 +38,10 @@ export default function SignupForm() {
           gap: '22px',
         }}
       >
-        <TextField required name='name' id='name' label='Name' min={8} value={''} onChange={() => { }} />
-        <TextField required name='email' id='email' label='Email' min={8} value={''} onChange={() => { }} />
-        <TextField required name='password' id='password' label='Password' min={8} value={''} onChange={() => { }} />
-        <TextField required name='confirm-password' id='confirm-password' label='Confirm password' min={8} value={''} onChange={() => { }} />
+        <TextField required name='name' id='name' label='Name' min={3} value={name} onChange={(e) => setName(e.target.value)} onBlur={()=>setIsFirstInteractionName(true)} placeholder="Hayman Andrews" error={nameError} />
+        <TextField required name='email' id='email' label='Email'  min={8} value={email} onChange={(e) =>  setEmail(e.target.value)} onBlur={()=>setIsFirstInteractionEmail(true)} placeholder="example@email.com" error={emailError}/>
+        <TextField required name='password' id='password' label='Password' password min={8} value={password} onChange={(e) => setPassword(e.target.value)} onBlur={()=>setIsFirstInteractionPassword(true)} error={passwordError}/>
+        <TextField required name='confirm-password' id='confirm-password' label='Confirm password' password min={8} value={confPass} onChange={(e) => setConfPass(e.target.value)} onBlur={()=>setIsFirstInteractionConfPass(true)} error={confPassError} />
 
         <Box
           sx={{
@@ -33,7 +52,7 @@ export default function SignupForm() {
             gap: '16px',
           }}
         >
-          <CustomButton size={isMobile ? 's' : 'l'} variant='contained' type='submit'>
+          <CustomButton size={isMobile ? 's' : 'l'} variant='contained' type='submit' disabled={!!nameError||!name||!!emailError||!email||!!passwordError||!password||!!confPassError||!confPass}>
             Sign Up
           </CustomButton>
           <Typography
