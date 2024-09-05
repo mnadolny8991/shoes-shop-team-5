@@ -25,14 +25,20 @@ export default function UserSettings() {
   }
 
   return (
-    <>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: isMobile ? 'center' : 'flex-start',
+        marginLeft: isMobile ? '26px' : '60px',
+        marginTop: isMobile ? '25px' : 0,
+        marginBottom: '50px',
+      }}>
       <Box
         sx={{
           maxWidth: "460px",
           display: 'flex',
           flexDirection: 'column',
-          marginLeft: isMobile ? '26px' : '60px',
-          marginTop: isMobile ? '25px' : 0,
         }}
       >
         <Typography variant="h1">
@@ -83,6 +89,6 @@ export default function UserSettings() {
         </Typography>
         <UpdateProfileForm />
       </Box>
-    </>
+    </Box>
   );
 }
