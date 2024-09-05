@@ -6,24 +6,7 @@ import DeleteModal from '@/components/modals/DeleteModal';
 import { useState } from 'react';
 import ShoeImageSlider from '@/components/sliders/ShoeImageSlider';
 import { Box, Chip, Container, Grid, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
-
-const colors = [
-  {
-    id: 1,
-    color: 'white',
-    avaliable: true,
-  },
-  {
-    id: 2,
-    color: 'red',
-    avaliable: false,
-  },
-  {
-    id: 3,
-    color: 'blue',
-    avaliable: true,
-  },
-];
+import { products } from '@/mock/products';
 
 const sizes = [
   {
@@ -69,11 +52,20 @@ const sizes = [
 ];
 
 export default function Page({ params }: { params: { id: string } }) {
-  const [color, setColor] = useState(1);
-  const [size, setSize] = useState(1);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const gender = 'woman';
+  const [product, setProduct] = useState(products[parseInt(params.id)]);
+  const [colorId, setColorId] = useState(1);
+  const [sizeId, setSizeId] = useState(1);
+  
+  const gender = product.gender;
+  let allSizes = [];
+  for (let i = 36; i <= 45; i++) {
+    allSizes.push({
+      id: i - 36,
+      name: 'EU-' + i,
+    });
+  }
 
   function handleChipClick() {}
 
@@ -82,7 +74,7 @@ export default function Page({ params }: { params: { id: string } }) {
       direction="row"
       sx={{
         width: isMobile ? '320px' : '85%',
-        gap: isMobile ? '20px' : '50px',
+        gap: isMobile ? '20px' : '102px',
         justifyContent: 'center',
         alignItems: 'center',
         margin: 'auto',
@@ -120,18 +112,17 @@ export default function Page({ params }: { params: { id: string } }) {
             marginTop: '15px',
           }}
         >
-          {gender === 'woman' ? "Woman's" : "Men's"} shoes
+          {gender === 'Female' ? "Woman's" : "Men's"} shoes
         </Typography>
         <Stack gap="15px" direction="row" sx={{ marginTop: '19px' }}>
-          {colors.map((c) => (
+          {product.color?.map((c) => (
             <Chip
               key={c.id}
-              disabled={!c.avaliable}
-              label={c.color}
-              variant={c.avaliable ? 'outlined' : 'filled'}
-              onClick={() => setColor(c.id)}
+              label={c.name}
+              variant="outlined"
+              onClick={() => setColorId(c.id)}
               sx={ (theme) => ({
-                border: color === c.id ? `1px solid ${theme.palette.secondary.main}` : '',
+                border: colorId === c.id ? `1px solid ${theme.palette.secondary.main}` : '',
               })}
             />
           ))}
@@ -154,16 +145,17 @@ export default function Page({ params }: { params: { id: string } }) {
           flexWrap="wrap"
           marginTop={isMobile ? "13px" : "23px"}
         >
-          {sizes.map((s) => (
+          {allSizes.map((s) => (
             <Chip
               key={s.id}
-              label={'EU-' + s.value}
+              label={s.name}
               variant="outlined"
-              onClick={() => setSize(s.id)}
+              disabled={!product.sizes?.find(si => si.id === s.id)}
+              onClick={() => setSizeId(s.id)}
               sx={(theme) => ({
                 width: isMobile ? '60px' : '85px',
                 height: isMobile ? '50px' : '55px',
-                border: size === s.id ? `1 px solid ${theme.palette.secondary.main}` : '',
+                border: sizeId === s.id ? `1 px solid ${theme.palette.secondary.main}` : '',
                 borderRadius: '8px',
                 fontSize: isMobile ? '10px' : '12px'
               })}

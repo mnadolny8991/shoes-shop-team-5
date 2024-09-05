@@ -5,13 +5,21 @@ type ProductImage = {
   url: string;
 };
 type TeamName = 'team-1' | 'team-2' | 'team-3' | 'team-4' | 'team-5';
+type Color = {
+  id: number,
+  name: string,
+}
+type Size = {
+  id: number,
+  name: string,
+}
 export type Product = {
   id: number;
   name: string;
   description: string;
   brand: string;
-  color?: string;
-  sizes?: Array<string>;
+  color?: Array<Color>;
+  sizes?: Array<Size>;
   categories?: Array<string>;
   price: number;
   gender: 'Male' | 'Female';
@@ -81,6 +89,20 @@ export const products: Array<Product> = [
     description: 'some description Nike Air Zoom Pegasus',
     price: 120,
     gender: 'Male',
+    color: [
+      {
+        id: 0,
+        name: 'red'
+      },
+      {
+        id: 1,
+        name: 'green'
+      },
+      {
+        id: 2,
+        name: 'blue'
+      }
+    ],
     images: [
       {
         id: 0,
@@ -123,6 +145,39 @@ export const products: Array<Product> = [
         name: 'Nike Air Zoom Pegasus',
         alternativeText: 'Nike Air Zoom Pegasus',
         url: 'https://placehold.co/300x300',
+      },
+    ],
+    sizes: [
+      {
+        id: 0,
+        name: 'EU-36'
+      },{
+        id: 1,
+        name: 'EU-37'
+      },
+      {
+        id: 2,
+        name: 'EU-38'
+      },
+      {
+        id: 4,
+        name: 'EU-40'
+      },
+      {
+        id: 6,
+        name: 'EU-42'
+      },
+      {
+        id: 7,
+        name: 'EU-43'
+      },
+      {
+        id: 8,
+        name: 'EU-44'
+      },
+      {
+        id: 9,
+        name: 'EU-45'
       },
     ],
     brand: 'Nike',
