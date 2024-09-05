@@ -87,7 +87,7 @@ export default function Page({ params }: { params: { id: string } }) {
         alignItems: 'center',
         margin: 'auto',
         my: isMobile ? '35px' : '100px',
-        [theme.breakpoints.down('lg')]: {
+        [theme.breakpoints.down(1300)]: {
           flexDirection: 'column-reverse',
         },
       }}>

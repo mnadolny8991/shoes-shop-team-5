@@ -77,12 +77,6 @@ import ImageContainer from '../containers/ImageContainer';
       }
     }, [isMobile]);
   
-    function onError(e: SyntheticEvent<HTMLImageElement, Event>, w: number, h: number) {
-        (e.target as HTMLImageElement).src =
-          `https://placehold.co/${w}x${h}`;
-        console.log('working');
-    };
-  
     function handleRightClick() {
       const imageIdx = images.findIndex((i) => i.id === choosenImageId)!;
       setChoosenImageId(images[(imageIdx + 1) % images.length].id);
@@ -103,7 +97,7 @@ import ImageContainer from '../containers/ImageContainer';
         }}>
         <Stack
           sx={{
-            width: isMobile ? 40 : 76,
+            width: 'fit-content',
             height: isMobile ? 320 : 628,
           }}
           justifyContent="space-between"
