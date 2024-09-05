@@ -8,49 +8,6 @@ import ShoeImageSlider from '@/components/sliders/ShoeImageSlider';
 import { Box, Chip, Container, Grid, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { products } from '@/mock/products';
 
-const sizes = [
-  {
-    id: 1,
-    value: 36,
-  },
-  {
-    id: 2,
-    value: 37,
-  },
-  {
-    id: 3,
-    value: 38,
-  },
-  {
-    id: 4,
-    value: 39,
-  },
-  {
-    id: 5,
-    value: 40,
-  },
-  {
-    id: 6,
-    value: 41,
-  },
-  {
-    id: 7,
-    value: 42,
-  },
-  {
-    id: 8,
-    value: 43,
-  },
-  {
-    id: 9,
-    value: 44,
-  },
-  {
-    id: 10,
-    value: 45,
-  },
-];
-
 export default function Page({ params }: { params: { id: string } }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
