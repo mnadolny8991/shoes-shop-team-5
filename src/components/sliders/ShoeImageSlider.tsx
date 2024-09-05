@@ -15,54 +15,17 @@ import {
   import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined';
   import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
 import ImageContainer from '../containers/ImageContainer';
-  
-  // To be fetched
-  const images = [
-    {
-      id: '1223',
-      url: 'https://placehold.co/300x300',
-      alt: 'shoe image',
-    },
-    {
-      id: '1224',
-      url: 'https://placehold.co/300x300',
-      alt: 'shoe image',
-    },
-    {
-      id: '1225',
-      url: 'https://placehold.co/300x300',
-      alt: 'shoe image',
-    },
-    {
-      id: '1226',
-      url: 'https://placehold.co/300x300',
-      alt: 'shoe image',
-    },
-    {
-      id: '1227',
-      url: 'https://placehold.co/300x300',
-      alt: 'shoe image',
-    },
-    {
-      id: '1228',
-      url: 'https://placehold.co/300x300',
-      alt: 'shoe image',
-    },
-    {
-      id: '1229',
-      url: 'https://placehold.co/300x300',
-      alt: 'shoe image',
-    },
-  ];
+import { products } from '@/mock/products';
   
   type ShoeImageSliderProps = {
     shoeId: string;
   };
   
   export default function ShoeImageSlider({ shoeId }: ShoeImageSliderProps) {
-    const [choosenImageId, setChoosenImageId] = useState<string>(images[0].id);
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+    const [images, setImages] = useState(products[parseInt(shoeId)].images);
+    const [choosenImageId, setChoosenImageId] = useState<number>(images[0].id);
 
     const [smallImageSize, setSmallImageSize] = useState({ width: 76, height: 76 });
     const [bigImageSize, setBigImageSize] = useState({ width: 588, height: 628 });
@@ -107,7 +70,7 @@ import ImageContainer from '../containers/ImageContainer';
             <ImageContainer
               key={img.id}
               src={img.url}
-              alt={img.alt}
+              alt={img.alternativeText}
               width={smallImageSize.width}
               height={smallImageSize.height}
               onClick={() => setChoosenImageId(img.id)}
