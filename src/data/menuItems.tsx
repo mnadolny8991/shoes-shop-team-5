@@ -6,9 +6,7 @@ const getMenuItems = (signedIn: boolean) => [
   {
     id: 0,
     name: 'My Products',
-    icon: (
-      <ShoppingBasketOutlinedIcon sx={{ width: '20px', height: '20px' }} />
-    ),
+    icon: <ShoppingBasketOutlinedIcon sx={{ width: '20px', height: '20px' }} />,
   },
   {
     id: 1,

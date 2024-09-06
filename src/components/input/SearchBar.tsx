@@ -67,7 +67,15 @@ type SearchBarProps = {
 
 const SearchBar = forwardRef<HTMLInputElement, SearchBarProps>(
   (
-    { value, onChange, width, height, variant, withErase, onIconClick }: SearchBarProps,
+    {
+      value,
+      onChange,
+      width,
+      height,
+      variant,
+      withErase,
+      onIconClick,
+    }: SearchBarProps,
     ref: ForwardedRef<HTMLInputElement>
   ) => {
     const inputRef = useRef<HTMLInputElement>(null);

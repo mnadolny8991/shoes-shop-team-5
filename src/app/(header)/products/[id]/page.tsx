@@ -2,7 +2,14 @@
 import CustomButton from '@/components/buttons/CustomButton';
 import { useState } from 'react';
 import ShoeImageSlider from '@/components/sliders/ShoeImageSlider';
-import { Box, Chip, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
+import {
+  Box,
+  Chip,
+  Stack,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import { products } from '@/mock/products';
 import allSizes from '@/data/allSizes';
 
@@ -12,11 +19,11 @@ export default function Page({ params }: { params: { id: string } }) {
   const [product, setProduct] = useState(products[parseInt(params.id)]);
   const [colorId, setColorId] = useState(1);
   const [sizeId, setSizeId] = useState(1);
-  
+
   const gender = product.gender;
 
   return (
-    <Stack 
+    <Stack
       direction="row"
       sx={{
         width: { xs: '320px', md: '85%' },
@@ -28,7 +35,8 @@ export default function Page({ params }: { params: { id: string } }) {
         [theme.breakpoints.down(1300)]: {
           flexDirection: 'column-reverse',
         },
-      }}>
+      }}
+    >
       <ShoeImageSlider shoeId={params.id} />
       <Box sx={{ width: { xs: '320px', md: '522px' } }}>
         <Box
@@ -67,8 +75,11 @@ export default function Page({ params }: { params: { id: string } }) {
               label={c.name}
               variant="outlined"
               onClick={() => setColorId(c.id)}
-              sx={ (theme) => ({
-                border: colorId === c.id ? `1px solid ${theme.palette.secondary.main}` : '',
+              sx={(theme) => ({
+                border:
+                  colorId === c.id
+                    ? `1px solid ${theme.palette.secondary.main}`
+                    : '',
               })}
             />
           ))}
@@ -84,7 +95,7 @@ export default function Page({ params }: { params: { id: string } }) {
         >
           Select Size
         </Typography>
-        <Stack 
+        <Stack
           direction="row"
           useFlexGap
           flexWrap="wrap"
@@ -98,32 +109,35 @@ export default function Page({ params }: { params: { id: string } }) {
               key={s.id}
               label={s.name}
               variant="outlined"
-              disabled={!product.sizes?.find(si => si.id === s.id)}
+              disabled={!product.sizes?.find((si) => si.id === s.id)}
               onClick={() => setSizeId(s.id)}
               sx={(theme) => ({
                 width: { xs: '60px', md: '85px' },
                 height: { xs: '50px', md: '55px' },
-                border: sizeId === s.id ? `1 px solid ${theme.palette.secondary.main}` : '',
+                border:
+                  sizeId === s.id
+                    ? `1 px solid ${theme.palette.secondary.main}`
+                    : '',
                 borderRadius: '8px',
                 fontSize: { xs: '10px', md: '12px' },
               })}
             />
           ))}
         </Stack>
-        <Stack 
-          direction={isMobile ? "column" : "row"} 
-          spacing={isMobile ? "10px" : "26px"} 
-          width={isMobile ? '320px' : '522px'} 
+        <Stack
+          direction={isMobile ? 'column' : 'row'}
+          spacing={isMobile ? '10px' : '26px'}
+          width={isMobile ? '320px' : '522px'}
           mt="35px"
           sx={{
             flexDirection: { xs: 'column', md: 'row' },
             gap: { xs: '10px', md: '26px' },
           }}
         >
-          <CustomButton size={isMobile ? "m" : "xl"} variant="outlined">
+          <CustomButton size={isMobile ? 'm' : 'xl'} variant="outlined">
             Favorite
           </CustomButton>
-          <CustomButton size={isMobile ? "m" : "xl"} variant="contained">
+          <CustomButton size={isMobile ? 'm' : 'xl'} variant="contained">
             Add to Bag
           </CustomButton>
         </Stack>

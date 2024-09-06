@@ -1,9 +1,5 @@
 'use client';
-import {
-  Box,
-  styled,
-  Typography,
-} from '@mui/material';
+import { Box, styled, Typography } from '@mui/material';
 import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
 import { ForwardedRef, forwardRef } from 'react';
 

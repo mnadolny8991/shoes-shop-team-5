@@ -9,7 +9,13 @@ interface ImageContainerProps {
   onClick?: () => void;
 }
 
-const ImageContainer: React.FC<ImageContainerProps> = ({ src, alt, width, height, onClick }) => {
+const ImageContainer: React.FC<ImageContainerProps> = ({
+  src,
+  alt,
+  width,
+  height,
+  onClick,
+}) => {
   return (
     <Box
       width={width}

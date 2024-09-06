@@ -1,7 +1,7 @@
 type Size = {
-  id: number,
-  name: string,
-}
+  id: number;
+  name: string;
+};
 
 let allSizes: Size[] = [];
 for (let i = 36; i <= 45; i++) {

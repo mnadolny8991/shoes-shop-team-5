@@ -52,7 +52,7 @@ export default function PopupMenu({
           top: 80,
         }}
       >
-        {menuItems.map(menuItem => (
+        {menuItems.map((menuItem) => (
           <ListItemButton sx={{ px: 0 }} key={menuItem.id}>
             <ListItemIcon sx={{ minWidth: '35px' }}>
               {menuItem.icon}

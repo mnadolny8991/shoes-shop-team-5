@@ -1,4 +1,4 @@
-import { IconButton, Stack } from "@mui/material";
+import { IconButton, Stack } from '@mui/material';
 import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined';
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
 
@@ -8,7 +8,11 @@ type SliderButtonsProps = {
   sx?: object;
 };
 
-export default function SliderButtons({ sx, onRightClick, onLeftClick }: SliderButtonsProps) {
+export default function SliderButtons({
+  sx,
+  onRightClick,
+  onLeftClick,
+}: SliderButtonsProps) {
   return (
     <Stack direction="row" width="fit-content" sx={sx} gap="16px">
       <IconButton
