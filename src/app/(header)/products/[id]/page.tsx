@@ -24,8 +24,6 @@ export default function Page({ params }: { params: { id: string } }) {
     });
   }
 
-  function handleChipClick() {}
-
   return (
     <Stack 
       direction="row"

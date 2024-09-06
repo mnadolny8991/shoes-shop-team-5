@@ -62,73 +62,70 @@ type SearchBarProps = {
   height: number | string;
   variant: keyof typeof variants;
   withErase?: boolean;
+  onIconClick?: () => void;
 };
 
 const SearchBar = forwardRef<HTMLInputElement, SearchBarProps>(
   (
-    { value, onChange, width, height, variant, withErase }: SearchBarProps,
+    { value, onChange, width, height, variant, withErase, onIconClick }: SearchBarProps,
     ref: ForwardedRef<HTMLInputElement>
   ) => {
-    const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
     const inputRef = useRef<HTMLInputElement>(null);
 
     return (
-      <form>
-        <Outline
+      <Outline
+        sx={{
+          width: width,
+          height: height,
+        }}
+      >
+        <Box
           sx={{
-            width: width,
-            height: height,
+            display: 'flex',
+            alignItems: 'center',
+            gap: variants[variant].gap,
+            width: '100%',
           }}
         >
-          <Box
+          <IconButton onClick={onIconClick}>
+            <Image
+              src="/search-normal.svg"
+              width={variants[variant].imgWidth}
+              height={variants[variant].imgWidth}
+              alt="website logo"
+            />
+          </IconButton>
+          <Input
+            ref={ref}
+            placeholder="Search"
+            value={value}
+            onChange={(e: any) => onChange(e.target.value)}
             sx={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: variants[variant].gap,
-              width: '100%',
+              fontSize: variants[variant].fontSize,
+              fontWeight: variants[variant].fontWeight,
+              lineHeight: variants[variant].lineHeight,
             }}
-          >
-            <IconButton type="submit">
-              <Image
-                src="/search-normal.svg"
-                width={variants[variant].imgWidth}
-                height={variants[variant].imgWidth}
-                alt="website logo"
+          />
+          {withErase && (
+            <IconButton
+              onClick={() => {
+                onChange('');
+                setTimeout(() => inputRef.current?.focus(), 100);
+              }}
+              sx={{
+                color: '#494949',
+              }}
+            >
+              <CloseIcon
+                sx={{
+                  width: { xs: '15px', md: '24px' },
+                  height: { xs: '15px', md: '24px' },
+                }}
               />
             </IconButton>
-            <Input
-              ref={ref}
-              placeholder="Search"
-              value={value}
-              onChange={(e: any) => onChange(e.target.value)}
-              sx={{
-                fontSize: variants[variant].fontSize,
-                fontWeight: variants[variant].fontWeight,
-                lineHeight: variants[variant].lineHeight,
-              }}
-            />
-            {withErase && (
-              <IconButton
-                onClick={() => {
-                  onChange('');
-                  setTimeout(() => inputRef.current?.focus(), 100);
-                }}
-                sx={{
-                  color: '#494949',
-                }}
-              >
-                <CloseIcon
-                  sx={{
-                    width: isMobile ? '15px' : '24px',
-                    height: isMobile ? '15px' : '24px',
-                  }}
-                />
-              </IconButton>
-            )}
-          </Box>
-        </Outline>
-      </form>
+          )}
+        </Box>
+      </Outline>
     );
   }
 );
