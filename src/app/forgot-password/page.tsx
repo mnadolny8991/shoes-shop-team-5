@@ -84,6 +84,7 @@ const ForgotPassword: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 onBlur={(e) => setIsFirstInteraction(true)}
+                type="text"
                 required
                 name="email"
                 id="email"

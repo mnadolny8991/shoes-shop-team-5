@@ -62,7 +62,7 @@ export default function ResetPassword() {
               onChange={(e) => setPassword(e.target.value)}
               onBlur={(e) => setIsFirstInteractionPass(true)}
               required
-              password
+              type="password"
               name="password"
               id="password"
               label="Password"
@@ -74,7 +74,7 @@ export default function ResetPassword() {
               onChange={(e) => setConfPass(e.target.value)}
               onBlur={(e) => setIsFirstInteractionConfPass(true)}
               required
-              password
+              type="password"
               name="confirmPassword"
               id="confirmPassword"
               label="Confirm password"

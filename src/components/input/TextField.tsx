@@ -3,8 +3,6 @@ import {
   Box,
   styled,
   Typography,
-  useMediaQuery,
-  useTheme,
 } from '@mui/material';
 import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
 import { ForwardedRef, forwardRef } from 'react';
@@ -13,7 +11,6 @@ type TextFieldInput = React.InputHTMLAttributes<HTMLInputElement> & {
   required: boolean;
   label: string;
   min?: number;
-  password?: boolean;
   error?: string;
   width?: string | number;
 };
@@ -47,23 +44,21 @@ const TextField = forwardRef(function TextField(
     label,
     min,
     error,
-    password,
     placeholder,
     value,
+    type,
+    onChange,
     ...props
   }: TextFieldInput,
   ref: ForwardedRef<HTMLInputElement>
 ) {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-
   return (
     <Box
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        width: isMobile ? '320px' : '436px',
-        gap: isMobile ? '4.92px' : '8px',
+        width: { xs: '320px', md: '436px' },
+        gap: { xs: '4.92px', md: '8px' },
       }}
     >
       <Typography variant="caption" component="label" htmlFor={id}>
@@ -82,10 +77,10 @@ const TextField = forwardRef(function TextField(
         {...props}
         ref={ref}
         value={value}
-        type={password ? 'password' : 'text'}
+        type={type}
         name={name}
         id={id}
-        onChange={props.onChange}
+        onChange={onChange}
         placeholder={placeholder ? placeholder : `at least ${min} characters`}
         error={error}
       ></CustomInput>
@@ -100,15 +95,15 @@ const TextField = forwardRef(function TextField(
         >
           <WarningAmberRoundedIcon
             sx={{
-              width: isMobile ? '12px' : '16px',
-              height: isMobile ? '12px' : '16px',
+              width: { xs: '12px', md: '16px' },
+              height: { xs: '12px', md: '16px' },
               color: 'error.main',
             }}
           />
           <Typography
             component="small"
             sx={{
-              fontSize: isMobile ? '10px' : '12px',
+              fontSize: { xs: '10px', md: '12px' },
               color: 'error.main',
               lineHeight: '14px',
               fontWeight: '400',

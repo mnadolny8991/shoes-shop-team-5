@@ -1,11 +1,9 @@
 'use client';
 
-import TextField from '@/components/input/TextField';
 import CustomButton from '@/components/buttons/CustomButton';
-import DeleteModal from '@/components/modals/DeleteModal';
 import { useState } from 'react';
 import ShoeImageSlider from '@/components/sliders/ShoeImageSlider';
-import { Box, Chip, Container, Grid, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Chip, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { products } from '@/mock/products';
 
 export default function Page({ params }: { params: { id: string } }) {
