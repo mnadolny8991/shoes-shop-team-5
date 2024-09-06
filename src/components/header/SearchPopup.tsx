@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import Image from 'next/image';
-import SearchBar from '../input/SearchBar';
+import SearchBar from '@/components/input/SearchBar';
 import { useEffect, useRef } from 'react';
 
 const popularSearchTerms = [

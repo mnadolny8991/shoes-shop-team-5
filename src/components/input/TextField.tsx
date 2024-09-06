@@ -7,7 +7,7 @@ import {
   useTheme,
 } from '@mui/material';
 import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
-import { ChangeEvent, ForwardedRef, forwardRef } from 'react';
+import { ForwardedRef, forwardRef } from 'react';
 
 type TextFieldInput = React.InputHTMLAttributes<HTMLInputElement> & {
   required: boolean;

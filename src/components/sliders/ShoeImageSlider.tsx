@@ -3,18 +3,14 @@
 import {
     Box,
     IconButton,
-    ImageList,
-    ImageListItem,
     Stack,
-    styled,
     useMediaQuery,
     useTheme,
   } from '@mui/material';
-  import Image from 'next/image';
-  import { SyntheticEvent, useEffect, useState } from 'react';
+  import { useEffect, useState } from 'react';
   import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined';
   import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
-import ImageContainer from '../containers/ImageContainer';
+import ImageContainer from '@/components/containers/ImageContainer'
 import { products } from '@/mock/products';
   
   type ShoeImageSliderProps = {
