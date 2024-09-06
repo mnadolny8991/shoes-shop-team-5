@@ -1,10 +1,10 @@
 'use client';
-
 import CustomButton from '@/components/buttons/CustomButton';
 import { useState } from 'react';
 import ShoeImageSlider from '@/components/sliders/ShoeImageSlider';
 import { Box, Chip, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { products } from '@/mock/products';
+import allSizes from '@/data/allSizes';
 
 export default function Page({ params }: { params: { id: string } }) {
   const theme = useTheme();
@@ -14,30 +14,23 @@ export default function Page({ params }: { params: { id: string } }) {
   const [sizeId, setSizeId] = useState(1);
   
   const gender = product.gender;
-  let allSizes = [];
-  for (let i = 36; i <= 45; i++) {
-    allSizes.push({
-      id: i - 36,
-      name: 'EU-' + i,
-    });
-  }
 
   return (
     <Stack 
       direction="row"
       sx={{
-        width: isMobile ? '320px' : '85%',
-        gap: isMobile ? '20px' : '102px',
+        width: { xs: '320px', md: '85%' },
+        gap: { xs: '20px', md: '102px' },
         justifyContent: 'center',
         alignItems: 'center',
         margin: 'auto',
-        my: isMobile ? '35px' : '100px',
+        my: { xs: '35px', md: '100px' },
         [theme.breakpoints.down(1300)]: {
           flexDirection: 'column-reverse',
         },
       }}>
       <ShoeImageSlider shoeId={params.id} />
-      <Box sx={{ width: isMobile ? '320px' : '522px' }}>
+      <Box sx={{ width: { xs: '320px', md: '522px' } }}>
         <Box
           sx={{
             display: 'flex',
@@ -94,9 +87,11 @@ export default function Page({ params }: { params: { id: string } }) {
         <Stack 
           direction="row"
           useFlexGap
-          spacing={isMobile ? "5px" : "24px"}
           flexWrap="wrap"
-          marginTop={isMobile ? "13px" : "23px"}
+          sx={{
+            gap: { xs: '5px', md: '24px' },
+            mt: { xs: '13px', md: '23px' },
+          }}
         >
           {allSizes.map((s) => (
             <Chip
@@ -106,11 +101,11 @@ export default function Page({ params }: { params: { id: string } }) {
               disabled={!product.sizes?.find(si => si.id === s.id)}
               onClick={() => setSizeId(s.id)}
               sx={(theme) => ({
-                width: isMobile ? '60px' : '85px',
-                height: isMobile ? '50px' : '55px',
+                width: { xs: '60px', md: '85px' },
+                height: { xs: '50px', md: '55px' },
                 border: sizeId === s.id ? `1 px solid ${theme.palette.secondary.main}` : '',
                 borderRadius: '8px',
-                fontSize: isMobile ? '10px' : '12px'
+                fontSize: { xs: '10px', md: '12px' },
               })}
             />
           ))}
@@ -119,7 +114,12 @@ export default function Page({ params }: { params: { id: string } }) {
           direction={isMobile ? "column" : "row"} 
           spacing={isMobile ? "10px" : "26px"} 
           width={isMobile ? '320px' : '522px'} 
-          mt="35px">
+          mt="35px"
+          sx={{
+            flexDirection: { xs: 'column', md: 'row' },
+            gap: { xs: '10px', md: '26px' },
+          }}
+        >
           <CustomButton size={isMobile ? "m" : "xl"} variant="outlined">
             Favorite
           </CustomButton>
@@ -134,7 +134,7 @@ export default function Page({ params }: { params: { id: string } }) {
               fontWeight: '500',
               lineHeight: '23.46px',
               color: '#494949',
-              mt: isMobile ? '25px' : '65px',
+              mt: { xs: '25px', md: '65px' },
             }}
           >
             Description
