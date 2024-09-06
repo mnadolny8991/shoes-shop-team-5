@@ -1,6 +1,6 @@
 "use client";
 
-import theme from "@/theme";
+import theme from "@/styles/theme";
 import { Grid, Box, Typography, Divider, useMediaQuery } from "@mui/material";
 import Image from 'next/image'
 import SignupForm from "@/components/forms/SignupForm";
