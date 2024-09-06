@@ -8,9 +8,7 @@ import {
   Typography,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import ShoppingBasketOutlinedIcon from '@mui/icons-material/ShoppingBasketOutlined';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import getMenuItems from '@/data/menuItems';
 
 type PopupMenuProps = {
   signedIn: boolean;
@@ -23,6 +21,8 @@ export default function PopupMenu({
   showMenu,
   onMenuClose,
 }: PopupMenuProps) {
+  const menuItems = getMenuItems(signedIn);
+
   return (
     <Drawer
       anchor="right"
@@ -52,40 +52,10 @@ export default function PopupMenu({
           top: 80,
         }}
       >
-        <ListItemButton sx={{ px: 0 }}>
-          <ListItemIcon sx={{ minWidth: '35px' }}>
-            <ShoppingBasketOutlinedIcon
-              sx={{ width: '20px', height: '20px' }}
-            />
-          </ListItemIcon>
-          <ListItemText
-            primary={
-              <Typography
-                sx={{ fontSize: 16, fontWeight: '500', lineHeight: '18.77px' }}
-              >
-                My Products
-              </Typography>
-            }
-          />
-        </ListItemButton>
-        <ListItemButton sx={{ px: 0 }}>
-          <ListItemIcon sx={{ minWidth: '35px' }}>
-            <SettingsOutlinedIcon sx={{ width: '20px', height: '20px' }} />
-          </ListItemIcon>
-          <ListItemText
-            primary={
-              <Typography
-                sx={{ fontSize: 16, fontWeight: '500', lineHeight: '18.77px' }}
-              >
-                Settings
-              </Typography>
-            }
-          />
-        </ListItemButton>
-        {signedIn ? (
-          <ListItemButton sx={{ px: 0 }}>
+        {menuItems.map(menuItem => (
+          <ListItemButton sx={{ px: 0 }} key={menuItem.id}>
             <ListItemIcon sx={{ minWidth: '35px' }}>
-              <LogoutOutlinedIcon sx={{ width: '20px', height: '20px' }} />
+              {menuItem.icon}
             </ListItemIcon>
             <ListItemText
               primary={
@@ -96,31 +66,12 @@ export default function PopupMenu({
                     lineHeight: '18.77px',
                   }}
                 >
-                  Log Out
+                  {menuItem.name}
                 </Typography>
               }
             />
           </ListItemButton>
-        ) : (
-          <ListItemButton sx={{ px: 0 }}>
-            <ListItemIcon sx={{ minWidth: '35px' }}>
-              <LogoutOutlinedIcon sx={{ width: '20px', height: '20px' }} />
-            </ListItemIcon>
-            <ListItemText
-              primary={
-                <Typography
-                  sx={{
-                    fontSize: 16,
-                    fontWeight: '500',
-                    lineHeight: '18.77px',
-                  }}
-                >
-                  Log In
-                </Typography>
-              }
-            />
-          </ListItemButton>
-        )}
+        ))}
       </List>
     </Drawer>
   );

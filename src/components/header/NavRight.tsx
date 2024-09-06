@@ -27,7 +27,7 @@ export default function NavRight() {
         display: 'flex',
         alignItems: 'center',
         flexDirection: 'row-reverse',
-        gap: isMobile ? '20px' : '40px',
+        gap: { xs: '20px', md: '40px' },
       }}
     >
       {isMobile && (
@@ -44,7 +44,7 @@ export default function NavRight() {
         sx={{
           display: 'flex',
           alignItems: 'center',
-          flexDirection: isMobile ? 'row' : 'row-reverse',
+          flexDirection: { xs: 'row', md: 'row-reverse' },
           gap: '16px',
         }}
       >

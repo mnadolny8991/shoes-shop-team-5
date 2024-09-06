@@ -1,12 +1,6 @@
-import {
-  Box,
-  IconButton,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
+import { Box, IconButton, Typography, useMediaQuery, useTheme } from "@mui/material";
 import Image from 'next/image';
-import Link from 'next/link';
+import Link from "next/link";
 
 export default function NavLeft() {
   const theme = useTheme();

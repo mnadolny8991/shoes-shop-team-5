@@ -1,14 +1,9 @@
 'use client';
-import { useTheme } from '@mui/material/styles';
 import { AppBar, Toolbar } from '@mui/material';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import NavLeft from '@/components/header/NavLeft';
 import NavRight from '@/components/header/NavRight';
 
 export default function Header() {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-
   return (
     <>
       <AppBar position="static" color="transparent">
@@ -16,8 +11,8 @@ export default function Header() {
           disableGutters={true}
           sx={{
             margin: 0,
-            height: isMobile ? '59px' : '120px',
-            px: isMobile ? '20px' : '40px',
+            height: { xs: '59px', md: '120px' },
+            px: { xs: '20px', md: '40px' },
             justifyContent: 'space-between',
           }}
         >
