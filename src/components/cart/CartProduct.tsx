@@ -1,14 +1,20 @@
-import { Box, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
-import ImageContainer from "@/components/containers/ImageContainer";
+import { Box, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
+import ImageContainer from '@/components/containers/ImageContainer';
+import CartProductBar from './CartProductBar';
 
 type CartProductProps = {
   name: string;
-  price: number,
-  gender: 'Male' | 'Female',
-  inStock: boolean,
-}
+  price: number;
+  gender: 'Male' | 'Female';
+  inStock: boolean;
+};
 
-const CartProduct: React.FC<CartProductProps> = ({ name, price, gender, inStock }) => {
+const CartProduct: React.FC<CartProductProps> = ({
+  name,
+  price,
+  gender,
+  inStock,
+}) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -27,19 +33,20 @@ const CartProduct: React.FC<CartProductProps> = ({ name, price, gender, inStock 
         gap: {
           xs: '15px',
           md: '46px',
-        }
+        },
       }}
     >
-      <ImageContainer 
+      <ImageContainer
         src="https://placehold.co/200x200"
         alt="product image"
-        width={isMobile ? '104px' : '223px' }
+        width={isMobile ? '104px' : '223px'}
         height={isMobile ? '100px' : '214px'}
       />
       <Stack justifyContent="space-between" width="100%" height="100%">
         <Box sx={{ width: '100%', height: 'fit-content' }}>
           <Stack direction="row" justifyContent="space-between" width="100%">
-            <Typography component="h3"
+            <Typography
+              component="h3"
               sx={{
                 fontSize: { md: '30px', xs: '12px' },
                 fontWeight: '500',
@@ -48,7 +55,8 @@ const CartProduct: React.FC<CartProductProps> = ({ name, price, gender, inStock 
             >
               {name}
             </Typography>
-            <Typography component="h3"
+            <Typography
+              component="h3"
               sx={{
                 fontSize: { md: '30px', xs: '12px' },
                 fontWeight: '500',
@@ -63,13 +71,13 @@ const CartProduct: React.FC<CartProductProps> = ({ name, price, gender, inStock 
               fontSize: { md: '20px', xs: '8px' },
               fontWeight: '500',
               lineHeight: { md: '23.46px', xs: '9.38px' },
-              color: '#5C5C5C'
+              color: '#5C5C5C',
             }}
           >
             {gender === 'Female' ? "Woman's" : "Men's"} shoes
           </Typography>
-          {(!isMobile && inStock) &&
-            <Typography 
+          {!isMobile && inStock && (
+            <Typography
               color="primary.main"
               sx={{
                 fontSize: '25px',
@@ -80,21 +88,19 @@ const CartProduct: React.FC<CartProductProps> = ({ name, price, gender, inStock 
             >
               In Stock
             </Typography>
-          }
+          )}
         </Box>
         <Box
           sx={{
-            width: { md: '300px', xs: '100%'},
-            height: '32px',
-            backgroundColor: 'secondary.main',
+            width: { md: 'fit-content', xs: '100%' },
             marginLeft: 'auto',
           }}
         >
-          TBA
+          <CartProductBar amount={2} />
         </Box>
       </Stack>
     </Stack>
-  )
-}
+  );
+};
 
 export default CartProduct;
