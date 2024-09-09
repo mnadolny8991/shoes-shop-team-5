@@ -1,6 +1,6 @@
 'use client';
 
-import theme from '@/theme';
+import theme from '@/styles/theme';
 import { Box, Typography, Avatar, useMediaQuery } from '@mui/material';
 import Image from 'next/image';
 import CustomButton from '@/components/buttons/CustomButton';
