@@ -30,13 +30,17 @@ const confirmPasswordValdiator = (firstPass: string) => {
   };
 };
 
-const nameValidator = (name:string) =>{
-  if(!new RegExp(/^[a-zA-Z]{3,}$/).test(name)){
-    return 'Name must have minimum 3 letters and should not containe numbers'
+const nameValidator = (name: string) => {
+  if (!new RegExp(/^[a-zA-Z]{3,}$/).test(name)) {
+    return 'Name must have minimum 3 letters and should not containe numbers';
+  } else {
+    return '';
   }
-  else{
-    return ''
-  }
-}
+};
 
-export { emailValidator, passwordValidator, confirmPasswordValdiator, nameValidator };
+export {
+  emailValidator,
+  passwordValidator,
+  confirmPasswordValdiator,
+  nameValidator,
+};

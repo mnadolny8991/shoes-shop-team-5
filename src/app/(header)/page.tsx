@@ -1,8 +1,6 @@
 'use client';
-
 import TextField from '@/components/input/TextField';
 import CustomButton from '@/components/buttons/CustomButton';
-import { Container } from '@mui/material';
 import DeleteModal from '@/components/modals/DeleteModal';
 import { useState } from 'react';
 
@@ -12,6 +10,7 @@ export default function Home() {
     <>
       <TextField
         required={true}
+        type="text"
         name="input"
         id="input"
         label="Label Text"
@@ -21,7 +20,7 @@ export default function Home() {
       <CustomButton
         size="m"
         variant="contained"
-        onClick={(e) => setIsOpen(true)}
+        onClick={() => setIsOpen(true)}
       >
         Open Modal
       </CustomButton>

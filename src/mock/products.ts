@@ -6,13 +6,13 @@ type ProductImage = {
 };
 type TeamName = 'team-1' | 'team-2' | 'team-3' | 'team-4' | 'team-5';
 type Color = {
-  id: number,
-  name: string,
-}
+  id: number;
+  name: string;
+};
 type Size = {
-  id: number,
-  name: string,
-}
+  id: number;
+  name: string;
+};
 export type Product = {
   id: number;
   name: string;
@@ -92,16 +92,16 @@ export const products: Array<Product> = [
     color: [
       {
         id: 0,
-        name: 'red'
+        name: 'red',
       },
       {
         id: 1,
-        name: 'green'
+        name: 'green',
       },
       {
         id: 2,
-        name: 'blue'
-      }
+        name: 'blue',
+      },
     ],
     images: [
       {
@@ -150,34 +150,35 @@ export const products: Array<Product> = [
     sizes: [
       {
         id: 0,
-        name: 'EU-36'
-      },{
+        name: 'EU-36',
+      },
+      {
         id: 1,
-        name: 'EU-37'
+        name: 'EU-37',
       },
       {
         id: 2,
-        name: 'EU-38'
+        name: 'EU-38',
       },
       {
         id: 4,
-        name: 'EU-40'
+        name: 'EU-40',
       },
       {
         id: 6,
-        name: 'EU-42'
+        name: 'EU-42',
       },
       {
         id: 7,
-        name: 'EU-43'
+        name: 'EU-43',
       },
       {
         id: 8,
-        name: 'EU-44'
+        name: 'EU-44',
       },
       {
         id: 9,
-        name: 'EU-45'
+        name: 'EU-45',
       },
     ],
     brand: 'Nike',

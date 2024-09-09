@@ -44,6 +44,7 @@ export default function SignInForm() {
             onBlur={(e) => setIsFirstInteractionEmail(true)}
             onChange={(e) => setEmail(e.target.value)}
             required
+            type="text"
             name="email"
             id="email"
             label="Email"
@@ -55,7 +56,7 @@ export default function SignInForm() {
             onBlur={(e) => setIsFirstInteractionPass(true)}
             onChange={(e) => setPassword(e.target.value)}
             required
-            password
+            type="password"
             name="password"
             id="password"
             label="Password"
