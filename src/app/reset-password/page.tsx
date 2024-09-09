@@ -48,10 +48,10 @@ export default function ResetPassword() {
               display: 'flex',
               flexDirection: 'column',
               gap: '15px',
-              width: isMobile ? '320px' : '436px',
+              width: {xs:'320px',md: '436px'},
             }}
           >
-            <Typography variant="h1" fontSize={isMobile ? '30px' : '45px'}>
+            <Typography variant="h1" >
               Reset password
             </Typography>
             <Typography variant="body2" color={theme.palette.text.secondary}>
@@ -92,7 +92,6 @@ export default function ResetPassword() {
             </CustomButton>
             <Typography
               variant="caption"
-              fontSize={isMobile ? '11.15px' : '15px'}
               textAlign="center"
             >
               <Link href="/login">Back to log in</Link>
