@@ -1,12 +1,12 @@
 'use client';
 
-import { Box, Typography, Link, useTheme, useMediaQuery } from '@mui/material';
-import TextField from '../input/TextField';
-import CustomButton from '../buttons/CustomButton';
+import { Box, useTheme, useMediaQuery } from "@mui/material";
+import TextField from "../input/TextField";
+import CustomButton from "../buttons/CustomButton";
 
-export default function SignupForm() {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+export default function UpdateProfileForm() {
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 
   return (
     <form>
@@ -74,18 +74,12 @@ export default function SignupForm() {
 
         <Box
           sx={{
-            marginTop: isMobile ? '29px' : '68px',
+            marginTop: isMobile ? '7px' : '34px',
             display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '16px',
+            justifyContent: 'flex-end',
           }}
         >
-          <CustomButton
-            size={isMobile ? 's' : 'l'}
-            variant="contained"
-            type="submit"
-          >
+          <CustomButton size={isMobile ? 's' : 'm'} variant='contained' type='submit' sx={{ maxWidth: '150px', borderRadius: '8px' }}>
             Save Changes
           </CustomButton>
         </Box>
