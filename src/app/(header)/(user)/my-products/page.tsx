@@ -12,12 +12,10 @@ import {
 import Image from 'next/image';
 import unsplash from '/public/pawel-czerwinski-unsplash-3.png';
 
-import { products } from '../../../../mock/products';
+import { products } from '@/mock/products';
 import ProductsGrid from '@/components/products/ProductsGrid';
 import MyProductsEmptyState from '@/components/products/MyProductsEmptyState';
 import AddProductButton from '@/components/products/AddProductButton';
-
-// const products = null
 
 const MyProductsHeader = () => {
   const theme = useTheme();

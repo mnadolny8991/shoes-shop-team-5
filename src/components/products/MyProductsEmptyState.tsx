@@ -9,7 +9,7 @@ import {
   useTheme,
 } from '@mui/material';
 import Image from 'next/image';
-import AddProductButton from './AddProductButton';
+import AddProductButton from '@/components/products/AddProductButton';
 
 export default function MyProductsEmptyState() {
   const theme = useTheme();

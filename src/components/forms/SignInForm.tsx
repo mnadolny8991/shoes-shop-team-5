@@ -7,8 +7,8 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import CustomButton from '../buttons/CustomButton';
-import TextField from '../input/TextField';
+import CustomButton from '@/components/buttons/CustomButton';
+import TextField from '@/components/input/TextField';
 import { useState } from 'react';
 import useValidate from '@/hooks/useValidate';
 import { emailValidator, passwordValidator } from '@/lib/validators';

@@ -9,7 +9,7 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import HeaderLayout from './(header)/layout';
+import HeaderLayout from '@/app/(header)/layout';
 import Image from 'next/image';
 import GoBackAndHomeButtonsStack from '@/components/buttons/GoBackAndHomeButtonsStack';
 

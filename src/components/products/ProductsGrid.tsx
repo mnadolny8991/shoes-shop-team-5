@@ -1,9 +1,9 @@
 'use client';
 
 import { useMediaQuery, useTheme } from '@mui/material';
-import { Product } from '../../mock/products';
+import { Product } from '@/mock/products';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
-import ProductCard from './ProductCard';
+import ProductCard from '@/components/products/ProductCard';
 
 export default function ProductsGrid({
   products,
