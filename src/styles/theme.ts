@@ -22,6 +22,24 @@ theme = createTheme({
         lineHeight: '35.19px',
       },
     },
+    h4:{
+      fontSize: 20,
+      lineHeight: '23.46px',
+      fontWeight: '500',
+      [theme.breakpoints.down('md')]: {
+        fontSize: 16,
+        lineHeight: '18.77px',
+      },
+    },
+    h5:{
+      fontSize: 20,
+      lineHeight: '23.46px',
+      fontWeight: '500',
+      [theme.breakpoints.down('md')]: {
+        fontSize: 14,
+        lineHeight: '16.42px',
+      },
+    },
     body1: {
       fontSize: 25,
       lineHeight: '33.83px',

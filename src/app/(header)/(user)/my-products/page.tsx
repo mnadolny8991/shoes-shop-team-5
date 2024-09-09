@@ -4,7 +4,6 @@ import {
   Avatar,
   Box,
   Stack,
-  styled,
   Typography,
   useMediaQuery,
   useTheme,
@@ -21,26 +20,10 @@ const MyProductsHeader = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  const UserInfo = styled('div')(() => ({
-    position: 'relative',
-    top: isMobile ? -15 : -30,
-    marginLeft: isMobile ? 20 : 55,
-    display: 'flex',
-    gap: isMobile ? 13 : 26,
-    alignItems: 'end',
-  }));
-
-  const UserName = styled(Typography)(() => ({
-    fontSize: isMobile ? 14 : 20,
-    fontWeight: 500,
-    lineHeight: isMobile ? '16.42px' : '23.46px',
-    marginBottom: isMobile ? 2 : 4,
-  }));
-
   return (
     <>
       <Box
-        height={isMobile ? '132px' : '262px'}
+        height={{xs:132, md: 262}}
         position="relative"
         width="100%"
       >
@@ -56,27 +39,34 @@ const MyProductsHeader = () => {
           }}
         />
       </Box>
-      <UserInfo>
+      <Box       
+        position='relative'
+        top={{xs: -15, md: -30}}
+        marginLeft={{xs: '20px', md: '55px'}}
+        display='flex'
+        gap={{xs : '13px', md : '26px'}}
+        alignItems='end'
+        >
         <Avatar
           alt="Jane Meldrum"
           src="/jane-meldrum.png"
           sx={{
-            width: isMobile ? 64 : 128,
-            height: isMobile ? 64 : 128,
+            width: {xs: 64, md : 128},
+            height: {xs: 64, md : 128},
             border: '4px solid white',
           }}
         />
         <Box>
-          <UserName>Jane Meldrum</UserName>
+          <Typography variant='h5' mb={{xs:'2px', md:'4px'}}>Jane Meldrum</Typography>
           <Typography variant="subtitle2">1 374 bonus points</Typography>
         </Box>
-      </UserInfo>
+      </Box>
       <Stack
         direction={'row'}
         justifyContent="space-between"
         alignItems="center"
         mx={'20px'}
-        mb={isMobile ? '19px' : '36px'}
+        mb={{xs:'19px', md: '36px'}}
       >
         <Typography variant="h1">My products</Typography>
         {products && !isMobile && <AddProductButton />}

@@ -3,7 +3,6 @@
 import {
   IconButton,
   Stack,
-  styled,
   Typography,
   useMediaQuery,
   useTheme,
@@ -15,21 +14,15 @@ export default function MyProductsEmptyState() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  const NoProductsCaption = styled(Typography)(() => ({
-    fontSize: isMobile ? 16 : 20,
-    fontWeight: 500,
-    lineHeight: isMobile ? '18.77px' : '23.46px',
-  }));
-
   return (
     <Stack
       alignItems="center"
       spacing="10px"
-      mt={isMobile ? '65px' : '100px'}
+      mt={{xs: '65px', md: '100px'}}
       useFlexGap
     >
       <IconButton
-        sx={{ width: '72px', height: '72px', backgroundColor: '#F9FAFB' }}
+        sx={{ width: 72, height: 72, backgroundColor: '#F9FAFB' }}
       >
         <Image
           src="/bag.svg"
@@ -38,8 +31,8 @@ export default function MyProductsEmptyState() {
           alt="bag icon"
         />
       </IconButton>
-      <NoProductsCaption>You don’t have any products yet</NoProductsCaption>
-      <Typography variant="subtitle2" mb={isMobile ? 4 : 5}>
+      <Typography variant='h4'>You don’t have any products yet</Typography>
+      <Typography variant="subtitle2" mb={{xs:4, md: 5}}>
         Post can contain video, images and text.
       </Typography>
       <AddProductButton />
