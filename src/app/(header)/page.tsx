@@ -3,6 +3,7 @@ import TextField from '@/components/input/TextField';
 import CustomButton from '@/components/buttons/CustomButton';
 import DeleteModal from '@/components/modals/DeleteModal';
 import CartSummary from '@/components/cart/CartSummary';
+import CartProduct from '@/components/cart/CartProduct';
 import { useState } from 'react';
 
 export default function Home() {
@@ -35,11 +36,7 @@ export default function Home() {
           asperiores fuga maiores tempora ad atque inventore dolore consequatur
           soluta recusandae."
       />
-      <CartSummary 
-        subtotal={410}
-        shipping={20}
-        tax={0}
-      />
+      <CartProduct name="Nike Air Max 270" price={160} gender="male" inStock={true} />
     </>
   );
 }
