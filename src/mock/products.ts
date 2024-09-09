@@ -1,4 +1,4 @@
-type ProductImage = {
+export type ProductImage = {
   id: number;
   name: string;
   alternativeText: string;
@@ -9,7 +9,7 @@ type Color = {
   id: number;
   name: string;
 };
-type Size = {
+export type Size = {
   id: number;
   name: string;
 };
