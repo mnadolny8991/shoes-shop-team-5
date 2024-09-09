@@ -1,14 +1,13 @@
-"use client";
+'use client';
 
-import theme from "@/theme";
-import { Box, Typography, Avatar, useMediaQuery } from "@mui/material";
-import Image from 'next/image'
-import CustomButton from "@/components/buttons/CustomButton";
-import UpdateProfileForm from "@/components/forms/UpdateProfileForm";
-
+import theme from '@/theme';
+import { Box, Typography, Avatar, useMediaQuery } from '@mui/material';
+import Image from 'next/image';
+import CustomButton from '@/components/buttons/CustomButton';
+import UpdateProfileForm from '@/components/forms/UpdateProfileForm';
 
 export default function UserSettings() {
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const Logo = () => {
     return (
       <Image
@@ -18,11 +17,11 @@ export default function UserSettings() {
         alt="shoes shop logo"
         style={{
           marginTop: isMobile ? '20px' : '50px',
-          marginLeft: isMobile ? '20px' : '40px'
+          marginLeft: isMobile ? '20px' : '40px',
         }}
       />
-    )
-  }
+    );
+  };
 
   return (
     <Box
@@ -33,17 +32,16 @@ export default function UserSettings() {
         marginLeft: isMobile ? '26px' : '60px',
         marginTop: isMobile ? '25px' : 0,
         marginBottom: '50px',
-      }}>
+      }}
+    >
       <Box
         sx={{
-          maxWidth: "460px",
+          maxWidth: '460px',
           display: 'flex',
           flexDirection: 'column',
         }}
       >
-        <Typography variant="h1">
-          My Profile
-        </Typography>
+        <Typography variant="h1">My Profile</Typography>
         <Box
           sx={{
             display: 'flex',
@@ -52,7 +50,8 @@ export default function UserSettings() {
             marginTop: isMobile ? '10px' : '33px',
             marginBottom: isMobile ? '10px' : '47px',
             maxWidth: isMobile ? '245px' : '370px',
-          }}>
+          }}
+        >
           <Avatar
             alt="Jane Meldrum"
             src="/jane-meldrum.png"
@@ -71,10 +70,18 @@ export default function UserSettings() {
               gap: isMobile ? '15px' : '23px',
             }}
           >
-            <CustomButton size={isMobile ? 's' : 'm'} variant='outlined' sx={{ borderRadius: '8px' }}>
+            <CustomButton
+              size={isMobile ? 's' : 'm'}
+              variant="outlined"
+              sx={{ borderRadius: '8px' }}
+            >
               Change photo
             </CustomButton>
-            <CustomButton size={isMobile ? 's' : 'm'} variant='contained' sx={{ borderRadius: '8px' }}>
+            <CustomButton
+              size={isMobile ? 's' : 'm'}
+              variant="contained"
+              sx={{ borderRadius: '8px' }}
+            >
               Delete
             </CustomButton>
           </Box>

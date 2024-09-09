@@ -1,12 +1,12 @@
 'use client';
 
-import { Box, useTheme, useMediaQuery } from "@mui/material";
-import TextField from "../input/TextField";
-import CustomButton from "../buttons/CustomButton";
+import { Box, useTheme, useMediaQuery } from '@mui/material';
+import TextField from '../input/TextField';
+import CustomButton from '../buttons/CustomButton';
 
 export default function UpdateProfileForm() {
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <form>
@@ -79,7 +79,12 @@ export default function UpdateProfileForm() {
             justifyContent: 'flex-end',
           }}
         >
-          <CustomButton size={isMobile ? 's' : 'm'} variant='contained' type='submit' sx={{ maxWidth: '150px', borderRadius: '8px' }}>
+          <CustomButton
+            size={isMobile ? 's' : 'm'}
+            variant="contained"
+            type="submit"
+            sx={{ maxWidth: '150px', borderRadius: '8px' }}
+          >
             Save Changes
           </CustomButton>
         </Box>
