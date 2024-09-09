@@ -2,6 +2,7 @@
 import TextField from '@/components/input/TextField';
 import CustomButton from '@/components/buttons/CustomButton';
 import DeleteModal from '@/components/modals/DeleteModal';
+import CartSummary from '@/components/cart/CartSummary';
 import { useState } from 'react';
 
 export default function Home() {
@@ -33,6 +34,11 @@ export default function Home() {
           perspiciatis in a quas doloribus impedit esse assumenda ut ratione,
           asperiores fuga maiores tempora ad atque inventore dolore consequatur
           soluta recusandae."
+      />
+      <CartSummary 
+        subtotal={410}
+        shipping={20}
+        tax={0}
       />
     </>
   );
