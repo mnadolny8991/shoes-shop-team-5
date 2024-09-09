@@ -7,8 +7,8 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import CustomButton from '../buttons/CustomButton';
-import TextField from '../input/TextField';
+import CustomButton from '@/components/buttons/CustomButton';
+import TextField from '@/components/input/TextField';
 import { useState } from 'react';
 import useValidate from '@/hooks/useValidate';
 import { emailValidator, passwordValidator } from '@/lib/validators';
@@ -37,8 +37,8 @@ export default function SignInForm() {
 
   return (
     <form>
-      <Box maxWidth={isMobile ? 320 : 436}>
-        <Stack spacing={2} mt={isMobile ? '25px' : '48px'}>
+      <Box maxWidth={{xs:320, md: 436}}>
+        <Stack spacing={2} mt={{xs:'25px', md: '48px'}}>
           <TextField
             value={email}
             onBlur={(e) => setIsFirstInteractionEmail(true)}
@@ -69,8 +69,8 @@ export default function SignInForm() {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            marginTop: isMobile ? '12px' : '16px',
-            marginBottom: isMobile ? '30px' : '56px',
+            marginTop: {xs: '12px', md: '16px'},
+            marginBottom: {xs: '30px', md: '56px'},
           }}
         >
           <FormControlLabel
@@ -78,7 +78,7 @@ export default function SignInForm() {
             label="Remember me"
             slotProps={{ typography: { variant: 'body2' } }}
           />
-          <Link variant="body2" href="/forgot_password">
+          <Link variant="body2" href="/forgot-password">
             Forgot password?
           </Link>
         </Box>

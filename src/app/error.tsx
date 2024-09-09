@@ -27,7 +27,7 @@ export default function Error({
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const ImageMessageContainer = styled('div')(({ theme }) => ({
-    ...(isMobile && {
+    [theme.breakpoints.down('md')]:{
       position: 'relative',
       height: 443,
       width: '100%',
@@ -36,41 +36,42 @@ export default function Error({
       alignItems: 'flex-end',
       justifyContent: 'center',
       textAlign: 'center',
-    }),
+    },
     '& p': {
-      fontSize: isMobile ? 12 : 20,
+      fontSize: 20,
       fontWeight: 500,
-      lineHeight: isMobile ? '17.2px' : '28.66px',
-      color: isMobile
-        ? theme.palette.primary.contrastText
-        : theme.palette.text.secondary,
+      lineHeight: '28.66px',
+      color: theme.palette.text.secondary,
+      [theme.breakpoints.down('md')]:{
+        fontSize: 12,
+        lineHeight: '17.2px',
+        color: theme.palette.primary.contrastText
+      }
     },
     '& img': {
       zIndex: -1,
-      ...(isMobile
-        ? {
-            objectPosition: '70% 50%',
-            objectFit: 'cover',
-          }
-        : {
-            position: 'absolute',
-            left: 0,
-            top: 0,
-            width: '100%',
-            height: 'auto',
-          }),
+      [theme.breakpoints.down('md')]:{
+        objectPosition: '70% 50%',
+        objectFit: 'cover',
+      },
+      [theme.breakpoints.up('md')]:{
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        width: '100%',
+        height: 'auto',
+      }
     },
   }));
 
   return (
     <Stack
-      sx={
-        isMobile
-          ? { alignItems: 'center' }
-          : { position: 'relative', padding: '10%' }
-      }
+      sx={{
+        alignItems:{xs: 'center', md: 'flex-start'},
+        position:{md:'relative'},
+        padding:{md:'10%'}}}
     >
-      <Typography variant="h1" mt={'43px'} mb={isMobile ? 2 : 3}>
+      <Typography variant="h1" mt={'43px'} mb={{xs: 2, md: 3}}>
         We lost that page...
       </Typography>
       <ImageMessageContainer>
