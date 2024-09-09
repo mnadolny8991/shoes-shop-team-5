@@ -78,7 +78,7 @@ export default function SignInForm() {
             label="Remember me"
             slotProps={{ typography: { variant: 'body2' } }}
           />
-          <Link variant="body2" href="/forgot_password">
+          <Link variant="body2" href="/forgot-password">
             Forgot password?
           </Link>
         </Box>
