@@ -4,7 +4,7 @@ import { Box, Typography, useMediaQuery } from '@mui/material';
 import backgroundImage from '../../../public/reset-password-backgroound.png';
 import CustomButton from '@/components/buttons/CustomButton';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
-import theme from '@/theme';
+import theme from '@/styles/theme';
 import TextField from '@/components/input/TextField';
 import Link from 'next/link';
 import useValidate from '../../hooks/useValidate';
@@ -62,7 +62,7 @@ export default function ResetPassword() {
               onChange={(e) => setPassword(e.target.value)}
               onBlur={(e) => setIsFirstInteractionPass(true)}
               required
-              password
+              type="password"
               name="password"
               id="password"
               label="Password"
@@ -74,7 +74,7 @@ export default function ResetPassword() {
               onChange={(e) => setConfPass(e.target.value)}
               onBlur={(e) => setIsFirstInteractionConfPass(true)}
               required
-              password
+              type="password"
               name="confirmPassword"
               id="confirmPassword"
               label="Confirm password"

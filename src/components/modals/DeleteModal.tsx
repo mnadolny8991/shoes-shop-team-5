@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import CustomButton from '../buttons/CustomButton';
-import theme from '@/theme';
+import theme from '@/styles/theme';
 import { Dispatch, SetStateAction } from 'react';
 
 type Props = {

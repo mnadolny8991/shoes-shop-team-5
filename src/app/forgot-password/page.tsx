@@ -5,7 +5,7 @@ import { Typography, Box, Grid } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Link from 'next/link';
 import Image from 'next/image';
-import theme from '@/theme';
+import theme from '@/styles/theme';
 import TextField from '../../components/input/TextField';
 import CustomButton from '../../components/buttons/CustomButton';
 import useValidate from '../../hooks/useValidate';
@@ -84,6 +84,7 @@ const ForgotPassword: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 onBlur={(e) => setIsFirstInteraction(true)}
+                type="text"
                 required
                 name="email"
                 id="email"
