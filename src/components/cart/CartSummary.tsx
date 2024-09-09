@@ -6,12 +6,14 @@ type CartSummaryProps = {
   subtotal: number;
   shipping: number;
   tax: number;
+  sx?: object,
 };
 
 const CartSummary: React.FC<CartSummaryProps> = ({
   subtotal,
   shipping,
   tax,
+  sx,
 }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -21,9 +23,10 @@ const CartSummary: React.FC<CartSummaryProps> = ({
     <Box
       sx={{
         width: {
-          xs: '360px',
+          xs: '320px',
           md: '400px',
         },
+        ...sx,
       }}
     >
       <Typography variant="h1" component="h2">

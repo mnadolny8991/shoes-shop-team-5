@@ -24,7 +24,6 @@ const CartProduct: React.FC<CartProductProps> = ({ name, price, gender, inStock 
           xs: '100px',
           md: '214px',
         },
-        maxWidth: '963px',
         gap: {
           xs: '15px',
           md: '46px',
