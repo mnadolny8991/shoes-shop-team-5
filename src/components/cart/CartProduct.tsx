@@ -4,7 +4,7 @@ import ImageContainer from "@/components/containers/ImageContainer";
 type CartProductProps = {
   name: string;
   price: number,
-  gender: 'male' | 'female',
+  gender: 'Male' | 'Female',
   inStock: boolean,
 }
 
@@ -66,7 +66,7 @@ const CartProduct: React.FC<CartProductProps> = ({ name, price, gender, inStock 
               color: '#5C5C5C'
             }}
           >
-            {gender === 'female' ? "Woman's" : "Men's"} shoes
+            {gender === 'Female' ? "Woman's" : "Men's"} shoes
           </Typography>
           {(!isMobile && inStock) &&
             <Typography 

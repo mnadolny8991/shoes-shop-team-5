@@ -1,6 +1,7 @@
 import { Box, Divider, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 import CartProduct from "@/components/cart/CartProduct";
-import CartSummary from "./CartSummary";
+import CartSummary from "@/components/cart/CartSummary";
+import cartProducts from '@/mock/cartProducts';
 
 type CartProps = {
 
@@ -19,7 +20,7 @@ const Cart: React.FC<CartProps> = () => {
         maxWidth: '1800px',
         margin: 'auto',
         justifyContent: 'space-between',
-        my: '80px',
+        my: { xs: '30px', md: '80px' },
       }}
     >
       <Box 
@@ -31,6 +32,7 @@ const Cart: React.FC<CartProps> = () => {
         <Typography variant="h1" component="h2">
           Cart
         </Typography>
+        {isMobile && <Divider sx={{ mt: '12px' }} />}
         <Stack
           sx={{
             width: '100%',
@@ -39,29 +41,20 @@ const Cart: React.FC<CartProps> = () => {
           }}
           divider={!isMobile && <Divider />}
         >
-          <CartProduct
-            name="Nike Air Max Pro"
-            price={200}
-            gender="male"
-            inStock={true}
-          />
-          <CartProduct
-            name="Nike Air Max Pro"
-            price={200}
-            gender="male"
-            inStock={true}
-          />
-          <CartProduct
-            name="Nike Air Max Pro"
-            price={200}
-            gender="male"
-            inStock={true}
-          />
+          {cartProducts.map(product => 
+            <CartProduct
+              key={product.id}
+              name={product.name}
+              price={product.price}
+              gender={product.gender}
+              inStock={true}
+            />
+          )}
         </Stack>
       </Box>
       <CartSummary
-        subtotal={800}
-        shipping={50}
+        subtotal={cartProducts.reduce((val, acc) => acc.price + val, 0)}
+        shipping={20}
         tax={0}
         sx={{ mt: totalDown ? '80px' : 0 }}
       />
