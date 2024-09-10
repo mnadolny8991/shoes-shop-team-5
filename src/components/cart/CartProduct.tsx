@@ -1,12 +1,14 @@
 import { Box, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import ImageContainer from '@/components/containers/ImageContainer';
 import CartProductBar from './CartProductBar';
+import { useState } from 'react';
 
 type CartProductProps = {
   name: string;
   price: number;
   gender: 'Male' | 'Female';
   inStock: boolean;
+  onDelete: () => void;
 };
 
 const CartProduct: React.FC<CartProductProps> = ({
@@ -14,9 +16,11 @@ const CartProduct: React.FC<CartProductProps> = ({
   price,
   gender,
   inStock,
+  onDelete,
 }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const [amount, setAmount] = useState<number>(1);
 
   return (
     <Stack
@@ -96,7 +100,12 @@ const CartProduct: React.FC<CartProductProps> = ({
             marginLeft: 'auto',
           }}
         >
-          <CartProductBar amount={2} />
+          <CartProductBar 
+            amount={amount} 
+            onAddClick={() => { if (amount >= 0) setAmount(amount + 1) }}
+            onSubtractClick={() => { if (amount > 0) setAmount(amount - 1) }}
+            onDeleteClick={onDelete}
+          />
         </Box>
       </Stack>
     </Stack>

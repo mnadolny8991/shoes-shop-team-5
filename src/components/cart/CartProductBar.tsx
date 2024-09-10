@@ -7,12 +7,14 @@ type CartProductBarProps = {
   amount: number;
   onAddClick?: () => void;
   onSubtractClick?: () => void;
+  onDeleteClick?: () => void;
 };
 
 const CartProductBar: React.FC<CartProductBarProps> = ({
   amount,
   onAddClick,
   onSubtractClick,
+  onDeleteClick,
 }) => {
   return (
     <Stack
@@ -51,7 +53,7 @@ const CartProductBar: React.FC<CartProductBarProps> = ({
           Quantity
         </Typography>
         <Stack direction="row" alignItems="center">
-          <IconButton>
+          <IconButton onClick={onDeleteClick}>
             <DeleteOutlineRoundedIcon width="32px" height="32px" sx={{ color: '#6E7278' }}/>
           </IconButton>
           <Typography

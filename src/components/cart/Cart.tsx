@@ -2,6 +2,8 @@ import { Box, Divider, Stack, Typography, useMediaQuery, useTheme } from "@mui/m
 import CartProduct from "@/components/cart/CartProduct";
 import CartSummary from "@/components/cart/CartSummary";
 import cartProducts from '@/mock/cartProducts';
+import { useState } from "react";
+import { Product } from "@/mock/mockTypes";
 
 type CartProps = {
 
@@ -11,6 +13,14 @@ const Cart: React.FC<CartProps> = () => {
   const theme = useTheme();
   const totalDown = useMediaQuery(theme.breakpoints.down(1750));
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+  const [products, setProducts] = useState<Product[]>(cartProducts);
+
+  const handleDelete = (productId: number) => {
+    setProducts(
+      products.filter(product => product.id !== productId)
+    );
+  }
 
   return (
     <Stack
@@ -41,13 +51,14 @@ const Cart: React.FC<CartProps> = () => {
           }}
           divider={!isMobile && <Divider />}
         >
-          {cartProducts.map(product => 
+          {products.map(product => 
             <CartProduct
               key={product.id}
               name={product.name}
               price={product.price}
               gender={product.gender}
               inStock={true}
+              onDelete={() => handleDelete(product.id) }
             />
           )}
         </Stack>
