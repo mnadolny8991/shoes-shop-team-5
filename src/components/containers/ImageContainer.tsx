@@ -7,6 +7,7 @@ interface ImageContainerProps {
   width: number | string;
   height: number | string;
   onClick?: () => void;
+  sx?: object;
 }
 
 const ImageContainer: React.FC<ImageContainerProps> = ({
@@ -15,6 +16,7 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
   width,
   height,
   onClick,
+  sx,
 }) => {
   return (
     <Box
@@ -25,6 +27,7 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
       sx={{
         cursor: onClick ? 'pointer' : 'default',
         overflow: 'hidden',
+        ...sx,
       }}
     >
       <Image

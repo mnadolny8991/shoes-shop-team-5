@@ -12,7 +12,7 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({
   const [products, setProducts] = useState<Product[]>(cartProducts);
   const [amount, setAmount] = useState<ProductAmount[]>(() =>
     products.map((p) => {
-      return { productId: p.id, value: 0 };
+      return { productId: p.id, value: 1 };
     })
   );
   const [promcode, setPromcode] = useState<string | null>(null);
@@ -27,11 +27,14 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const handleAmountChange = (productId: number, operation: '+' | '-') => {
     setAmount(
-      amount.map((pa) =>
-        pa.productId === productId
-          ? { productId, value: eval(`pa.value ${operation} 1`) }
-          : pa
-      )
+      amount.map((pa) => {
+        if (pa.productId === productId) {
+          const newVal = eval(`pa.value ${operation} 1`);
+          if (newVal <= 0) handleDelete(productId);
+          return { productId, value: newVal };
+        }
+        return pa;
+      })
     );
   };
 

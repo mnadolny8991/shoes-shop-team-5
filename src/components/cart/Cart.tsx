@@ -9,10 +9,11 @@ import {
 } from '@mui/material';
 import CartProduct from '@/components/cart/CartProduct';
 import CartSummary from '@/components/cart/CartSummary';
-import { useContext, useState } from 'react';
-import { Product } from '@/mock/mockTypes';
+import { useContext } from 'react';
 import { CartContext } from '@/context/CartContext';
 import { CartContextType } from '@/types/cart';
+import CartEmpty from '@/components/cart/CartEmpty';
+import { createPortal } from 'react-dom';
 
 type CartProps = {};
 
@@ -24,6 +25,8 @@ const Cart: React.FC<CartProps> = () => {
   const { products, amount, onDelete } = useContext(
     CartContext
   ) as CartContextType;
+
+  const empty = products.length <= 0;
 
   return (
     <Stack
@@ -39,12 +42,15 @@ const Cart: React.FC<CartProps> = () => {
       <Box
         sx={{
           width: '100%',
-          maxWidth: '963px',
+          maxWidth: empty ? 'none' : '963px',
         }}
       >
         <Typography variant="h1" component="h2">
           Cart
         </Typography>
+        {empty &&
+          createPortal(<CartEmpty />, document.body)
+        }
         {isMobile && <Divider sx={{ mt: '12px' }} />}
         <Stack
           sx={{
@@ -67,17 +73,19 @@ const Cart: React.FC<CartProps> = () => {
           ))}
         </Stack>
       </Box>
-      <CartSummary
-        subtotal={products.reduce(
-          (acc, val) =>
-            val.price * amount.find((a) => a.productId === val.id)?.value! +
-            acc,
-          0
-        )}
-        shipping={20}
-        tax={0}
-        sx={{ mt: totalDown ? '80px' : 0 }}
-      />
+      {!empty && (
+        <CartSummary
+          subtotal={products.reduce(
+            (acc, val) =>
+              val.price * amount.find((a) => a.productId === val.id)?.value! +
+              acc,
+            0
+          )}
+          shipping={20}
+          tax={0}
+          sx={{ mt: totalDown ? '80px' : 0 }}
+        />
+      )}
     </Stack>
   );
 };
