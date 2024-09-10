@@ -1,13 +1,18 @@
-import { Box, Divider, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
-import CartProduct from "@/components/cart/CartProduct";
-import CartSummary from "@/components/cart/CartSummary";
+import {
+  Box,
+  Divider,
+  Stack,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
+import CartProduct from '@/components/cart/CartProduct';
+import CartSummary from '@/components/cart/CartSummary';
 import cartProducts from '@/mock/cartProducts';
-import { useState } from "react";
-import { Product } from "@/mock/mockTypes";
+import { useState } from 'react';
+import { Product } from '@/mock/mockTypes';
 
-type CartProps = {
-
-}
+type CartProps = {};
 
 const Cart: React.FC<CartProps> = () => {
   const theme = useTheme();
@@ -17,10 +22,8 @@ const Cart: React.FC<CartProps> = () => {
   const [products, setProducts] = useState<Product[]>(cartProducts);
 
   const handleDelete = (productId: number) => {
-    setProducts(
-      products.filter(product => product.id !== productId)
-    );
-  }
+    setProducts(products.filter((product) => product.id !== productId));
+  };
 
   return (
     <Stack
@@ -33,10 +36,10 @@ const Cart: React.FC<CartProps> = () => {
         my: { xs: '30px', md: '80px' },
       }}
     >
-      <Box 
+      <Box
         sx={{
           width: '100%',
-          maxWidth: '963px'
+          maxWidth: '963px',
         }}
       >
         <Typography variant="h1" component="h2">
@@ -51,16 +54,16 @@ const Cart: React.FC<CartProps> = () => {
           }}
           divider={!isMobile && <Divider />}
         >
-          {products.map(product => 
+          {products.map((product) => (
             <CartProduct
               key={product.id}
               name={product.name}
               price={product.price}
               gender={product.gender}
               inStock={true}
-              onDelete={() => handleDelete(product.id) }
+              onDelete={() => handleDelete(product.id)}
             />
-          )}
+          ))}
         </Stack>
       </Box>
       <CartSummary
@@ -71,6 +74,6 @@ const Cart: React.FC<CartProps> = () => {
       />
     </Stack>
   );
-}
+};
 
 export default Cart;

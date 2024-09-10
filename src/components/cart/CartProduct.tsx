@@ -46,8 +46,8 @@ const CartProduct: React.FC<CartProductProps> = ({
         width={isMobile ? '104px' : '223px'}
         height={isMobile ? '100px' : '214px'}
       />
-      <Stack justifyContent="space-between" width="100%" height="100%">
-        <Box sx={{ width: '100%', height: 'fit-content' }}>
+      <Stack justifyContent="space-between" flexGrow="1" height="100%">
+        <Box sx={{ height: 'fit-content' }}>
           <Stack direction="row" justifyContent="space-between" width="100%">
             <Typography
               component="h3"
@@ -94,19 +94,25 @@ const CartProduct: React.FC<CartProductProps> = ({
             </Typography>
           )}
         </Box>
-        <Box
-          sx={{
-            width: { md: 'fit-content', xs: '100%' },
-            marginLeft: 'auto',
-          }}
-        >
-          <CartProductBar 
-            amount={amount} 
-            onAddClick={() => { if (amount >= 0) setAmount(amount + 1) }}
-            onSubtractClick={() => { if (amount > 0) setAmount(amount - 1) }}
-            onDeleteClick={onDelete}
-          />
-        </Box>
+        {!isMobile && (
+          <Box
+            sx={{
+              width: { md: 'fit-content', xs: '100%' },
+              marginLeft: 'auto',
+            }}
+          >
+            <CartProductBar
+              amount={amount}
+              onAddClick={() => {
+                if (amount >= 0) setAmount(amount + 1);
+              }}
+              onSubtractClick={() => {
+                if (amount > 0) setAmount(amount - 1);
+              }}
+              onDeleteClick={onDelete}
+            />
+          </Box>
+        )}
       </Stack>
     </Stack>
   );
