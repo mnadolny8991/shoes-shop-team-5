@@ -18,12 +18,10 @@ export default function MyProductsEmptyState() {
     <Stack
       alignItems="center"
       spacing="10px"
-      mt={{xs: '65px', md: '100px'}}
+      mt={{ xs: '65px', md: '100px' }}
       useFlexGap
     >
-      <IconButton
-        sx={{ width: 72, height: 72, backgroundColor: '#F9FAFB' }}
-      >
+      <IconButton sx={{ width: 72, height: 72, backgroundColor: '#F9FAFB' }}>
         <Image
           src="/bag.svg"
           width={isMobile ? 20 : 24}
@@ -31,8 +29,8 @@ export default function MyProductsEmptyState() {
           alt="bag icon"
         />
       </IconButton>
-      <Typography variant='h4'>You don’t have any products yet</Typography>
-      <Typography variant="subtitle2" mb={{xs:4, md: 5}}>
+      <Typography variant="h4">You don’t have any products yet</Typography>
+      <Typography variant="subtitle2" mb={{ xs: 4, md: 5 }}>
         Post can contain video, images and text.
       </Typography>
       <AddProductButton />

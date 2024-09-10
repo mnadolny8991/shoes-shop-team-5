@@ -46,11 +46,15 @@ export default function UserLayout({
               <Typography
                 fontSize={12}
                 fontWeight={500}
-                lineHeight='18px'
+                lineHeight="18px"
                 color={'#98A2B3'}
-                mb='4px'
-              >Welcome</Typography>
-              <Typography fontSize={16} fontWeight={500} lineHeight='18.77px'>Jane Meldrum</Typography>
+                mb="4px"
+              >
+                Welcome
+              </Typography>
+              <Typography fontSize={16} fontWeight={500} lineHeight="18.77px">
+                Jane Meldrum
+              </Typography>
             </Box>
           </Box>
           <Divider />

@@ -15,6 +15,7 @@ const styleField = ({ theme, error }: StyleFieldProps) => ({
   backgroundColor: 'transparent',
   [theme.breakpoints.down('md')]: {
     padding: '11.76px 10.34px',
+    ...theme.typography.body2,
   },
 
   '&:focus': {

@@ -22,11 +22,7 @@ const MyProductsHeader = () => {
 
   return (
     <>
-      <Box
-        height={{xs:132, md: 262}}
-        position="relative"
-        width="100%"
-      >
+      <Box height={{ xs: 132, md: 262 }} position="relative" width="100%">
         <Image
           alt="Pawel Czerwinski unsplash-3"
           src={unsplash}
@@ -39,25 +35,27 @@ const MyProductsHeader = () => {
           }}
         />
       </Box>
-      <Box       
-        position='relative'
-        top={{xs: -15, md: -30}}
-        marginLeft={{xs: '20px', md: '55px'}}
-        display='flex'
-        gap={{xs : '13px', md : '26px'}}
-        alignItems='end'
-        >
+      <Box
+        position="relative"
+        top={{ xs: -15, md: -30 }}
+        marginLeft={{ xs: '20px', md: '55px' }}
+        display="flex"
+        gap={{ xs: '13px', md: '26px' }}
+        alignItems="end"
+      >
         <Avatar
           alt="Jane Meldrum"
           src="/jane-meldrum.png"
           sx={{
-            width: {xs: 64, md : 128},
-            height: {xs: 64, md : 128},
+            width: { xs: 64, md: 128 },
+            height: { xs: 64, md: 128 },
             border: '4px solid white',
           }}
         />
         <Box>
-          <Typography variant='h5' mb={{xs:'2px', md:'4px'}}>Jane Meldrum</Typography>
+          <Typography variant="h5" mb={{ xs: '2px', md: '4px' }}>
+            Jane Meldrum
+          </Typography>
           <Typography variant="subtitle2">1 374 bonus points</Typography>
         </Box>
       </Box>
@@ -66,7 +64,7 @@ const MyProductsHeader = () => {
         justifyContent="space-between"
         alignItems="center"
         mx={'20px'}
-        mb={{xs:'19px', md: '36px'}}
+        mb={{ xs: '19px', md: '36px' }}
       >
         <Typography variant="h1">My products</Typography>
         {products && !isMobile && <AddProductButton />}

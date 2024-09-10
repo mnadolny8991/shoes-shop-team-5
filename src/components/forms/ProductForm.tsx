@@ -3,6 +3,7 @@
 import { Product, Size } from '@/mock/products';
 import {
   Button,
+  MenuItem,
   Stack,
   Typography,
   useMediaQuery,
@@ -15,6 +16,8 @@ import InputField from '@/components/input/InputField';
 import allSizes from '@/data/allSizes';
 import EditingImagesBox from '@/components/containers/EditingImagesBox';
 import CheckboxesGroup from '@/components/input/CheckboxesGroup';
+import ALL_COLORS from '@/mock/ALL_COLORS';
+import MultipleSelect from '@/components/input/MultipleSelect';
 
 type ProductFormProps = {
   title: string;
@@ -36,6 +39,7 @@ const SaveButton = (
 export default function ProductForm({
   title,
   description,
+  product,
   onSubmit,
 }: ProductFormProps) {
   const theme = useTheme();
@@ -77,7 +81,7 @@ export default function ProductForm({
         spacing={{ xs: 4, md: 10 }}
         alignItems={{ xs: 'center', md: 'flex-start' }}
         direction={{ md: 'row' }}
-        mb={{xs: 3, md:6}}
+        mb={{ xs: 3, md: 6 }}
       >
         <Stack spacing={3} maxWidth={{ xs: '320px', md: '436px' }}>
           <InputField
@@ -85,46 +89,56 @@ export default function ProductForm({
             name="name"
             label="Product name"
             required
-            placeholder='Nike Air Max 90'
+            defaultValue={product?.name}
+            placeholder="Nike Air Max 90"
           />
-          <InputField id="price" name="price" label="Price" required placeholder='$160'/>
+          <InputField
+            id="price"
+            name="price"
+            label="Price"
+            required
+            placeholder="$160"
+            defaultValue={product?.price}
+          />
+          <MultipleSelect
+            id="color"
+            name="color"
+            label="Color"
+            defaultValue={product?.color?.map(({ id }) => id) ?? []}
+          >
+            {ALL_COLORS.map(({ name, id }) => (
+              <MenuItem value={id} key={id}>
+                {name}
+              </MenuItem>
+            ))}
+          </MultipleSelect>
           <Stack direction="row" spacing={2}>
             <Select
               id="gender"
               name="gender"
               label="Gender"
               required
-              defaultValue=""
+              defaultValue={product?.gender}
             >
               <option value="" disabled></option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
             </Select>
-            <Select id="color" name="color" label="Color" defaultValue="">
-              <option value=""></option>
-              {['black', 'blue', 'gray', 'green', 'red', 'white', 'yellow'].map(
-                (color) => (
-                  <option value={color} key={color}>
-                    {color}
-                  </option>
-                )
-              )}
+            <Select
+              id="brand"
+              name="brand"
+              label="Brand"
+              required
+              defaultValue={product?.brand}
+            >
+              <option value="" disabled></option>
+              {BRANDS.map((brand) => (
+                <option key={brand} value={brand}>
+                  {brand}
+                </option>
+              ))}
             </Select>
           </Stack>
-          <Select
-            id="brand"
-            name="brand"
-            label="Brand"
-            required
-            defaultValue=""
-        >
-            <option value="" disabled></option>
-            {BRANDS.map((brand) => (
-            <option key={brand} value={brand}>
-                {brand}
-            </option>
-            ))}
-        </Select>
           <Textarea
             id="description"
             name="description"
@@ -132,10 +146,16 @@ export default function ProductForm({
             required
             rows={isMobile ? 1 : 15}
             placeholder="Do not exceed 300 characters."
+            defaultValue={product?.description}
           />
-          <CheckboxesGroup name='sizes' caption='Add sizes' items={allSizes}/>
+          <CheckboxesGroup
+            name="sizes"
+            caption="Add sizes"
+            items={allSizes}
+            defaultChecked={product?.sizes?.map(({ id }) => id)}
+          />
         </Stack>
-        <EditingImagesBox/>
+        <EditingImagesBox initialImages={product?.images} />
         {isMobile && SaveButton}
       </Stack>
     </form>
