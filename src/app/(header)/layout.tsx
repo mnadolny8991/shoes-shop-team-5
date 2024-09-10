@@ -1,4 +1,6 @@
+'use client';
 import Header from '@/components/header/Header';
+import { CartContextProvider } from '@/context/CartContext';
 
 export default function HeaderLayout({
   children,
@@ -7,8 +9,10 @@ export default function HeaderLayout({
 }>) {
   return (
     <>
-      <Header />
-      {children}
+      <CartContextProvider>
+        <Header />
+        {children}
+      </CartContextProvider>
     </>
   );
 }

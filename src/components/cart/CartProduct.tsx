@@ -1,9 +1,12 @@
 import { Box, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import ImageContainer from '@/components/containers/ImageContainer';
 import CartProductBar from './CartProductBar';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { CartContext } from '@/context/CartContext';
+import { CartContextType } from '@/types/cart';
 
 type CartProductProps = {
+  id: number,
   name: string;
   price: number;
   gender: 'Male' | 'Female';
@@ -12,6 +15,7 @@ type CartProductProps = {
 };
 
 const CartProduct: React.FC<CartProductProps> = ({
+  id,
   name,
   price,
   gender,
@@ -20,7 +24,7 @@ const CartProduct: React.FC<CartProductProps> = ({
 }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const [amount, setAmount] = useState<number>(1);
+  const { amount, onAmountChange } = useContext(CartContext) as CartContextType;
 
   return (
     <Stack
@@ -101,12 +105,12 @@ const CartProduct: React.FC<CartProductProps> = ({
           }}
         >
           <CartProductBar
-            amount={amount}
+            amount={amount[id].value}
             onAddClick={() => {
-              if (amount >= 0) setAmount(amount + 1);
+              if (amount[id].value >= 0) onAmountChange(id, '+');
             }}
             onSubtractClick={() => {
-              if (amount > 0) setAmount(amount - 1);
+              if (amount[id].value > 0) onAmountChange(id, '-');
             }}
             onDeleteClick={onDelete}
           />

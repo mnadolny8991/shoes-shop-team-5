@@ -1,3 +1,4 @@
+'use client';
 import {
   Box,
   Divider,
@@ -8,9 +9,10 @@ import {
 } from '@mui/material';
 import CartProduct from '@/components/cart/CartProduct';
 import CartSummary from '@/components/cart/CartSummary';
-import cartProducts from '@/mock/cartProducts';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Product } from '@/mock/mockTypes';
+import { CartContext } from '@/context/CartContext';
+import { CartContextType } from '@/types/cart';
 
 type CartProps = {};
 
@@ -19,11 +21,9 @@ const Cart: React.FC<CartProps> = () => {
   const totalDown = useMediaQuery(theme.breakpoints.down(1750));
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  const [products, setProducts] = useState<Product[]>(cartProducts);
-
-  const handleDelete = (productId: number) => {
-    setProducts(products.filter((product) => product.id !== productId));
-  };
+  const { products, amount, onDelete } = useContext(
+    CartContext
+  ) as CartContextType;
 
   return (
     <Stack
@@ -57,17 +57,23 @@ const Cart: React.FC<CartProps> = () => {
           {products.map((product) => (
             <CartProduct
               key={product.id}
+              id={product.id}
               name={product.name}
               price={product.price}
               gender={product.gender}
               inStock={true}
-              onDelete={() => handleDelete(product.id)}
+              onDelete={() => onDelete(product.id)}
             />
           ))}
         </Stack>
       </Box>
       <CartSummary
-        subtotal={cartProducts.reduce((val, acc) => acc.price + val, 0)}
+        subtotal={products.reduce(
+          (acc, val) =>
+            val.price * amount.find((a) => a.productId === val.id)?.value! +
+            acc,
+          0
+        )}
         shipping={20}
         tax={0}
         sx={{ mt: totalDown ? '80px' : 0 }}
