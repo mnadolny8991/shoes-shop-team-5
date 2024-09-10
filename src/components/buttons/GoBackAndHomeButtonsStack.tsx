@@ -1,6 +1,6 @@
 import { Stack } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import CustomButton from './CustomButton';
+import CustomButton from '@/components/buttons/CustomButton';
 
 export default function GoBackAndHomeButtonsStack() {
   const router = useRouter();

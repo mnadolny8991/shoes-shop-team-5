@@ -9,10 +9,10 @@ import {
   styled,
   Typography,
 } from '@mui/material';
-import { Product } from '../../mock/products';
+import { Product } from '@/mock/products';
 import { MoreHoriz } from '@mui/icons-material';
 import { useState } from 'react';
-import DeleteModal from '../modals/DeleteModal';
+import DeleteModal from '@/components/modals/DeleteModal';
 
 export default function ProductCard({
   product: { id, name, price, images, gender },

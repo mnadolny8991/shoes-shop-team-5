@@ -9,23 +9,9 @@ import {
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import Image from 'next/image';
-import SearchBar from '../input/SearchBar';
+import SearchBar from '@/components/input/SearchBar';
 import { useEffect, useRef } from 'react';
-
-const popularSearchTerms = [
-  {
-    id: 1,
-    value: 'Nike Air Force 1 LV8',
-  },
-  {
-    id: 2,
-    value: 'Nike Air Force 1',
-  },
-  {
-    id: 3,
-    value: "Nike Air Force 1 '07 High",
-  },
-];
+import popularSearchTerms from '@/mock/popularSearchTerms';
 
 type SearchPopupProps = {
   show: boolean;
@@ -60,7 +46,7 @@ export default function SearchPopup({
       sx={{
         '& .MuiDrawer-paper': {
           width: '100%',
-          height: isMobile ? '196px' : '419px',
+          height: { xs: '196px', md: '419px' },
         },
       }}
     >
@@ -72,7 +58,7 @@ export default function SearchPopup({
           justifyContent: 'space-between',
           padding: '40px',
           paddingTop: '45px',
-          alignItems: isMobile ? 'center' : 'start',
+          alignItems: { xs: 'center', md: 'start' },
         }}
       >
         {!isMobile && (
@@ -89,6 +75,7 @@ export default function SearchPopup({
             width={isMobile ? '290px' : '700px'}
             height={isMobile ? '25px' : '79px'}
             variant={isMobile ? 'popupMobile' : 'popupLarge'}
+            onIconClick={close}
           />
           {!isMobile && (
             <Stack gap="24px">
@@ -131,8 +118,8 @@ export default function SearchPopup({
         >
           <CloseIcon
             sx={{
-              width: isMobile ? '15px' : '24px',
-              height: isMobile ? '15px' : '24px',
+              width: { xs: '15px', md: '24px' },
+              height: { xs: '15px', md: '24px' },
             }}
           />
         </IconButton>
