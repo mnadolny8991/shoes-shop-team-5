@@ -94,25 +94,23 @@ const CartProduct: React.FC<CartProductProps> = ({
             </Typography>
           )}
         </Box>
-        {!isMobile && (
-          <Box
-            sx={{
-              width: { md: 'fit-content', xs: '100%' },
-              marginLeft: 'auto',
+        <Box
+          sx={{
+            width: { md: 'fit-content', xs: '100%' },
+            marginLeft: 'auto',
+          }}
+        >
+          <CartProductBar
+            amount={amount}
+            onAddClick={() => {
+              if (amount >= 0) setAmount(amount + 1);
             }}
-          >
-            <CartProductBar
-              amount={amount}
-              onAddClick={() => {
-                if (amount >= 0) setAmount(amount + 1);
-              }}
-              onSubtractClick={() => {
-                if (amount > 0) setAmount(amount - 1);
-              }}
-              onDeleteClick={onDelete}
-            />
-          </Box>
-        )}
+            onSubtractClick={() => {
+              if (amount > 0) setAmount(amount - 1);
+            }}
+            onDeleteClick={onDelete}
+          />
+        </Box>
       </Stack>
     </Stack>
   );
