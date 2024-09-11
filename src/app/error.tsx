@@ -27,7 +27,7 @@ export default function Error({
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const ImageMessageContainer = styled('div')(({ theme }) => ({
-    [theme.breakpoints.down('md')]:{
+    [theme.breakpoints.down('md')]: {
       position: 'relative',
       height: 443,
       width: '100%',
@@ -42,36 +42,37 @@ export default function Error({
       fontWeight: 500,
       lineHeight: '28.66px',
       color: theme.palette.text.secondary,
-      [theme.breakpoints.down('md')]:{
+      [theme.breakpoints.down('md')]: {
         fontSize: 12,
         lineHeight: '17.2px',
-        color: theme.palette.primary.contrastText
-      }
+        color: theme.palette.primary.contrastText,
+      },
     },
     '& img': {
       zIndex: -1,
-      [theme.breakpoints.down('md')]:{
+      [theme.breakpoints.down('md')]: {
         objectPosition: '70% 50%',
         objectFit: 'cover',
       },
-      [theme.breakpoints.up('md')]:{
+      [theme.breakpoints.up('md')]: {
         position: 'absolute',
         left: 0,
         top: 0,
         width: '100%',
         height: 'auto',
-      }
+      },
     },
   }));
 
   return (
     <Stack
       sx={{
-        alignItems:{xs: 'center', md: 'flex-start'},
-        position:{md:'relative'},
-        padding:{md:'10%'}}}
+        alignItems: { xs: 'center', md: 'flex-start' },
+        position: { md: 'relative' },
+        padding: { md: '10%' },
+      }}
     >
-      <Typography variant="h1" mt={'43px'} mb={{xs: 2, md: 3}}>
+      <Typography variant="h1" mt={'43px'} mb={{ xs: 2, md: 3 }}>
         We lost that page...
       </Typography>
       <ImageMessageContainer>

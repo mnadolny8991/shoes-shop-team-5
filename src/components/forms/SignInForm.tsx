@@ -37,8 +37,8 @@ export default function SignInForm() {
 
   return (
     <form>
-      <Box maxWidth={{xs:320, md: 436}}>
-        <Stack spacing={2} mt={{xs:'25px', md: '48px'}}>
+      <Box maxWidth={{ xs: 320, md: 436 }}>
+        <Stack spacing={2} mt={{ xs: '25px', md: '48px' }}>
           <TextField
             value={email}
             onBlur={(e) => setIsFirstInteractionEmail(true)}
@@ -69,8 +69,8 @@ export default function SignInForm() {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            marginTop: {xs: '12px', md: '16px'},
-            marginBottom: {xs: '30px', md: '56px'},
+            marginTop: { xs: '12px', md: '16px' },
+            marginBottom: { xs: '30px', md: '56px' },
           }}
         >
           <FormControlLabel

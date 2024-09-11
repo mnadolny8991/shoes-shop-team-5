@@ -17,6 +17,13 @@ export default function DeleteModal({
   title,
   bodyText,
 }: Props) {
-
-  return <CustomModal isOpen={isOpen} onClose={onClose} onDelete={onDelete} title={title} bodyText={bodyText}/> 
+  return (
+    <CustomModal
+      isOpen={isOpen}
+      onClose={onClose}
+      onDelete={onDelete}
+      title={title}
+      bodyText={bodyText}
+    />
+  );
 }

@@ -30,7 +30,7 @@ export default function NotFound() {
       ) : (
         <Stack direction="row">
           <Box sx={{ flex: 1 }}>
-            <Box margin={{md: '30% calc((50vw - 436px) / 3)'}}>
+            <Box margin={{ md: '30% calc((50vw - 436px) / 3)' }}>
               <MessageBox />
               <GoBackAndHomeButtonsStack />
             </Box>
@@ -46,17 +46,17 @@ function ImageBox() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  const StyledImageBox = styled('div')(({theme}) =>({
+  const StyledImageBox = styled('div')(({ theme }) => ({
     [theme.breakpoints.down('md')]: {
-        width: '100%',
-        borderBottomLeftRadius: 35,
-        borderBottomRightRadius: 35,
-        overflow: 'hidden',
-      },
-    [theme.breakpoints.up('md')]:{
-          flex: 1,
-      }
-  }))
+      width: '100%',
+      borderBottomLeftRadius: 35,
+      borderBottomRightRadius: 35,
+      overflow: 'hidden',
+    },
+    [theme.breakpoints.up('md')]: {
+      flex: 1,
+    },
+  }));
 
   return (
     <StyledImageBox>
@@ -77,8 +77,8 @@ function ImageBox() {
 
 function MessageBox() {
   return (
-    <Box maxWidth={538} mx={{xs:'auto', md: 0}}>
-      <Typography variant="h1" mb={{xs:'12px', md: '20px'}}>
+    <Box maxWidth={538} mx={{ xs: 'auto', md: 0 }}>
+      <Typography variant="h1" mb={{ xs: '12px', md: '20px' }}>
         Error 404
       </Typography>
       <Typography variant="subtitle2">
