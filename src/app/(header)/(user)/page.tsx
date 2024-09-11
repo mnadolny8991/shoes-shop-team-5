@@ -4,12 +4,12 @@ import { Stack, Typography } from '@mui/material';
 
 import { products } from '@/mock/products';
 import ProductsGrid from '@/components/products/ProductsGrid';
-import MyProductsHeader from '@/components/products/MyProductsHeader';
+import ProductsHeader from '@/components/products/ProductsHeader';
 
 export default function DefaultProducts() {
   return (
     <>
-      <MyProductsHeader />
+      <ProductsHeader />
       <Stack
         direction={'row'}
         justifyContent="space-between"
