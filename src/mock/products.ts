@@ -1,4 +1,5 @@
 import type { Product } from '@/mock/mockTypes';
+import { Color } from '@/mock/ALL_COLORS';
 
 export const products: Array<Product> = [
   {

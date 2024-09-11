@@ -18,8 +18,8 @@ export default function CustomButton({
   size,
   variant,
   sx,
- onClick,
- disabled 
+  onClick,
+  disabled,
 }: CustomButtonProps) {
   return (
     <Button
