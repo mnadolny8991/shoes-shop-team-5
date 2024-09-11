@@ -2,17 +2,16 @@
 import { Box, Stack, useMediaQuery, useTheme } from '@mui/material';
 import { useEffect, useState } from 'react';
 import ImageContainer from '@/components/containers/ImageContainer';
-import { products } from '@/mock/products';
 import SliderButtons from '../buttons/SliderButtons';
+import { Image } from '@/data/apiTypes';
 
 type ShoeImageSliderProps = {
-  shoeId: string;
+  images: Image[],
 };
 
-export default function ShoeImageSlider({ shoeId }: ShoeImageSliderProps) {
+export default function ShoeImageSlider({ images }: ShoeImageSliderProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const [images, setImages] = useState(products[parseInt(shoeId)].images);
   const [choosenImageId, setChoosenImageId] = useState<number>(images[0].id);
 
   const [smallImageSize, setSmallImageSize] = useState({
@@ -55,14 +54,14 @@ export default function ShoeImageSlider({ shoeId }: ShoeImageSliderProps) {
           width: 'fit-content',
           height: isMobile ? 320 : 628,
         }}
-        justifyContent="space-between"
+        justifyContent="flex-start"
         direction="column"
       >
         {images.map((img) => (
           <ImageContainer
-            key={img.id}
-            src={img.url}
-            alt={img.alternativeText}
+            key={img?.id}
+            src={img?.attributes.url}
+            alt={img?.attributes.alternativeText || ''}
             width={smallImageSize.width}
             height={smallImageSize.height}
             onClick={() => setChoosenImageId(img.id)}
@@ -77,7 +76,7 @@ export default function ShoeImageSlider({ shoeId }: ShoeImageSliderProps) {
         }}
       >
         <ImageContainer
-          src={images.find((i) => i.id === choosenImageId)!.url}
+          src={images.find((i) => i.id === choosenImageId)!.attributes.url}
           alt="shoe image"
           width={bigImageSize.width}
           height={bigImageSize.height}

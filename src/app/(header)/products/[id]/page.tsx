@@ -10,17 +10,35 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { products } from '@/mock/products';
 import allSizes from '@/data/allSizes';
+import { Product, ProductResponse } from '@/data/apiTypes';
 
 export default function Page({ params }: { params: { id: string } }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const [product, setProduct] = useState(products[parseInt(params.id)]);
   const [colorId, setColorId] = useState(1);
   const [sizeId, setSizeId] = useState(1);
 
-  const gender = product.gender;
+  const { data } = useQuery({
+    queryKey: ['products'],
+    queryFn: () =>
+      fetch(
+        `https://shoes-shop-strapi.herokuapp.com/api/products/${params.id}?populate=*`
+      )
+        .then((res) => res.json())
+        .then((data) => data as ProductResponse),
+  });
+
+  const product = data?.data.attributes;
+  const gender = product?.gender?.data?.attributes?.name;
+  const color = product?.color?.data?.attributes?.name;
+  const sizes = product?.sizes?.data.map(s => 'EU-' + s.attributes.value);
+  const description = product?.description;
+  const name = product?.name;
+  const price = product?.price;
+  const images = product?.images?.data;
 
   return (
     <Stack
@@ -37,7 +55,9 @@ export default function Page({ params }: { params: { id: string } }) {
         },
       }}
     >
-      <ShoeImageSlider shoeId={params.id} />
+      {images && 
+        <ShoeImageSlider images={images} />
+      }
       <Box sx={{ width: { xs: '320px', md: '522px' } }}>
         <Box
           sx={{
@@ -46,7 +66,7 @@ export default function Page({ params }: { params: { id: string } }) {
             alignItems: 'flex-end',
           }}
         >
-          <Typography variant="h1">Nike Air Max 270</Typography>
+          <Typography variant="h1">{name}</Typography>
           <Typography
             sx={{
               fontSize: '22px',
@@ -54,7 +74,7 @@ export default function Page({ params }: { params: { id: string } }) {
               lineHeight: '25.81px',
             }}
           >
-            $160
+            ${price}
           </Typography>
         </Box>
         <Typography
@@ -66,23 +86,13 @@ export default function Page({ params }: { params: { id: string } }) {
             marginTop: '15px',
           }}
         >
-          {gender === 'Female' ? "Woman's" : "Men's"} shoes
+          {gender === 'Women' ? "Woman's" : "Men's"} shoes
         </Typography>
         <Stack gap="15px" direction="row" sx={{ marginTop: '19px' }}>
-          {product.color?.map((c) => (
-            <Chip
-              key={c.id}
-              label={c.name}
-              variant="outlined"
-              onClick={() => setColorId(c.id)}
-              sx={(theme) => ({
-                border:
-                  colorId === c.id
-                    ? `1px solid ${theme.palette.secondary.main}`
-                    : '',
-              })}
-            />
-          ))}
+          <Chip
+            label={color}
+            variant="outlined"
+          />
         </Stack>
         <Typography
           sx={{
@@ -108,19 +118,15 @@ export default function Page({ params }: { params: { id: string } }) {
             <Chip
               key={s.id}
               label={s.name}
-              variant="outlined"
-              disabled={!product.sizes?.find((si) => si.id === s.id)}
+              variant={s.id == sizeId ? "filled" : "outlined"}
+              disabled={sizes?.find((si) => si === s.name) !== undefined}
               onClick={() => setSizeId(s.id)}
-              sx={(theme) => ({
+              sx={{
                 width: { xs: '60px', md: '85px' },
                 height: { xs: '50px', md: '55px' },
-                border:
-                  sizeId === s.id
-                    ? `1 px solid ${theme.palette.secondary.main}`
-                    : '',
                 borderRadius: '8px',
                 fontSize: { xs: '10px', md: '12px' },
-              })}
+              }}
             />
           ))}
         </Stack>
@@ -154,11 +160,7 @@ export default function Page({ params }: { params: { id: string } }) {
             Description
           </Typography>
           <Typography variant="body2">
-            Boasting the first-ever Max Air unit created specifically for Nike
-            Sportswear, the Nike Air Max 270 delivers an Air unit that absorbs
-            and gives back energy with every springy step. Updated for modern
-            comfort, it nods to the original, 1991 Air Max 180 with its
-            exaggerated tongue top and heritage tongue logo.
+            {description}
           </Typography>
         </Stack>
       </Box>
