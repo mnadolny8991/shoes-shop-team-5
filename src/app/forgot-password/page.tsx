@@ -70,12 +70,10 @@ const ForgotPassword: React.FC = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '15px',
-                width: {xs:'320px',md : '436px'},
+                width: { xs: '320px', md: '436px' },
               }}
             >
-              <Typography variant="h1" >
-                Forgot password?
-              </Typography>
+              <Typography variant="h1">Forgot password?</Typography>
               <Typography variant="body2" color={theme.palette.text.secondary}>
                 Don’t worry, we’ll send you reset instructions.
               </Typography>
@@ -101,10 +99,7 @@ const ForgotPassword: React.FC = () => {
                 Reset Password
               </CustomButton>
 
-              <Typography
-                variant="caption"
-                textAlign="center"
-              >
+              <Typography variant="caption" textAlign="center">
                 <Link href="/login">Back to log in</Link>
               </Typography>
             </Box>

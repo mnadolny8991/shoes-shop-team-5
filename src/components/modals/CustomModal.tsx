@@ -21,7 +21,6 @@ type Props = {
   bodyText: string;
 };
 
-
 export default function CustomModal({
   isOpen,
   onClose,
@@ -39,7 +38,7 @@ export default function CustomModal({
         '& .MuiDialog-container': {
           '& .MuiPaper-root': {
             width: '100%',
-            maxWidth: {xs:'320px', md: '656px'},
+            maxWidth: { xs: '320px', md: '656px' },
           },
         },
       }}
