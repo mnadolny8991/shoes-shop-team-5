@@ -38,6 +38,18 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({
     );
   };
 
+  const applyAmountChange = (productId: number, newValue: number) => {
+    setAmount(
+      amount.map((pa) => {
+        if (pa.productId === productId) {
+          if (newValue <= 0) handleDelete(productId);
+          return { productId, value: newValue };
+        }
+        return pa;
+      })
+    );
+  }
+
   return (
     <CartContext.Provider
       value={{
@@ -45,7 +57,8 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({
         amount,
         promcode,
         onDelete: handleDelete,
-        onAmountChange: handleAmountChange,
+        onAmountIncrement: handleAmountChange,
+        onAmountChange: applyAmountChange,
         onPromcodeChange: handlePromcodeChange,
       }}
     >

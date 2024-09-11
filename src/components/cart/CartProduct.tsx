@@ -24,7 +24,7 @@ const CartProduct: React.FC<CartProductProps> = ({
 }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const { amount, onAmountChange } = useContext(CartContext) as CartContextType;
+  const { amount, onAmountIncrement, onAmountChange } = useContext(CartContext) as CartContextType;
 
   return (
     <Stack
@@ -107,12 +107,13 @@ const CartProduct: React.FC<CartProductProps> = ({
           <CartProductBar
             amount={amount[id].value}
             onAddClick={() => {
-              if (amount[id].value >= 0) onAmountChange(id, '+');
+              if (amount[id].value >= 0) onAmountIncrement(id, '+');
             }}
             onSubtractClick={() => {
-              if (amount[id].value > 0) onAmountChange(id, '-');
+              if (amount[id].value > 0) onAmountIncrement(id, '-');
             }}
             onDeleteClick={onDelete}
+            onAmountChange={(newValue: number) => onAmountChange(id, newValue)}
           />
         </Box>
       </Stack>

@@ -2,6 +2,7 @@ import {
   Box,
   Divider,
   IconButton,
+  Input,
   Stack,
   Typography,
   useMediaQuery,
@@ -11,12 +12,14 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded';
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { useState } from 'react';
 
 type CartProductBarProps = {
   amount: number;
-  onAddClick?: () => void;
-  onSubtractClick?: () => void;
-  onDeleteClick?: () => void;
+  onAddClick: () => void;
+  onSubtractClick: () => void;
+  onDeleteClick: () => void;
+  onAmountChange: (newValue: number) => void;
 };
 
 const CartProductBar: React.FC<CartProductBarProps> = ({
@@ -24,9 +27,11 @@ const CartProductBar: React.FC<CartProductBarProps> = ({
   onAddClick,
   onSubtractClick,
   onDeleteClick,
+  onAmountChange,
 }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const [openQuantityInput, setOpenQuantityInput] = useState<boolean>(false);
 
   return (
     <Stack
@@ -94,20 +99,33 @@ const CartProductBar: React.FC<CartProductBarProps> = ({
       )}
       {isMobile && 
         <Stack direction="row" justifyContent="space-between" width="100%">
-          <Stack direction="row" alignItems="center">
-            <Typography
-              sx={{
-                fontSize: '12px',
-                fontWeight: '400',
-                lineHeight: '14.08px',
-                color: '#494949',
-              }}
-            >
-              Quantity
-            </Typography>
-            <IconButton sx={{ p: 0 }}>
-              <KeyboardArrowDownIcon fontSize="small" />
-            </IconButton>
+          <Stack direction="column">
+            <Stack direction="row" alignItems="center">
+              <Typography
+                sx={{
+                  fontSize: '12px',
+                  fontWeight: '400',
+                  lineHeight: '14.08px',
+                  color: '#494949',
+                }}
+              >
+                Quantity
+              </Typography>
+              <IconButton sx={{ p: 0 }}>
+                <KeyboardArrowDownIcon fontSize="small" onClick={() => setOpenQuantityInput(!openQuantityInput)} />
+              </IconButton>
+            </Stack>
+            {openQuantityInput &&
+              <Input 
+                type="number"
+                value={amount}
+                placeholder="Quantity"
+                onChange={(e) => onAmountChange(parseInt(e.target.value))}
+                sx={{
+                  fontSize: '12px',
+                }}
+              />
+            }
           </Stack>
           <Stack direction="row" alignItems="center">
               <IconButton onClick={onDeleteClick} sx={{ p: 0 }}>

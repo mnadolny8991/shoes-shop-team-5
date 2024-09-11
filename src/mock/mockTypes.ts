@@ -1,3 +1,5 @@
+import { Color } from '@/mock/ALL_COLORS';
+
 export type ProductImage = {
   id: number;
   name: string;
@@ -7,11 +9,6 @@ export type ProductImage = {
 
 export type TeamName = 'team-1' | 'team-2' | 'team-3' | 'team-4' | 'team-5';
 
-export type Color = {
-  id: number;
-  name: string;
-
-};
 export type Size = {
   id: number;
   name: string;

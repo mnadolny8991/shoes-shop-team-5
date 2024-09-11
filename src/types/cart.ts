@@ -6,5 +6,6 @@ export type CartContextType = {
   promcode: string | null;
   onDelete: (productId: number) => void;
   onPromcodeChange: (value: string) => void;
-  onAmountChange: (productId: number, operation: '+' | '-') => void;
+  onAmountIncrement: (productId: number, operation: '+' | '-') => void;
+  onAmountChange: (productId: number, newValue: number) => void;
 };
