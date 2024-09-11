@@ -5,8 +5,13 @@ import { Stack, Typography } from '@mui/material';
 import { products } from '@/mock/products';
 import ProductsGrid from '@/components/products/ProductsGrid';
 import ProductsHeader from '@/components/products/ProductsHeader';
+import lastViewedItems from '@/mock/lastViewedId';
 
 export default function DefaultProducts() {
+  const lastViewed = lastViewedItems.map(
+    (id) => products.find((product) => product.id == id)!
+  );
+
   return (
     <>
       <ProductsHeader />
@@ -21,7 +26,7 @@ export default function DefaultProducts() {
       </Stack>
       {products && (
         <>
-          <ProductsGrid products={products} />
+          <ProductsGrid products={lastViewed} />
         </>
       )}
     </>
