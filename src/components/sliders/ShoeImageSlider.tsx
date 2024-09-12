@@ -37,7 +37,8 @@ export default function ShoeImageSlider({ images }: ShoeImageSliderProps) {
 
   function handleLeftClick() {
     const imageIdx = images.findIndex((i) => i.id === choosenImageId)!;
-    setChoosenImageId(images[(imageIdx - 1) % images.length].id);
+    if (imageIdx === 0) setChoosenImageId(images[images.length - 1].id);
+    else setChoosenImageId(images[(imageIdx - 1) % images.length].id);
   }
 
   return (

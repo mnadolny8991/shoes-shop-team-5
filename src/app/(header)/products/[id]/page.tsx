@@ -14,12 +14,14 @@ import { useQuery } from '@tanstack/react-query';
 import { products } from '@/mock/products';
 import allSizes from '@/data/allSizes';
 import { Product, ProductResponse } from '@/data/apiTypes';
+import { useRouter } from 'next/navigation';
 
 export default function Page({ params }: { params: { id: string } }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [colorId, setColorId] = useState(1);
   const [sizeId, setSizeId] = useState(1);
+  const router = useRouter();
 
   const { data } = useQuery({
     queryKey: ['products'],
@@ -31,10 +33,13 @@ export default function Page({ params }: { params: { id: string } }) {
         .then((data) => data as ProductResponse),
   });
 
-  const product = data?.data.attributes;
+  const productResponseDataObject = data?.data;
+  if (!productResponseDataObject) router.push('/error');
+
+  const product = productResponseDataObject?.attributes;
   const gender = product?.gender?.data?.attributes?.name;
   const color = product?.color?.data?.attributes?.name;
-  const sizes = product?.sizes?.data.map(s => 'EU-' + s.attributes.value);
+  const sizes = product?.sizes?.data.map((s) => 'EU-' + s.attributes.value);
   const description = product?.description;
   const name = product?.name;
   const price = product?.price;
