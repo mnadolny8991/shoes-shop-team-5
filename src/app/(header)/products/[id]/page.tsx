@@ -1,6 +1,6 @@
 'use client';
 import CustomButton from '@/components/buttons/CustomButton';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import ShoeImageSlider from '@/components/sliders/ShoeImageSlider';
 import {
   Box,
@@ -11,12 +11,11 @@ import {
   useTheme,
 } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { Product } from '@/types/product';
 import allSizes from '@/data/allSizes';
 import { useRouter } from 'next/navigation';
-import { CartContext, useCartContext } from '@/context/CartContext';
+import { useCartContext } from '@/context/CartContext';
 import mapProduct from '@/mappers/productMapper';
-import Cart from '@/components/cart/Cart';
+import apiUrl from '@/data/apiUrl';
 
 export default function Page({ params }: { params: { id: string } }) {
   const theme = useTheme();
@@ -26,7 +25,7 @@ export default function Page({ params }: { params: { id: string } }) {
     queryKey: ['products'],
     queryFn: () =>
       fetch(
-        `https://shoes-shop-strapi.herokuapp.com/api/products/${params.id}?populate=*`
+        `${apiUrl}/products/${params.id}?populate=*`
       )
         .then((res) => { 
           if (res.status === 404) {
