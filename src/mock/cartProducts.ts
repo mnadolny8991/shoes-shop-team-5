@@ -6,7 +6,7 @@ const cartProducts: Array<Product> = [
     name: 'Nike Air Max 270',
     description: 'some description Nike Air Max 270',
     price: 160,
-    gender: 'Female',
+    gender: 'Women',
     images: [
       {
         id: 0,
@@ -24,7 +24,7 @@ const cartProducts: Array<Product> = [
     name: 'Nike Air Max 90',
     description: 'some description Nike Air Max 90',
     price: 140,
-    gender: 'Male',
+    gender: 'Men',
     images: [
       {
         id: 0,
@@ -42,7 +42,7 @@ const cartProducts: Array<Product> = [
     name: "Nike Air Force 1 '07 SE",
     description: "some description about Nike Air Force 1 '07 SE",
     price: 110,
-    gender: 'Female',
+    gender: 'Women',
     images: [
       {
         id: 0,

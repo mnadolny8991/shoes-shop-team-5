@@ -1,7 +1,6 @@
 'use client';
 
 import { Box, Typography, Rating } from '@mui/material';
-import theme from '@/styles/theme';
 
 export default function SignupSlider() {
   return (

@@ -1,7 +1,6 @@
 import { Box, Stack, Typography } from '@mui/material';
-import Image from 'next/image';
 import CustomButton from '@/components/buttons/CustomButton';
-import ImageContainer from '../containers/ImageContainer';
+import ImageContainer from '@/components/containers/ImageContainer';
 import { useRouter } from 'next/navigation';
 
 type CartEmptyProps = {

@@ -1,6 +1,6 @@
 import { Box, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import ImageContainer from '@/components/containers/ImageContainer';
-import CartProductBar from './CartProductBar';
+import CartProductBar from '@/components/cart/CartProductBar';
 import { useCartContext } from '@/context/CartContext';
 
 type CartProductProps = {

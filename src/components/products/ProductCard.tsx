@@ -9,7 +9,7 @@ import {
   styled,
   Typography,
 } from '@mui/material';
-import { Product } from '@/mock/products';
+import { Product } from '@/mock/mockTypes';
 import { MoreHoriz } from '@mui/icons-material';
 import { useState } from 'react';
 import DeleteModal from '@/components/modals/DeleteModal';
