@@ -6,6 +6,7 @@ import {
 } from '@tanstack/react-query';
 
 const queryClient = new QueryClient();
+import { CartContextProvider } from '@/context/CartContext';
 
 export default function HeaderLayout({
   children,
@@ -15,8 +16,10 @@ export default function HeaderLayout({
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <Header />
-        {children}
+        <CartContextProvider>
+          <Header />
+          {children}
+        </CartContextProvider>
       </QueryClientProvider>
     </>
   );
