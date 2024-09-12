@@ -1,9 +1,6 @@
 'use client';
 import Header from '@/components/header/Header';
-import {
-  QueryClient,
-  QueryClientProvider,
-} from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const queryClient = new QueryClient();
 import { CartContextProvider } from '@/context/CartContext';

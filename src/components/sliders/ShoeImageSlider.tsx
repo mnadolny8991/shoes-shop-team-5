@@ -6,7 +6,7 @@ import SliderButtons from '../buttons/SliderButtons';
 import { ProductImage } from '@/types/product';
 
 type ShoeImageSliderProps = {
-  images: ProductImage[],
+  images: ProductImage[];
 };
 
 export default function ShoeImageSlider({ images }: ShoeImageSliderProps) {

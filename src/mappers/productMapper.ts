@@ -1,5 +1,10 @@
-import { ApiColor, ApiImage, ApiProductResponse, ApiSize } from "@/types/apiTypes";
-import { Color, Product, ProductImage, Size, TeamName } from "@/types/product";
+import {
+  ApiColor,
+  ApiImage,
+  ApiProductResponse,
+  ApiSize,
+} from '@/types/apiTypes';
+import { Color, Product, ProductImage, Size, TeamName } from '@/types/product';
 
 const mapApiImageToProductImage = (apiImage: ApiImage): ProductImage => ({
   id: apiImage.id,
@@ -21,7 +26,9 @@ const mapApiSizeToSize = (apiSize: ApiSize): Size => ({
   name: apiSize.attributes.value.toString(),
 });
 
-const mapProduct = async (apiProductResponse: ApiProductResponse): Promise<Product> => {
+const mapProduct = async (
+  apiProductResponse: ApiProductResponse
+): Promise<Product> => {
   const { id, attributes: apiProduct } = apiProductResponse.data;
   const product: Product = {
     id,
@@ -30,7 +37,9 @@ const mapProduct = async (apiProductResponse: ApiProductResponse): Promise<Produ
     brand: apiProduct.brand.data.attributes.name,
     color: mapApiColorToColor(apiProduct.color),
     sizes: apiProduct.sizes.data.map(mapApiSizeToSize),
-    categories: apiProduct.categories.data.map((category) => category.attributes.name),
+    categories: apiProduct.categories.data.map(
+      (category) => category.attributes.name
+    ),
     price: apiProduct.price,
     gender: apiProduct.gender.data.attributes.name as 'Men' | 'Women',
     images: apiProduct.images.data.map(mapApiImageToProductImage),
