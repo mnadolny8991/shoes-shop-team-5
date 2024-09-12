@@ -11,7 +11,7 @@ import {
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CustomButton from '@/components/buttons/CustomButton';
 import { useContext, useState } from 'react';
-import { CartContext } from '@/context/CartContext';
+import { CartContext, useCartContext } from '@/context/CartContext';
 import { CartContextType } from '@/types/cart';
 
 type CartSummaryProps = {
@@ -31,9 +31,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const [hasPromocode, setHasPromocode] = useState<boolean>(false);
-  const { promocode, onPromocodeChange } = useContext(
-    CartContext
-  ) as CartContextType;
+  const { promocode, onPromocodeChange } = useCartContext();
 
   const total = subtotal + shipping + tax;
 

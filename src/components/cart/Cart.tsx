@@ -9,9 +9,7 @@ import {
 } from '@mui/material';
 import CartProduct from '@/components/cart/CartProduct';
 import CartSummary from '@/components/cart/CartSummary';
-import { useContext } from 'react';
-import { CartContext } from '@/context/CartContext';
-import { CartContextType } from '@/types/cart';
+import { useCartContext } from '@/context/CartContext';
 import CartEmpty from '@/components/cart/CartEmpty';
 import { createPortal } from 'react-dom';
 
@@ -22,9 +20,7 @@ const Cart: React.FC<CartProps> = () => {
   const totalDown = useMediaQuery(theme.breakpoints.down(1750));
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  const { products, amount, onDelete } = useContext(
-    CartContext
-  ) as CartContextType;
+  const { products, amount, onDelete } = useCartContext();
 
   const empty = products.length <= 0;
 

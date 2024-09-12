@@ -1,15 +1,13 @@
 import { Box, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import ImageContainer from '@/components/containers/ImageContainer';
 import CartProductBar from './CartProductBar';
-import { useContext, useState } from 'react';
-import { CartContext } from '@/context/CartContext';
-import { CartContextType } from '@/types/cart';
+import { useCartContext } from '@/context/CartContext';
 
 type CartProductProps = {
   id: number;
   name: string;
   price: number;
-  gender: 'Male' | 'Female';
+  gender: 'Men' | 'Women';
   inStock: boolean;
   onDelete: () => void;
 };
@@ -24,9 +22,7 @@ const CartProduct: React.FC<CartProductProps> = ({
 }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const { amount, onAmountIncrement, onAmountChange } = useContext(
-    CartContext
-  ) as CartContextType;
+  const { amount, onAmountIncrement, onAmountChange } = useCartContext();
 
   return (
     <Stack
@@ -84,7 +80,7 @@ const CartProduct: React.FC<CartProductProps> = ({
               color: '#5C5C5C',
             }}
           >
-            {gender === 'Female' ? "Woman's" : "Men's"} shoes
+            {gender === 'Women' ? "Woman's" : "Men's"} shoes
           </Typography>
           {!isMobile && inStock && (
             <Typography

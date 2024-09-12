@@ -13,9 +13,8 @@ import {
 import { useQuery } from '@tanstack/react-query';
 import { Product } from '@/types/product';
 import allSizes from '@/data/allSizes';
-import { ApiProductResponse } from '@/types/apiTypes';
 import { useRouter } from 'next/navigation';
-import { CartContext } from '@/context/CartContext';
+import { CartContext, useCartContext } from '@/context/CartContext';
 import mapProduct from '@/mappers/productMapper';
 import Cart from '@/components/cart/Cart';
 
@@ -42,6 +41,7 @@ export default function Page({ params }: { params: { id: string } }) {
         }),
   });
   const [sizeId, setSizeId] = useState<null | number>(null);
+  const { onProductAdd } = useCartContext();
 
   return (
     <>
@@ -151,7 +151,12 @@ export default function Page({ params }: { params: { id: string } }) {
           <CustomButton 
             size={isMobile ? 'm' : 'xl'} 
             variant="contained"
-            // onClick={addToCart}
+            onClick={() => {
+              if (data) {
+                console.log(data);
+                onProductAdd(data);
+              };
+            }}
           >
             Add to Bag
           </CustomButton>
