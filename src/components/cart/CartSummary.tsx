@@ -62,13 +62,10 @@ const CartSummary: React.FC<CartSummaryProps> = ({
         }}
       >
         <Typography
-          sx={{
-            fontSize: '20px',
-            fontWeight: '400',
-            lineHeight: '23.46px',
-          }}
+          variant="h4"
+          fontWeight={400}
         >
-          Do you have a promcode?
+          Do you have a promocode?
         </Typography>
         <IconButton onClick={() => setHasPromocode(!hasPromocode)}>
           <ExpandMoreIcon />

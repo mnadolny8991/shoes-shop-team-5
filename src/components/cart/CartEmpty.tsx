@@ -2,12 +2,15 @@ import { Box, Stack, Typography } from '@mui/material';
 import Image from 'next/image';
 import CustomButton from '@/components/buttons/CustomButton';
 import ImageContainer from '../containers/ImageContainer';
+import { useRouter } from 'next/navigation';
 
 type CartEmptyProps = {
   sx?: object;
 };
 
 const CartEmpty: React.FC<CartEmptyProps> = ({ sx }) => {
+  const router = useRouter();
+
   return (
     <Stack
       alignItems="center"
@@ -17,6 +20,7 @@ const CartEmpty: React.FC<CartEmptyProps> = ({ sx }) => {
         left: '50%',
         transform: 'translate(-50%, -50%)',
         gap: '40px',
+        ...sx,
       }}
     >
       <Box
@@ -30,7 +34,7 @@ const CartEmpty: React.FC<CartEmptyProps> = ({ sx }) => {
       </Box>
       <Stack gap="10px">
         <Typography variant="h4" textAlign="center">
-          You don't have any products yet
+          You don&apos;t have any products yet
         </Typography>
         <Typography
           variant="body2"
@@ -43,7 +47,12 @@ const CartEmpty: React.FC<CartEmptyProps> = ({ sx }) => {
           Post can contain video, images and text
         </Typography>
       </Stack>
-      <CustomButton size="m" variant="contained" sx={{ width: '152px' }}>
+      <CustomButton 
+        size="m" 
+        variant="contained" 
+        sx={{ width: '152px' }}
+        onClick={() => router.push('catalog')}
+      >
         Add Product
       </CustomButton>
     </Stack>
