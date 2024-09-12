@@ -11,6 +11,7 @@ import SearchBar from '@/components/input/SearchBar';
 import SearchPopup from '@/components/header/SearchPopup';
 import CustomButton from '@/components/buttons/CustomButton';
 import PopupMenu from '@/components/header/PopupMenu';
+import { useRouter } from 'next/navigation';
 
 export default function NavRight() {
   const [showMenu, setShowMenu] = useState(false);
@@ -19,6 +20,7 @@ export default function NavRight() {
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const router = useRouter();
   const signedIn = true; // auth context here
 
   return (
@@ -49,7 +51,7 @@ export default function NavRight() {
         }}
       >
         {signedIn && !isMobile && (
-          <IconButton>
+          <IconButton onClick={() => router.push('/settings')}>
             <Avatar
               alt="Remy Sharp"
               src="/avatar.svg"
@@ -57,7 +59,7 @@ export default function NavRight() {
             />
           </IconButton>
         )}
-        <IconButton>
+        <IconButton onClick={() => router.push('/cart')}>
           <Image
             src="/bag.svg"
             width={isMobile ? 20 : 24}
