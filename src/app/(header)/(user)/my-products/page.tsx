@@ -1,18 +1,12 @@
 'use client';
 
-import {
-  Box,
-  Stack,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
+import { Box, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 
 import { products } from '@/mock/products';
 import ProductsGrid from '@/components/products/ProductsGrid';
 import MyProductsEmptyState from '@/components/products/MyProductsEmptyState';
 import AddProductButton from '@/components/products/AddProductButton';
-import MyProductsHeader from '@/components/products/MyProductsHeader';
+import ProductsHeader from '@/components/products/ProductsHeader';
 
 export default function MyProducts() {
   const theme = useTheme();
@@ -20,7 +14,7 @@ export default function MyProducts() {
 
   return (
     <>
-      <MyProductsHeader />
+      <ProductsHeader />
       <Stack
         direction={'row'}
         justifyContent="space-between"
