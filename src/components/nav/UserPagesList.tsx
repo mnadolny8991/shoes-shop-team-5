@@ -38,7 +38,6 @@ export default function UserPagesList() {
     <List disablePadding>
       <StyledListItem
         onClick={() => router.push(MY_PRODUCTS_PATH)}
-        selected={location.pathname === MY_PRODUCTS_PATH}
       >
         <ListItemIcon>
           <ShoppingBasketOutlinedIcon />
@@ -55,7 +54,6 @@ export default function UserPagesList() {
       </StyledListItem>
       <StyledListItem
         onClick={() => router.push(SETTINGS_PATH)}
-        selected={location.pathname === SETTINGS_PATH}
       >
         <ListItemIcon>
           <SettingsOutlinedIcon />
