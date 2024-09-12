@@ -33,4 +33,6 @@ const Select = forwardRef(function (
   );
 });
 
+Select.displayName = 'Select';
+
 export default Select;

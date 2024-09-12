@@ -44,4 +44,6 @@ const MultipleSelect = forwardRef(function (
   );
 });
 
+MultipleSelect.displayName = 'MultipleSelect';
+
 export default MultipleSelect;
