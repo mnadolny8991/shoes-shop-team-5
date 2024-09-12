@@ -22,13 +22,13 @@ export type Product = {
   name: string;
   description: string;
   brand: string;
-  color?: Array<Color>;
+  color?: Color;
   sizes?: Array<Size>;
   categories?: Array<string>;
   price: number;
-  gender: 'Male' | 'Female';
+  gender: 'Men' | 'Women';
   images: Array<ProductImage>;
-  userID: number;
+  userID?: number;
   teamName: TeamName;
 };
 
