@@ -3,10 +3,10 @@ import { Box, Stack, useMediaQuery, useTheme } from '@mui/material';
 import { useEffect, useState } from 'react';
 import ImageContainer from '@/components/containers/ImageContainer';
 import SliderButtons from '../buttons/SliderButtons';
-import { Image } from '@/data/apiTypes';
+import { ProductImage } from '@/types/product';
 
 type ShoeImageSliderProps = {
-  images: Image[],
+  images: ProductImage[],
 };
 
 export default function ShoeImageSlider({ images }: ShoeImageSliderProps) {
@@ -61,8 +61,8 @@ export default function ShoeImageSlider({ images }: ShoeImageSliderProps) {
         {images.map((img) => (
           <ImageContainer
             key={img?.id}
-            src={img?.attributes.url}
-            alt={img?.attributes.alternativeText || ''}
+            src={img?.url}
+            alt={img?.alternativeText || ''}
             width={smallImageSize.width}
             height={smallImageSize.height}
             onClick={() => setChoosenImageId(img.id)}
@@ -77,7 +77,7 @@ export default function ShoeImageSlider({ images }: ShoeImageSliderProps) {
         }}
       >
         <ImageContainer
-          src={images.find((i) => i.id === choosenImageId)!.attributes.url}
+          src={images.find((i) => i.id === choosenImageId)!.url}
           alt="shoe image"
           width={bigImageSize.width}
           height={bigImageSize.height}

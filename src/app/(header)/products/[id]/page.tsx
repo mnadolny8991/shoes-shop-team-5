@@ -1,6 +1,6 @@
 'use client';
 import CustomButton from '@/components/buttons/CustomButton';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import ShoeImageSlider from '@/components/sliders/ShoeImageSlider';
 import {
   Box,
@@ -11,42 +11,42 @@ import {
   useTheme,
 } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { products } from '@/mock/products';
+import { Product } from '@/types/product';
 import allSizes from '@/data/allSizes';
-import { Product, ProductResponse } from '@/data/apiTypes';
+import { ApiProductResponse } from '@/types/apiTypes';
 import { useRouter } from 'next/navigation';
+import { CartContext } from '@/context/CartContext';
+import mapProduct from '@/mappers/productMapper';
+import Cart from '@/components/cart/Cart';
 
 export default function Page({ params }: { params: { id: string } }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const [colorId, setColorId] = useState(1);
-  const [sizeId, setSizeId] = useState(1);
   const router = useRouter();
-
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['products'],
     queryFn: () =>
       fetch(
         `https://shoes-shop-strapi.herokuapp.com/api/products/${params.id}?populate=*`
       )
-        .then((res) => res.json())
-        .then((data) => data as ProductResponse),
+        .then((res) => { 
+          if (res.status === 404) {
+            console.log('somethings wrong');
+            throw new Error('There is no product with this id');
+          }
+          return res.json()
+        })
+        .then((data) => mapProduct(data))
+        .catch(() => { 
+          router.push('/error');
+        }),
   });
-
-  const productResponseDataObject = data?.data;
-  if (!productResponseDataObject) router.push('/error');
-
-  const product = productResponseDataObject?.attributes;
-  const gender = product?.gender?.data?.attributes?.name;
-  const color = product?.color?.data?.attributes?.name;
-  const sizes = product?.sizes?.data.map((s) => 'EU-' + s.attributes.value);
-  const description = product?.description;
-  const name = product?.name;
-  const price = product?.price;
-  const images = product?.images?.data;
+  const [sizeId, setSizeId] = useState<null | number>(null);
 
   return (
-    <Stack
+    <>
+      {!isLoading &&
+        <Stack
       direction="row"
       sx={{
         width: { xs: '320px', md: '85%' },
@@ -60,8 +60,8 @@ export default function Page({ params }: { params: { id: string } }) {
         },
       }}
     >
-      {images && 
-        <ShoeImageSlider images={images} />
+      {data?.images && 
+        <ShoeImageSlider images={data?.images} />
       }
       <Box sx={{ width: { xs: '320px', md: '522px' } }}>
         <Box
@@ -71,7 +71,7 @@ export default function Page({ params }: { params: { id: string } }) {
             alignItems: 'flex-end',
           }}
         >
-          <Typography variant="h1">{name}</Typography>
+          <Typography variant="h1">{data?.name}</Typography>
           <Typography
             sx={{
               fontSize: '22px',
@@ -79,7 +79,7 @@ export default function Page({ params }: { params: { id: string } }) {
               lineHeight: '25.81px',
             }}
           >
-            ${price}
+            ${data?.price}
           </Typography>
         </Box>
         <Typography
@@ -91,11 +91,11 @@ export default function Page({ params }: { params: { id: string } }) {
             marginTop: '15px',
           }}
         >
-          {gender === 'Women' ? "Woman's" : "Men's"} shoes
+          {data?.gender === 'Women' ? "Woman's" : "Men's"} shoes
         </Typography>
         <Stack gap="15px" direction="row" sx={{ marginTop: '19px' }}>
           <Chip
-            label={color}
+            label={data?.color?.name}
             variant="outlined"
           />
         </Stack>
@@ -123,8 +123,8 @@ export default function Page({ params }: { params: { id: string } }) {
             <Chip
               key={s.id}
               label={s.name}
-              variant={s.id == sizeId ? "filled" : "outlined"}
-              disabled={sizes?.find((si) => si === s.name) !== undefined}
+              variant={s.id === sizeId ? "filled" : "outlined"}
+              disabled={data?.sizes?.find((si) => 'EU-' + si.name === s.name) !== undefined}
               onClick={() => setSizeId(s.id)}
               sx={{
                 width: { xs: '60px', md: '85px' },
@@ -148,7 +148,11 @@ export default function Page({ params }: { params: { id: string } }) {
           <CustomButton size={isMobile ? 'm' : 'xl'} variant="outlined">
             Favorite
           </CustomButton>
-          <CustomButton size={isMobile ? 'm' : 'xl'} variant="contained">
+          <CustomButton 
+            size={isMobile ? 'm' : 'xl'} 
+            variant="contained"
+            // onClick={addToCart}
+          >
             Add to Bag
           </CustomButton>
         </Stack>
@@ -165,10 +169,13 @@ export default function Page({ params }: { params: { id: string } }) {
             Description
           </Typography>
           <Typography variant="body2">
-            {description}
+            {data?.description}
           </Typography>
         </Stack>
       </Box>
     </Stack>
+      }
+    </>
+    
   );
 }

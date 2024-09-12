@@ -1,4 +1,4 @@
-export type ImageFormat = {
+export type ApiImageFormat = {
   ext: string;
   url: string;
   hash: string;
@@ -13,14 +13,14 @@ export type ImageFormat = {
   };
 };
 
-export type ImageAttributes = {
+export type ApiImageAttributes = {
   name: string;
   alternativeText: string | null;
   caption: string | null;
   width: number | null;
   height: number | null;
   formats: {
-    [key: string]: ImageFormat;
+    [key: string]: ApiImageFormat;
   } | null;
   hash: string;
   ext: string;
@@ -37,78 +37,78 @@ export type ImageAttributes = {
   updatedAt: string;
 };
 
-export type Image = {
+export type ApiImage = {
   id: number;
-  attributes: ImageAttributes;
+  attributes: ApiImageAttributes;
 };
 
-export type BrandAttributes = {
+export type ApiBrandAttributes = {
   name: string;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
 };
 
-export type Brand = {
+export type ApiBrand = {
   data: {
     id: number;
-    attributes: BrandAttributes;
+    attributes: ApiBrandAttributes;
   };
 };
 
-export type CategoryAttributes = {
+export type ApiCategoryAttributes = {
   name: string;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
 };
 
-export type Category = {
+export type ApiCategory = {
   id: number;
-  attributes: CategoryAttributes;
+  attributes: ApiCategoryAttributes;
 };
 
-export type ColorAttributes = {
+export type ApiColorAttributes = {
   name: string;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
 };
 
-export type Color = {
+export type ApiColor = {
   data: {
     id: number;
-    attributes: ColorAttributes;
+    attributes: ApiColorAttributes;
   };
 };
 
-export type GenderAttributes = {
+export type ApiGenderAttributes = {
   name: string;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
 };
 
-export type Gender = {
+export type ApiGender = {
   data: {
     id: number;
-    attributes: GenderAttributes;
+    attributes: ApiGenderAttributes;
   };
 };
 
-export type SizeAttributes = {
+export type ApiSizeAttributes = {
   value: number;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
 };
 
-export type Size = {
+export type ApiSize = {
   id: number;
-  attributes: SizeAttributes;
+  attributes: ApiSizeAttributes;
 };
 
-export type UserAttributes = {
+export type ApiUserAttributes = {
   username: string;
   email: string;
   provider: string;
@@ -121,14 +121,14 @@ export type UserAttributes = {
   lastName: string | null;
 };
 
-export type User = {
+export type ApiUser = {
   data: {
     id: number;
-    attributes: UserAttributes;
+    attributes: ApiUserAttributes;
   };
 };
 
-export type Product = {
+export type ApiProduct = {
   name: string;
   description: string;
   price: number;
@@ -137,26 +137,26 @@ export type Product = {
   publishedAt: string;
   teamName: string;
   images: {
-    data: Image[];
+    data: ApiImage[];
   };
-  brand: Brand;
+  brand: ApiBrand;
   categories: {
-    data: Category[];
+    data: ApiCategory[];
   };
-  color: Color;
-  gender: Gender;
+  color: ApiColor;
+  gender: ApiGender;
   sizes: {
-    data: Size[];
+    data: ApiSize[];
   };
-  userID: User;
+  userID: ApiUser;
 };
 
-export type ProductResponseDataObject = {
+export type ApiProductResponseDataObject = {
   id: number;
-  attributes: Product;
+  attributes: ApiProduct;
 };
 
-export type ProductResponse = {
-  data: ProductResponseDataObject;
+export type ApiProductResponse = {
+  data: ApiProductResponseDataObject;
   meta: Record<string, unknown>;
 };

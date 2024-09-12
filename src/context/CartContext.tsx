@@ -50,6 +50,10 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({
     );
   };
 
+  const handleProductAdd = (product: Product) => {
+    setProducts([...products, product]);
+  }
+
   return (
     <CartContext.Provider
       value={{
@@ -60,6 +64,7 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({
         onAmountIncrement: handleAmountChange,
         onAmountChange: applyAmountChange,
         onPromocodeChange: handlePromocodeChange,
+        onProductAdd: handleProductAdd,
       }}
     >
       {children}
