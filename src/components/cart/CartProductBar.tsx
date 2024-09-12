@@ -32,6 +32,7 @@ const CartProductBar: React.FC<CartProductBarProps> = ({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [openQuantityInput, setOpenQuantityInput] = useState<boolean>(false);
+  const [amountMobile, setAmountMobile] = useState<number>(amount);
 
   return (
     <Stack
@@ -112,15 +113,25 @@ const CartProductBar: React.FC<CartProductBarProps> = ({
                 Quantity
               </Typography>
               <IconButton sx={{ p: 0 }}>
-                <KeyboardArrowDownIcon fontSize="small" onClick={() => setOpenQuantityInput(!openQuantityInput)} />
+                <KeyboardArrowDownIcon 
+                  fontSize="small" 
+                  onClick={() => {
+                    if (openQuantityInput) {
+                      Number.isNaN(amountMobile) 
+                        ? onAmountChange(amount) 
+                        : onAmountChange(amountMobile);
+                    }
+                    setOpenQuantityInput(!openQuantityInput);
+                  }}
+                />
               </IconButton>
             </Stack>
             {openQuantityInput &&
               <Input 
                 type="number"
-                value={amount}
+                value={amountMobile}
                 placeholder="Quantity"
-                onChange={(e) => onAmountChange(parseInt(e.target.value))}
+                onChange={(e) => setAmountMobile(parseInt(e.target.value))}
                 sx={{
                   fontSize: '12px',
                 }}

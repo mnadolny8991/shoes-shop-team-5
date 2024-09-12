@@ -15,14 +15,14 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({
       return { productId: p.id, value: 1 };
     })
   );
-  const [promcode, setPromcode] = useState<string | null>(null);
+  const [promocode, setPromocode] = useState<string | null>(null);
 
   const handleDelete = (productId: number) => {
     setProducts(products.filter((product) => product.id !== productId));
   };
 
-  const handlePromcodeChange = (value: string) => {
-    setPromcode(value);
+  const handlePromocodeChange = (value: string) => {
+    setPromocode(value);
   };
 
   const handleAmountChange = (productId: number, operation: '+' | '-') => {
@@ -55,11 +55,11 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({
       value={{
         products,
         amount,
-        promcode,
+        promocode,
         onDelete: handleDelete,
         onAmountIncrement: handleAmountChange,
         onAmountChange: applyAmountChange,
-        onPromcodeChange: handlePromcodeChange,
+        onPromocodeChange: handlePromocodeChange,
       }}
     >
       {children}

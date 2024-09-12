@@ -30,8 +30,8 @@ const CartSummary: React.FC<CartSummaryProps> = ({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  const [hasPromcode, setHasPromcode] = useState<boolean>(false);
-  const { promcode, onPromcodeChange } = useContext(
+  const [hasPromocode, setHasPromocode] = useState<boolean>(false);
+  const { promocode, onPromocodeChange } = useContext(
     CartContext
   ) as CartContextType;
 
@@ -70,12 +70,12 @@ const CartSummary: React.FC<CartSummaryProps> = ({
         >
           Do you have a promcode?
         </Typography>
-        <IconButton onClick={() => setHasPromcode(!hasPromcode)}>
+        <IconButton onClick={() => setHasPromocode(!hasPromocode)}>
           <ExpandMoreIcon />
         </IconButton>
       </Stack>
-      {hasPromcode && (
-        <Input value={promcode} onChange={(e) => onPromcodeChange(e.target.value)} />
+      {hasPromocode && (
+        <Input value={promocode} onChange={(e) => onPromocodeChange(e.target.value)} />
       )}
       <Stack
         sx={{
