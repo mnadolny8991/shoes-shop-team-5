@@ -1,4 +1,4 @@
-import { Product } from "@/mock/mockTypes";
+import { Product } from '@/mock/mockTypes';
 
 const cartProducts: Array<Product> = [
   {

@@ -1,12 +1,10 @@
-import Cart from "@/components/cart/Cart";
-import { FC } from "react";
+import Cart from '@/components/cart/Cart';
+import { FC } from 'react';
 
 type PageProps = {};
 
 const Page: FC<PageProps> = () => {
-  return (
-    <Cart />
-  )
-}
+  return <Cart />;
+};
 
 export default Page;

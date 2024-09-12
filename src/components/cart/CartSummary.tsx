@@ -61,10 +61,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({
           },
         }}
       >
-        <Typography
-          variant="h4"
-          fontWeight={400}
-        >
+        <Typography variant="h4" fontWeight={400}>
           Do you have a promocode?
         </Typography>
         <IconButton onClick={() => setHasPromocode(!hasPromocode)}>
@@ -72,7 +69,10 @@ const CartSummary: React.FC<CartSummaryProps> = ({
         </IconButton>
       </Stack>
       {hasPromocode && (
-        <Input value={promocode} onChange={(e) => onPromocodeChange(e.target.value)} />
+        <Input
+          value={promocode}
+          onChange={(e) => onPromocodeChange(e.target.value)}
+        />
       )}
       <Stack
         sx={{

@@ -1,4 +1,4 @@
-import { Product, ProductAmount } from "@/types/product";
+import { Product, ProductAmount } from '@/types/product';
 
 export type CartContextType = {
   products: Product[];

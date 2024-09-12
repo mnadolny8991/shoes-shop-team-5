@@ -6,7 +6,7 @@ import { CartContext } from '@/context/CartContext';
 import { CartContextType } from '@/types/cart';
 
 type CartProductProps = {
-  id: number,
+  id: number;
   name: string;
   price: number;
   gender: 'Male' | 'Female';
@@ -24,7 +24,9 @@ const CartProduct: React.FC<CartProductProps> = ({
 }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const { amount, onAmountIncrement, onAmountChange } = useContext(CartContext) as CartContextType;
+  const { amount, onAmountIncrement, onAmountChange } = useContext(
+    CartContext
+  ) as CartContextType;
 
   return (
     <Stack

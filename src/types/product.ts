@@ -35,4 +35,4 @@ export type Product = {
 export type ProductAmount = {
   productId: number;
   value: number;
-}
+};

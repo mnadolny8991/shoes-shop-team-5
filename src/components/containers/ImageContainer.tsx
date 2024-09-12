@@ -34,8 +34,8 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
         src={src}
         alt={alt}
         fill
-        style={{ 
-          objectFit: 'cover', 
+        style={{
+          objectFit: 'cover',
           width: '100%',
           height: '100%',
         }} // ensures the image covers the container

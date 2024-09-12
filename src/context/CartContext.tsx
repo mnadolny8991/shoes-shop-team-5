@@ -48,7 +48,7 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({
         return pa;
       })
     );
-  }
+  };
 
   return (
     <CartContext.Provider

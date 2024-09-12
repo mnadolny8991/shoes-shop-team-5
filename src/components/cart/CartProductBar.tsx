@@ -98,7 +98,7 @@ const CartProductBar: React.FC<CartProductBarProps> = ({
           </Stack>
         </>
       )}
-      {isMobile && 
+      {isMobile && (
         <Stack direction="row" justifyContent="space-between" width="100%">
           <Stack direction="column">
             <Stack direction="row" alignItems="center">
@@ -113,12 +113,12 @@ const CartProductBar: React.FC<CartProductBarProps> = ({
                 Quantity
               </Typography>
               <IconButton sx={{ p: 0 }}>
-                <KeyboardArrowDownIcon 
-                  fontSize="small" 
+                <KeyboardArrowDownIcon
+                  fontSize="small"
                   onClick={() => {
                     if (openQuantityInput) {
-                      Number.isNaN(amountMobile) 
-                        ? onAmountChange(amount) 
+                      Number.isNaN(amountMobile)
+                        ? onAmountChange(amount)
                         : onAmountChange(amountMobile);
                     }
                     setOpenQuantityInput(!openQuantityInput);
@@ -126,8 +126,8 @@ const CartProductBar: React.FC<CartProductBarProps> = ({
                 />
               </IconButton>
             </Stack>
-            {openQuantityInput &&
-              <Input 
+            {openQuantityInput && (
+              <Input
                 type="number"
                 value={amountMobile}
                 placeholder="Quantity"
@@ -136,28 +136,28 @@ const CartProductBar: React.FC<CartProductBarProps> = ({
                   fontSize: '12px',
                 }}
               />
-            }
+            )}
           </Stack>
           <Stack direction="row" alignItems="center">
-              <IconButton onClick={onDeleteClick} sx={{ p: 0 }}>
-                <DeleteOutlineRoundedIcon
-                  fontSize="small"
-                  sx={{ color: '#6E7278' }}
-                />
-              </IconButton>
-              <Typography
-                sx={{
-                  fontSize: '12px',
-                  fontWeight: '400',
-                  lineHeight: '14.08px',
-                  color: '#6E7278',
-                }}
-              >
-                Delete
-              </Typography>
-            </Stack>
+            <IconButton onClick={onDeleteClick} sx={{ p: 0 }}>
+              <DeleteOutlineRoundedIcon
+                fontSize="small"
+                sx={{ color: '#6E7278' }}
+              />
+            </IconButton>
+            <Typography
+              sx={{
+                fontSize: '12px',
+                fontWeight: '400',
+                lineHeight: '14.08px',
+                color: '#6E7278',
+              }}
+            >
+              Delete
+            </Typography>
+          </Stack>
         </Stack>
-      }
+      )}
     </Stack>
   );
 };

@@ -47,9 +47,9 @@ const CartEmpty: React.FC<CartEmptyProps> = ({ sx }) => {
           Post can contain video, images and text
         </Typography>
       </Stack>
-      <CustomButton 
-        size="m" 
-        variant="contained" 
+      <CustomButton
+        size="m"
+        variant="contained"
         sx={{ width: '152px' }}
         onClick={() => router.push('catalog')}
       >
