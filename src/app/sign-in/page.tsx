@@ -20,10 +20,10 @@ export default function SignIn() {
       <Box sx={{ flex: 1 }}>
         <Link
           href="/"
-          mt={{xs:'18px', md:'50px'}}
-          ml={{xs:'20px', md:'40px'}}
-          display='inline-block'
-          >
+          mt={{ xs: '18px', md: '50px' }}
+          ml={{ xs: '20px', md: '40px' }}
+          display="inline-block"
+        >
           <Image
             src="/logo.svg"
             width={isMobile ? 35 : 40}
@@ -35,7 +35,7 @@ export default function SignIn() {
         <Box
           margin={{
             xs: '35px  calc((100vw - 320px) / 2)',
-            md: '20% calc((50vw - 436px) / 3)'
+            md: '20% calc((50vw - 436px) / 3)',
           }}
         >
           <Typography variant="h1">Welcome back</Typography>
@@ -44,8 +44,8 @@ export default function SignIn() {
           </Typography>
           <SignInForm />
           <Typography
-            mt={{xs: '16px', md: '24px'}}
-            maxWidth={{xs: 320, md: 436}}
+            mt={{ xs: '16px', md: '24px' }}
+            maxWidth={{ xs: 320, md: 436 }}
             align="center"
             variant="body2"
           >

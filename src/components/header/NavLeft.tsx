@@ -7,10 +7,12 @@ import {
 } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function NavLeft() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const router = useRouter();
 
   return (
     <Box
@@ -20,7 +22,7 @@ export default function NavLeft() {
         gap: '44px',
       }}
     >
-      <IconButton>
+      <IconButton onClick={() => router.push('/')}>
         <Image
           src="/logo.svg"
           width={isMobile ? 35 : 40}

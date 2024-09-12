@@ -22,7 +22,16 @@ theme = createTheme({
         lineHeight: '35.19px',
       },
     },
-    h4:{
+    h2: {
+      fontWeight: '400',
+      fontSize: 30,
+      lineHeight: '35.19px',
+      [theme.breakpoints.down('md')]: {
+        fontSize: 20,
+        lineHeight: '23.46px',
+      },
+    },
+    h4: {
       fontSize: 20,
       lineHeight: '23.46px',
       fontWeight: '500',
@@ -31,7 +40,7 @@ theme = createTheme({
         lineHeight: '18.77px',
       },
     },
-    h5:{
+    h5: {
       fontSize: 20,
       lineHeight: '23.46px',
       fontWeight: '500',

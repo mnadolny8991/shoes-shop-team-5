@@ -12,12 +12,10 @@
  * @returns {string} - An error message if the email does not meet the criteria, otherwise an empty string.
  */
 const emailValidator = (inputVal: string) => {
-  const emailRegEx =new RegExp(
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    ) 
-  if (
-    !emailRegEx.test(inputVal)
-  ) {
+  const emailRegEx = new RegExp(
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  );
+  if (!emailRegEx.test(inputVal)) {
     return 'Enter a valid email address';
   } else {
     return '';
@@ -35,10 +33,10 @@ const emailValidator = (inputVal: string) => {
  * @returns {string} - An error message if the password does not meet the criteria, otherwise an empty string.
  */
 const passwordValidator = (inputVal: string) => {
-  const passwordRegex = new RegExp(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/)
-  if (
-    !passwordRegex.test(inputVal)
-  ) {
+  const passwordRegex = new RegExp(
+    /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/
+  );
+  if (!passwordRegex.test(inputVal)) {
     return 'Password should contains atleast 8 charaters and containing uppercase,lowercase and numbers';
   } else {
     return '';
@@ -71,7 +69,7 @@ const confirmPasswordValdiator = (firstPass: string) => {
  * @returns {string} - An error message if the password does not meet the criteria, otherwise an empty string.
  */
 const nameValidator = (name: string) => {
-  const nameRegex = new RegExp(/^[a-zA-Z]{3,}$/)
+  const nameRegex = new RegExp(/^[a-zA-Z]{3,}$/);
   if (!nameRegex.test(name)) {
     return 'Name must have minimum 3 letters and should not containe numbers';
   } else {

@@ -48,12 +48,10 @@ export default function ResetPassword() {
               display: 'flex',
               flexDirection: 'column',
               gap: '15px',
-              width: {xs:'320px',md: '436px'},
+              width: { xs: '320px', md: '436px' },
             }}
           >
-            <Typography variant="h1" >
-              Reset password
-            </Typography>
+            <Typography variant="h1">Reset password</Typography>
             <Typography variant="body2" color={theme.palette.text.secondary}>
               Please create new password here
             </Typography>
@@ -90,10 +88,7 @@ export default function ResetPassword() {
             >
               Reset Password
             </CustomButton>
-            <Typography
-              variant="caption"
-              textAlign="center"
-            >
+            <Typography variant="caption" textAlign="center">
               <Link href="/login">Back to log in</Link>
             </Typography>
           </Box>

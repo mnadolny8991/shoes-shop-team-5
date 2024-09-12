@@ -7,6 +7,7 @@ interface ImageContainerProps {
   width: number | string;
   height: number | string;
   onClick?: () => void;
+  sx?: object;
 }
 
 const ImageContainer: React.FC<ImageContainerProps> = ({
@@ -15,6 +16,7 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
   width,
   height,
   onClick,
+  sx,
 }) => {
   return (
     <Box
@@ -25,13 +27,18 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
       sx={{
         cursor: onClick ? 'pointer' : 'default',
         overflow: 'hidden',
+        ...sx,
       }}
     >
       <Image
         src={src}
         alt={alt}
         fill
-        style={{ objectFit: 'cover' }} // ensures the image covers the container
+        style={{
+          objectFit: 'cover',
+          width: '100%',
+          height: '100%',
+        }} // ensures the image covers the container
       />
     </Box>
   );

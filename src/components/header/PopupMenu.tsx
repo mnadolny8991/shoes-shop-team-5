@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import getMenuItems from '@/data/menuItems';
+import { useRouter } from 'next/navigation';
 
 type PopupMenuProps = {
   signedIn: boolean;
@@ -21,6 +22,7 @@ export default function PopupMenu({
   showMenu,
   onMenuClose,
 }: PopupMenuProps) {
+  const router = useRouter();
   const menuItems = getMenuItems(signedIn);
 
   return (
@@ -53,7 +55,14 @@ export default function PopupMenu({
         }}
       >
         {menuItems.map((menuItem) => (
-          <ListItemButton sx={{ px: 0 }} key={menuItem.id}>
+          <ListItemButton
+            sx={{ px: 0 }}
+            key={menuItem.id}
+            onClick={() => {
+              router.push(menuItem.href);
+              onMenuClose();
+            }}
+          >
             <ListItemIcon sx={{ minWidth: '35px' }}>
               {menuItem.icon}
             </ListItemIcon>
