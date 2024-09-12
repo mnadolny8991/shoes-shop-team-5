@@ -3,9 +3,9 @@
 
 import ProductsGrid from '@/components/products/ProductsGrid';
 import NothingFound from '@/components/products/NothingFound';
-//import { products } from '@/mock/products';
+import { products } from '@/mock/products';
 
-const products = null
+//const products = null
 
 export default function MyProducts() {
 
