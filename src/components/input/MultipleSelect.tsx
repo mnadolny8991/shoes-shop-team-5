@@ -1,3 +1,4 @@
+'use client';
 import { Select, SelectProps } from '@mui/material';
 import InputFieldContainer, {
   InputProps,

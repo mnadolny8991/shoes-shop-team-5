@@ -1,3 +1,5 @@
+'use client';
+
 import { Box, Stack, Typography } from '@mui/material';
 import CustomButton from '@/components/buttons/CustomButton';
 import ImageContainer from '@/components/containers/ImageContainer';

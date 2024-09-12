@@ -1,3 +1,5 @@
+'use client';
+
 import Cart from '@/components/cart/Cart';
 import { FC } from 'react';
 

@@ -1,3 +1,4 @@
+'use client';
 import { Box, styled } from '@mui/material';
 import Image from 'next/image';
 import IconButton from '@mui/material/IconButton';

@@ -1,3 +1,5 @@
+'use client';
+
 import { Box, BoxProps, Typography } from '@mui/material';
 import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
 

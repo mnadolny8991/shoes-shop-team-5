@@ -1,3 +1,5 @@
+'use client';
+
 import { Box, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import ImageContainer from '@/components/containers/ImageContainer';
 import CartProductBar from '@/components/cart/CartProductBar';
