@@ -49,6 +49,8 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   }, [products]);
 
+  const isLoading = productsData.some((query) => query.isLoading);
+
   const handleDelete = (productId: number) => {
     setProducts(products.filter((product) => product.id !== productId));
   };
@@ -110,6 +112,7 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({
         onAmountChange: applyAmountChange,
         onPromocodeChange: handlePromocodeChange,
         onProductAdd: handleProductAdd,
+        isLoading,
       }}
     >
       {children}
