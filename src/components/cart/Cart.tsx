@@ -61,6 +61,7 @@ const Cart: React.FC<CartProps> = () => {
               name={product.name}
               price={product.price}
               gender={product.gender}
+              url={product.images[0].url}
               inStock={true}
               onDelete={() => onDelete(product.id)}
             />
@@ -71,7 +72,7 @@ const Cart: React.FC<CartProps> = () => {
         <CartSummary
           subtotal={products.reduce(
             (acc, val) =>
-              val.price * amount.find((a) => a.productId === val.id)?.value! +
+              val.price * amount.find((a) => a.id === val.id)?.amount! +
               acc,
             0
           )}
