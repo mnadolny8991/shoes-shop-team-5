@@ -29,7 +29,7 @@ export default function MyProductsEmptyState() {
           alt="bag icon"
         />
       </IconButton>
-      <Typography variant="h4">You don’t have any products yet</Typography>
+      <Typography variant="h4">You don&apos;t have any products yet</Typography>
       <Typography variant="subtitle2" mb={{ xs: 4, md: 5 }}>
         Post can contain video, images and text.
       </Typography>

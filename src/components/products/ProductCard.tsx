@@ -132,7 +132,7 @@ export default function ProductCard({ product }: { product: Product }) {
           <CardName>{name}</CardName>
           <CardName>${price}</CardName>
         </Stack>
-        <Typography variant="subtitle2">{`${gender.name}’s Shoes`}</Typography>
+        <Typography variant="subtitle2">{gender.name}&apos;s Shoes</Typography>
       </CardContent>
     </Card>
   );
