@@ -82,7 +82,7 @@ const CartProduct: React.FC<CartProductProps> = ({
               color: '#5C5C5C',
             }}
           >
-            {gender}'s shoes
+            {gender}&apos;s shoes
           </Typography>
           {!isMobile && inStock && (
             <Typography
