@@ -1,6 +1,6 @@
 'use client';
 
-import { Product } from '@/mock/mockTypes';
+import { Product } from '@/types/product';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import ProductCard from '@/components/products/ProductCard';
 

@@ -17,31 +17,16 @@ export type Size = {
   name: string;
 };
 
-export type Category = {
-  id: number;
-  name: string;
-};
-
-export type Brand = {
-  id: number;
-  name: string;
-};
-
-export type Gender = {
-  id: number;
-  name: string;
-};
-
 export type Product = {
   id: number;
   name: string;
   description: string;
-  brand: Brand;
+  brand: string;
   color?: Color;
   sizes?: Array<Size>;
-  categories?: Array<Category>;
+  categories?: Array<string>;
   price: number;
-  gender: Gender;
+  gender: 'Men' | 'Women';
   images: Array<ProductImage>;
   userID?: number;
   teamName: TeamName;
