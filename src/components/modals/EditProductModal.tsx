@@ -1,3 +1,4 @@
+'use client';
 import { Dialog } from '@mui/material';
 import ProductForm from '@/components/forms/ProductForm';
 import { Product } from '@/types/product';

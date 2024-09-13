@@ -36,6 +36,7 @@ const mapProduct = async (
   apiProductResponse: ApiProductResponse
 ): Promise<Product> => {
   const { id, attributes: apiProduct } = apiProductResponse.data;
+  
   const product: Product = {
     id,
     name: apiProduct.name,

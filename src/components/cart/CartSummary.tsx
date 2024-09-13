@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Box,
   Divider,
@@ -10,9 +12,8 @@ import {
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CustomButton from '@/components/buttons/CustomButton';
-import { useContext, useState } from 'react';
-import { CartContext, useCartContext } from '@/context/CartContext';
-import { CartContextType } from '@/types/cart';
+import { useState } from 'react';
+import { useCartContext } from '@/context/CartContext';
 
 type CartSummaryProps = {
   subtotal: number;

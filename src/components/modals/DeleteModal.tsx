@@ -1,6 +1,6 @@
 'use client';
 
-import CustomModal from './CustomModal';
+import CustomModal from '@/components/modals/CustomModal';
 
 type Props = {
   isOpen: boolean;

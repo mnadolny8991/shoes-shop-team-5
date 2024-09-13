@@ -2,7 +2,7 @@
 import { Box, Stack, useMediaQuery, useTheme } from '@mui/material';
 import { useEffect, useState } from 'react';
 import ImageContainer from '@/components/containers/ImageContainer';
-import SliderButtons from '../buttons/SliderButtons';
+import SliderButtons from '@/components/buttons/SliderButtons';
 import { ProductImage } from '@/types/product';
 
 type ShoeImageSliderProps = {
