@@ -1,6 +1,6 @@
 'use client';
 
-import { ProductImage } from '@/mock/products';
+import { ProductImage } from '@/types/product';
 import {
   Box,
   IconButton,

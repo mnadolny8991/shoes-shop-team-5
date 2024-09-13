@@ -1,23 +1,26 @@
 'use client';
 
-import { Product, Size } from '@/mock/products';
+import { Product, Size } from '@/types/product';
 import {
   Button,
-  MenuItem,
   Stack,
   Typography,
   useMediaQuery,
   useTheme,
 } from '@mui/material';
 import Select from '@/components/input/Select';
-import { BRANDS } from '@/mock/BRANDS';
 import Textarea from '@/components/input/Textarea';
 import InputField from '@/components/input/InputField';
-import allSizes from '@/data/allSizes';
 import EditingImagesBox from '@/components/containers/EditingImagesBox';
 import CheckboxesGroup from '@/components/input/CheckboxesGroup';
-import ALL_COLORS from '@/mock/ALL_COLORS';
-import MultipleSelect from '@/components/input/MultipleSelect';
+import { useQuery } from '@tanstack/react-query';
+import apiUrl from '@/data/apiUrl';
+import {
+  mapAllColors,
+  mapAllSizes,
+  mapBrands,
+  mapGenders,
+} from '@/mappers/productMappers';
 
 type ProductFormProps = {
   title: string;
@@ -45,13 +48,45 @@ export default function ProductForm({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
+  const { data: colors, isLoading: isColorsLoading } = useQuery({
+    queryKey: ['colors'],
+    queryFn: () =>
+      fetch(`${apiUrl}/colors?fields=name`)
+        .then((res) => res.json())
+        .then((data) => mapAllColors(data)),
+  });
+
+  const { data: sizes, isLoading: isSizesLoading } = useQuery({
+    queryKey: ['sizes'],
+    queryFn: () =>
+      fetch(`${apiUrl}/sizes?fields=value`)
+        .then((res) => res.json())
+        .then((data) => mapAllSizes(data)),
+  });
+
+  const { data: brands, isLoading: isBrandLoading } = useQuery({
+    queryKey: ['brands'],
+    queryFn: () =>
+      fetch(`${apiUrl}/brands?fields=name`)
+        .then((res) => res.json())
+        .then((data) => mapBrands(data)),
+  });
+
+  const { data: genders, isLoading: isGenderLoading } = useQuery({
+    queryKey: ['genders'],
+    queryFn: () =>
+      fetch(`${apiUrl}/genders?fields=name`)
+        .then((res) => res.json())
+        .then((data) => mapGenders(data)),
+  });
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
     onSubmit({
       ...Object.fromEntries(formData),
       sizes: (formData.getAll('sizes') as string[]).map((id) =>
-        allSizes.find((size) => size.id === +id)
+        sizes?.find((size) => size.id === +id)
       ) as Size[],
     });
   };
@@ -100,41 +135,45 @@ export default function ProductForm({
             placeholder="$160"
             defaultValue={product?.price}
           />
-          <MultipleSelect
+          <Select
             id="color"
             name="color"
             label="Color"
-            defaultValue={product?.color?.map(({ id }) => id) ?? []}
+            defaultValue={product?.color?.id}
           >
-            {ALL_COLORS.map(({ name, id }) => (
-              <MenuItem value={id} key={id}>
+            <option value=""></option>
+            {colors?.map(({ name, id }) => (
+              <option value={id} key={id}>
                 {name}
-              </MenuItem>
+              </option>
             ))}
-          </MultipleSelect>
+          </Select>
           <Stack direction="row" spacing={2}>
             <Select
               id="gender"
               name="gender"
               label="Gender"
               required
-              defaultValue={product?.gender}
+              defaultValue={product?.gender.id}
             >
               <option value="" disabled></option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
+              {genders?.map(({ name, id }) => (
+                <option value={id} key={id}>
+                  {name}
+                </option>
+              ))}
             </Select>
             <Select
               id="brand"
               name="brand"
               label="Brand"
               required
-              defaultValue={product?.brand}
+              defaultValue={product?.brand.id}
             >
               <option value="" disabled></option>
-              {BRANDS.map((brand) => (
-                <option key={brand} value={brand}>
-                  {brand}
+              {brands?.map((brand) => (
+                <option key={brand.id} value={brand.id}>
+                  {brand.name}
                 </option>
               ))}
             </Select>
@@ -148,12 +187,14 @@ export default function ProductForm({
             placeholder="Do not exceed 300 characters."
             defaultValue={product?.description}
           />
-          <CheckboxesGroup
-            name="sizes"
-            caption="Add sizes"
-            items={allSizes}
-            defaultChecked={product?.sizes?.map(({ id }) => id)}
-          />
+          {sizes && (
+            <CheckboxesGroup
+              name="sizes"
+              caption="Add sizes"
+              items={sizes}
+              defaultChecked={product?.sizes?.map(({ id }) => id)}
+            />
+          )}
         </Stack>
         <EditingImagesBox initialImages={product?.images} />
         {isMobile && SaveButton}

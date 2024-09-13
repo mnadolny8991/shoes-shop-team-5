@@ -6,7 +6,10 @@ const cartProducts: Array<Product> = [
     name: 'Nike Air Max 270',
     description: 'some description Nike Air Max 270',
     price: 160,
-    gender: 'Female',
+    gender: {
+      id: 4,
+      name: 'Women',
+    },
     images: [
       {
         id: 0,
@@ -15,7 +18,10 @@ const cartProducts: Array<Product> = [
         url: '/mock/irene-kredenets.png',
       },
     ],
-    brand: 'Nike',
+    brand: {
+      id: 9,
+      name: 'Nike',
+    },
     userID: 0,
     teamName: 'team-5',
   },
@@ -24,7 +30,10 @@ const cartProducts: Array<Product> = [
     name: 'Nike Air Max 90',
     description: 'some description Nike Air Max 90',
     price: 140,
-    gender: 'Male',
+    gender: {
+      id: 3,
+      name: 'Men',
+    },
     images: [
       {
         id: 0,
@@ -33,7 +42,10 @@ const cartProducts: Array<Product> = [
         url: '/mock/imani-bahati.png',
       },
     ],
-    brand: 'Nike',
+    brand: {
+      id: 9,
+      name: 'Nike',
+    },
     userID: 0,
     teamName: 'team-5',
   },
@@ -42,7 +54,10 @@ const cartProducts: Array<Product> = [
     name: "Nike Air Force 1 '07 SE",
     description: "some description about Nike Air Force 1 '07 SE",
     price: 110,
-    gender: 'Female',
+    gender: {
+      id: 4,
+      name: 'Women',
+    },
     images: [
       {
         id: 0,
@@ -51,7 +66,10 @@ const cartProducts: Array<Product> = [
         url: '/mock/luis-felipe-lins.png',
       },
     ],
-    brand: 'Nike',
+    brand: {
+      id: 9,
+      name: 'Nike',
+    },
     userID: 0,
     teamName: 'team-5',
   },

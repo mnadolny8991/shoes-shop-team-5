@@ -7,7 +7,7 @@ type CartProductProps = {
   id: number;
   name: string;
   price: number;
-  gender: 'Men' | 'Women';
+  gender: string;
   inStock: boolean;
   onDelete: () => void;
 };
@@ -80,7 +80,7 @@ const CartProduct: React.FC<CartProductProps> = ({
               color: '#5C5C5C',
             }}
           >
-            {gender === 'Women' ? "Woman's" : "Men's"} shoes
+            {gender}'s shoes
           </Typography>
           {!isMobile && inStock && (
             <Typography

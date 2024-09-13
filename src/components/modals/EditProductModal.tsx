@@ -1,6 +1,6 @@
 import { Dialog } from '@mui/material';
 import ProductForm from '@/components/forms/ProductForm';
-import { Product } from '@/mock/products';
+import { Product } from '@/types/product';
 
 type Props = {
   isOpen: boolean;

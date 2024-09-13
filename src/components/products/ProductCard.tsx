@@ -9,7 +9,7 @@ import {
   styled,
   Typography,
 } from '@mui/material';
-import { Product } from '@/mock/products';
+import { Product } from '@/types/product';
 import { MoreHoriz } from '@mui/icons-material';
 import { useState } from 'react';
 import DeleteModal from '@/components/modals/DeleteModal';
@@ -131,9 +131,7 @@ export default function ProductCard({ product }: { product: Product }) {
           <CardName>{name}</CardName>
           <CardName>${price}</CardName>
         </Stack>
-        <Typography variant="subtitle2">
-          {gender === 'Male' ? 'Men’s' : 'Women’s'} Shoes
-        </Typography>
+        <Typography variant="subtitle2">{`${gender.name}’s Shoes`}</Typography>
       </CardContent>
     </Card>
   );

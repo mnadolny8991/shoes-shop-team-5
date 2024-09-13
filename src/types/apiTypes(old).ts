@@ -1,11 +1,3 @@
-type ApiListMeta = {
-  pagination: {
-    page: number;
-    pageSize: number;
-    pageCount: number;
-    total: number;
-  };
-};
 export type ApiImageFormat = {
   ext: string;
   url: string;
@@ -58,13 +50,10 @@ export type ApiBrandAttributes = {
 };
 
 export type ApiBrand = {
-  id: number;
-  attributes: ApiBrandAttributes;
-};
-
-export type ApiBrandListResponse = {
-  data: ApiBrand[];
-  meta: ApiListMeta;
+  data: {
+    id: number;
+    attributes: ApiBrandAttributes;
+  };
 };
 
 export type ApiCategoryAttributes = {
@@ -79,11 +68,6 @@ export type ApiCategory = {
   attributes: ApiCategoryAttributes;
 };
 
-export type ApiCategoryListResponse = {
-  data: ApiCategory[];
-  meta: ApiListMeta;
-};
-
 export type ApiColorAttributes = {
   name: string;
   createdAt: string;
@@ -92,13 +76,10 @@ export type ApiColorAttributes = {
 };
 
 export type ApiColor = {
-  id: number;
-  attributes: ApiColorAttributes;
-};
-
-export type ApiColorListResponse = {
-  data: ApiColor[];
-  meta: ApiListMeta;
+  data: {
+    id: number;
+    attributes: ApiColorAttributes;
+  };
 };
 
 export type ApiGenderAttributes = {
@@ -109,13 +90,10 @@ export type ApiGenderAttributes = {
 };
 
 export type ApiGender = {
-  id: number;
-  attributes: ApiGenderAttributes;
-};
-
-export type ApiGenderListResponse = {
-  data: ApiGender[];
-  meta: ApiListMeta;
+  data: {
+    id: number;
+    attributes: ApiGenderAttributes;
+  };
 };
 
 export type ApiSizeAttributes = {
@@ -128,11 +106,6 @@ export type ApiSizeAttributes = {
 export type ApiSize = {
   id: number;
   attributes: ApiSizeAttributes;
-};
-
-export type ApiSizeListResponse = {
-  data: ApiSize[];
-  meta: ApiListMeta;
 };
 
 export type ApiUserAttributes = {
@@ -166,18 +139,12 @@ export type ApiProduct = {
   images: {
     data: ApiImage[];
   };
-  brand: {
-    data: ApiBrand;
-  };
+  brand: ApiBrand;
   categories: {
     data: ApiCategory[];
   };
-  color: {
-    data: ApiColor;
-  };
-  gender: {
-    data: ApiGender;
-  };
+  color: ApiColor;
+  gender: ApiGender;
   sizes: {
     data: ApiSize[];
   };
@@ -192,14 +159,4 @@ export type ApiProductResponseDataObject = {
 export type ApiProductResponse = {
   data: ApiProductResponseDataObject;
   meta: Record<string, unknown>;
-};
-
-export type ApiProductListResponseDataItem = {
-  id: number;
-  attributes: ApiProduct;
-};
-
-export type ApiProductListResponse = {
-  data: ApiProductListResponseDataItem[];
-  meta: ApiListMeta;
 };
