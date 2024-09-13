@@ -46,8 +46,3 @@ export type Product = {
   userID?: number;
   teamName: TeamName;
 };
-
-export type ProductAmount = {
-  productId: number;
-  value: number;
-};

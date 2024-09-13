@@ -11,6 +11,7 @@ type CartProductProps = {
   price: number;
   gender: string;
   inStock: boolean;
+  url: string;
   onDelete: () => void;
 };
 
