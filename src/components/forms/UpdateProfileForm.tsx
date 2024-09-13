@@ -1,8 +1,8 @@
 'use client';
 
 import { Box, useTheme, useMediaQuery } from '@mui/material';
-import TextField from '../input/TextField';
-import CustomButton from '../buttons/CustomButton';
+import TextField from '@/components/input/TextField';
+import CustomButton from '@/components/buttons/CustomButton';
 
 export default function UpdateProfileForm() {
   const theme = useTheme();

@@ -1,8 +1,8 @@
 'use client';
 
 import { Box, Typography, Link, useTheme, useMediaQuery } from '@mui/material';
-import TextField from '../input/TextField';
-import CustomButton from '../buttons/CustomButton';
+import TextField from '@/components/input/TextField';
+import CustomButton from '@/components/buttons/CustomButton';
 import { useState } from 'react';
 import useValidate from '@/hooks/useValidate';
 import {

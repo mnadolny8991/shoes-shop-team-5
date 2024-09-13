@@ -1,6 +1,7 @@
+'use client';
 import { Dialog } from '@mui/material';
 import ProductForm from '@/components/forms/ProductForm';
-import { Product } from '@/mock/products';
+import { Product } from '@/mock/mockTypes';
 
 type Props = {
   isOpen: boolean;

@@ -1,3 +1,4 @@
+'use client';
 import { Select, SelectProps } from '@mui/material';
 import InputFieldContainer, {
   InputProps,
@@ -43,5 +44,7 @@ const MultipleSelect = forwardRef(function (
     </InputFieldContainer>
   );
 });
+
+MultipleSelect.displayName = 'MultipleSelect';
 
 export default MultipleSelect;

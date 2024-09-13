@@ -10,7 +10,7 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import CustomButton from '../buttons/CustomButton';
+import CustomButton from '@/components/buttons/CustomButton';
 import theme from '@/styles/theme';
 
 type Props = {

@@ -1,10 +1,17 @@
 'use client';
-import { createContext, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { Product, ProductAmount } from '@/types/product';
 import cartProducts from '@/mock/cartProducts';
 import { CartContextType } from '@/types/cart';
 
 const CartContext = createContext<CartContextType | null>(null);
+
+export const useCartContext = () => {
+  const context = useContext(CartContext);
+  if (!context)
+    throw Error('useAuthContext can only be used inside an AuthProvider');
+  return context;
+};
 
 const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -50,6 +57,10 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({
     );
   };
 
+  const handleProductAdd = (product: Product) => {
+    setProducts([...products, product]);
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -60,6 +71,7 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({
         onAmountIncrement: handleAmountChange,
         onAmountChange: applyAmountChange,
         onPromocodeChange: handlePromocodeChange,
+        onProductAdd: handleProductAdd,
       }}
     >
       {children}

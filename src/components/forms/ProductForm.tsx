@@ -1,6 +1,6 @@
 'use client';
 
-import { Product, Size } from '@/mock/products';
+import { Product, Size } from '@/mock/mockTypes';
 import {
   Button,
   MenuItem,

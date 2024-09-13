@@ -2,17 +2,16 @@
 import { Box, Stack, useMediaQuery, useTheme } from '@mui/material';
 import { useEffect, useState } from 'react';
 import ImageContainer from '@/components/containers/ImageContainer';
-import { products } from '@/mock/products';
-import SliderButtons from '../buttons/SliderButtons';
+import SliderButtons from '@/components/buttons/SliderButtons';
+import { ProductImage } from '@/types/product';
 
 type ShoeImageSliderProps = {
-  shoeId: string;
+  images: ProductImage[];
 };
 
-export default function ShoeImageSlider({ shoeId }: ShoeImageSliderProps) {
+export default function ShoeImageSlider({ images }: ShoeImageSliderProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const [images, setImages] = useState(products[parseInt(shoeId)].images);
   const [choosenImageId, setChoosenImageId] = useState<number>(images[0].id);
 
   const [smallImageSize, setSmallImageSize] = useState({
@@ -38,7 +37,8 @@ export default function ShoeImageSlider({ shoeId }: ShoeImageSliderProps) {
 
   function handleLeftClick() {
     const imageIdx = images.findIndex((i) => i.id === choosenImageId)!;
-    setChoosenImageId(images[(imageIdx - 1) % images.length].id);
+    if (imageIdx === 0) setChoosenImageId(images[images.length - 1].id);
+    else setChoosenImageId(images[(imageIdx - 1) % images.length].id);
   }
 
   return (
@@ -55,14 +55,14 @@ export default function ShoeImageSlider({ shoeId }: ShoeImageSliderProps) {
           width: 'fit-content',
           height: isMobile ? 320 : 628,
         }}
-        justifyContent="space-between"
+        justifyContent="flex-start"
         direction="column"
       >
         {images.map((img) => (
           <ImageContainer
-            key={img.id}
-            src={img.url}
-            alt={img.alternativeText}
+            key={img?.id}
+            src={img?.url}
+            alt={img?.alternativeText || ''}
             width={smallImageSize.width}
             height={smallImageSize.height}
             onClick={() => setChoosenImageId(img.id)}

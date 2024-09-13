@@ -1,3 +1,4 @@
+'use client';
 import {
   List,
   ListItemButton,
@@ -9,6 +10,7 @@ import {
 import ShoppingBasketOutlinedIcon from '@mui/icons-material/ShoppingBasketOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import { useRouter } from 'next/navigation';
 
 const MY_PRODUCTS_PATH = '/my-products';
 const SETTINGS_PATH = '/settings';
@@ -30,11 +32,12 @@ const StyledListItem = styled(ListItemButton)(({ theme }) => ({
 }));
 
 export default function UserPagesList() {
+  const router = useRouter();
+
   return (
     <List disablePadding>
       <StyledListItem
-        href={MY_PRODUCTS_PATH}
-        selected={location.pathname === MY_PRODUCTS_PATH}
+        onClick={() => router.push(MY_PRODUCTS_PATH)}
       >
         <ListItemIcon>
           <ShoppingBasketOutlinedIcon />
@@ -50,8 +53,7 @@ export default function UserPagesList() {
         />
       </StyledListItem>
       <StyledListItem
-        href={SETTINGS_PATH}
-        selected={location.pathname === SETTINGS_PATH}
+        onClick={() => router.push(SETTINGS_PATH)}
       >
         <ListItemIcon>
           <SettingsOutlinedIcon />

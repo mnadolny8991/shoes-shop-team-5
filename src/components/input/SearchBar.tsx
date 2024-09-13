@@ -1,4 +1,5 @@
-import { Box, styled, useMediaQuery, useTheme } from '@mui/material';
+'use client';
+import { Box, styled } from '@mui/material';
 import Image from 'next/image';
 import IconButton from '@mui/material/IconButton';
 import { ForwardedRef, forwardRef, useRef } from 'react';

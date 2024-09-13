@@ -1,3 +1,4 @@
+'use client';
 import CustomButton from '@/components/buttons/CustomButton';
 
 export default function AddProductButton() {
