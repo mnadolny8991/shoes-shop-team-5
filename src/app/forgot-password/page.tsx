@@ -75,7 +75,7 @@ const ForgotPassword: React.FC = () => {
             >
               <Typography variant="h1">Forgot password?</Typography>
               <Typography variant="body2" color={theme.palette.text.secondary}>
-                Don’t worry, we’ll send you reset instructions.
+                Don&apos;t worry, we&apos;ll send you reset instructions.
               </Typography>
 
               <TextField

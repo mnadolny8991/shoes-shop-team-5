@@ -3,8 +3,14 @@ import {
   ApiImage,
   ApiProductResponse,
   ApiSize,
-} from '@/types/apiTypes';
-import { Color, Product, ProductImage, Size, TeamName } from '@/types/product';
+} from '@/types/apiTypes(old)';
+import {
+  Color,
+  Product,
+  ProductImage,
+  Size,
+  TeamName,
+} from '@/types/product(old)';
 
 const mapApiImageToProductImage = (apiImage: ApiImage): ProductImage => ({
   id: apiImage.id,
@@ -30,7 +36,7 @@ const mapProduct = async (
   apiProductResponse: ApiProductResponse
 ): Promise<Product> => {
   const { id, attributes: apiProduct } = apiProductResponse.data;
-  
+
   const product: Product = {
     id,
     name: apiProduct.name,

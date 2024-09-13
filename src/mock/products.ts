@@ -1,5 +1,4 @@
-import type { Product } from '@/mock/mockTypes';
-import { Color } from '@/mock/ALL_COLORS';
+import type { Product } from '@/types/product';
 
 export const products: Array<Product> = [
   {
@@ -7,7 +6,10 @@ export const products: Array<Product> = [
     name: 'Nike Air Max 270',
     description: 'some description Nike Air Max 270',
     price: 160,
-    gender: 'Female',
+    gender: {
+      id: 4,
+      name: 'Women',
+    },
     images: [
       {
         id: 0,
@@ -16,7 +18,10 @@ export const products: Array<Product> = [
         url: '/mock/irene-kredenets.png',
       },
     ],
-    brand: 'Nike',
+    brand: {
+      id: 9,
+      name: 'Nike',
+    },
     userID: 0,
     teamName: 'team-5',
   },
@@ -25,7 +30,10 @@ export const products: Array<Product> = [
     name: 'Nike Air Max 90',
     description: 'some description Nike Air Max 90',
     price: 140,
-    gender: 'Male',
+    gender: {
+      id: 3,
+      name: 'Men',
+    },
     images: [
       {
         id: 0,
@@ -34,7 +42,10 @@ export const products: Array<Product> = [
         url: '/mock/imani-bahati.png',
       },
     ],
-    brand: 'Nike',
+    brand: {
+      id: 9,
+      name: 'Nike',
+    },
     userID: 0,
     teamName: 'team-5',
   },
@@ -43,7 +54,10 @@ export const products: Array<Product> = [
     name: "Nike Air Force 1 '07 SE",
     description: "some description about Nike Air Force 1 '07 SE",
     price: 110,
-    gender: 'Female',
+    gender: {
+      id: 4,
+      name: 'Women',
+    },
     images: [
       {
         id: 0,
@@ -52,7 +66,10 @@ export const products: Array<Product> = [
         url: '/mock/luis-felipe-lins.png',
       },
     ],
-    brand: 'Nike',
+    brand: {
+      id: 9,
+      name: 'Nike',
+    },
     userID: 0,
     teamName: 'team-5',
   },
@@ -61,21 +78,14 @@ export const products: Array<Product> = [
     name: 'Nike Air Zoom Pegasus',
     description: 'some description Nike Air Zoom Pegasus',
     price: 120,
-    gender: 'Male',
-    color: [
-      {
-        id: 0,
-        name: 'red',
-      },
-      {
-        id: 1,
-        name: 'green',
-      },
-      {
-        id: 2,
-        name: 'blue',
-      },
-    ],
+    gender: {
+      id: 4,
+      name: 'Women',
+    },
+    color: {
+      id: 12,
+      name: 'red',
+    },
     images: [
       {
         id: 0,
@@ -154,7 +164,10 @@ export const products: Array<Product> = [
         name: 'EU-45',
       },
     ],
-    brand: 'Nike',
+    brand: {
+      id: 9,
+      name: 'Nike',
+    },
     userID: 0,
     teamName: 'team-5',
   },

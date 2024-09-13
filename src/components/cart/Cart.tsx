@@ -60,8 +60,7 @@ const Cart: React.FC<CartProps> = () => {
               id={product.id}
               name={product.name}
               price={product.price}
-              gender={product.gender}
-              url={product.images[0].url}
+              gender={product.gender.name}
               inStock={true}
               onDelete={() => onDelete(product.id)}
             />
