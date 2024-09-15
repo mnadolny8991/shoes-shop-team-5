@@ -95,37 +95,61 @@ export default function ProductForm({
     register,
     handleSubmit,
     formState: { errors },
-    reset,
+    setValue,
+    setError,
+    getValues,
+    trigger,
+    clearErrors,
   } = useForm<FormData>({
     defaultValues: {
       name: product?.name || '',
-      price: product?.price?.toString() || '', // Convert price to string
-      color: product?.color?.id?.toString() || '', // Convert color ID to string
-      gender: product?.gender?.id?.toString() || '', // Convert gender ID to string
-      brand: product?.brand?.id?.toString() || '', // Convert brand ID to string
+      price: product?.price?.toString() || '',
+      color: product?.color?.id?.toString() || '',
+      gender: product?.gender?.id?.toString() || '',
+      brand: product?.brand?.id?.toString() || '',
       description: product?.description || '',
       sizes: product?.sizes?.map(({ id }) => id) || [],
     },
   });
 
+  const handleSizeChange = (selectedSizes: number[]) => {
+    setValue('sizes', selectedSizes);
+    if (selectedSizes.length === 0)
+      setError('sizes', {
+        type: 'custom',
+        message: 'At least one size must be selected.',
+      });
+    else {
+      clearErrors('sizes');
+    }
+    trigger('sizes');
+  };
+
   const onSubmitForm = (data: FormData) => {
-    console.log('aaaa');
     onSubmit({
       ...data,
       price: parseFloat(data.price),
-      color: colors!.find((color) => color.id === parseInt(data.color)), // Convert color back to number
-      gender: genders!.find((gender) => gender.id === parseInt(data.gender)), // Convert gender back to number
-      brand: brands!.find((brand) => brand.id === parseInt(data.brand)), // Convert brand back to number
+      color: colors!.find((color) => color.id === parseInt(data.color)),
+      gender: genders!.find((gender) => gender.id === parseInt(data.gender)),
+      brand: brands!.find((brand) => brand.id === parseInt(data.brand)),
       sizes: data.sizes.map((id) =>
         sizes?.find((size) => size.id === id)
       ) as Size[],
     });
-    // reset(); // Reset form after submission
   };
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmitForm)}
+      onSubmit={(e) => {
+        if (getValues('sizes').length === 0) {
+          setError('sizes', {
+            type: 'custom',
+            message: 'At least one size must be selected.',
+          });
+          trigger('sizes');
+        }
+        handleSubmit(onSubmitForm)(e);
+      }}
       {...(isMobile && { style: { margin: '50px 20px 0' } })}
     >
       <Stack
@@ -237,11 +261,12 @@ export default function ProductForm({
 
           {sizes && (
             <CheckboxesGroup
+              name="sizes"
               caption="Add sizes"
               items={sizes}
-              defaultChecked={product?.sizes?.map(({ id }) => id)}
-              {...register('sizes', { required: false })}
-              // error={errors.sizes ? 'At least one size must be selected.' : ''}
+              selected={getValues('sizes')} // Pass the current selected sizes
+              onChange={handleSizeChange} // Handle size changes
+              error={errors.sizes ? 'At least one size must be selected.' : ''}
             />
           )}
         </Stack>
