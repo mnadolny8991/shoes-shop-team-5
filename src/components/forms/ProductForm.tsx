@@ -21,6 +21,7 @@ import {
   mapBrands,
   mapGenders,
 } from '@/mappers/productMappers';
+import { useForm } from 'react-hook-form';
 
 type ProductFormProps = {
   title: string;
@@ -38,6 +39,16 @@ const SaveButton = (
     Save
   </Button>
 );
+
+type FormData = {
+  name: string;
+  price: string;
+  color: string;
+  gender: string;
+  brand: string;
+  description: string;
+  sizes: number[];
+};
 
 export default function ProductForm({
   title,
@@ -80,20 +91,65 @@ export default function ProductForm({
         .then((data) => mapGenders(data)),
   });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.target as HTMLFormElement);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+    setError,
+    getValues,
+    trigger,
+    clearErrors,
+  } = useForm<FormData>({
+    defaultValues: {
+      name: product?.name || '',
+      price: product?.price?.toString() || '',
+      color: product?.color?.id?.toString() || '',
+      gender: product?.gender?.id?.toString() || '',
+      brand: product?.brand?.id?.toString() || '',
+      description: product?.description || '',
+      sizes: product?.sizes?.map(({ id }) => id) || [],
+    },
+  });
+
+  const handleSizeChange = (selectedSizes: number[]) => {
+    setValue('sizes', selectedSizes);
+    if (selectedSizes.length === 0)
+      setError('sizes', {
+        type: 'custom',
+        message: 'At least one size must be selected.',
+      });
+    else {
+      clearErrors('sizes');
+    }
+    trigger('sizes');
+  };
+
+  const onSubmitForm = (data: FormData) => {
     onSubmit({
-      ...Object.fromEntries(formData),
-      sizes: (formData.getAll('sizes') as string[]).map((id) =>
-        sizes?.find((size) => size.id === +id)
+      ...data,
+      price: parseFloat(data.price),
+      color: colors!.find((color) => color.id === parseInt(data.color)),
+      gender: genders!.find((gender) => gender.id === parseInt(data.gender)),
+      brand: brands!.find((brand) => brand.id === parseInt(data.brand)),
+      sizes: data.sizes.map((id) =>
+        sizes?.find((size) => size.id === id)
       ) as Size[],
     });
   };
 
   return (
     <form
-      onSubmit={handleSubmit}
+      onSubmit={(e) => {
+        if (getValues('sizes').length === 0) {
+          setError('sizes', {
+            type: 'custom',
+            message: 'At least one size must be selected.',
+          });
+          trigger('sizes');
+        }
+        handleSubmit(onSubmitForm)(e);
+      }}
       {...(isMobile && { style: { margin: '50px 20px 0' } })}
     >
       <Stack
@@ -121,25 +177,36 @@ export default function ProductForm({
         <Stack spacing={3} maxWidth={{ xs: '320px', md: '436px' }}>
           <InputField
             id="name"
-            name="name"
             label="Product name"
-            required
-            defaultValue={product?.name}
             placeholder="Nike Air Max 90"
+            error={
+              errors.name
+                ? 'Product name is required and must be at least 3 characters.'
+                : ''
+            }
+            {...register('name', { required: true, minLength: 3 })}
           />
+
           <InputField
             id="price"
-            name="price"
             label="Price"
-            required
             placeholder="$160"
-            defaultValue={product?.price}
+            error={
+              errors.price
+                ? 'Price is required and must be a valid number.'
+                : ''
+            }
+            {...register('price', {
+              required: true,
+              pattern: /^[0-9]+(\.[0-9]{1,2})?$/,
+            })}
           />
+
           <Select
             id="color"
-            name="color"
             label="Color"
-            defaultValue={product?.color?.id}
+            error={errors.color ? 'Color is required.' : ''}
+            {...register('color', { required: true })}
           >
             <option value=""></option>
             {colors?.map(({ name, id }) => (
@@ -148,29 +215,29 @@ export default function ProductForm({
               </option>
             ))}
           </Select>
+
           <Stack direction="row" spacing={2}>
             <Select
               id="gender"
-              name="gender"
               label="Gender"
-              required
-              defaultValue={product?.gender.id}
+              error={errors.gender ? 'Gender is required.' : ''}
+              {...register('gender', { required: true })}
             >
-              <option value="" disabled></option>
+              <option value=""></option>
               {genders?.map(({ name, id }) => (
                 <option value={id} key={id}>
                   {name}
                 </option>
               ))}
             </Select>
+
             <Select
               id="brand"
-              name="brand"
               label="Brand"
-              required
-              defaultValue={product?.brand.id}
+              error={errors.brand ? 'Brand is required.' : ''}
+              {...register('brand', { required: true })}
             >
-              <option value="" disabled></option>
+              <option value=""></option>
               {brands?.map((brand) => (
                 <option key={brand.id} value={brand.id}>
                   {brand.name}
@@ -178,25 +245,34 @@ export default function ProductForm({
               ))}
             </Select>
           </Stack>
+
           <Textarea
             id="description"
-            name="description"
             label="Description"
-            required
-            rows={isMobile ? 1 : 15}
             placeholder="Do not exceed 300 characters."
-            defaultValue={product?.description}
+            rows={isMobile ? 1 : 15}
+            error={
+              errors.description
+                ? 'Description is required and should not exceed 300 characters.'
+                : ''
+            }
+            {...register('description', { required: true, maxLength: 300 })}
           />
+
           {sizes && (
             <CheckboxesGroup
               name="sizes"
               caption="Add sizes"
               items={sizes}
-              defaultChecked={product?.sizes?.map(({ id }) => id)}
+              selected={getValues('sizes')} // Pass the current selected sizes
+              onChange={handleSizeChange} // Handle size changes
+              error={errors.sizes ? 'At least one size must be selected.' : ''}
             />
           )}
         </Stack>
+
         <EditingImagesBox initialImages={product?.images} />
+
         {isMobile && SaveButton}
       </Stack>
     </form>

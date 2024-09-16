@@ -13,7 +13,9 @@ type CheckboxesGroupProps = {
   name: string;
   caption: string;
   items: Array<{ id: number; name: string }>;
-  defaultChecked?: number[];
+  selected: number[]; // Pass the current selected sizes from the parent
+  onChange: (selected: number[]) => void; // Call this to update sizes in the parent form
+  error?: string;
 };
 
 const CheckboxesFormGroup = styled(FormGroup)(({ theme }) => ({
@@ -49,8 +51,18 @@ export default function CheckboxesGroup({
   name,
   caption,
   items,
-  defaultChecked,
+  selected,
+  onChange,
+  error,
 }: CheckboxesGroupProps) {
+  const handleCheckboxChange = (id: number) => {
+    const updatedSizes = selected.includes(id)
+      ? selected.filter((sizeId) => sizeId !== id)
+      : [...selected, id];
+
+    onChange(updatedSizes); // Call onChange to update the parent form
+  };
+
   return (
     <Box>
       <Typography variant="caption">{caption}</Typography>
@@ -61,14 +73,19 @@ export default function CheckboxesGroup({
             control={
               <Checkbox
                 value={item.id}
-                name={name}
-                defaultChecked={defaultChecked?.includes(item.id)}
+                checked={selected.includes(item.id)}
+                onChange={() => handleCheckboxChange(item.id)}
               />
             }
             label={item.name}
           />
         ))}
       </CheckboxesFormGroup>
+      {error && (
+        <Typography color="error" variant="caption">
+          {error}
+        </Typography>
+      )}
     </Box>
   );
 }
