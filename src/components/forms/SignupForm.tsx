@@ -27,6 +27,7 @@ import {
   ApiErrorDetail,
   ApiFormError,
 } from '@/types/apiFormError';
+import ServerErrorBox from '../containers/ServerErrorBox';
 
 export default function SignupForm() {
   const theme = useTheme();
@@ -83,6 +84,10 @@ export default function SignupForm() {
         throw errorResponse.error;
       }
     },
+    onSuccess: (data) => {
+      console.log(data.user.id);
+      router.push('/');
+    }
   });
 
   const handleSubmit = () => {
@@ -105,16 +110,10 @@ export default function SignupForm() {
       >
         {mutation.isError && (
           <>
-            <Typography>
-              An Error: {(mutation.error as ApiError).message}
-            </Typography>
-            <Stack>
-              {(mutation.error as ApiError)?.details?.errors?.map(
-                (d: ApiErrorDetail, i: number) => (
-                  <Typography key={i}>{d.message}</Typography>
-                )
-              )}
-            </Stack>
+            <ServerErrorBox 
+              message={(mutation.error as ApiError).message}
+              submessages={(mutation.error as ApiError)?.details?.errors?.map(e => e.message) || []}
+            />
           </>
         )}
         <TextField
