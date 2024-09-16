@@ -1,6 +1,13 @@
 'use client';
 
-import { Box, Typography, Link, useTheme, useMediaQuery } from '@mui/material';
+import {
+  Box,
+  Typography,
+  Link,
+  useTheme,
+  useMediaQuery,
+  Stack,
+} from '@mui/material';
 import TextField from '@/components/input/TextField';
 import CustomButton from '@/components/buttons/CustomButton';
 import { useState } from 'react';
@@ -11,10 +18,20 @@ import {
   nameValidator,
   passwordValidator,
 } from '@/lib/validators';
+import { useMutation } from '@tanstack/react-query';
+import { UserFormData } from '@/types/userFormData';
+import apiUrl from '@/data/apiUrl';
+import { useRouter } from 'next/navigation';
+import {
+  ApiError,
+  ApiErrorDetail,
+  ApiFormError,
+} from '@/types/apiFormError';
 
 export default function SignupForm() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const router = useRouter();
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -49,6 +66,33 @@ export default function SignupForm() {
     isFirstInteractionConfPass
   );
 
+  const mutation = useMutation({
+    mutationFn: async (user: UserFormData) => {
+      const response = await fetch(`${apiUrl}/auth/local/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(user),
+      });
+
+      if (response.ok) {
+        return response.json();
+      } else {
+        const errorResponse: ApiFormError = await response.json();
+        throw errorResponse.error;
+      }
+    },
+  });
+
+  const handleSubmit = () => {
+    mutation.mutate({
+      username: name,
+      email,
+      password,
+    });
+  };
+
   return (
     <form>
       <Box
@@ -59,6 +103,20 @@ export default function SignupForm() {
           gap: '22px',
         }}
       >
+        {mutation.isError && (
+          <>
+            <Typography>
+              An Error: {(mutation.error as ApiError).message}
+            </Typography>
+            <Stack>
+              {(mutation.error as ApiError)?.details?.errors?.map(
+                (d: ApiErrorDetail, i: number) => (
+                  <Typography key={i}>{d.message}</Typography>
+                )
+              )}
+            </Stack>
+          </>
+        )}
         <TextField
           required
           name="name"
@@ -122,7 +180,7 @@ export default function SignupForm() {
           <CustomButton
             size={isMobile ? 's' : 'l'}
             variant="contained"
-            type="submit"
+            onClick={handleSubmit}
             disabled={
               !!nameError ||
               !name ||
@@ -140,7 +198,7 @@ export default function SignupForm() {
             Already have an account?
             <Link
               sx={{
-                marginLeft: isMobile ? '5px' : '7px',
+                marginLeft: { xs: '5px', md: '7px' },
               }}
               href="/sign-in"
               color="primary"

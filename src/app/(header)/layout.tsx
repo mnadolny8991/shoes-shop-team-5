@@ -1,8 +1,5 @@
 'use client';
 import Header from '@/components/header/Header';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-
-const queryClient = new QueryClient();
 import { CartContextProvider } from '@/context/CartContext';
 
 export default function HeaderLayout({
@@ -12,12 +9,10 @@ export default function HeaderLayout({
 }>) {
   return (
     <>
-      <QueryClientProvider client={queryClient}>
-        <CartContextProvider>
-          <Header />
-          {children}
-        </CartContextProvider>
-      </QueryClientProvider>
+      <CartContextProvider>
+        <Header />
+        {children}
+      </CartContextProvider>
     </>
   );
 }

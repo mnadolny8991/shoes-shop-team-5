@@ -1,7 +1,14 @@
 'use client';
 
 import theme from '@/styles/theme';
-import { Grid, Box, Typography, Divider, useMediaQuery, IconButton } from '@mui/material';
+import {
+  Grid,
+  Box,
+  Typography,
+  Divider,
+  useMediaQuery,
+  IconButton,
+} from '@mui/material';
 import Image from 'next/image';
 import SignupForm from '@/components/forms/SignupForm';
 import SignupSlider from '@/components/sliders/SignupSlider';
