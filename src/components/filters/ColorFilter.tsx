@@ -1,23 +1,43 @@
-'use-client'
+'use-client';
 
-import { FormControlLabel, Checkbox, Stack, Typography, useTheme } from '@mui/material';
+import { FormControlLabel, Checkbox, Stack, Typography } from '@mui/material';
+import { Color } from '@/types/product';
 
-export default function ColorFilter() {
-  const theme = useTheme()
+interface ColorFilterProps {
+  colors: Color[];
+  selected: string[];
+  onChange: (selected: string[]) => void;
+}
+
+const ColorFilter: React.FC<ColorFilterProps> = ({
+  colors,
+  selected,
+  onChange,
+}) => {
+  const handleToggle = (colorTitle: string) => {
+    const updatedSelection = selected.includes(colorTitle)
+      ? selected.filter((col) => col !== colorTitle)
+      : [...selected, colorTitle];
+    onChange(updatedSelection);
+  };
+
   return (
     <Stack>
-      <FormControlLabel
-        control={<Checkbox size='small' />}
-        label={<Typography variant='subtitle2'>red</Typography>}
-      />
-      <FormControlLabel
-        control={<Checkbox size='small' />}
-        label={<Typography variant='subtitle2'>green</Typography>}
-      />
-      <FormControlLabel
-        control={<Checkbox size='small' />}
-        label={<Typography variant='subtitle2'>yellow</Typography>}
-      />
+      {colors.map((color) => (
+        <FormControlLabel
+          key={color.id}
+          control={
+            <Checkbox
+              size="small"
+              checked={selected.includes(color.name)}
+              onChange={() => handleToggle(color.name)}
+            />
+          }
+          label={<Typography variant="subtitle2">{color.name}</Typography>}
+        />
+      ))}
     </Stack>
   );
-}
+};
+
+export default ColorFilter;

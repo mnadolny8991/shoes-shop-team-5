@@ -1,19 +1,36 @@
-'use-client'
+'use-client';
 
-import { FormControlLabel, Checkbox, Stack, Typography, useTheme } from '@mui/material';
+import { FormControlLabel, Checkbox, Stack, Typography } from '@mui/material';
 
-export default function GenderFilter() {
-  const theme = useTheme()
+type GenderFilterProps = {
+  selected: string[];
+  onChange: (selected: string[]) => void;
+};
+
+const GenderFilter: React.FC<GenderFilterProps> = ({ selected, onChange }) => {
+  const handleToggle = (gender: string) => {
+    const updatedSelection = selected.includes(gender)
+      ? selected.filter((gen) => gen !== gender)
+      : [...selected, gender];
+    onChange(updatedSelection);
+  };
   return (
     <Stack>
-      <FormControlLabel
-        control={<Checkbox size='small' />}
-        label={<Typography variant='subtitle2'>Men</Typography>}
-      />
-      <FormControlLabel
-        control={<Checkbox size='small' />}
-        label={<Typography variant='subtitle2'>Women</Typography>}
-      />
+      {['Male', 'Female'].map((gender) => (
+        <FormControlLabel
+          key={gender}
+          control={
+            <Checkbox
+              size="small"
+              checked={selected.includes(gender)}
+              onChange={() => handleToggle(gender)}
+            />
+          }
+          label={<Typography variant="subtitle2">{gender}</Typography>}
+        />
+      ))}
     </Stack>
   );
-}
+};
+
+export default GenderFilter;

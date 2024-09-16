@@ -1,28 +1,43 @@
-'use-client'
+'use-client';
 
-import { TextField, FormControlLabel, Checkbox, Stack, useTheme, Typography } from '@mui/material';
+import { FormControlLabel, Checkbox, Stack, Typography } from '@mui/material';
 
-export default function BrandFilter() {
-  const theme = useTheme()
+interface BrandFilterProps {
+  brands: string[];
+  selected: string[];
+  onChange: (selected: string[]) => void;
+}
+
+const BrandFilter: React.FC<BrandFilterProps> = ({
+  brands,
+  selected,
+  onChange,
+}) => {
+  const handleToggle = (brand: string) => {
+    const updatedSelected = selected.includes(brand)
+      ? selected.filter((b) => b !== brand)
+      : [...selected, brand];
+
+    onChange(updatedSelected);
+  };
 
   return (
     <Stack spacing={1}>
-      <FormControlLabel
-        control={<Checkbox size='small' />}
-        label={<Typography variant='subtitle2'>brand 1</Typography>}
-      />
-      <FormControlLabel
-        control={<Checkbox size='small' />}
-        label={<Typography variant='subtitle2'>brand 2</Typography>}
-      />
-      <FormControlLabel
-        control={<Checkbox size='small' />}
-        label={<Typography variant='subtitle2'>brand 3</Typography>}
-      />
-      <FormControlLabel
-        control={<Checkbox size='small' />}
-        label={<Typography variant='subtitle2'>brand 4</Typography>}
-      />
+      {brands.map((brand) => (
+        <FormControlLabel
+          key={brand}
+          control={
+            <Checkbox
+              size="small"
+              checked={selected.includes(brand)}
+              onChange={() => handleToggle(brand)}
+            />
+          }
+          label={<Typography variant="subtitle2">{brand}</Typography>}
+        />
+      ))}
     </Stack>
   );
-}
+};
+
+export default BrandFilter;

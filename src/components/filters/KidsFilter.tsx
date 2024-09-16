@@ -1,18 +1,37 @@
-'use-client'
+'use-client';
 
-import { FormControlLabel, Checkbox, Stack, useTheme, Typography } from '@mui/material';
+import { FormControlLabel, Checkbox, Stack, Typography } from '@mui/material';
 
-export default function KidsFilter() {
+type KidsFilterProps = {
+  selected: string[];
+  onChange: (selected: string[]) => void;
+};
+
+const KidsFilter: React.FC<KidsFilterProps> = ({ selected, onChange }) => {
+  const handleToggle = (kids: string) => {
+    const updatedSelection = selected.includes(kids)
+      ? selected.filter((k) => k !== kids)
+      : [...selected, kids];
+    onChange(updatedSelection);
+  };
+
   return (
     <Stack>
-      <FormControlLabel
-        control={<Checkbox size='small' />}
-        label={<Typography variant='subtitle2'>Boys</Typography>}
-      />
-      <FormControlLabel
-        control={<Checkbox size='small' />}
-        label={<Typography variant='subtitle2'>Girls</Typography>}
-      />
+      {['Boys', 'Girls'].map((kid) => (
+        <FormControlLabel
+          key={kid}
+          control={
+            <Checkbox
+              size="small"
+              checked={selected.includes(kid)}
+              onChange={() => handleToggle(kid)}
+            />
+          }
+          label={<Typography variant="subtitle2">{kid}</Typography>}
+        />
+      ))}
     </Stack>
   );
-}
+};
+
+export default KidsFilter;
