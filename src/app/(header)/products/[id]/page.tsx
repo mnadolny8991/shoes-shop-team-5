@@ -14,7 +14,7 @@ import { useQuery } from '@tanstack/react-query';
 import allSizes from '@/data/allSizes';
 import { useRouter } from 'next/navigation';
 import { useCartContext } from '@/context/CartContext';
-import mapProduct from '@/mappers/productMapper';
+import mapProduct from '@/mappers/productMappers';
 import apiUrl from '@/data/apiUrl';
 
 export default function Page({ params }: { params: { id: string } }) {
@@ -86,7 +86,7 @@ export default function Page({ params }: { params: { id: string } }) {
                 marginTop: '15px',
               }}
             >
-              {data?.gender === 'Women' ? "Woman's" : "Men's"} shoes
+              {`${data?.gender.name}&apos;s Shoes`}
             </Typography>
             <Stack gap="15px" direction="row" sx={{ marginTop: '19px' }}>
               <Chip label={data?.color?.name} variant="outlined" />
@@ -148,7 +148,7 @@ export default function Page({ params }: { params: { id: string } }) {
                 variant="contained"
                 onClick={() => {
                   if (data) {
-                    onProductAdd(data);
+                    onProductAdd(data.id);
                   }
                 }}
               >

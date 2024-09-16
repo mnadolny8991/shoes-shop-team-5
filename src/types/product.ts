@@ -17,22 +17,32 @@ export type Size = {
   name: string;
 };
 
+export type Category = {
+  id: number;
+  name: string;
+};
+
+export type Brand = {
+  id: number;
+  name: string;
+};
+
+export type Gender = {
+  id: number;
+  name: string;
+};
+
 export type Product = {
   id: number;
   name: string;
   description: string;
-  brand: string;
+  brand: Brand;
   color?: Color;
   sizes?: Array<Size>;
-  categories?: Array<string>;
+  categories?: Array<Category>;
   price: number;
-  gender: 'Men' | 'Women';
+  gender: Gender;
   images: Array<ProductImage>;
   userID?: number;
   teamName: TeamName;
-};
-
-export type ProductAmount = {
-  productId: number;
-  value: number;
 };

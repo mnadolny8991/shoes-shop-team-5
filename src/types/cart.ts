@@ -1,12 +1,14 @@
-import { Product, ProductAmount } from '@/types/product';
+import { Product } from '@/types/product';
+import { CartProduct } from '@/types/cartProduct';
 
 export type CartContextType = {
   products: Product[];
-  amount: ProductAmount[];
+  amount: CartProduct[];
   promocode: string | null;
-  onProductAdd: (product: Product) => void;
+  onProductAdd: (productId: number) => void;
   onDelete: (productId: number) => void;
   onPromocodeChange: (value: string) => void;
   onAmountIncrement: (productId: number, operation: '+' | '-') => void;
   onAmountChange: (productId: number, newValue: number) => void;
+  isLoading: boolean,
 };

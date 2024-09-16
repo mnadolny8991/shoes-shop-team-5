@@ -2,15 +2,30 @@
 
 import { Box, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 
-import { products } from '@/mock/products';
 import ProductsGrid from '@/components/products/ProductsGrid';
 import MyProductsEmptyState from '@/components/products/MyProductsEmptyState';
 import AddProductButton from '@/components/products/AddProductButton';
 import ProductsHeader from '@/components/products/ProductsHeader';
+import { useQuery } from '@tanstack/react-query';
+import apiUrl from '@/data/apiUrl';
+import { mapProductList } from '@/mappers/productMappers';
+import { useRouter } from 'next/navigation';
+import { ApiProductListResponse } from '@/types/apiTypes';
 
 export default function MyProducts() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const router = useRouter();
+  const { data, isLoading } = useQuery({
+    queryKey: ['myProducts'],
+    queryFn: () =>
+      fetch(`${apiUrl}/products?filters[teamName]=team-5&populate=*`) // filters[userID]=${id}
+        .then((res) => res.json())
+        .then((data: ApiProductListResponse) => mapProductList(data))
+        .catch(() => {
+          // router.push('/error');
+        }),
+  });
 
   return (
     <>
@@ -23,11 +38,13 @@ export default function MyProducts() {
         mb={{ xs: '19px', md: '36px' }}
       >
         <Typography variant="h1">My products</Typography>
-        {products && !isMobile && <AddProductButton />}
+        {!!data && !isMobile && <AddProductButton />}
       </Stack>
-      {products ? (
+      {isLoading ? (
+        '...loading'
+      ) : data ? (
         <>
-          <ProductsGrid products={products} />
+          <ProductsGrid products={data} />
           {isMobile && (
             <Box
               height="80px"

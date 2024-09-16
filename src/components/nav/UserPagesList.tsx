@@ -36,9 +36,7 @@ export default function UserPagesList() {
 
   return (
     <List disablePadding>
-      <StyledListItem
-        onClick={() => router.push(MY_PRODUCTS_PATH)}
-      >
+      <StyledListItem onClick={() => router.push(MY_PRODUCTS_PATH)}>
         <ListItemIcon>
           <ShoppingBasketOutlinedIcon />
         </ListItemIcon>
@@ -52,9 +50,7 @@ export default function UserPagesList() {
           }
         />
       </StyledListItem>
-      <StyledListItem
-        onClick={() => router.push(SETTINGS_PATH)}
-      >
+      <StyledListItem onClick={() => router.push(SETTINGS_PATH)}>
         <ListItemIcon>
           <SettingsOutlinedIcon />
         </ListItemIcon>
