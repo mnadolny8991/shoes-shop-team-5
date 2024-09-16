@@ -148,7 +148,7 @@ export default function Page({ params }: { params: { id: string } }) {
                 variant="contained"
                 onClick={() => {
                   if (data) {
-                    onProductAdd(data);
+                    onProductAdd(data.id);
                   }
                 }}
               >

@@ -11,6 +11,7 @@ type CartProductProps = {
   price: number;
   gender: string;
   inStock: boolean;
+  url: string;
   onDelete: () => void;
 };
 
@@ -19,12 +20,15 @@ const CartProduct: React.FC<CartProductProps> = ({
   name,
   price,
   gender,
+  url,
   inStock,
   onDelete,
 }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { amount, onAmountIncrement, onAmountChange } = useCartContext();
+
+  const prodAmount = amount.find(p => p.id === id)?.amount!;
 
   return (
     <Stack
@@ -45,7 +49,7 @@ const CartProduct: React.FC<CartProductProps> = ({
       }}
     >
       <ImageContainer
-        src="https://placehold.co/200x200"
+        src={url}
         alt="product image"
         width={isMobile ? '104px' : '223px'}
         height={isMobile ? '100px' : '214px'}
@@ -105,12 +109,12 @@ const CartProduct: React.FC<CartProductProps> = ({
           }}
         >
           <CartProductBar
-            amount={amount[id].value}
+            amount={prodAmount}
             onAddClick={() => {
-              if (amount[id].value >= 0) onAmountIncrement(id, '+');
+              if (prodAmount >= 0) onAmountIncrement(id, '+');
             }}
             onSubtractClick={() => {
-              if (amount[id].value > 0) onAmountIncrement(id, '-');
+              if (prodAmount > 0) onAmountIncrement(id, '-');
             }}
             onDeleteClick={onDelete}
             onAmountChange={(newValue: number) => onAmountChange(id, newValue)}
