@@ -1,6 +1,7 @@
 'use client';
 import Header from '@/components/header/Header';
 import { CartContextProvider } from '@/context/CartContext';
+import { SearchContextProvider } from '@/context/SearchContext';
 
 export default function HeaderLayout({
   children,
@@ -10,8 +11,10 @@ export default function HeaderLayout({
   return (
     <>
       <CartContextProvider>
-        <Header />
-        {children}
+          <SearchContextProvider>
+            <Header />
+            {children}
+          </SearchContextProvider>
       </CartContextProvider>
     </>
   );
