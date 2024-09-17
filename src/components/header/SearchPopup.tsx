@@ -14,6 +14,7 @@ import Image from 'next/image';
 import SearchBar from '@/components/input/SearchBar';
 import { useEffect, useRef } from 'react';
 import popularSearchTerms from '@/mock/popularSearchTerms';
+import { useRouter } from 'next/navigation';
 
 type SearchPopupProps = {
   show: boolean;
@@ -31,6 +32,7 @@ export default function SearchPopup({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const searchRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
 
   useEffect(() => {
     if (show) {
@@ -77,7 +79,10 @@ export default function SearchPopup({
             width={isMobile ? '290px' : '700px'}
             height={isMobile ? '25px' : '79px'}
             variant={isMobile ? 'popupMobile' : 'popupLarge'}
-            onIconClick={close}
+            onIconClick={() => {
+              close();
+              router.push('/catalog');
+            }}
           />
           {!isMobile && (
             <Stack gap="24px">

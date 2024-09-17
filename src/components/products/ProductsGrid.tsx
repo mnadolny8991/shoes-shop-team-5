@@ -11,7 +11,7 @@ interface ProductsGridProps {
 
 export default function ProductsGrid({
   products,
-  isAdmin = false,
+  isAdmin = true,
 }: ProductsGridProps) {
   return (
     <Grid2 container spacing={{ xs: 2, md: 8 }} mx={{ xs: 1, md: 0 }}>

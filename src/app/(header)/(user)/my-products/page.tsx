@@ -44,7 +44,7 @@ export default function MyProducts() {
         '...loading'
       ) : data ? (
         <>
-          <ProductsGrid products={data} />
+          <ProductsGrid products={data}/>
           {isMobile && (
             <Box
               height="80px"
