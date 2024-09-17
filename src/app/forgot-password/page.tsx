@@ -110,6 +110,12 @@ const ForgotPassword: React.FC = () => {
                 error={error}
               />
 
+              {mutation.isSuccess && (
+                <Typography variant="caption" textAlign="center">
+                  Password reset email has been sent
+                </Typography>
+              )}
+
               <CustomButton
                 size={isMobile ? 's' : 'l'}
                 variant="contained"
