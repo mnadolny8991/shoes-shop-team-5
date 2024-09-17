@@ -1,10 +1,9 @@
-"use client";
+'use client';
 
-import { Box, Typography, Rating } from "@mui/material";
-import theme from "@/theme";
+import { Box, Typography, Rating } from '@mui/material';
+import { ArrowButton } from '../buttons/ArrowButton';
 
 export default function SignupSlider() {
-
   return (
     <Box
       sx={{
@@ -35,9 +34,10 @@ export default function SignupSlider() {
           gap: '10px',
         }}
       >
-        <Typography
-          variant='body1'>
-          Lorem Ipsum is a really great company because the team is passionate about the projects they produce, the people they work with, the quality of the work they do.
+        <Typography variant="body1">
+          Lorem Ipsum is a really great company because the team is passionate
+          about the projects they produce, the people they work with, the
+          quality of the work they do.
         </Typography>
         <Box
           sx={{
@@ -47,7 +47,7 @@ export default function SignupSlider() {
           }}
         >
           <Typography
-            variant='body1'
+            variant="body1"
             sx={{
               fontWeight: '600',
               fontSize: '25px',
@@ -61,7 +61,7 @@ export default function SignupSlider() {
           sx={{
             fontSize: '18px',
           }}
-          variant='subtitle2'
+          variant="subtitle2"
         >
           Ukraine, Chernivtsi
         </Typography>
@@ -73,36 +73,9 @@ export default function SignupSlider() {
           gap: '16px',
         }}
       >
-        <Box
-          sx={{
-            cursor: 'pointer',
-            width: '38px',
-            height: '38px',
-            backgroundImage: "url(/signup-review-left-arrow.png)",
-            backgroundPosition: 'center',
-            backgroundSize: '8px',
-            backgroundRepeat: 'no-repeat',
-            borderRadius: '50%',
-            overflow: 'hidden',
-            border: '2px solid #d7d2d5'
-          }}
-        />
-        <Box
-          sx={{
-            cursor: 'pointer',
-            width: '38px',
-            height: '38px',
-            backgroundImage: "url(/signup-review-right-arrow.png)",
-            backgroundPosition: 'center',
-            backgroundSize: '8px',
-            backgroundRepeat: 'no-repeat',
-            borderRadius: '50%',
-            overflow: 'hidden',
-            border: '2px solid #d7d2d5'
-          }}
-        >
-        </Box>
+        <ArrowButton direction="left" />
+        <ArrowButton direction="right" />
       </Box>
-    </Box >
-  )
+    </Box>
+  );
 }
