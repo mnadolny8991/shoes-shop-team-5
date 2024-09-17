@@ -1,25 +1,55 @@
+/**
+ * Validates the input email based on the following rules:
+ * - No special characters befor "@".
+ * - Dots allowed but not at start/end.
+ * - No consecutive dots.
+ * - Must contain at least one number.
+ * - The domain can consist of alphanumeric characters, hyphens (-), and dots (.).
+ * - Hyphens cannot be at the start or end of a domain name component and cannot appear consecutively.
+ * - The domain must end with a valid TLD consisting of at least two alphabetic characters.
+ *
+ * @param {string} inputVal - The email to validate.
+ * @returns {string} - An error message if the email does not meet the criteria, otherwise an empty string.
+ */
 const emailValidator = (inputVal: string) => {
-  if (
-    !new RegExp(
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    ).test(inputVal)
-  ) {
+  const emailRegEx = new RegExp(
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  );
+  if (!emailRegEx.test(inputVal)) {
     return 'Enter a valid email address';
   } else {
     return '';
   }
 };
 
+/**
+ * Validates the input password based on the following rules:
+ * - Must contain at least 8 characters.
+ * - Must contain at least one uppercase letter.
+ * - Must contain at least one lowercase letter.
+ * - Must contain at least one number.
+ *
+ * @param {string} inputVal - The password to validate.
+ * @returns {string} - An error message if the password does not meet the criteria, otherwise an empty string.
+ */
 const passwordValidator = (inputVal: string) => {
-  if (
-    !new RegExp(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/).test(inputVal)
-  ) {
+  const passwordRegex = new RegExp(
+    /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/
+  );
+  if (!passwordRegex.test(inputVal)) {
     return 'Password should contains atleast 8 charaters and containing uppercase,lowercase and numbers';
   } else {
     return '';
   }
 };
 
+/**
+ * Validates the confirm password based on the following rules:
+ * - Checks if confirm password matches a password
+ *
+ * @param {string} inputVal - The password to validate.
+ * @returns {function(string):string} - A function that returns an error message if the confrim password does not match the password, otherwise an empty string
+ */
 const confirmPasswordValdiator = (firstPass: string) => {
   return (inputVal: string) => {
     if (inputVal != firstPass) {
@@ -30,4 +60,26 @@ const confirmPasswordValdiator = (firstPass: string) => {
   };
 };
 
-export { emailValidator, passwordValidator, confirmPasswordValdiator };
+/**
+ * Validates the input password based on the following rules:
+ * - Must contain at least 3 characters.
+ * - Must only contains letters from the english alphabet.
+ *
+ * @param {string} inputVal - The password to validate.
+ * @returns {string} - An error message if the password does not meet the criteria, otherwise an empty string.
+ */
+const nameValidator = (name: string) => {
+  const nameRegex = new RegExp(/^[a-zA-Z]{3,}$/);
+  if (!nameRegex.test(name)) {
+    return 'Name must have minimum 3 letters and should not containe numbers';
+  } else {
+    return '';
+  }
+};
+
+export {
+  emailValidator,
+  passwordValidator,
+  confirmPasswordValdiator,
+  nameValidator,
+};

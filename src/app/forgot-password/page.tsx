@@ -5,7 +5,7 @@ import { Typography, Box, Grid } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Link from 'next/link';
 import Image from 'next/image';
-import theme from '@/theme';
+import theme from '@/styles/theme';
 import TextField from '../../components/input/TextField';
 import CustomButton from '../../components/buttons/CustomButton';
 import useValidate from '../../hooks/useValidate';
@@ -70,20 +70,19 @@ const ForgotPassword: React.FC = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '15px',
-                width: isMobile ? '320px' : '436px',
+                width: { xs: '320px', md: '436px' },
               }}
             >
-              <Typography variant="h1" fontSize={isMobile ? '30px' : '45px'}>
-                Forgot password?
-              </Typography>
+              <Typography variant="h1">Forgot password?</Typography>
               <Typography variant="body2" color={theme.palette.text.secondary}>
-                Don’t worry, we’ll send you reset instructions.
+                Don&apos;t worry, we&apos;ll send you reset instructions.
               </Typography>
 
               <TextField
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 onBlur={(e) => setIsFirstInteraction(true)}
+                type="text"
                 required
                 name="email"
                 id="email"
@@ -100,11 +99,7 @@ const ForgotPassword: React.FC = () => {
                 Reset Password
               </CustomButton>
 
-              <Typography
-                variant="caption"
-                fontSize={isMobile ? '11.15px' : '15px'}
-                textAlign="center"
-              >
+              <Typography variant="caption" textAlign="center">
                 <Link href="/login">Back to log in</Link>
               </Typography>
             </Box>

@@ -9,7 +9,6 @@ import {
   useTheme,
   Stack,
   Avatar,
-  styled,
 } from '@mui/material';
 
 export default function UserLayout({
@@ -19,20 +18,6 @@ export default function UserLayout({
 }>) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-
-  const WelcomeUser = styled(Typography)(() => ({
-    fontSize: 12,
-    fontWeight: 500,
-    lineHeight: '18px',
-    color: '#98A2B3',
-    marginBottom: 4,
-  }));
-
-  const UserName = styled(Typography)(() => ({
-    fontSize: 16,
-    fontWeight: 500,
-    lineHeight: '18.77px',
-  }));
 
   return (
     <Stack
@@ -45,10 +30,10 @@ export default function UserLayout({
     >
       {!isMobile && (
         <Stack
-          width="320px"
+          width="320"
           spacing={4}
           position="sticky"
-          top="40px"
+          top="40"
           alignSelf="start"
         >
           <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
@@ -58,8 +43,18 @@ export default function UserLayout({
               sx={{ width: 64, height: 64 }}
             />
             <Box>
-              <WelcomeUser>Welcome</WelcomeUser>
-              <UserName>Jane Meldrum</UserName>
+              <Typography
+                fontSize={12}
+                fontWeight={500}
+                lineHeight="18px"
+                color={'#98A2B3'}
+                mb="4px"
+              >
+                Welcome
+              </Typography>
+              <Typography fontSize={16} fontWeight={500} lineHeight="18.77px">
+                Jane Meldrum
+              </Typography>
             </Box>
           </Box>
           <Divider />

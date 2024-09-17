@@ -1,4 +1,5 @@
-import CustomButton from '../buttons/CustomButton';
+'use client';
+import CustomButton from '@/components/buttons/CustomButton';
 
 export default function AddProductButton() {
   return (

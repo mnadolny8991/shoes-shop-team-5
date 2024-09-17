@@ -1,6 +1,6 @@
-'use client'
+'use client';
 
-import theme from '@/theme';
+import theme from '@/styles/theme';
 import Image from 'next/image';
 import { useMediaQuery } from '@mui/material';
 

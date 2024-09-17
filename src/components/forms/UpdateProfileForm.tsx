@@ -1,10 +1,10 @@
 'use client';
 
 import { Box, useTheme, useMediaQuery } from '@mui/material';
-import TextField from '../input/TextField';
-import CustomButton from '../buttons/CustomButton';
+import TextField from '@/components/input/TextField';
+import CustomButton from '@/components/buttons/CustomButton';
 
-export default function SignupForm() {
+export default function UpdateProfileForm() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -36,51 +36,54 @@ export default function SignupForm() {
           name="name"
           id="name"
           label="Name"
+          type="text"
           min={8}
           value={''}
-          onChange={() => { }}
+          onChange={() => {}}
         />
         <TextField
           required
           name="surname"
           id="surname"
           label="Surname"
+          type="text"
           min={8}
           value={''}
-          onChange={() => { }}
+          onChange={() => {}}
         />
         <TextField
           required
           name="email"
           id="email"
           label="Email"
+          type="text"
           min={8}
           value={''}
-          onChange={() => { }}
+          onChange={() => {}}
         />
         <TextField
           required
           name="phone"
           id="phone"
+          type="text"
           label="Phone number"
           min={8}
           value={''}
-          onChange={() => { }}
+          onChange={() => {}}
         />
 
         <Box
           sx={{
-            marginTop: { xs: '29px', md: '68px' },
+            marginTop: isMobile ? '7px' : '34px',
             display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '16px',
+            justifyContent: 'flex-end',
           }}
         >
           <CustomButton
-            size={isMobile ? 's' : 'l'}
+            size={isMobile ? 's' : 'm'}
             variant="contained"
             type="submit"
+            sx={{ maxWidth: '150px', borderRadius: '8px' }}
           >
             Save Changes
           </CustomButton>

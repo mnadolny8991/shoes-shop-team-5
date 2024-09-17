@@ -1,24 +1,4 @@
-type ProductImage = {
-  id: number;
-  name: string;
-  alternativeText: string;
-  url: string;
-};
-type TeamName = 'team-1' | 'team-2' | 'team-3' | 'team-4' | 'team-5';
-export type Product = {
-  id: number;
-  name: string;
-  description: string;
-  brand: string;
-  color?: string;
-  sizes?: Array<string>;
-  categories?: Array<string>;
-  price: number;
-  gender: 'Male' | 'Female';
-  images: Array<ProductImage>;
-  userID: number;
-  teamName: TeamName;
-};
+import type { Product } from '@/types/product';
 
 export const products: Array<Product> = [
   {
@@ -26,7 +6,10 @@ export const products: Array<Product> = [
     name: 'Nike Air Max 270',
     description: 'some description Nike Air Max 270',
     price: 160,
-    gender: 'Female',
+    gender: {
+      id: 4,
+      name: 'Women',
+    },
     images: [
       {
         id: 0,
@@ -35,7 +18,10 @@ export const products: Array<Product> = [
         url: '/mock/irene-kredenets.png',
       },
     ],
-    brand: 'Nike',
+    brand: {
+      id: 9,
+      name: 'Nike',
+    },
     userID: 0,
     teamName: 'team-5',
   },
@@ -44,7 +30,10 @@ export const products: Array<Product> = [
     name: 'Nike Air Max 90',
     description: 'some description Nike Air Max 90',
     price: 140,
-    gender: 'Male',
+    gender: {
+      id: 3,
+      name: 'Men',
+    },
     images: [
       {
         id: 0,
@@ -53,7 +42,10 @@ export const products: Array<Product> = [
         url: '/mock/imani-bahati.png',
       },
     ],
-    brand: 'Nike',
+    brand: {
+      id: 9,
+      name: 'Nike',
+    },
     userID: 0,
     teamName: 'team-5',
   },
@@ -62,7 +54,10 @@ export const products: Array<Product> = [
     name: "Nike Air Force 1 '07 SE",
     description: "some description about Nike Air Force 1 '07 SE",
     price: 110,
-    gender: 'Female',
+    gender: {
+      id: 4,
+      name: 'Women',
+    },
     images: [
       {
         id: 0,
@@ -71,7 +66,10 @@ export const products: Array<Product> = [
         url: '/mock/luis-felipe-lins.png',
       },
     ],
-    brand: 'Nike',
+    brand: {
+      id: 9,
+      name: 'Nike',
+    },
     userID: 0,
     teamName: 'team-5',
   },
@@ -80,7 +78,14 @@ export const products: Array<Product> = [
     name: 'Nike Air Zoom Pegasus',
     description: 'some description Nike Air Zoom Pegasus',
     price: 120,
-    gender: 'Male',
+    gender: {
+      id: 4,
+      name: 'Women',
+    },
+    color: {
+      id: 12,
+      name: 'red',
+    },
     images: [
       {
         id: 0,
@@ -88,8 +93,81 @@ export const products: Array<Product> = [
         alternativeText: 'Nike Air Zoom Pegasus',
         url: '/mock/pexels-ray-piedra.png',
       },
+      {
+        id: 1,
+        name: 'Nike Air Zoom Pegasus',
+        alternativeText: 'Nike Air Zoom Pegasus',
+        url: 'https://placehold.co/300x300',
+      },
+      {
+        id: 2,
+        name: 'Nike Air Zoom Pegasus',
+        alternativeText: 'Nike Air Zoom Pegasus',
+        url: 'https://placehold.co/300x300',
+      },
+      {
+        id: 3,
+        name: 'Nike Air Zoom Pegasus',
+        alternativeText: 'Nike Air Zoom Pegasus',
+        url: 'https://placehold.co/300x300',
+      },
+      {
+        id: 4,
+        name: 'Nike Air Zoom Pegasus',
+        alternativeText: 'Nike Air Zoom Pegasus',
+        url: 'https://placehold.co/300x300',
+      },
+      {
+        id: 5,
+        name: 'Nike Air Zoom Pegasus',
+        alternativeText: 'Nike Air Zoom Pegasus',
+        url: 'https://placehold.co/300x300',
+      },
+      {
+        id: 6,
+        name: 'Nike Air Zoom Pegasus',
+        alternativeText: 'Nike Air Zoom Pegasus',
+        url: 'https://placehold.co/300x300',
+      },
     ],
-    brand: 'Nike',
+    sizes: [
+      {
+        id: 0,
+        name: 'EU-36',
+      },
+      {
+        id: 1,
+        name: 'EU-37',
+      },
+      {
+        id: 2,
+        name: 'EU-38',
+      },
+      {
+        id: 4,
+        name: 'EU-40',
+      },
+      {
+        id: 6,
+        name: 'EU-42',
+      },
+      {
+        id: 7,
+        name: 'EU-43',
+      },
+      {
+        id: 8,
+        name: 'EU-44',
+      },
+      {
+        id: 9,
+        name: 'EU-45',
+      },
+    ],
+    brand: {
+      id: 9,
+      name: 'Nike',
+    },
     userID: 0,
     teamName: 'team-5',
   },

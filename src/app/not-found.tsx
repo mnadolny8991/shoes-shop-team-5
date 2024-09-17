@@ -9,7 +9,7 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import HeaderLayout from './(header)/layout';
+import HeaderLayout from '@/app/(header)/layout';
 import Image from 'next/image';
 import GoBackAndHomeButtonsStack from '@/components/buttons/GoBackAndHomeButtonsStack';
 
@@ -30,7 +30,7 @@ export default function NotFound() {
       ) : (
         <Stack direction="row">
           <Box sx={{ flex: 1 }}>
-            <Box margin={isMobile ? '0' : '30% calc((50vw - 436px) / 3)'}>
+            <Box margin={{ md: '30% calc((50vw - 436px) / 3)' }}>
               <MessageBox />
               <GoBackAndHomeButtonsStack />
             </Box>
@@ -46,18 +46,17 @@ function ImageBox() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  const StyledImageBox = styled('div')(() =>
-    isMobile
-      ? {
-          width: '100%',
-          borderBottomLeftRadius: 35,
-          borderBottomRightRadius: 35,
-          overflow: 'hidden',
-        }
-      : {
-          flex: 1,
-        }
-  );
+  const StyledImageBox = styled('div')(({ theme }) => ({
+    [theme.breakpoints.down('md')]: {
+      width: '100%',
+      borderBottomLeftRadius: 35,
+      borderBottomRightRadius: 35,
+      overflow: 'hidden',
+    },
+    [theme.breakpoints.up('md')]: {
+      flex: 1,
+    },
+  }));
 
   return (
     <StyledImageBox>
@@ -77,12 +76,9 @@ function ImageBox() {
 }
 
 function MessageBox() {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-
   return (
-    <Box maxWidth={'538px'} mx={isMobile ? 'auto' : 0}>
-      <Typography variant="h1" mb={isMobile ? '12px' : '20px'}>
+    <Box maxWidth={538} mx={{ xs: 'auto', md: 0 }}>
+      <Typography variant="h1" mb={{ xs: '12px', md: '20px' }}>
         Error 404
       </Typography>
       <Typography variant="subtitle2">
