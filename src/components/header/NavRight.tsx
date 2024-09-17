@@ -14,16 +14,20 @@ import SearchPopup from '@/components/header/SearchPopup';
 import CustomButton from '@/components/buttons/CustomButton';
 import PopupMenu from '@/components/header/PopupMenu';
 import { useRouter } from 'next/navigation';
+import { useSearch } from '@/context/SearchContext';
 
 export default function NavRight() {
   const [showMenu, setShowMenu] = useState(false);
-  const [searchText, setSearchText] = useState('');
+  //const [searchText, setSearchText] = useState('');
   const [showSearchPopup, setShowSearchPopup] = useState(false);
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const router = useRouter();
   const signedIn = true; // auth context here
+
+  // Consume the search context
+  const { searchText, setSearchText } = useSearch();
 
   return (
     <Box

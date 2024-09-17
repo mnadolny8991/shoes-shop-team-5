@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const queryClient = new QueryClient();
 import { CartContextProvider } from '@/context/CartContext';
+import { SearchContextProvider } from '@/context/SearchContext';
 
 export default function HeaderLayout({
   children,
@@ -14,8 +15,10 @@ export default function HeaderLayout({
     <>
       <QueryClientProvider client={queryClient}>
         <CartContextProvider>
-          <Header />
-          {children}
+          <SearchContextProvider>
+            <Header />
+            {children}
+          </SearchContextProvider>
         </CartContextProvider>
       </QueryClientProvider>
     </>
