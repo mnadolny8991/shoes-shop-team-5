@@ -4,7 +4,7 @@ import { createContext, useContext, useState, ReactNode, FC } from 'react';
 // filters type
 type Filters = {
   gender: string[];
-  kids: string[];
+  size: string[];
   brand: string[];
   price: [number, number];
   color: string[];
@@ -21,7 +21,7 @@ type SearchContextType = {
 
 const defaultFilters: Filters = {
   gender: [],
-  kids: [],
+  size: [],
   brand: [],
   price: [0, 999],
   color: [],

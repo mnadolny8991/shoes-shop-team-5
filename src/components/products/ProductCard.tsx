@@ -15,11 +15,21 @@ import { MoreHoriz } from '@mui/icons-material';
 import { useState } from 'react';
 import DeleteModal from '@/components/modals/DeleteModal';
 import EditProductModal from '@/components/modals/EditProductModal';
+import { useRouter } from 'next/navigation';
 
-export default function ProductCard({ product }: { product: Product }) {
+interface ProductCardProps {
+  product: Product;
+  isAdmin?: boolean;
+}
+
+export default function ProductCard({
+  product,
+  isAdmin = true,
+}: ProductCardProps) {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const router = useRouter();
 
   const { id, name, price, images, gender } = product;
 
@@ -49,6 +59,12 @@ export default function ProductCard({ product }: { product: Product }) {
     handleMenuClose();
   };
 
+  const handleCardClick = () => {
+    if (!isAdmin) {
+      router.push(`/products/${id}`);
+    }
+  };
+
   const open = Boolean(anchorEl);
   const PopoverId = open ? 'simple-popover' : undefined;
 
@@ -67,61 +83,69 @@ export default function ProductCard({ product }: { product: Product }) {
   }));
 
   return (
-    <Card square sx={{ position: 'relative' }}>
-      <IconButton
-        sx={{ position: 'absolute', right: 0 }}
-        aria-describedby={PopoverId}
-        onClick={handleClick}
-      >
-        <MoreHoriz />
-      </IconButton>
-      <Menu
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleMenuClose}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        sx={{ opacity: 0.85 }}
-        MenuListProps={{
-          sx: {
-            p: 1,
-            width: 112,
-            '& .MuiMenuItem-root': {
-              height: 22,
-              minHeight: 22,
-              '&:not(:last-child)': { mb: 1 },
-            },
-          },
-        }}
-      >
-        <MenuItem
-          component="a"
-          href={`./products/${id}`}
-          divider
-          disableGutters
-        >
-          <Typography variant="subtitle2">View</Typography>
-        </MenuItem>
-        <MenuItem onClick={handleEditClick} divider disableGutters>
-          <Typography variant="subtitle2">Edit</Typography>
-        </MenuItem>
-        <MenuItem onClick={handleDeleteClick} disableGutters>
-          <Typography variant="subtitle2">Delete</Typography>
-        </MenuItem>
-      </Menu>
-      <DeleteModal
-        isOpen={isDeleteModalOpen}
-        onClose={handleDeleteClose}
-        onDelete={() => null}
-        title="Are you sure to delete selected product?"
-        bodyText={`${name}  $${price}`}
-      />
-      <EditProductModal
-        isOpen={isEditModalOpen}
-        onClose={handleEditClose}
-        product={product}
-        onSave={saveEdited}
-      />
+    <Card
+      square
+      sx={{ position: 'relative', cursor: !isAdmin ? 'pointer' : 'default' }}
+      onClick={handleCardClick}
+    >
+      {isAdmin && (
+        <>
+          <IconButton
+            sx={{ position: 'absolute', right: 0 }}
+            aria-describedby={PopoverId}
+            onClick={handleClick}
+          >
+            <MoreHoriz />
+          </IconButton>
+          <Menu
+            open={open}
+            anchorEl={anchorEl}
+            onClose={handleMenuClose}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            sx={{ opacity: 0.85 }}
+            MenuListProps={{
+              sx: {
+                p: 1,
+                width: 112,
+                '& .MuiMenuItem-root': {
+                  height: 22,
+                  minHeight: 22,
+                  '&:not(:last-child)': { mb: 1 },
+                },
+              },
+            }}
+          >
+            <MenuItem
+              component="a"
+              href={`./products/${id}`}
+              divider
+              disableGutters
+            >
+              <Typography variant="subtitle2">View</Typography>
+            </MenuItem>
+            <MenuItem onClick={handleEditClick} divider disableGutters>
+              <Typography variant="subtitle2">Edit</Typography>
+            </MenuItem>
+            <MenuItem onClick={handleDeleteClick} disableGutters>
+              <Typography variant="subtitle2">Delete</Typography>
+            </MenuItem>
+          </Menu>
+          <DeleteModal
+            isOpen={isDeleteModalOpen}
+            onClose={handleDeleteClose}
+            onDelete={() => null}
+            title="Are you sure to delete selected product?"
+            bodyText={`${name}  $${price}`}
+          />
+          <EditProductModal
+            isOpen={isEditModalOpen}
+            onClose={handleEditClose}
+            product={product}
+            onSave={saveEdited}
+          />
+        </>
+      )}
       <CardMedia
         title={images[0].name}
         image={images[0].url}

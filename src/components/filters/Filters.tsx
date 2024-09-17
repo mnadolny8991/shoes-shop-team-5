@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import GenderFilter from './GenderFilter';
-import KidsFilter from './KidsFilter';
+import SizeFilter from './SizeFilter';
 import BrandFilter from './BrandFilter';
 import PriceFilter from './PriceFilter';
 import ColorFilter from './ColorFilter';
@@ -29,7 +29,7 @@ export default function Filters() {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [brandName, setBrandName] = useState('');
 
-  const { filters, updateFilter } = useSearch();
+  const { filters, searchText, updateFilter } = useSearch();
 
   const handleBrandChange = (selectedBrands: string[]) => {
     updateFilter('brand', selectedBrands);
@@ -47,8 +47,8 @@ export default function Filters() {
     updateFilter('gender', selectedGender);
   };
 
-  const handleKidsChange = (selectedKids: string[]) => {
-    updateFilter('kids', selectedKids);
+  const handleSizeChange = (selectedSizes: string[]) => {
+    updateFilter('size', selectedSizes);
   };
 
   return (
@@ -64,9 +64,9 @@ export default function Filters() {
               variant="caption"
               sx={{ color: theme.palette.text.secondary }}
             >
-              Shoes/Air Force 1
+              Shoes
             </Typography>
-            <Typography variant="body1">Air Force 1 (137)</Typography>
+            <Typography variant="body1">{searchText}</Typography>
           </Stack>
           <Divider />
         </>
@@ -90,7 +90,6 @@ export default function Filters() {
       </Accordion>
       <Divider />
 
-      {/* 
       <Accordion
         defaultExpanded
         sx={{
@@ -99,14 +98,13 @@ export default function Filters() {
         }}
       >
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography variant="caption">Kids</Typography>
+          <Typography variant="caption">Sizes (EU)</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <KidsFilter onChange={handleKidsChange} selected={filters.kids} />
+          <SizeFilter onChange={handleSizeChange} selected={filters.size} />
         </AccordionDetails>
       </Accordion>
       <Divider />
-      */}
 
       <Accordion
         defaultExpanded

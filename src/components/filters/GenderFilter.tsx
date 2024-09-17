@@ -16,7 +16,7 @@ const GenderFilter: React.FC<GenderFilterProps> = ({ selected, onChange }) => {
   };
   return (
     <Stack>
-      {['Male', 'Female'].map((gender) => (
+      {['Men', 'Women'].map((gender) => (
         <FormControlLabel
           key={gender}
           control={

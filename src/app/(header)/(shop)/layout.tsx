@@ -2,16 +2,30 @@
 
 import { useState } from 'react';
 import Filters from '@/components/filters/Filters';
-import { Box, Stack, Typography, Divider, IconButton, useMediaQuery, useTheme } from '@mui/material';
+import {
+  Box,
+  Stack,
+  Typography,
+  Divider,
+  IconButton,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 
 import FilterAltOffOutlinedIcon from '@mui/icons-material/FilterAltOffOutlined';
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
 import FilterDrawer from '@/components/nav/FilterDrawer';
 
-export default function CatalogLayout({ children }: { children: React.ReactNode }) {
+import { useSearch } from '@/context/SearchContext';
+
+export default function CatalogLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-
+  const { searchText } = useSearch();
 
   // visibility of filters at desktop and mobile drawer
   const [showFilters, setShowFilters] = useState(false);
@@ -24,7 +38,10 @@ export default function CatalogLayout({ children }: { children: React.ReactNode 
     <>
       {/* Drawer for Mobile Filters */}
       {isMobile && (
-        <FilterDrawer showFilterDrawer={showFilters} onDrawerClose={toggleFilters} />
+        <FilterDrawer
+          showFilterDrawer={showFilters}
+          onDrawerClose={toggleFilters}
+        />
       )}
 
       <Stack
@@ -35,13 +52,12 @@ export default function CatalogLayout({ children }: { children: React.ReactNode 
           pt: '40px',
         })}
       >
-
         {/* Filters Section */}
         {!isMobile && showFilters && (
           <Stack
             width="320px"
             spacing={4}
-            position={!isMobile ? "sticky" : "static"}
+            position={!isMobile ? 'sticky' : 'static'}
             top="40px"
             alignSelf="start"
           >
@@ -49,7 +65,7 @@ export default function CatalogLayout({ children }: { children: React.ReactNode 
           </Stack>
         )}
 
-        <Box component={'main'} flex={'auto'} >
+        <Box component={'main'} flex={'auto'}>
           {/*Heading section */}
           {isMobile && (
             <>
@@ -59,9 +75,7 @@ export default function CatalogLayout({ children }: { children: React.ReactNode 
                   ml: '16px',
                 }}
               >
-                <Typography variant="h1">
-                  Search Results
-                </Typography>
+                <Typography variant="h1">Search Results</Typography>
               </Box>
               <Divider sx={{ marginTop: '12px' }} />
             </>
@@ -80,19 +94,18 @@ export default function CatalogLayout({ children }: { children: React.ReactNode 
             <Stack>
               {isMobile && (
                 <>
-                  <Typography variant='caption' sx={{ color: theme.palette.text.secondary }}>
-                    Shoes/Air Force 1
+                  <Typography
+                    variant="caption"
+                    sx={{ color: theme.palette.text.secondary }}
+                  >
+                    Shoes
                   </Typography>
-                  <Typography variant='body1'>
-                    Air Force 1 (137)
-                  </Typography>
+                  <Typography variant="body1">{searchText}</Typography>
                 </>
               )}
               {!isMobile && (
                 <>
-                  <Typography variant="h1">
-                    Search Results
-                  </Typography>
+                  <Typography variant="h1">Search Results</Typography>
                 </>
               )}
             </Stack>
@@ -105,16 +118,30 @@ export default function CatalogLayout({ children }: { children: React.ReactNode 
             >
               {showFilters ? (
                 <>
-                  <Typography variant={isMobile ? 'subtitle2' : 'body1'} sx={{ color: theme.palette.text.secondary }}>Hide Filters</Typography>
+                  <Typography
+                    variant={isMobile ? 'subtitle2' : 'body1'}
+                    sx={{ color: theme.palette.text.secondary }}
+                  >
+                    Hide Filters
+                  </Typography>
                   <IconButton>
-                    <FilterAltOffOutlinedIcon fontSize={isMobile ? 'small' : 'medium'} />
+                    <FilterAltOffOutlinedIcon
+                      fontSize={isMobile ? 'small' : 'medium'}
+                    />
                   </IconButton>
                 </>
               ) : (
                 <>
-                  <Typography variant={isMobile ? 'subtitle2' : 'body1'} sx={{ color: theme.palette.text.secondary }}>Filters</Typography>
+                  <Typography
+                    variant={isMobile ? 'subtitle2' : 'body1'}
+                    sx={{ color: theme.palette.text.secondary }}
+                  >
+                    Filters
+                  </Typography>
                   <IconButton>
-                    <FilterAltOutlinedIcon fontSize={isMobile ? 'small' : 'medium'} />
+                    <FilterAltOutlinedIcon
+                      fontSize={isMobile ? 'small' : 'medium'}
+                    />
                   </IconButton>
                 </>
               )}
