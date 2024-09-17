@@ -10,6 +10,8 @@ import TextField from '../../components/input/TextField';
 import CustomButton from '../../components/buttons/CustomButton';
 import useValidate from '../../hooks/useValidate';
 import { emailValidator } from '@/lib/validators';
+import { useMutation } from '@tanstack/react-query';
+import apiUrl from '@/data/apiUrl';
 
 const Logo = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -40,6 +42,23 @@ const ForgotPassword: React.FC = () => {
   const [isFirstInteraction, setIsFirstInteraction] = useState(false);
 
   const { error } = useValidate(email, emailValidator, isFirstInteraction);
+
+  const mutation = useMutation({
+    mutationFn: (email: string) => {
+      return fetch(`${apiUrl}/auth/forgot-password`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+    },
+  });
+
+  const handleForgotPassword = (email: string) => {
+    if (error) return;
+    mutation.mutate(email);
+  };
 
   return (
     <>
@@ -95,6 +114,7 @@ const ForgotPassword: React.FC = () => {
                 size={isMobile ? 's' : 'l'}
                 variant="contained"
                 disabled={!!error || !email}
+                onClick={() => handleForgotPassword(email)}
               >
                 Reset Password
               </CustomButton>
