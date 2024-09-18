@@ -72,8 +72,7 @@ const Cart: React.FC<CartProps> = () => {
         <CartSummary
           subtotal={products.reduce(
             (acc, val) =>
-              val.price * amount.find((a) => a.id === val.id)?.amount! +
-              acc,
+              val.price * amount.find((a) => a.id === val.id)?.amount! + acc,
             0
           )}
           shipping={20}

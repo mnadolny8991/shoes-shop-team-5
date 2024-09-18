@@ -9,11 +9,7 @@ type PageProps = {};
 const Page: FC<PageProps> = () => {
   const { isLoading } = useCartContext();
 
-  return (
-    <>
-      {!isLoading && <Cart />}
-    </>
-  );
+  return <>{!isLoading && <Cart />}</>;
 };
 
 export default Page;

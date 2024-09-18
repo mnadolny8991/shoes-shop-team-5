@@ -1,15 +1,15 @@
 import { CartProduct } from '@/types/cartProduct';
 
 const cartProducts: CartProduct[] = [
-  {
-    id: 1348,
-    amount: 2,
-  },
-  {
-    id: 1349,
-    amount: 3,
-  }
-]
+  // {
+  //   id: 1348,
+  //   amount: 2,
+  // },
+  // {
+  //   id: 1349,
+  //   amount: 3,
+  // }
+];
 
 // const cartProducts: Array<Product> = [
 //   {
