@@ -29,6 +29,7 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [products, setProducts] = useLocalStorage<CartProduct[]>('cart', []);
+  // const [products, setProducts] = useState<CartProduct[]>([]);
   const productsData = useQueries({
     queries: products.map((p: CartProduct) => {
       return {
@@ -53,7 +54,7 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({
     if (filteredProducts.length !== products.length) {
       setProducts(filteredProducts);
     }
-  }, [products]);
+  }, [products, setProducts]);
 
   const isLoading = productsData.some((query) => query.isLoading);
 

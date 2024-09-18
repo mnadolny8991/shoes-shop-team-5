@@ -42,6 +42,9 @@ export default function Page({ params }: { params: { id: string } }) {
 
   return (
     <>
+      {isLoading && 
+        <Typography>Loading...</Typography>
+      }
       {!isLoading && (
         <Stack
           direction="row"
@@ -86,7 +89,7 @@ export default function Page({ params }: { params: { id: string } }) {
                 marginTop: '15px',
               }}
             >
-              {`${data?.gender.name}&apos;s Shoes`}
+              {`${data?.gender.name}'s Shoes`}
             </Typography>
             <Stack gap="15px" direction="row" sx={{ marginTop: '19px' }}>
               <Chip label={data?.color?.name} variant="outlined" />
