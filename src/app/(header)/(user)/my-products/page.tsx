@@ -10,7 +10,7 @@ import { useQuery } from '@tanstack/react-query';
 import apiUrl from '@/data/apiUrl';
 import { mapProductList } from '@/mappers/productMappers';
 import { useRouter } from 'next/navigation';
-import { ApiProductListResponse } from '@/types/apiTypes';
+import { ApiProductListResponse } from '@/types/api/apiTypes';
 
 export default function MyProducts() {
   const theme = useTheme();

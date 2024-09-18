@@ -26,7 +26,7 @@ import {
   ApiError,
   ApiErrorDetail,
   ApiFormError,
-} from '@/types/apiFormError';
+} from '@/types/api/apiFormError';
 import ServerErrorBox from '../containers/ServerErrorBox';
 
 export default function SignupForm() {

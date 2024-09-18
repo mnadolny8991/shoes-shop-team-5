@@ -13,7 +13,7 @@ import {
   ApiProductResponseDataObject,
   ApiSize,
   ApiSizeListResponse,
-} from '@/types/apiTypes';
+} from '@/types/api/apiTypes';
 import {
   Brand,
   Category,

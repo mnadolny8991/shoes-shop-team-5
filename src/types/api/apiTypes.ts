@@ -1,3 +1,5 @@
+import { ApiUser } from '@/types/api/apiUser';
+
 type ApiListMeta = {
   pagination: {
     page: number;
@@ -133,26 +135,6 @@ export type ApiSize = {
 export type ApiSizeListResponse = {
   data: ApiSize[];
   meta: ApiListMeta;
-};
-
-export type ApiUserAttributes = {
-  username: string;
-  email: string;
-  provider: string;
-  confirmed: boolean;
-  blocked: boolean;
-  createdAt: string;
-  updatedAt: string;
-  phoneNumber: string | null;
-  firstName: string | null;
-  lastName: string | null;
-};
-
-export type ApiUser = {
-  data: {
-    id: number;
-    attributes: ApiUserAttributes;
-  };
 };
 
 export type ApiProduct = {

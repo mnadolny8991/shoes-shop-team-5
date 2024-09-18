@@ -15,6 +15,7 @@ import CustomButton from '@/components/buttons/CustomButton';
 import PopupMenu from '@/components/header/PopupMenu';
 import { useRouter } from 'next/navigation';
 import { useSearch } from '@/context/SearchContext';
+import { signIn, useSession } from 'next-auth/react';
 
 export default function NavRight() {
   const [showMenu, setShowMenu] = useState(false);
@@ -24,10 +25,10 @@ export default function NavRight() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const router = useRouter();
-  const signedIn = true; // auth context here
-
-  // Consume the search context
+  const { data: session } = useSession();
   const { searchText, setSearchText } = useSearch();
+
+  const signedIn = session !== null; 
 
   return (
     <Box
@@ -108,6 +109,7 @@ export default function NavRight() {
           sx={{
             width: '145px',
           }}
+          onClick={() => signIn()}
         >
           Sign In
         </CustomButton>
