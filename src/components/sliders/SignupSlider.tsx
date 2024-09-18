@@ -1,6 +1,7 @@
 'use client';
 
 import { Box, Typography, Rating } from '@mui/material';
+import { ArrowButton } from '../buttons/ArrowButton';
 
 export default function SignupSlider() {
   return (
@@ -72,34 +73,8 @@ export default function SignupSlider() {
           gap: '16px',
         }}
       >
-        <Box
-          sx={{
-            cursor: 'pointer',
-            width: '38px',
-            height: '38px',
-            backgroundImage: 'url(/signup-review-left-arrow.png)',
-            backgroundPosition: 'center',
-            backgroundSize: '8px',
-            backgroundRepeat: 'no-repeat',
-            borderRadius: '50%',
-            overflow: 'hidden',
-            border: '2px solid #d7d2d5',
-          }}
-        />
-        <Box
-          sx={{
-            cursor: 'pointer',
-            width: '38px',
-            height: '38px',
-            backgroundImage: 'url(/signup-review-right-arrow.png)',
-            backgroundPosition: 'center',
-            backgroundSize: '8px',
-            backgroundRepeat: 'no-repeat',
-            borderRadius: '50%',
-            overflow: 'hidden',
-            border: '2px solid #d7d2d5',
-          }}
-        ></Box>
+        <ArrowButton direction="left" />
+        <ArrowButton direction="right" />
       </Box>
     </Box>
   );

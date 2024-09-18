@@ -5,23 +5,12 @@ import { Grid, Box, Typography, Divider, useMediaQuery } from '@mui/material';
 import Image from 'next/image';
 import SignupForm from '@/components/forms/SignupForm';
 import SignupSlider from '@/components/sliders/SignupSlider';
+import { useRouter } from 'next/navigation';
+import { Logo } from '@/components/logo/Logo';
 
 export default function Signup() {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const Logo = () => {
-    return (
-      <Image
-        src="/logo.svg"
-        width={isMobile ? 35 : 40}
-        height={isMobile ? 26.5 : 30}
-        alt="shoes shop logo"
-        style={{
-          marginTop: isMobile ? '20px' : '50px',
-          marginLeft: isMobile ? '20px' : '40px',
-        }}
-      />
-    );
-  };
+  const router = useRouter();
 
   return (
     <Grid container sx={{ height: '100vh' }}>
@@ -46,7 +35,7 @@ export default function Signup() {
           {isMobile && (
             <Divider
               sx={{
-                marginTop: '10px',
+                mt: '10px',
               }}
             />
           )}
@@ -56,7 +45,7 @@ export default function Signup() {
             display: 'flex',
             flexDirection: 'column',
             gap: '15px',
-            width: isMobile ? '320px' : '436px',
+            width: { xs: '320px', md: '436px' },
           }}
         >
           <Typography variant="h1">Create an account</Typography>
