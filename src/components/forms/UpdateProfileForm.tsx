@@ -14,7 +14,7 @@ export default function UpdateProfileForm() {
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          maxWidth: isMobile ? '320px' : '436px',
+          maxWidth: { xs: '320px', md: '436px' },
           gap: '22px',
         }}
       >
@@ -74,7 +74,7 @@ export default function UpdateProfileForm() {
 
         <Box
           sx={{
-            marginTop: isMobile ? '7px' : '34px',
+            marginTop: { sx: '7px', md: '34px' },
             display: 'flex',
             justifyContent: 'flex-end',
           }}

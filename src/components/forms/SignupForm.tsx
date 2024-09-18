@@ -22,11 +22,7 @@ import { useMutation } from '@tanstack/react-query';
 import { UserFormData } from '@/types/userFormData';
 import apiUrl from '@/data/apiUrl';
 import { useRouter } from 'next/navigation';
-import {
-  ApiError,
-  ApiErrorDetail,
-  ApiFormError,
-} from '@/types/apiFormError';
+import { ApiError, ApiErrorDetail, ApiFormError } from '@/types/apiFormError';
 import ServerErrorBox from '../containers/ServerErrorBox';
 
 export default function SignupForm() {
@@ -87,7 +83,7 @@ export default function SignupForm() {
     onSuccess: (data) => {
       console.log(data.user.id);
       router.push('/');
-    }
+    },
   });
 
   const handleSubmit = () => {
@@ -110,9 +106,13 @@ export default function SignupForm() {
       >
         {mutation.isError && (
           <>
-            <ServerErrorBox 
+            <ServerErrorBox
               message={(mutation.error as ApiError).message}
-              submessages={(mutation.error as ApiError)?.details?.errors?.map(e => e.message) || []}
+              submessages={
+                (mutation.error as ApiError)?.details?.errors?.map(
+                  (e) => e.message
+                ) || []
+              }
             />
           </>
         )}

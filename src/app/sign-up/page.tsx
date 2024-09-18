@@ -1,41 +1,16 @@
 'use client';
 
 import theme from '@/styles/theme';
-import {
-  Grid,
-  Box,
-  Typography,
-  Divider,
-  useMediaQuery,
-  IconButton,
-} from '@mui/material';
+import { Grid, Box, Typography, Divider, useMediaQuery } from '@mui/material';
 import Image from 'next/image';
 import SignupForm from '@/components/forms/SignupForm';
 import SignupSlider from '@/components/sliders/SignupSlider';
 import { useRouter } from 'next/navigation';
+import { Logo } from '@/components/logo/Logo';
 
 export default function Signup() {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const router = useRouter();
-
-  const Logo = () => {
-    return (
-      <IconButton
-        sx={{
-          mt: { xs: '20px', md: '50px' },
-          ml: { xs: '20px', md: '40px' },
-        }}
-        onClick={() => router.push('/')}
-      >
-        <Image
-          src="/logo.svg"
-          width={isMobile ? 35 : 40}
-          height={isMobile ? 26.5 : 30}
-          alt="shoes shop logo"
-        />
-      </IconButton>
-    );
-  };
 
   return (
     <Grid container sx={{ height: '100vh' }}>
