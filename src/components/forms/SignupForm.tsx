@@ -87,7 +87,7 @@ export default function SignupForm() {
     onSuccess: (data) => {
       console.log(data.user.id);
       router.push('/');
-    }
+    },
   });
 
   const handleSubmit = () => {
@@ -110,9 +110,13 @@ export default function SignupForm() {
       >
         {mutation.isError && (
           <>
-            <ServerErrorBox 
+            <ServerErrorBox
               message={(mutation.error as ApiError).message}
-              submessages={(mutation.error as ApiError)?.details?.errors?.map(e => e.message) || []}
+              submessages={
+                (mutation.error as ApiError)?.details?.errors?.map(
+                  (e) => e.message
+                ) || []
+              }
             />
           </>
         )}
