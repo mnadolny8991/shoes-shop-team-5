@@ -12,20 +12,20 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import getMenuItems from '@/data/menuItems';
 import { useRouter } from 'next/navigation';
+import { signIn, useSession } from 'next-auth/react';
 
 type PopupMenuProps = {
-  signedIn: boolean;
   showMenu: boolean;
   onMenuClose: () => void;
 };
 
 export default function PopupMenu({
-  signedIn,
   showMenu,
   onMenuClose,
 }: PopupMenuProps) {
   const router = useRouter();
-  const menuItems = getMenuItems(signedIn);
+  const { data: session, status } = useSession();
+  const menuItems = getMenuItems(status === 'authenticated');
 
   return (
     <Drawer
@@ -61,7 +61,9 @@ export default function PopupMenu({
             sx={{ px: 0 }}
             key={menuItem.id}
             onClick={() => {
-              router.push(menuItem.href);
+              if (status === 'authenticated')
+                router.push(menuItem.href);
+              else signIn();
               onMenuClose();
             }}
           >
