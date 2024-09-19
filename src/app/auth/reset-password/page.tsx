@@ -12,12 +12,13 @@ import { useState } from 'react';
 import { confirmPasswordValdiator, passwordValidator } from '@/lib/validators';
 import apiUrl from '@/data/apiUrl';
 import { useMutation } from '@tanstack/react-query';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function ResetPassword() {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   const [password, setPassword] = useState('');
   const [confPass, setConfPass] = useState('');
@@ -54,6 +55,10 @@ export default function ResetPassword() {
         },
         body: JSON.stringify({ password, passwordConfirmation, code }),
       });
+    },
+    onSuccess: () => {
+      // Redirect to the sign-in page on success
+      router.push('/sign-in');
     },
   });
 
