@@ -1,11 +1,18 @@
 'use client';
-import { createContext, useContext, useEffect, useState } from 'react';
+import {
+  createContext,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import cartProducts from '@/mock/cartProducts';
 import { CartContextType } from '@/types/cart';
 import { useQueries } from '@tanstack/react-query';
 import apiUrl from '@/data/apiUrl';
 import { CartProduct } from '@/types/cartProduct';
 import mapProduct from '@/mappers/productMappers';
+import useLocalStorage from '@/hooks/useLocalStorage';
 
 const CartContext = createContext<CartContextType | null>(null);
 
@@ -21,7 +28,8 @@ export const useCartContext = () => {
 const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [products, setProducts] = useState(cartProducts);
+  const [products, setProducts] = useLocalStorage<CartProduct[]>('cart', []);
+  // const [products, setProducts] = useState<CartProduct[]>([]);
   const productsData = useQueries({
     queries: products.map((p: CartProduct) => {
       return {
@@ -46,7 +54,7 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({
     if (filteredProducts.length !== products.length) {
       setProducts(filteredProducts);
     }
-  }, [products]);
+  }, [products, setProducts]);
 
   const isLoading = productsData.some((query) => query.isLoading);
 
