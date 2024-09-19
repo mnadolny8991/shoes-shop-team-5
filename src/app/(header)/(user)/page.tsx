@@ -1,16 +1,12 @@
 'use client';
 
 import { Stack, Typography } from '@mui/material';
-
-import { products } from '@/mock/products';
 import ProductsGrid from '@/components/products/ProductsGrid';
 import ProductsHeader from '@/components/products/ProductsHeader';
-import lastViewedItems from '@/mock/lastViewedId';
+import { useLastViewed } from '@/context/LastViewedContext';
 
 export default function DefaultProducts() {
-  const lastViewed = lastViewedItems.map(
-    (id) => products.find((product) => product.id == id)!
-  );
+  const { lastViewed, isLoading } = useLastViewed();
 
   return (
     <>
@@ -22,11 +18,13 @@ export default function DefaultProducts() {
         mx={'20px'}
         mb={{ xs: '19px', md: '36px' }}
       >
-        <Typography variant="h1">Last viewed products</Typography>
+        {(!isLoading && lastViewed.length > 0) &&
+          <Typography variant="h1">Last viewed products</Typography>
+        }
       </Stack>
-      {products && (
+      {!isLoading && (
         <>
-          <ProductsGrid products={lastViewed} />
+          <ProductsGrid products={lastViewed} isAdmin={false} />
         </>
       )}
     </>
