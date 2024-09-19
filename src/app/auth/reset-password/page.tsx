@@ -8,16 +8,18 @@ import theme from '@/styles/theme';
 import TextField from '@/components/input/TextField';
 import Link from 'next/link';
 import useValidate from '@/hooks/useValidate';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { confirmPasswordValdiator, passwordValidator } from '@/lib/validators';
 import apiUrl from '@/data/apiUrl';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-export default function ResetPassword() {
+function ResetPasswordContent({
+  searchParams,
+}: {
+  searchParams: URLSearchParams;
+}) {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-
-  const searchParams = useSearchParams();
   const router = useRouter();
 
   const [password, setPassword] = useState('');
@@ -149,5 +151,15 @@ export default function ResetPassword() {
         </Grid2>
       )}
     </Grid2>
+  );
+}
+
+export default function ResetPassword() {
+  const searchParams = useSearchParams();
+
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ResetPasswordContent searchParams={searchParams} />
+    </Suspense>
   );
 }
