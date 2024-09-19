@@ -23,7 +23,7 @@ export default function Page({ params }: { params: { id: string } }) {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const router = useRouter();
   const { data, isLoading } = useQuery({
-    queryKey: ['products'],
+    queryKey: ['products', params.id],
     queryFn: () =>
       fetch(`${apiUrl}/products/${params.id}?populate=*`)
         .then((res) => {

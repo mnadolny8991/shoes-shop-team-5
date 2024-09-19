@@ -155,7 +155,7 @@ export default function ProductCard({
   };
 
   const handleCardClick = () => {
-    if (!isAdmin) {
+    if (!isAdmin && id) {
       router.push(`/products/${id}`);
     }
   };
