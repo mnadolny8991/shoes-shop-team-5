@@ -17,7 +17,7 @@ export type AvailableFilters = {
   genders: Array<'Men' | 'Women'>;
   colors: string[];
   sizes: string[];
-  priceRange: {min: number; max: number};
+  priceRange: { min: number; max: number };
 };
 
 export type SearchContextType = {

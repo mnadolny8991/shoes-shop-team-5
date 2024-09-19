@@ -143,7 +143,9 @@ export default function ProductCard({
     if (productUpdatingProps.productProps.images)
       productUpdatingProps.imagesToDelete = images
         .map(({ id }) => id)
-        .filter((id) => !productUpdatingProps.productProps.images?.includes(id));
+        .filter(
+          (id) => !productUpdatingProps.productProps.images?.includes(id)
+        );
 
     productUpdatingProps.files.length
       ? uploadImages(productUpdatingProps)

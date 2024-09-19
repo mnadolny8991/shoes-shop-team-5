@@ -11,10 +11,10 @@ export default function HeaderLayout({
   return (
     <>
       <CartContextProvider>
-          <SearchContextProvider>
-            <Header />
-            {children}
-          </SearchContextProvider>
+        <SearchContextProvider>
+          <Header />
+          {children}
+        </SearchContextProvider>
       </CartContextProvider>
     </>
   );

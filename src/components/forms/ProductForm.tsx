@@ -157,9 +157,12 @@ export default function ProductForm({
   };
 
   const onSubmitForm = (data: ProductFormData) => {
-    const changedData: ApiPutProduct = {};
-    Object.keys(dirtyFields).forEach((key) => (changedData[key] = data[key]));
-
+    const changedData: ApiPutProduct = Object.fromEntries(
+      Object.keys(dirtyFields).map((key) => [
+        key,
+        data[key as keyof ProductFormData],
+      ])
+    );
     onSubmit({ productProps: changedData, files: data.uploadImages });
   };
 
