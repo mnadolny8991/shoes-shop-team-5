@@ -20,6 +20,7 @@ export default function CustomButton({
   sx,
   onClick,
   disabled,
+  href,
 }: CustomButtonProps) {
   return (
     <Button
@@ -29,6 +30,7 @@ export default function CustomButton({
       variant={variant}
       onClick={onClick}
       disabled={disabled}
+      href={href}
     >
       <Typography fontSize={buttonSizes[size].fontSize} variant="button">
         {children}
