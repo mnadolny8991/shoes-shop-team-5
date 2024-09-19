@@ -15,7 +15,18 @@ import { MoreHoriz } from '@mui/icons-material';
 import { useState } from 'react';
 import DeleteModal from '@/components/modals/DeleteModal';
 import EditProductModal from '@/components/modals/EditProductModal';
+import { ApiPutProduct } from '@/types/apiTypes';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import apiUrl from '@/data/apiUrl';
+import mapProduct from '@/mappers/productMappers';
+import token from '@/data/token';
 import { useRouter } from 'next/navigation';
+
+type ProductUpdatingProps = {
+  productProps: ApiPutProduct;
+  files: File[];
+  imagesToDelete?: number[];
+};
 
 interface ProductCardProps {
   product: Product;
@@ -26,12 +37,87 @@ export default function ProductCard({
   product,
   isAdmin = true,
 }: ProductCardProps) {
+  const queryClient = useQueryClient();
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const router = useRouter();
 
   const { id, name, price, images, gender } = product;
+
+  const { mutate: editProduct } = useMutation({
+    mutationFn: ({ productProps }: ProductUpdatingProps) =>
+      fetch(`${apiUrl}/products/${id}?populate=*`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ data: productProps }),
+      }),
+    onSuccess: (res, { imagesToDelete }) =>
+      res
+        .json()
+        .then((data) => mapProduct(data))
+        .then((product) => {
+          imagesToDelete?.forEach((id) => deleteImage(id));
+          queryClient.setQueryData(['myProducts'], (old: Product[]) =>
+            old.with(
+              old.findIndex((oldProduct) => oldProduct.id === id),
+              product
+            )
+          );
+        }),
+    onError: (error) => console.error(error),
+  });
+
+  const { mutate: uploadImages } = useMutation({
+    mutationFn: ({ files }: ProductUpdatingProps) => {
+      const formData = new FormData();
+      files.forEach((file) => formData.append('files', file));
+      return fetch(`${apiUrl}/upload`, { method: 'POST', body: formData });
+    },
+    onSuccess: (res, productUpdatingProps) =>
+      res.json().then((data: { id: number }[]) => {
+        productUpdatingProps.productProps.images = [
+          ...(productUpdatingProps.productProps.images ||
+            images.map(({ id }) => id)),
+          ...data.map(({ id }) => id),
+        ];
+        editProduct(productUpdatingProps);
+      }),
+    onError: (error) => console.error(error),
+  });
+
+  const { mutate: deleteImage } = useMutation({
+    mutationFn: (id: number) =>
+      fetch(`${apiUrl}/upload/files/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+    onError: (error) => console.error(error),
+  });
+
+  const { mutate: deleteProduct } = useMutation({
+    mutationFn: () =>
+      fetch(`${apiUrl}/products/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+    onSuccess: () => {
+      queryClient.setQueryData(['myProducts'], (old: Product[]) =>
+        old.filter((oldProduct) => oldProduct.id !== id)
+      );
+      images.map(({ id }) => id).forEach((imageId) => deleteImage(imageId));
+    },
+    onError: (error) => console.error(error),
+  });
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -53,8 +139,17 @@ export default function ProductCard({
     setIsEditModalOpen(false);
   };
 
-  const saveEdited = (product: Partial<Product>) => {
-    console.log(product);
+  const saveEdited = (productUpdatingProps: ProductUpdatingProps) => {
+    if (productUpdatingProps.productProps.images)
+      productUpdatingProps.imagesToDelete = images
+        .map(({ id }) => id)
+        .filter(
+          (id) => !productUpdatingProps.productProps.images?.includes(id)
+        );
+
+    productUpdatingProps.files.length
+      ? uploadImages(productUpdatingProps)
+      : editProduct(productUpdatingProps);
     handleEditClose();
     handleMenuClose();
   };
@@ -134,7 +229,7 @@ export default function ProductCard({
           <DeleteModal
             isOpen={isDeleteModalOpen}
             onClose={handleDeleteClose}
-            onDelete={() => null}
+            onDelete={deleteProduct}
             title="Are you sure to delete selected product?"
             bodyText={`${name}  $${price}`}
           />

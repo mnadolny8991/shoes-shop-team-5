@@ -1,6 +1,6 @@
 'use client';
 
-import { Product, Size } from '@/types/product';
+import { Product } from '@/types/product';
 import {
   Button,
   Stack,
@@ -22,11 +22,18 @@ import {
   mapGenders,
 } from '@/mappers/productMappers';
 import { useForm } from 'react-hook-form';
+import { ApiPutProduct } from '@/types/apiTypes';
 
 type ProductFormProps = {
   title: string;
   description: string;
-  onSubmit: (product: Partial<Product>) => void;
+  onSubmit: ({
+    productProps,
+    files,
+  }: {
+    productProps: ApiPutProduct;
+    files: File[];
+  }) => void;
   product?: Product;
 };
 
@@ -40,14 +47,16 @@ const SaveButton = (
   </Button>
 );
 
-type FormData = {
+export type ProductFormData = {
   name: string;
-  price: string;
-  color: string;
-  gender: string;
-  brand: string;
+  price: number;
+  color: number;
+  gender: number;
+  brand: number;
   description: string;
   sizes: number[];
+  images: number[];
+  uploadImages: File[];
 };
 
 export default function ProductForm({
@@ -94,26 +103,28 @@ export default function ProductForm({
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, dirtyFields },
     setValue,
     setError,
     getValues,
     trigger,
     clearErrors,
-  } = useForm<FormData>({
+  } = useForm<ProductFormData>({
     defaultValues: {
       name: product?.name || '',
-      price: product?.price?.toString() || '',
-      color: product?.color?.id?.toString() || '',
-      gender: product?.gender?.id?.toString() || '',
-      brand: product?.brand?.id?.toString() || '',
+      price: product?.price,
+      color: product?.color?.id,
+      gender: product?.gender?.id,
+      brand: product?.brand?.id,
       description: product?.description || '',
       sizes: product?.sizes?.map(({ id }) => id) || [],
+      images: product?.images?.map(({ id }) => id) || [],
+      uploadImages: [],
     },
   });
 
   const handleSizeChange = (selectedSizes: number[]) => {
-    setValue('sizes', selectedSizes);
+    setValue('sizes', selectedSizes, { shouldDirty: true });
     if (selectedSizes.length === 0)
       setError('sizes', {
         type: 'custom',
@@ -125,29 +136,39 @@ export default function ProductForm({
     trigger('sizes');
   };
 
-  const onSubmitForm = (data: FormData) => {
-    onSubmit({
-      ...data,
-      price: parseFloat(data.price),
-      color: colors!.find((color) => color.id === parseInt(data.color)),
-      gender: genders!.find((gender) => gender.id === parseInt(data.gender)),
-      brand: brands!.find((brand) => brand.id === parseInt(data.brand)),
-      sizes: data.sizes.map((id) =>
-        sizes?.find((size) => size.id === id)
-      ) as Size[],
-    });
+  const handleImagesChange = ({
+    images,
+    uploadedImages,
+  }: {
+    images: number[];
+    uploadedImages: File[];
+  }) => {
+    setValue('images', images, { shouldDirty: true });
+    setValue('uploadImages', uploadedImages);
+    if (images.length === 0 && uploadedImages.length === 0)
+      setError('images', {
+        type: 'custom',
+        message: 'At least one image must be uploaded',
+      });
+    else {
+      clearErrors('images');
+    }
+    trigger('images');
+  };
+
+  const onSubmitForm = (data: ProductFormData) => {
+    const changedData: ApiPutProduct = Object.fromEntries(
+      Object.keys(dirtyFields).map((key) => [
+        key,
+        data[key as keyof ProductFormData],
+      ])
+    );
+    onSubmit({ productProps: changedData, files: data.uploadImages });
   };
 
   return (
     <form
       onSubmit={(e) => {
-        if (getValues('sizes').length === 0) {
-          setError('sizes', {
-            type: 'custom',
-            message: 'At least one size must be selected.',
-          });
-          trigger('sizes');
-        }
         handleSubmit(onSubmitForm)(e);
       }}
       {...(isMobile && { style: { margin: '50px 20px 0' } })}
@@ -198,52 +219,59 @@ export default function ProductForm({
             }
             {...register('price', {
               required: true,
-              pattern: /^[0-9]+(\.[0-9]{1,2})?$/,
+              valueAsNumber: true,
+              validate: (value) =>
+                /^[0-9]+(\.[0-9]{1,2})?$/.test(value.toString()),
             })}
           />
 
-          <Select
-            id="color"
-            label="Color"
-            error={errors.color ? 'Color is required.' : ''}
-            {...register('color', { required: true })}
-          >
-            <option value=""></option>
-            {colors?.map(({ name, id }) => (
-              <option value={id} key={id}>
-                {name}
-              </option>
-            ))}
-          </Select>
-
-          <Stack direction="row" spacing={2}>
+          {colors && (
             <Select
-              id="gender"
-              label="Gender"
-              error={errors.gender ? 'Gender is required.' : ''}
-              {...register('gender', { required: true })}
+              id="color"
+              label="Color"
+              error={errors.color ? 'Color is required.' : ''}
+              {...register('color', { required: true, valueAsNumber: true })}
             >
               <option value=""></option>
-              {genders?.map(({ name, id }) => (
+              {colors.map(({ name, id }) => (
                 <option value={id} key={id}>
                   {name}
                 </option>
               ))}
             </Select>
+          )}
 
-            <Select
-              id="brand"
-              label="Brand"
-              error={errors.brand ? 'Brand is required.' : ''}
-              {...register('brand', { required: true })}
-            >
-              <option value=""></option>
-              {brands?.map((brand) => (
-                <option key={brand.id} value={brand.id}>
-                  {brand.name}
-                </option>
-              ))}
-            </Select>
+          <Stack direction="row" spacing={2}>
+            {genders && (
+              <Select
+                id="gender"
+                label="Gender"
+                error={errors.gender ? 'Gender is required.' : ''}
+                {...register('gender', { required: true, valueAsNumber: true })}
+              >
+                <option value=""></option>
+                {genders?.map(({ name, id }) => (
+                  <option value={id} key={id}>
+                    {name}
+                  </option>
+                ))}
+              </Select>
+            )}
+            {brands && (
+              <Select
+                id="brand"
+                label="Brand"
+                error={errors.brand ? 'Brand is required.' : ''}
+                {...register('brand', { required: true, valueAsNumber: true })}
+              >
+                <option value=""></option>
+                {brands?.map((brand) => (
+                  <option key={brand.id} value={brand.id}>
+                    {brand.name}
+                  </option>
+                ))}
+              </Select>
+            )}
           </Stack>
 
           <Textarea
@@ -261,7 +289,7 @@ export default function ProductForm({
 
           {sizes && (
             <CheckboxesGroup
-              name="sizes"
+              id="sizes"
               caption="Add sizes"
               items={sizes}
               selected={getValues('sizes')} // Pass the current selected sizes
@@ -271,7 +299,11 @@ export default function ProductForm({
           )}
         </Stack>
 
-        <EditingImagesBox initialImages={product?.images} />
+        <EditingImagesBox
+          initialImages={product?.images}
+          onChange={handleImagesChange}
+          error={errors.images?.message}
+        />
 
         {isMobile && SaveButton}
       </Stack>

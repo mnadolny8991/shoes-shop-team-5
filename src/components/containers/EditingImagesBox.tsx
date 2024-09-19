@@ -9,10 +9,10 @@ import {
   useTheme,
 } from '@mui/material';
 import Image from 'next/image';
-import { useState } from 'react';
-//import { DeleteForever } from '@mui/icons-material';
+import { useEffect, useState } from 'react';
 import ImageFileInput from '@/components/input/ImageFileInput';
 import DeleteModal from '@/components/modals/DeleteModal';
+import ErrorMessage from '../products/ErrorMessage';
 
 const ImagesBox = styled('div')(() => ({
   display: 'grid',
@@ -28,15 +28,36 @@ const ImagesBox = styled('div')(() => ({
 
 export default function EditingImagesBox({
   initialImages = [],
+  error,
+  onChange,
 }: {
   initialImages?: ProductImage[];
+  error?: string;
+  onChange: ({
+    images,
+    uploadedImages,
+  }: {
+    images: number[];
+    uploadedImages: File[];
+  }) => void;
 }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  const [images, setImages] = useState<ProductImage[]>(initialImages);
+  const [images, setImages] =
+    useState<(ProductImage & { file?: File })[]>(initialImages);
 
   const [imageIdToDelete, setImageIdToDelete] = useState<number | null>(null);
+
+  useEffect(() => {
+    onChange({
+      images: images.filter(({ file }) => !file).map(({ id }) => id),
+      uploadedImages: images
+        .filter(({ file }) => !!file)
+        .map(({ file }) => file as File),
+    });
+  }, [images]);
+
   const deleteImage = (id: number) => {
     setImages((images) => images.filter((image) => image.id !== id));
   };
@@ -49,10 +70,10 @@ export default function EditingImagesBox({
         const url = reader.result;
         if (typeof url !== 'string') return;
         setImages((images) => {
-          const maxId = images.reduce((acc, curr) => Math.max(acc, curr.id), 0);
+          const minId = images.reduce((acc, curr) => Math.min(acc, curr.id), 0);
           return [
             ...images,
-            { url, alternativeText: name, name, id: maxId + 1 },
+            { url, alternativeText: name, name, id: minId - 1, file },
           ];
         });
       };
@@ -88,14 +109,20 @@ export default function EditingImagesBox({
               }}
               onClick={() => setImageIdToDelete(image.id)}
             >
-              {/* <DeleteForever /> */}
               <img src="./union.svg" alt="delete product image" />
             </IconButton>
           </Box>
         </Box>
       ))}
-      <Box>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: { xs: '4.92px', md: '8px' },
+        }}
+      >
         <ImageFileInput onFileUpload={handleImageUpload} />
+        <ErrorMessage message={error} />
       </Box>
       <DeleteModal
         isOpen={imageIdToDelete !== null}

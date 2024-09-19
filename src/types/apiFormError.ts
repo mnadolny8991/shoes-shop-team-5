@@ -1,20 +1,20 @@
 export type ApiFormError = {
   error: Error;
-}
+};
 
 export type ApiError = {
-  status: number,
-  name: string,
-  message: string,
+  status: number;
+  name: string;
+  message: string;
   details: ApiErrorDetails;
-}
+};
 
 export type ApiErrorDetails = {
-  errors: ApiErrorDetail[],
-}
+  errors: ApiErrorDetail[];
+};
 
 export type ApiErrorDetail = {
-  path: string[],
-  message: string,
-  name: string,
-}
+  path: string[];
+  message: string;
+  name: string;
+};

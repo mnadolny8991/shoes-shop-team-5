@@ -28,7 +28,7 @@ const CartProduct: React.FC<CartProductProps> = ({
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { amount, onAmountIncrement, onAmountChange } = useCartContext();
 
-  const prodAmount = amount.find(p => p.id === id)?.amount!;
+  const prodAmount = amount.find((p) => p.id === id)?.amount!;
 
   return (
     <Stack
