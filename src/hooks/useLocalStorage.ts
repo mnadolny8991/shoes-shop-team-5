@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 
-const useLocalStorage = <T,>(key: string, initialValue: T) => {
+const useLocalStorage = <T>(key: string, initialValue: T) => {
   const [data, setData] = useState<T>(initialValue);
   const [isMounted, setIsMounted] = useState(false); // Track hydration
 

@@ -42,9 +42,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
   return (
     <>
-      {isLoading && 
-        <Typography>Loading...</Typography>
-      }
+      {isLoading && <Typography>Loading...</Typography>}
       {!isLoading && (
         <Stack
           direction="row"

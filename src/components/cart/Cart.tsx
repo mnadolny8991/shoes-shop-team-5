@@ -24,7 +24,7 @@ const Cart: React.FC<CartProps> = () => {
 
   useEffect(() => {
     setIsMounted(true);
-  }, [])
+  }, []);
 
   const { products, amount, onDelete } = useCartContext();
 
@@ -50,7 +50,7 @@ const Cart: React.FC<CartProps> = () => {
         <Typography variant="h1" component="h2">
           Cart
         </Typography>
-        {(empty && isMounted) && createPortal(<CartEmpty />, document.body)}
+        {empty && isMounted && createPortal(<CartEmpty />, document.body)}
         {isMobile && <Divider sx={{ mt: '12px' }} />}
         <Stack
           sx={{

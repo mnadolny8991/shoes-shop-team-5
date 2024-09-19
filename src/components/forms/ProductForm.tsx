@@ -122,14 +122,14 @@ export default function ProductForm({
       uploadImages: [],
     },
   });
-
+  const setSizesEmptyError = () =>
+    setError('sizes', {
+      type: 'custom',
+      message: 'At least one size must be selected.',
+    });
   const handleSizeChange = (selectedSizes: number[]) => {
     setValue('sizes', selectedSizes, { shouldDirty: true });
-    if (selectedSizes.length === 0)
-      setError('sizes', {
-        type: 'custom',
-        message: 'At least one size must be selected.',
-      });
+    if (selectedSizes.length === 0) setSizesEmptyError();
     else {
       clearErrors('sizes');
     }
@@ -169,6 +169,8 @@ export default function ProductForm({
   return (
     <form
       onSubmit={(e) => {
+        if (getValues('sizes').length === 0) setSizesEmptyError();
+
         handleSubmit(onSubmitForm)(e);
       }}
       {...(isMobile && { style: { margin: '50px 20px 0' } })}
@@ -294,7 +296,7 @@ export default function ProductForm({
               items={sizes}
               selected={getValues('sizes')} // Pass the current selected sizes
               onChange={handleSizeChange} // Handle size changes
-              error={errors.sizes ? 'At least one size must be selected.' : ''}
+              error={errors.sizes?.message}
             />
           )}
         </Stack>
