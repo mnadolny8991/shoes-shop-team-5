@@ -1,18 +1,23 @@
 'use client';
 
 import { Box, Typography, useMediaQuery } from '@mui/material';
-import backgroundImage from '../../../public/reset-password-backgroound.png';
+import backgroundImage from '../../../../public/reset-password-backgroound.png';
 import CustomButton from '@/components/buttons/CustomButton';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import theme from '@/styles/theme';
 import TextField from '@/components/input/TextField';
 import Link from 'next/link';
-import useValidate from '../../hooks/useValidate';
+import useValidate from '@/hooks/useValidate';
 import { useState } from 'react';
 import { confirmPasswordValdiator, passwordValidator } from '@/lib/validators';
+import apiUrl from '@/data/apiUrl';
+import { useMutation } from '@tanstack/react-query';
+import { useSearchParams } from 'next/navigation';
 
 export default function ResetPassword() {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+  const searchParams = useSearchParams();
 
   const [password, setPassword] = useState('');
   const [confPass, setConfPass] = useState('');
@@ -31,6 +36,36 @@ export default function ResetPassword() {
     confirmPasswordValdiator(password),
     isFirstInteractionConfPass
   );
+
+  const mutation = useMutation({
+    mutationFn: ({
+      password,
+      passwordConfirmation,
+      code,
+    }: {
+      password: string;
+      passwordConfirmation: string;
+      code: string;
+    }) => {
+      return fetch(`${apiUrl}/auth/reset-password`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ password, passwordConfirmation, code }),
+      });
+    },
+  });
+
+  const onResetPassword = () => {
+    if (!!passError || !password || !!confPassError || !confPass) return;
+
+    mutation.mutate({
+      password,
+      passwordConfirmation: confPass,
+      code: searchParams.get('code')!,
+    });
+  };
 
   return (
     <Grid2 container style={{ height: '100vh' }}>
@@ -85,6 +120,7 @@ export default function ResetPassword() {
               disabled={
                 !!passError || !password || !!confPassError || !confPass
               }
+              onClick={onResetPassword}
             >
               Reset Password
             </CustomButton>
