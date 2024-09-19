@@ -1,6 +1,7 @@
 'use client';
 import Header from '@/components/header/Header';
 import { CartContextProvider } from '@/context/CartContext';
+import LastViewedContextProvider from '@/context/LastViewedContext';
 import { SearchContextProvider } from '@/context/SearchContext';
 
 export default function HeaderLayout({
@@ -10,12 +11,14 @@ export default function HeaderLayout({
 }>) {
   return (
     <>
-      <CartContextProvider>
+      <LastViewedContextProvider>
+        <CartContextProvider>
           <SearchContextProvider>
             <Header />
             {children}
           </SearchContextProvider>
-      </CartContextProvider>
+        </CartContextProvider>
+      </LastViewedContextProvider>
     </>
   );
 }

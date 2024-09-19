@@ -1,6 +1,6 @@
 'use client';
 import CustomButton from '@/components/buttons/CustomButton';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ShoeImageSlider from '@/components/sliders/ShoeImageSlider';
 import {
   Box,
@@ -16,6 +16,7 @@ import { useRouter } from 'next/navigation';
 import { useCartContext } from '@/context/CartContext';
 import mapProduct from '@/mappers/productMappers';
 import apiUrl from '@/data/apiUrl';
+import { useLastViewed } from '@/context/LastViewedContext';
 
 export default function Page({ params }: { params: { id: string } }) {
   const theme = useTheme();
@@ -39,6 +40,13 @@ export default function Page({ params }: { params: { id: string } }) {
   });
   const [sizeId, setSizeId] = useState<null | number>(null);
   const { onProductAdd } = useCartContext();
+  const { onLastViewedAdd } = useLastViewed();
+
+  useEffect(() => {
+    const idInt = parseInt(params.id);
+    if (idInt === undefined) return;
+    onLastViewedAdd(idInt);
+  }, [params.id, onLastViewedAdd]);
 
   return (
     <>
