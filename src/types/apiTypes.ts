@@ -203,3 +203,27 @@ export type ApiProductListResponse = {
   data: ApiProductListResponseDataItem[];
   meta: ApiListMeta;
 };
+
+export type ApiPostProduct = {
+  name: string;
+  images: number[];
+  description: string;
+  brand?: number;
+  categories?: number[];
+  color?: number;
+  gender?: number;
+  sizes?: number[];
+  price: number;
+  userID?: number;
+  teamName: string;
+};
+
+export type ApiPutProduct = Partial<ApiPostProduct>;
+
+export type ApiPostProductRequest = {
+  data: ApiPostProduct;
+};
+
+export type ApiPutProductRequest = {
+  data: ApiPutProduct;
+};

@@ -1,16 +1,10 @@
 'use client';
 
-import {
-  Box,
-  Checkbox,
-  FormControlLabel,
-  FormGroup,
-  styled,
-  Typography,
-} from '@mui/material';
+import { Checkbox, FormControlLabel, FormGroup, styled } from '@mui/material';
+import InputFieldContainer from '@/components/containers/InputFieldContainer';
 
 type CheckboxesGroupProps = {
-  name: string;
+  id: string;
   caption: string;
   items: Array<{ id: number; name: string }>;
   selected: number[]; // Pass the current selected sizes from the parent
@@ -48,7 +42,7 @@ const CheckboxesFormGroup = styled(FormGroup)(({ theme }) => ({
 }));
 
 export default function CheckboxesGroup({
-  name,
+  id,
   caption,
   items,
   selected,
@@ -64,8 +58,7 @@ export default function CheckboxesGroup({
   };
 
   return (
-    <Box>
-      <Typography variant="caption">{caption}</Typography>
+    <InputFieldContainer label={caption} error={error} id={id}>
       <CheckboxesFormGroup row>
         {items.map((item) => (
           <FormControlLabel
@@ -81,11 +74,6 @@ export default function CheckboxesGroup({
           />
         ))}
       </CheckboxesFormGroup>
-      {error && (
-        <Typography color="error" variant="caption">
-          {error}
-        </Typography>
-      )}
-    </Box>
+    </InputFieldContainer>
   );
 }

@@ -10,5 +10,5 @@ export type CartContextType = {
   onPromocodeChange: (value: string) => void;
   onAmountIncrement: (productId: number, operation: '+' | '-') => void;
   onAmountChange: (productId: number, newValue: number) => void;
-  isLoading: boolean,
+  isLoading: boolean;
 };
