@@ -1,8 +1,4 @@
-import {
-  Drawer,
-  IconButton,
-  Stack,
-} from '@mui/material';
+import { Drawer, IconButton, Stack } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import Filters from '@/components/filters/Filters';
 

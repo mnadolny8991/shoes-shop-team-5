@@ -10,7 +10,6 @@ import {
 } from '@mui/material';
 import Image from 'next/image';
 
-
 export default function NothingFound() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -32,7 +31,7 @@ export default function NothingFound() {
           alt="bag icon"
         />
       </IconButton>
-      <Typography variant='h4'>No products found</Typography>
+      <Typography variant="h4">No products found</Typography>
       <Typography variant="subtitle2" mb={isMobile ? 4 : 5}>
         We couldn’t find what you searched for.
       </Typography>

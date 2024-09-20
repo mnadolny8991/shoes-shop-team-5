@@ -2,12 +2,19 @@
 import { Dialog } from '@mui/material';
 import ProductForm from '@/components/forms/ProductForm';
 import { Product } from '@/types/product';
+import { ApiPutProduct } from '@/types/apiTypes';
 
 type Props = {
   isOpen: boolean;
   onClose: () => void;
   product: Product;
-  onSave: (product: Partial<Product>) => void;
+  onSave: ({
+    productProps,
+    files,
+  }: {
+    productProps: ApiPutProduct;
+    files: File[];
+  }) => void;
 };
 
 export default function EditProductModal({

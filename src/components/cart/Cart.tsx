@@ -12,6 +12,7 @@ import CartSummary from '@/components/cart/CartSummary';
 import { useCartContext } from '@/context/CartContext';
 import CartEmpty from '@/components/cart/CartEmpty';
 import { createPortal } from 'react-dom';
+import { useEffect, useState } from 'react';
 
 type CartProps = {};
 
@@ -19,6 +20,11 @@ const Cart: React.FC<CartProps> = () => {
   const theme = useTheme();
   const totalDown = useMediaQuery(theme.breakpoints.down(1750));
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const { products, amount, onDelete } = useCartContext();
 
@@ -44,7 +50,7 @@ const Cart: React.FC<CartProps> = () => {
         <Typography variant="h1" component="h2">
           Cart
         </Typography>
-        {empty && createPortal(<CartEmpty />, document.body)}
+        {empty && isMounted && createPortal(<CartEmpty />, document.body)}
         {isMobile && <Divider sx={{ mt: '12px' }} />}
         <Stack
           sx={{
@@ -72,8 +78,7 @@ const Cart: React.FC<CartProps> = () => {
         <CartSummary
           subtotal={products.reduce(
             (acc, val) =>
-              val.price * amount.find((a) => a.id === val.id)?.amount! +
-              acc,
+              val.price * amount.find((a) => a.id === val.id)?.amount! + acc,
             0
           )}
           shipping={20}
