@@ -1,6 +1,7 @@
 'use client';
 
 import UserPagesList from '@/components/nav/UserPagesList';
+import useAvatarQuery from '@/hooks/useAvatarQuery';
 import {
   Box,
   Divider,
@@ -18,6 +19,8 @@ export default function UserLayout({
 }>) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+  const { data } = useAvatarQuery();
 
   return (
     <Stack
@@ -38,8 +41,8 @@ export default function UserLayout({
         >
           <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
             <Avatar
-              alt="Jane Meldrum"
-              src="/jane-meldrum.png"
+              alt={data?.alt}
+              src={data?.src}
               sx={{ width: 64, height: 64 }}
             />
             <Box>
@@ -53,7 +56,7 @@ export default function UserLayout({
                 Welcome
               </Typography>
               <Typography fontSize={16} fontWeight={500} lineHeight="18.77px">
-                Jane Meldrum
+                {data?.name}
               </Typography>
             </Box>
           </Box>

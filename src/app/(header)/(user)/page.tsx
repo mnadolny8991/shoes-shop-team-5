@@ -18,9 +18,9 @@ export default function DefaultProducts() {
         mx={'20px'}
         mb={{ xs: '19px', md: '36px' }}
       >
-        {(!isLoading && lastViewed.length > 0) &&
+        {!isLoading && lastViewed.length > 0 && (
           <Typography variant="h1">Last viewed products</Typography>
-        }
+        )}
       </Stack>
       {!isLoading && (
         <>
