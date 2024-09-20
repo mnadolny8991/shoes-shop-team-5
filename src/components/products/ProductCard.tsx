@@ -117,7 +117,7 @@ export default function ProductCard({
       queryClient.setQueryData(['myProducts'], (old: Product[]) =>
         old.filter((oldProduct) => oldProduct.id !== id)
       );
-      onLastViewedRemove(id);
+      // onLastViewedRemove(id);
       images.map(({ id }) => id).forEach((imageId) => deleteImage(imageId));
     },
     onError: (error) => console.error(error),

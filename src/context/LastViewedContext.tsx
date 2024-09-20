@@ -2,9 +2,11 @@
 import apiUrl from '@/data/apiUrl';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import mapProduct from '@/mappers/productMappers';
+import { ApiProductResponse } from '@/types/api/apiTypes';
 import { Product } from '@/types/product';
+import { LastPageTwoTone } from '@mui/icons-material';
 import { useQueries } from '@tanstack/react-query';
-import { createContext, useContext, ReactNode, FC } from 'react';
+import { createContext, useContext, ReactNode, FC, useEffect } from 'react';
 
 type LastViewedContextType = {
   lastViewed: Product[];
@@ -40,14 +42,20 @@ const LastViewedContextProvider: FC<{ children: ReactNode }> = ({
           fetch(`${apiUrl}/products/${id}?populate=*`)
             .then((res) => {
               if (res.status === 404) {
-                console.log('somethings wrong');
-                throw new Error('There is no product with this id');
+                return null;
               }
               return res.json();
             })
-            .then((data) => mapProduct(data)),
+            .then((data: ApiProductResponse | null) =>
+              data ? mapProduct(data) : null
+            )
+            .catch((_e) => null),
       };
     }),
+  });
+
+  useEffect(() => {
+    console.log(lastViewed);
   });
 
   const handleLastViewedAdd = (id: number) => {
@@ -67,14 +75,14 @@ const LastViewedContextProvider: FC<{ children: ReactNode }> = ({
 
   const handleLastViewedRemove = (id: number) => {
     setLastViewedIds(lastViewedIds.filter((i) => i !== id));
-  }
+  };
 
   const isLoading = lastViewed.some((query) => query.isLoading);
 
   return (
     <LastViewedContext.Provider
       value={{
-        lastViewed: lastViewed.map((p) => p.data!) ?? [],
+        lastViewed: lastViewed.filter((p) => p.data).map((p) => p.data!) ?? [],
         onLastViewedAdd: handleLastViewedAdd,
         onLastViewedRemove: handleLastViewedRemove,
         isLoading,
