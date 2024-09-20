@@ -49,13 +49,19 @@ const LastViewedContextProvider: FC<{ children: ReactNode }> = ({
     }),
   });
 
-  const lastViewedHashSet = new Set(lastViewedIds);
-
   const handleLastViewedAdd = (id: number) => {
-    if (lastViewedIds.length === 4) 
-      setLastViewedIds(lastViewedIds.filter((_id, idx) => idx > 0));
-    if (!lastViewedHashSet.has(id))
-      setLastViewedIds(prev => [...prev, id]);
+    setLastViewedIds((prev) => {
+      const lastViewedHashSet = new Set(prev);
+      if (lastViewedHashSet.has(id)) return prev; // No duplicates allowed
+
+      const updatedIds = [...prev, id];
+
+      if (updatedIds.length > 4) {
+        return updatedIds.slice(1);
+      }
+
+      return updatedIds;
+    });
   };
 
   const isLoading = lastViewed.some((query) => query.isLoading);
