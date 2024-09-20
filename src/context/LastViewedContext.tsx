@@ -9,6 +9,7 @@ import { createContext, useContext, ReactNode, FC } from 'react';
 type LastViewedContextType = {
   lastViewed: Product[];
   onLastViewedAdd: (id: number) => void;
+  onLastViewedRemove: (id: number) => void;
   isLoading: boolean;
 };
 
@@ -64,6 +65,10 @@ const LastViewedContextProvider: FC<{ children: ReactNode }> = ({
     });
   };
 
+  const handleLastViewedRemove = (id: number) => {
+    setLastViewedIds(lastViewedIds.filter((i) => i !== id));
+  }
+
   const isLoading = lastViewed.some((query) => query.isLoading);
 
   return (
@@ -71,6 +76,7 @@ const LastViewedContextProvider: FC<{ children: ReactNode }> = ({
       value={{
         lastViewed: lastViewed.map((p) => p.data!) ?? [],
         onLastViewedAdd: handleLastViewedAdd,
+        onLastViewedRemove: handleLastViewedRemove,
         isLoading,
       }}
     >

@@ -15,12 +15,14 @@ import { MoreHoriz } from '@mui/icons-material';
 import { useState } from 'react';
 import DeleteModal from '@/components/modals/DeleteModal';
 import EditProductModal from '@/components/modals/EditProductModal';
-import { ApiPutProduct } from '@/types/apiTypes';
+import { ApiPutProduct } from '@/types/api/apiTypes';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import apiUrl from '@/data/apiUrl';
 import mapProduct from '@/mappers/productMappers';
 import token from '@/data/token';
 import { useRouter } from 'next/navigation';
+import { useLastViewed } from '@/context/LastViewedContext';
+import { on } from 'stream';
 
 type ProductUpdatingProps = {
   productProps: ApiPutProduct;
@@ -42,6 +44,7 @@ export default function ProductCard({
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const router = useRouter();
+  const { onLastViewedRemove } = useLastViewed();
 
   const { id, name, price, images, gender } = product;
 
@@ -114,6 +117,7 @@ export default function ProductCard({
       queryClient.setQueryData(['myProducts'], (old: Product[]) =>
         old.filter((oldProduct) => oldProduct.id !== id)
       );
+      onLastViewedRemove(id);
       images.map(({ id }) => id).forEach((imageId) => deleteImage(imageId));
     },
     onError: (error) => console.error(error),
