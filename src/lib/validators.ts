@@ -77,9 +77,27 @@ const nameValidator = (name: string) => {
   }
 };
 
+/**
+ * Validates the input phone number based on the following rules:
+ * - Must contain only digits.
+ * - Must be between 10 and 15 characters long.
+ *
+ * @param {string} inputVal - The phone number to validate.
+ * @returns {string} - An error message if the phone number does not meet the criteria, otherwise an empty string.
+ */
+const phoneValidator = (inputVal: string) => {
+  const phoneRegex = new RegExp(/^\d{10,15}$/);
+  if (!phoneRegex.test(inputVal)) {
+    return 'Phone number must be between 10 and 15 digits long and contain only numbers';
+  } else {
+    return '';
+  }
+};
+
 export {
   emailValidator,
   passwordValidator,
   confirmPasswordValdiator,
   nameValidator,
+  phoneValidator,
 };
