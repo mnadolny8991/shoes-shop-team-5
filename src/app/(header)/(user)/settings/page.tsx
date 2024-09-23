@@ -75,7 +75,9 @@ export default function UserSettings() {
       }
       const imageData = await response.json();
       const imageId = imageData[0]?.id;
-      const updateResponse = await updateUserData(userId, token, { avatar: imageId });
+      const updateResponse = await updateUserData(userId, token, {
+        avatar: imageId,
+      });
       if (!updateResponse.ok) {
         throw new Error('Error updating user avatar');
       }
@@ -100,7 +102,7 @@ export default function UserSettings() {
   const { data, status } = useQuery({
     queryKey: ['user', userId],
     queryFn: () => getUserData(userId, token),
-  })
+  });
 
   useEffect(() => {
     if (status === 'success') {

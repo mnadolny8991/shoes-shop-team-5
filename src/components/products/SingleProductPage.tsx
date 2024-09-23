@@ -20,7 +20,7 @@ import { Product } from '@/types/product';
 
 type SingleProductPageProps = {
   id: number;
-  initialData: Product,
+  initialData: Product;
 };
 
 const SingleProductPage: FC<SingleProductPageProps> = ({ id, initialData }) => {

@@ -55,7 +55,7 @@ export default function NavRight() {
           gap: '16px',
         }}
       >
-        {(status === 'authenticated' && !isMobile) && (
+        {status === 'authenticated' && !isMobile && (
           <IconButton onClick={() => router.push('/settings')}>
             <Avatar
               alt="Remy Sharp"

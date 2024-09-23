@@ -14,14 +14,13 @@ const handler = NextAuth({
 
   providers: [
     CredentialsProvider({
-      name: "Credentials",
+      name: 'Credentials',
       credentials: {
         identifier: {},
         password: {},
       },
       async authorize(credentials) {
-        if (!credentials?.identifier || !credentials?.password) 
-          return null;
+        if (!credentials?.identifier || !credentials?.password) return null;
         try {
           const response = await fetch(`${apiUrl}/auth/local`, {
             method: 'POST',
@@ -31,7 +30,7 @@ const handler = NextAuth({
             body: JSON.stringify({
               identifier: credentials.identifier,
               password: credentials.password,
-            })
+            }),
           });
           if (!response.ok) {
             return null;
@@ -48,11 +47,14 @@ const handler = NextAuth({
       },
     }),
   ],
-  
+
   callbacks: {
     async jwt(data) {
       // User data avaliable in user object when logged in
-      const userData = data.user as (ApiUserAttributes & { token: string, id: string });
+      const userData = data.user as ApiUserAttributes & {
+        token: string;
+        id: string;
+      };
       if (data.account) {
         // all data that should be in session object should be put into data.token
         data.token.id = parseInt(userData.id);
@@ -65,8 +67,8 @@ const handler = NextAuth({
         session.accessToken = token.accessToken as string;
       }
       return session;
-    }
-  }
+    },
+  },
 });
 
 export { handler as GET, handler as POST };

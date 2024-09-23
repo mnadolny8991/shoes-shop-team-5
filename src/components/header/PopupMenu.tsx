@@ -19,10 +19,7 @@ type PopupMenuProps = {
   onMenuClose: () => void;
 };
 
-export default function PopupMenu({
-  showMenu,
-  onMenuClose,
-}: PopupMenuProps) {
+export default function PopupMenu({ showMenu, onMenuClose }: PopupMenuProps) {
   const router = useRouter();
   const { data: session, status } = useSession();
   const menuItems = getMenuItems(status === 'authenticated');
@@ -61,8 +58,7 @@ export default function PopupMenu({
             sx={{ px: 0 }}
             key={menuItem.id}
             onClick={() => {
-              if (status === 'authenticated')
-                router.push(menuItem.href);
+              if (status === 'authenticated') router.push(menuItem.href);
               else signIn();
               onMenuClose();
             }}

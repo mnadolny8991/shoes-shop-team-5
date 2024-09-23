@@ -13,7 +13,11 @@ import {
 } from '@/lib/validators';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import apiUrl from '@/data/apiUrl';
-import { ApiError, ApiErrorDetail, ApiFormError } from '@/types/api/apiFormError';
+import {
+  ApiError,
+  ApiErrorDetail,
+  ApiFormError,
+} from '@/types/api/apiFormError';
 import { getUserData } from '@/lib/fetchUserData';
 
 type UserUpdateFormData = {
@@ -80,7 +84,7 @@ export default function UpdateProfileForm() {
       setPhoneNumber(data.phoneNumber ?? '');
       setEmail(data.email);
     }
-  }, [data, status])
+  }, [data, status]);
 
   const mutation = useMutation({
     mutationFn: async (user: UserUpdateFormData) => {

@@ -21,18 +21,13 @@ export default function UserLayout({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { data: session, status } = useSession();
-  const signedIn = session !== null;
 
   const { data } = useAvatarQuery();
 
   return (
     <>
-      {status === 'unauthenticated' &&
-        <></>
-      }
-      {status === 'loading' &&
-        <Typography variant="h1">Loading...</Typography>
-      }
+      {status === 'unauthenticated' && <></>}
+      {status === 'loading' && <Typography variant="h1">Loading...</Typography>}
       {status === 'authenticated' && (
         <Stack
           {...(!isMobile && {

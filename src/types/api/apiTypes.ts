@@ -1,4 +1,4 @@
-import { ApiUser } from '@/types/api/apiUser';
+import { ApiUser, ApiUserAttributes } from '@/types/api/apiUser';
 
 type ApiListMeta = {
   pagination: {

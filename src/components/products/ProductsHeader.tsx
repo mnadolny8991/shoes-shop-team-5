@@ -38,7 +38,7 @@ const ProductsHeader = () => {
           marginLeft={{ xs: '20px', md: '55px' }}
           display="flex"
           gap={{ xs: '13px', md: '26px' }}
-          alignItems="end"
+          alignItems="center"
         >
           <Avatar
             alt={data.alt}
@@ -49,12 +49,9 @@ const ProductsHeader = () => {
               border: '4px solid white',
             }}
           />
-          <Box>
-            <Typography variant="h5" mb={{ xs: '2px', md: '4px' }}>
-              {data.name}
-            </Typography>
-            <Typography variant="subtitle2">no bonus points</Typography>
-          </Box>
+          <Typography variant="h5" mb={{ xs: '2px', md: '4px' }}>
+            {data.name}
+          </Typography>
         </Box>
       )}
     </>
