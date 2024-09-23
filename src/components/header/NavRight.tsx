@@ -15,6 +15,7 @@ import CustomButton from '@/components/buttons/CustomButton';
 import PopupMenu from '@/components/header/PopupMenu';
 import { useRouter } from 'next/navigation';
 import { useSearch } from '@/context/SearchContext';
+import { signIn, useSession } from 'next-auth/react';
 
 export default function NavRight() {
   const [showMenu, setShowMenu] = useState(false);
@@ -24,9 +25,7 @@ export default function NavRight() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const router = useRouter();
-  const signedIn = true; // auth context here
-
-  // Consume the search context
+  const { data: session, status } = useSession();
   const { searchText, setSearchText } = useSearch();
 
   return (
@@ -56,7 +55,7 @@ export default function NavRight() {
           gap: '16px',
         }}
       >
-        {signedIn && !isMobile && (
+        {(status === 'authenticated' && !isMobile) && (
           <IconButton onClick={() => router.push('/settings')}>
             <Avatar
               alt="Remy Sharp"
@@ -100,7 +99,7 @@ export default function NavRight() {
         searchText={searchText}
         onTextChange={(val: string) => setSearchText(val)}
       />
-      {!signedIn && !isMobile && (
+      {status === 'unauthenticated' && !isMobile && (
         <CustomButton
           size="l"
           variant="outlined"
@@ -108,12 +107,13 @@ export default function NavRight() {
           sx={{
             width: '145px',
           }}
+          onClick={() => signIn()}
         >
           Sign In
         </CustomButton>
       )}
       {isMobile && showMenu && (
-        <PopupMenu signedIn showMenu onMenuClose={() => setShowMenu(false)} />
+        <PopupMenu showMenu onMenuClose={() => setShowMenu(false)} />
       )}
     </Box>
   );

@@ -22,8 +22,12 @@ import { useMutation } from '@tanstack/react-query';
 import { UserFormData } from '@/types/userFormData';
 import apiUrl from '@/data/apiUrl';
 import { useRouter } from 'next/navigation';
-import { ApiError, ApiErrorDetail, ApiFormError } from '@/types/apiFormError';
-import ServerErrorBox from '../containers/ServerErrorBox';
+import {
+  ApiError,
+  ApiErrorDetail,
+  ApiFormError,
+} from '@/types/api/apiFormError';
+import ServerErrorBox from '@/components/containers/ServerErrorBox';
 
 export default function SignupForm() {
   const theme = useTheme();

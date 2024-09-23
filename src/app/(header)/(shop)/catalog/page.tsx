@@ -6,7 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import apiUrl from '@/data/apiUrl';
 import ProductsGrid from '@/components/products/ProductsGrid';
 import NothingFound from '@/components/products/NothingFound';
-import { ApiProductListResponse } from '@/types/apiTypes';
+import { ApiProductListResponse } from '@/types/api/apiTypes';
 import { Product } from '@/types/product';
 import { mapProductList } from '@/mappers/productMappers';
 

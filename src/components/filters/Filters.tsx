@@ -12,12 +12,12 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import GenderFilter from './GenderFilter';
-import SizeFilter from './SizeFilter';
-import BrandFilter from './BrandFilter';
-import PriceFilter from './PriceFilter';
-import ColorFilter from './ColorFilter';
-import SearchBar from '../input/SearchBar';
+import GenderFilter from '@/components/filters/GenderFilter';
+import SizeFilter from '@/components/filters/SizeFilter';
+import BrandFilter from '@/components/filters/BrandFilter';
+import PriceFilter from '@/components/filters/PriceFilter';
+import ColorFilter from '@/components/filters/ColorFilter';
+import SearchBar from '@/components/input/SearchBar';
 
 import { useSearch } from '@/context/SearchContext';
 

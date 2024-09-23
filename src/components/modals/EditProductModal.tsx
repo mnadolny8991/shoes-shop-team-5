@@ -2,7 +2,7 @@
 import { Dialog } from '@mui/material';
 import ProductForm from '@/components/forms/ProductForm';
 import { Product } from '@/types/product';
-import { ApiPutProduct } from '@/types/apiTypes';
+import { ApiPutProduct } from '@/types/api/apiTypes';
 
 type Props = {
   isOpen: boolean;

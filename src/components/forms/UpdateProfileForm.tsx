@@ -1,12 +1,140 @@
 'use client';
 
-import { Box, useTheme, useMediaQuery } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Box, useTheme, useMediaQuery, Snackbar, Alert } from '@mui/material';
 import TextField from '@/components/input/TextField';
 import CustomButton from '@/components/buttons/CustomButton';
+import token from '@/data/token';
+import useValidate from '@/hooks/useValidate';
+import {
+  emailValidator,
+  nameValidator,
+  phoneValidator,
+} from '@/lib/validators';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import apiUrl from '@/data/apiUrl';
+import { ApiError, ApiErrorDetail, ApiFormError } from '@/types/api/apiFormError';
+import { getUserData } from '@/lib/fetchUserData';
+
+type UserUpdateFormData = {
+  email: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+};
 
 export default function UpdateProfileForm() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+  const userId = 679;
+
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+
+  const [isFirstInteractionFirstName, setIsFirstInteractionFirstName] =
+    useState(false);
+  const [isFirstInteractionLastName, setIsFirstInteractionLastName] =
+    useState(false);
+  const [isFirstInteractionEmail, setIsFirstInteractionEmail] = useState(false);
+  const [isFirstInteractionPhone, setIsFirstInteractionPhone] = useState(false);
+
+  const { error: firstNameError } = useValidate(
+    firstName,
+    nameValidator,
+    isFirstInteractionFirstName
+  );
+  const { error: lastNameError } = useValidate(
+    lastName,
+    nameValidator,
+    isFirstInteractionLastName
+  );
+  const { error: emailError } = useValidate(
+    email,
+    emailValidator,
+    isFirstInteractionEmail
+  );
+  const { error: phoneError } = useValidate(
+    phoneNumber,
+    phoneValidator,
+    isFirstInteractionPhone
+  );
+
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error'>(
+    'success'
+  );
+
+  const { data, status } = useQuery({
+    queryKey: ['user', userId],
+    queryFn: () => getUserData(userId, token),
+  });
+
+  useEffect(() => {
+    if (status === 'success') {
+      setFirstName(data.firstName ?? '');
+      setLastName(data.lastName ?? '');
+      setPhoneNumber(data.phoneNumber ?? '');
+      setEmail(data.email);
+    }
+  }, [data, status])
+
+  const mutation = useMutation({
+    mutationFn: async (user: UserUpdateFormData) => {
+      const response = await fetch(`${apiUrl}/users/${userId}`, {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(user),
+      });
+
+      if (response.ok) {
+        return response.json();
+      } else {
+        const errorResponse: ApiFormError = await response.json();
+        throw errorResponse.error;
+      }
+    },
+    onSuccess: (_data) => {
+      setSnackbarMessage('Profile updated successfully!');
+      setSnackbarSeverity('success');
+      setOpenSnackbar(true);
+
+      // setFirstName('');
+      // setLastName('');
+      // setEmail('');
+      // setPhoneNumber('');
+    },
+    onError: (error: ApiError | ApiErrorDetail) => {
+      setSnackbarMessage(`Failed to update profile: ${error.message}`);
+      setSnackbarSeverity('error');
+      setOpenSnackbar(true);
+    },
+  });
+
+  const handleCloseSnackbar = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenSnackbar(false);
+  };
+
+  const handleSubmit = () => {
+    mutation.mutate({
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+    });
+  };
 
   return (
     <form>
@@ -18,60 +146,54 @@ export default function UpdateProfileForm() {
           gap: '22px',
         }}
       >
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-            }}
-          ></Box>
-        </Box>
         <TextField
+          value={firstName}
+          onBlur={(e) => setIsFirstInteractionFirstName(true)}
+          onChange={(e) => setFirstName(e.target.value)}
           required
+          type="text"
           name="name"
           id="name"
           label="Name"
-          type="text"
           min={8}
-          value={''}
-          onChange={() => {}}
+          error={firstNameError!}
         />
         <TextField
+          value={lastName}
+          onBlur={(e) => setIsFirstInteractionLastName(true)}
+          onChange={(e) => setLastName(e.target.value)}
           required
-          name="surname"
-          id="surname"
+          type="text"
+          name="lastName"
+          id="lastName"
           label="Surname"
-          type="text"
           min={8}
-          value={''}
-          onChange={() => {}}
+          error={lastNameError}
         />
         <TextField
+          value={email}
+          onBlur={(e) => setIsFirstInteractionEmail(true)}
+          onChange={(e) => setEmail(e.target.value)}
           required
+          type="text"
           name="email"
           id="email"
           label="Email"
-          type="text"
           min={8}
-          value={''}
-          onChange={() => {}}
+          error={emailError}
         />
         <TextField
+          value={phoneNumber}
+          onBlur={(e) => setIsFirstInteractionPhone(true)}
+          onChange={(e) => setPhoneNumber(e.target.value)}
           required
+          type="text"
           name="phone"
           id="phone"
-          type="text"
-          label="Phone number"
+          label="Phone"
           min={8}
-          value={''}
-          onChange={() => {}}
+          error={phoneError}
         />
-
         <Box
           sx={{
             marginTop: { sx: '7px', md: '34px' },
@@ -81,14 +203,40 @@ export default function UpdateProfileForm() {
         >
           <CustomButton
             size={isMobile ? 's' : 'm'}
+            onClick={handleSubmit}
             variant="contained"
             type="submit"
             sx={{ maxWidth: '150px', borderRadius: '8px' }}
+            disabled={
+              !!firstNameError ||
+              !firstName ||
+              !!lastNameError ||
+              !lastName ||
+              !!emailError ||
+              !email ||
+              !!phoneError ||
+              !phoneNumber
+            }
           >
             Save Changes
           </CustomButton>
         </Box>
       </Box>
+
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbarSeverity}
+          sx={{ width: '100%' }}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </form>
   );
 }

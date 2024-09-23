@@ -11,6 +11,7 @@ import {
   Stack,
   Avatar,
 } from '@mui/material';
+import { useSession } from 'next-auth/react';
 
 export default function UserLayout({
   children,
@@ -19,54 +20,70 @@ export default function UserLayout({
 }>) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const { data: session, status } = useSession();
+  const signedIn = session !== null;
 
   const { data } = useAvatarQuery();
 
   return (
-    <Stack
-      {...(!isMobile && {
-        direction: 'row',
-        spacing: '40px',
-        px: '40px',
-        pt: '40px',
-      })}
-    >
-      {!isMobile && (
+    <>
+      {status === 'unauthenticated' &&
+        <></>
+      }
+      {status === 'loading' &&
+        <Typography variant="h1">Loading...</Typography>
+      }
+      {status === 'authenticated' && (
         <Stack
-          width="320"
-          spacing={4}
-          position="sticky"
-          top="40"
-          alignSelf="start"
+          {...(!isMobile && {
+            direction: 'row',
+            spacing: '40px',
+            px: '40px',
+            pt: '40px',
+          })}
         >
-          <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
-            <Avatar
-              alt={data?.alt}
-              src={data?.src}
-              sx={{ width: 64, height: 64 }}
-            />
-            <Box>
-              <Typography
-                fontSize={12}
-                fontWeight={500}
-                lineHeight="18px"
-                color={'#98A2B3'}
-                mb="4px"
-              >
-                Welcome
-              </Typography>
-              <Typography fontSize={16} fontWeight={500} lineHeight="18.77px">
-                {data?.name}
-              </Typography>
-            </Box>
+          {!isMobile && (
+            <Stack
+              width="320"
+              spacing={4}
+              position="sticky"
+              top="40"
+              alignSelf="start"
+            >
+              <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
+                <Avatar
+                  alt={data?.alt}
+                  src={data?.src}
+                  sx={{ width: 64, height: 64 }}
+                />
+                <Box>
+                  <Typography
+                    fontSize={12}
+                    fontWeight={500}
+                    lineHeight="18px"
+                    color={'#98A2B3'}
+                    mb="4px"
+                  >
+                    Welcome
+                  </Typography>
+                  <Typography
+                    fontSize={16}
+                    fontWeight={500}
+                    lineHeight="18.77px"
+                  >
+                    {data?.name}
+                  </Typography>
+                </Box>
+              </Box>
+              <Divider />
+              <UserPagesList />
+            </Stack>
+          )}
+          <Box component={'main'} flex={'auto'}>
+            {children}
           </Box>
-          <Divider />
-          <UserPagesList />
         </Stack>
       )}
-      <Box component={'main'} flex={'auto'}>
-        {children}
-      </Box>
-    </Stack>
+    </>
   );
 }
