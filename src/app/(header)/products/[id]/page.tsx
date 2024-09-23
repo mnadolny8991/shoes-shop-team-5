@@ -1,5 +1,5 @@
 import SingleProductPage from '@/components/products/SingleProductPage';
-import { fetchProductById } from '@/lib/fetching';
+import { fetchProductById } from '@/lib/fetchProducts';
 
 export default async function Page({ params }: { params: { id: string } }) {
   const id = parseInt(params.id);

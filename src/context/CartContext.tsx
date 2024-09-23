@@ -13,6 +13,7 @@ import apiUrl from '@/data/apiUrl';
 import { CartProduct } from '@/types/cartProduct';
 import mapProduct from '@/mappers/productMappers';
 import useLocalStorage from '@/hooks/useLocalStorage';
+import { fetchProductById } from '@/lib/fetchProducts';
 
 const CartContext = createContext<CartContextType | null>(null);
 
@@ -29,24 +30,6 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [products, setProducts] = useLocalStorage<CartProduct[]>('cart', []);
-  // const [products, setProducts] = useState<CartProduct[]>([]);
-  const productsData = useQueries({
-    queries: products.map((p: CartProduct) => {
-      return {
-        queryKey: ['product', p.id],
-        queryFn: () =>
-          fetch(`${apiUrl}/products/${p.id}?populate=*`)
-            .then((res) => {
-              if (res.status === 404) {
-                console.log('somethings wrong');
-                throw new Error('There is no product with this id');
-              }
-              return res.json();
-            })
-            .then((data) => mapProduct(data)),
-      };
-    }),
-  });
   const [promocode, setPromocode] = useState<string | null>(null);
 
   useEffect(() => {
@@ -55,8 +38,6 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({
       setProducts(filteredProducts);
     }
   }, [products, setProducts]);
-
-  const isLoading = productsData.some((query) => query.isLoading);
 
   const handleDelete = (productId: number) => {
     setProducts(products.filter((product) => product.id !== productId));
@@ -111,7 +92,6 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({
   return (
     <CartContext.Provider
       value={{
-        products: productsData.map((pq) => pq.data!),
         amount: products,
         promocode,
         onDelete: handleDelete,
@@ -119,7 +99,6 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({
         onAmountChange: applyAmountChange,
         onPromocodeChange: handlePromocodeChange,
         onProductAdd: handleProductAdd,
-        isLoading,
       }}
     >
       {children}

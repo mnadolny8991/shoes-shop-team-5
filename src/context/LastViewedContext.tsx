@@ -1,6 +1,7 @@
 'use client';
 import apiUrl from '@/data/apiUrl';
 import useLocalStorage from '@/hooks/useLocalStorage';
+import { fetchProductById } from '@/lib/fetchProducts';
 import mapProduct from '@/mappers/productMappers';
 import { ApiProductResponse } from '@/types/api/apiTypes';
 import { Product } from '@/types/product';
@@ -9,10 +10,9 @@ import { useQueries } from '@tanstack/react-query';
 import { createContext, useContext, ReactNode, FC, useEffect } from 'react';
 
 type LastViewedContextType = {
-  lastViewed: Product[];
+  lastViewedIds: number[],
   onLastViewedAdd: (id: number) => void;
   onLastViewedRemove: (id: number) => void;
-  isLoading: boolean;
 };
 
 const LastViewedContext = createContext<LastViewedContextType | undefined>(
@@ -34,25 +34,6 @@ const LastViewedContextProvider: FC<{ children: ReactNode }> = ({
     'lastViewed',
     []
   );
-  const lastViewed = useQueries({
-    queries: lastViewedIds.map((id: number) => {
-      return {
-        queryKey: ['product', id],
-        queryFn: () =>
-          fetch(`${apiUrl}/products/${id}?populate=*`)
-            .then((res) => {
-              if (res.status === 404) {
-                return null;
-              }
-              return res.json();
-            })
-            .then((data: ApiProductResponse | null) =>
-              data ? mapProduct(data) : null
-            )
-            .catch((_e) => null),
-      };
-    }),
-  });
 
   const handleLastViewedAdd = (id: number) => {
     setLastViewedIds((prev) => {
@@ -73,15 +54,12 @@ const LastViewedContextProvider: FC<{ children: ReactNode }> = ({
     setLastViewedIds(lastViewedIds.filter((i) => i !== id));
   };
 
-  const isLoading = lastViewed.some((query) => query.isLoading);
-
   return (
     <LastViewedContext.Provider
       value={{
-        lastViewed: lastViewed.filter((p) => p.data).map((p) => p.data!) ?? [],
+        lastViewedIds,
         onLastViewedAdd: handleLastViewedAdd,
         onLastViewedRemove: handleLastViewedRemove,
-        isLoading,
       }}
     >
       {children}
