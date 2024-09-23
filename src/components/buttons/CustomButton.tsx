@@ -1,4 +1,5 @@
 'use client';
+import { PropaneSharp } from '@mui/icons-material';
 import { Button, ButtonProps, Typography } from '@mui/material';
 
 const buttonSizes = {
@@ -21,6 +22,7 @@ export default function CustomButton({
   onClick,
   disabled,
   href,
+  ...props
 }: CustomButtonProps) {
   return (
     <Button
@@ -31,6 +33,7 @@ export default function CustomButton({
       onClick={onClick}
       disabled={disabled}
       href={href}
+      {...props}
     >
       <Typography fontSize={buttonSizes[size].fontSize} variant="button">
         {children}

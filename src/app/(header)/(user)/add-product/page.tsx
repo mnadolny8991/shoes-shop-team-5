@@ -2,7 +2,7 @@
 import ProductForm from '@/components/forms/ProductForm';
 import apiUrl from '@/data/apiUrl';
 import token from '@/data/token';
-import { ApiPostProduct, ApiPutProduct } from '@/types/apiTypes';
+import { ApiPostProduct, ApiPutProduct } from '@/types/api/apiTypes';
 import {
   Alert,
   Backdrop,

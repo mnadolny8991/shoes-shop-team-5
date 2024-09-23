@@ -13,7 +13,7 @@ import {
 } from '@/lib/validators';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import apiUrl from '@/data/apiUrl';
-import { ApiError, ApiErrorDetail, ApiFormError } from '@/types/apiFormError';
+import { ApiError, ApiErrorDetail, ApiFormError } from '@/types/api/apiFormError';
 import { getUserData } from '@/lib/fetchUserData';
 
 type UserUpdateFormData = {

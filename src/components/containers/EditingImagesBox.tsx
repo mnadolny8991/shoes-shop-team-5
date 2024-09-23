@@ -12,7 +12,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import ImageFileInput from '@/components/input/ImageFileInput';
 import DeleteModal from '@/components/modals/DeleteModal';
-import ErrorMessage from '../products/ErrorMessage';
+import ErrorMessage from '@/components/products/ErrorMessage';
 
 const ImagesBox = styled('div')(() => ({
   display: 'grid',

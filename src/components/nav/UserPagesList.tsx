@@ -11,6 +11,7 @@ import ShoppingBasketOutlinedIcon from '@mui/icons-material/ShoppingBasketOutlin
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import { useRouter } from 'next/navigation';
+import { signOut, useSession } from 'next-auth/react';
 
 const MY_PRODUCTS_PATH = '/my-products';
 const SETTINGS_PATH = '/settings';
@@ -33,6 +34,9 @@ const StyledListItem = styled(ListItemButton)(({ theme }) => ({
 
 export default function UserPagesList() {
   const router = useRouter();
+  const { data: session } = useSession();
+
+  const loggedIn = session !== null;
 
   return (
     <List disablePadding>
@@ -64,7 +68,7 @@ export default function UserPagesList() {
           }
         />
       </StyledListItem>
-      <StyledListItem>
+      <StyledListItem onClick={() => signOut()}>
         <ListItemIcon>
           <LogoutOutlinedIcon />
         </ListItemIcon>

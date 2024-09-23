@@ -11,13 +11,16 @@ import {
 } from '@mui/material';
 import CustomButton from '@/components/buttons/CustomButton';
 import TextField from '@/components/input/TextField';
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import useValidate from '@/hooks/useValidate';
 import { emailValidator, passwordValidator } from '@/lib/validators';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 export default function SignInForm() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const router = useRouter();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -33,12 +36,30 @@ export default function SignInForm() {
   );
   const { error: passwordError } = useValidate(
     password,
-    passwordValidator,
+    (password) => '',
     isFirstInteractionPassword
   );
 
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    console.log('click');
+    try {
+      const resp = await signIn('credentials', {
+        identifier: email,
+        password,
+        redirect: false,
+      });
+      if (resp) {
+        console.log('auth success!');
+        router.push('/');
+      }
+    } catch (e) {
+      console.log('login failed: ' + e);
+    }
+  }
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <Box maxWidth={{ xs: 320, md: 436 }}>
         <Stack spacing={2} mt={{ xs: '25px', md: '48px' }}>
           <TextField
@@ -88,6 +109,7 @@ export default function SignInForm() {
           size={isMobile ? 's' : 'l'}
           variant="contained"
           disabled={!!emailError || !email || !!passwordError || !password}
+          type="submit"
         >
           Sign in
         </CustomButton>

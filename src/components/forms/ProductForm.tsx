@@ -22,7 +22,7 @@ import {
   mapGenders,
 } from '@/mappers/productMappers';
 import { useForm } from 'react-hook-form';
-import { ApiPutProduct } from '@/types/apiTypes';
+import { ApiPutProduct } from '@/types/api/apiTypes';
 
 type ProductFormProps = {
   title: string;
