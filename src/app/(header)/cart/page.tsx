@@ -7,9 +7,7 @@ import { FC } from 'react';
 type PageProps = {};
 
 const Page: FC<PageProps> = () => {
-  const { isLoading } = useCartContext();
-
-  return <>{!isLoading && <Cart />}</>;
+  return <Cart />;
 };
 
 export default Page;

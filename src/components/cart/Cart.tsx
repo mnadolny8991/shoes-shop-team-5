@@ -13,6 +13,9 @@ import { useCartContext } from '@/context/CartContext';
 import CartEmpty from '@/components/cart/CartEmpty';
 import { createPortal } from 'react-dom';
 import { useEffect, useState } from 'react';
+import { fetchProductById } from '@/lib/fetchProducts';
+import { useQueries } from '@tanstack/react-query';
+import { Product } from '@/types/product';
 
 type CartProps = {};
 
@@ -26,7 +29,18 @@ const Cart: React.FC<CartProps> = () => {
     setIsMounted(true);
   }, []);
 
-  const { products, amount, onDelete } = useCartContext();
+  const { amount, onDelete } = useCartContext();
+  const productsData = useQueries({
+    queries: amount.map((p) => {
+      return {
+        queryKey: ['product', p.id],
+        queryFn: () => fetchProductById(p.id),
+      };
+    }),
+  });
+  const products = productsData
+    .map((response) => response.data)
+    .filter((product) => product ? true : false) as Product[];
 
   const empty = products.length <= 0;
 
