@@ -1,4 +1,4 @@
-import { ApiUserResponse } from '@/types/apiTypes';
+import { ApiUserResponse } from '@/types/api/apiTypes';
 
 export const mapApiUserResponseToAvatar = (
   apiUserResponse: ApiUserResponse
