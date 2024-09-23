@@ -1,7 +1,7 @@
 'use client';
 
 import { Box, Typography, Rating } from '@mui/material';
-import { ArrowButton } from '../buttons/ArrowButton';
+import { ArrowButton } from '@/components/buttons/ArrowButton';
 
 export default function SignupSlider() {
   return (

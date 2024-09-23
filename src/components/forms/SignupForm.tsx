@@ -27,7 +27,7 @@ import {
   ApiErrorDetail,
   ApiFormError,
 } from '@/types/api/apiFormError';
-import ServerErrorBox from '../containers/ServerErrorBox';
+import ServerErrorBox from '@/components/containers/ServerErrorBox';
 
 export default function SignupForm() {
   const theme = useTheme();

@@ -15,7 +15,7 @@ import allSizes from '@/data/allSizes';
 import { useCartContext } from '@/context/CartContext';
 import { useLastViewed } from '@/context/LastViewedContext';
 import { fetchProductById } from '@/lib/fetching';
-import CustomButton from '../buttons/CustomButton';
+import CustomButton from '@/components/buttons/CustomButton';
 import { Product } from '@/types/product';
 
 type SingleProductPageProps = {

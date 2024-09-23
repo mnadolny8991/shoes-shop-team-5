@@ -2,7 +2,7 @@
 
 import { Typography, useMediaQuery } from '@mui/material';
 import { useState } from 'react';
-import CustomButton from '../buttons/CustomButton';
+import CustomButton from '@/components/buttons/CustomButton';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import theme from '@/styles/theme';
@@ -10,7 +10,7 @@ import useValidate from '@/hooks/useValidate';
 import { confirmPasswordValdiator, passwordValidator } from '@/lib/validators';
 import { useMutation } from '@tanstack/react-query';
 import apiUrl from '@/data/apiUrl';
-import TextField from '../input/TextField';
+import TextField from '@/components/input/TextField';
 
 const ResetPasswordForm = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
