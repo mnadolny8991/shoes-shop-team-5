@@ -21,4 +21,4 @@ export type ApiUser = {
 export type ApiLoginResponse = {
   jwt: string;
   user: ApiUserAttributes & { id: number };
-}
+};

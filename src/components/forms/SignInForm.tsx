@@ -56,7 +56,7 @@ export default function SignInForm() {
     } catch (e) {
       console.log('login failed: ' + e);
     }
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit}>
