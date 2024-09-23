@@ -54,10 +54,6 @@ const LastViewedContextProvider: FC<{ children: ReactNode }> = ({
     }),
   });
 
-  useEffect(() => {
-    console.log(lastViewed);
-  });
-
   const handleLastViewedAdd = (id: number) => {
     setLastViewedIds((prev) => {
       const lastViewedHashSet = new Set(prev);
