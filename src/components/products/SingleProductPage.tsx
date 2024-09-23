@@ -14,7 +14,7 @@ import { useQuery } from '@tanstack/react-query';
 import allSizes from '@/data/allSizes';
 import { useCartContext } from '@/context/CartContext';
 import { useLastViewed } from '@/context/LastViewedContext';
-import { fetchProductById } from '@/lib/fetching';
+import { fetchProductById } from '@/lib/fetchProducts';
 import CustomButton from '@/components/buttons/CustomButton';
 import { Product } from '@/types/product';
 
