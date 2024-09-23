@@ -14,6 +14,7 @@ export default function DefaultProducts() {
     return {
       queryKey: ['product', id],
       queryFn: () => fetchProductById(id),
+      retry: false,
     };
   });
   const lastViewed = useQueries({ queries });
