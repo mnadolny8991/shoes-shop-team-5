@@ -13,10 +13,11 @@ import {
 import CustomButton from '@/components/buttons/CustomButton';
 import UpdateProfileForm from '@/components/forms/UpdateProfileForm';
 
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import apiUrl from '@/data/apiUrl';
 import token from '@/data/token';
 import { useRouter } from 'next/navigation';
+import { getUserData, updateUserData } from '@/lib/fetchUserData';
 
 export default function UserSettings() {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -33,46 +34,10 @@ export default function UserSettings() {
   );
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const MAX_FILE_SIZE = 2 * 1024 * 1024;
 
+  const MAX_FILE_SIZE = 2 * 1024 * 1024;
   const userId = 679; // Test user ID
 
-  const handleCloseSnackbar = (
-    event?: React.SyntheticEvent | Event,
-    reason?: string
-  ) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setOpenSnackbar(false);
-  };
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await fetch(`${apiUrl}/users/${userId}?populate=*`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        if (response.ok) {
-          const userData = await response.json();
-          const currentAvatarUrl =
-            userData.avatar?.url || '/default-avatar.png';
-          setAvatarUrl(currentAvatarUrl);
-        } else {
-          console.error('Failed to fetch user data');
-        }
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    };
-
-    fetchUserData();
-  }, [userId]);
-
-  // delete user mutation
   const deleteUserMutation = useMutation({
     mutationFn: async (userId: number) => {
       const response = await fetch(`${apiUrl}/users/${userId}`, {
@@ -96,7 +61,6 @@ export default function UserSettings() {
     },
   });
 
-  // upload avatar mutation
   const uploadAvatarMutation = useMutation({
     mutationFn: async (formData: FormData) => {
       const response = await fetch(`${apiUrl}/upload`, {
@@ -106,30 +70,15 @@ export default function UserSettings() {
         },
         body: formData,
       });
-
       if (!response.ok) {
         throw new Error('Error uploading avatar');
       }
-
       const imageData = await response.json();
       const imageId = imageData[0]?.id;
-
-      // Update user profile with the new avatar id
-      const updateResponse = await fetch(`${apiUrl}/users/${userId}`, {
-        method: 'PUT',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          avatar: imageId,
-        }),
-      });
-
+      const updateResponse = await updateUserData(userId, token, { avatar: imageId });
       if (!updateResponse.ok) {
         throw new Error('Error updating user avatar');
       }
-
       return imageData[0]?.url; // Return the avatar URL
     },
 
@@ -147,6 +96,27 @@ export default function UserSettings() {
       setOpenSnackbar(true);
     },
   });
+
+  const { data, status } = useQuery({
+    queryKey: ['user', userId],
+    queryFn: () => getUserData(userId, token),
+  })
+
+  useEffect(() => {
+    if (status === 'success') {
+      setAvatarUrl(data.avatar?.url ?? '/default-avatar.png');
+    }
+  }, [data, status]);
+
+  const handleCloseSnackbar = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenSnackbar(false);
+  };
 
   const handleDelete = () => {
     deleteUserMutation.mutate(userId);

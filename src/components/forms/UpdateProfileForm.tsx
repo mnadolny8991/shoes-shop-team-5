@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, useTheme, useMediaQuery, Snackbar, Alert } from '@mui/material';
 import TextField from '@/components/input/TextField';
 import CustomButton from '@/components/buttons/CustomButton';
@@ -11,9 +11,10 @@ import {
   nameValidator,
   phoneValidator,
 } from '@/lib/validators';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import apiUrl from '@/data/apiUrl';
 import { ApiError, ApiErrorDetail, ApiFormError } from '@/types/apiFormError';
+import { getUserData } from '@/lib/fetchUserData';
 
 type UserUpdateFormData = {
   email: string;
@@ -67,15 +68,19 @@ export default function UpdateProfileForm() {
     'success'
   );
 
-  const handleCloseSnackbar = (
-    event?: React.SyntheticEvent | Event,
-    reason?: string
-  ) => {
-    if (reason === 'clickaway') {
-      return;
+  const { data, status } = useQuery({
+    queryKey: ['user', userId],
+    queryFn: () => getUserData(userId, token),
+  });
+
+  useEffect(() => {
+    if (status === 'success') {
+      setFirstName(data.firstName ?? '');
+      setLastName(data.lastName ?? '');
+      setPhoneNumber(data.phoneNumber ?? '');
+      setEmail(data.email);
     }
-    setOpenSnackbar(false);
-  };
+  }, [data, status])
 
   const mutation = useMutation({
     mutationFn: async (user: UserUpdateFormData) => {
@@ -95,15 +100,15 @@ export default function UpdateProfileForm() {
         throw errorResponse.error;
       }
     },
-    onSuccess: (data) => {
+    onSuccess: (_data) => {
       setSnackbarMessage('Profile updated successfully!');
       setSnackbarSeverity('success');
       setOpenSnackbar(true);
 
-      setFirstName('');
-      setLastName('');
-      setEmail('');
-      setPhoneNumber('');
+      // setFirstName('');
+      // setLastName('');
+      // setEmail('');
+      // setPhoneNumber('');
     },
     onError: (error: ApiError | ApiErrorDetail) => {
       setSnackbarMessage(`Failed to update profile: ${error.message}`);
@@ -111,6 +116,16 @@ export default function UpdateProfileForm() {
       setOpenSnackbar(true);
     },
   });
+
+  const handleCloseSnackbar = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenSnackbar(false);
+  };
 
   const handleSubmit = () => {
     mutation.mutate({
