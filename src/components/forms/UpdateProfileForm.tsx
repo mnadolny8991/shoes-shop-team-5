@@ -33,8 +33,6 @@ export default function UpdateProfileForm() {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { data: session } = useSession();
 
-  const userId = 679;
-
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -75,8 +73,8 @@ export default function UpdateProfileForm() {
   );
 
   const { data, status } = useQuery({
-    queryKey: ['user', userId],
-    queryFn: () => getUserData(userId, session?.accessToken!),
+    queryKey: ['user', session?.id!],
+    queryFn: () => getUserData(session?.id!, session?.accessToken!),
   });
 
   useEffect(() => {
@@ -90,7 +88,7 @@ export default function UpdateProfileForm() {
 
   const mutation = useMutation({
     mutationFn: async (user: UserUpdateFormData) => {
-      const response = await fetch(`${apiUrl}/users/${userId}`, {
+      const response = await fetch(`${apiUrl}/users/${session?.id!}`, {
         method: 'PUT',
         headers: {
           Authorization: `Bearer ${session?.accessToken}`,
