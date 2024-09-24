@@ -32,8 +32,8 @@ export default function NothingFound() {
         />
       </IconButton>
       <Typography variant="h4">No products found</Typography>
-      <Typography variant="subtitle2" mb={isMobile ? 4 : 5}>
-        We couldn’t find what you searched for.
+      <Typography variant="subtitle2" mb={{ xs: 4, md: 5 }}>
+        We couldn&apos;t find what you searched for.
       </Typography>
     </Stack>
   );

@@ -44,16 +44,16 @@ export default function ShoeImageSlider({ images }: ShoeImageSliderProps) {
   return (
     <Stack
       direction="row"
-      gap={isMobile ? '5px' : '14px'}
+      gap={{ xs: '5px', md: '14px' }}
       sx={{
-        height: isMobile ? 320 : 628,
-        width: isMobile ? 320 : 678,
+        height: { xs: 320, md: 628 },
+        width: { xs: 320, md: 678 },
       }}
     >
       <Stack
         sx={{
           width: 'fit-content',
-          height: isMobile ? 320 : 628,
+          height: { xs: 320, md: 628 },
         }}
         justifyContent="flex-start"
         direction="column"
