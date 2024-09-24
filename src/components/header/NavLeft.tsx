@@ -34,7 +34,7 @@ export default function NavLeft() {
       </IconButton>
       {!isMobile && (
         <Link
-          href="/"
+          href="/catalog"
           style={{ textDecoration: 'none', color: theme.palette.text.primary }}
         >
           <Typography
