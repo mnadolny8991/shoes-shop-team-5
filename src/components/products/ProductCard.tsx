@@ -184,6 +184,7 @@ export default function ProductCard({
   return (
     <Card
       square
+      elevation={0}
       sx={{ position: 'relative', cursor: !isAdmin ? 'pointer' : 'default' }}
       onClick={handleCardClick}
     >
