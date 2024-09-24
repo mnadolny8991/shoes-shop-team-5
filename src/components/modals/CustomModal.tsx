@@ -46,8 +46,8 @@ export default function CustomModal({
       <DialogTitle>
         <Typography
           fontWeight="500"
-          fontSize={isMobile ? '30px' : '45px'}
-          lineHeight={isMobile ? '35px' : '53px'}
+          fontSize={{ xs: '30px', md: '45px' }}
+          lineHeight={{ xs: '35px', md: '53px' }}
         >
           {title}
         </Typography>

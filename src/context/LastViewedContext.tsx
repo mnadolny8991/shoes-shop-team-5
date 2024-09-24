@@ -10,7 +10,7 @@ import { useQueries } from '@tanstack/react-query';
 import { createContext, useContext, ReactNode, FC, useEffect } from 'react';
 
 type LastViewedContextType = {
-  lastViewedIds: number[],
+  lastViewedIds: number[];
   onLastViewedAdd: (id: number) => void;
   onLastViewedRemove: (id: number) => void;
 };

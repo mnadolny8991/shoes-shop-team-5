@@ -9,8 +9,8 @@ import { Product } from '@/types/product';
 import { fetchProducts } from '@/lib/fetchProducts';
 
 type CatalogProps = {
-  initialData: Product[],
-}
+  initialData: Product[];
+};
 
 const Catalog: FC<CatalogProps> = ({ initialData }) => {
   const { searchText, filters } = useSearch();
@@ -89,6 +89,6 @@ const Catalog: FC<CatalogProps> = ({ initialData }) => {
       )}
     </>
   );
-}
+};
 
 export default Catalog;

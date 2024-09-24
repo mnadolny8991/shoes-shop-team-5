@@ -73,7 +73,7 @@ const Cart: React.FC<CartProps> = () => {
     <Stack
       direction={totalDown ? 'column' : 'row'}
       sx={{
-        width: isMobile ? '320px' : '80%',
+        width: { xs: '320px', md: '80%' },
         maxWidth: '1800px',
         margin: 'auto',
         justifyContent: 'space-between',

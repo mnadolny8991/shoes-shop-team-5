@@ -20,18 +20,18 @@ export default function DefaultProducts() {
   const lastViewed = useQueries({ queries });
 
   const products = lastViewed
-  .filter((result, index) => {
-    if (result.isSuccess) {
+    .filter((result, index) => {
+      if (result.isSuccess) {
+        return true;
+      } else if (result.isError) {
+        const idToRemove = queries[index].queryKey[1] as number;
+        onLastViewedRemove(idToRemove);
+        return false;
+      }
       return true;
-    } else if (result.isError) {
-      const idToRemove = queries[index].queryKey[1] as number;
-      onLastViewedRemove(idToRemove);
-      return false;
-    }
-    return true;
-  })
-  .map((result) => result.data)
-  .filter((product) => product)  as Product[];
+    })
+    .map((result) => result.data)
+    .filter((product) => product) as Product[];
 
   return (
     <>
@@ -43,9 +43,9 @@ export default function DefaultProducts() {
         mx={'20px'}
         mb={{ xs: '19px', md: '36px' }}
       >
-        {(lastViewed.length > 0) &&
+        {lastViewed.length > 0 && (
           <Typography variant="h1">Last viewed products</Typography>
-        }
+        )}
       </Stack>
       <ProductsGrid products={products} isAdmin={false} />
     </>
