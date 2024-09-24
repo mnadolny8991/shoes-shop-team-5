@@ -43,6 +43,11 @@ export default function SearchPopup({
     };
   }, [show]);
 
+  const handleSearch = () => {
+    close();
+    router.push('/catalog');
+  }
+
   return (
     <Drawer
       anchor="top"
@@ -71,19 +76,21 @@ export default function SearchPopup({
           </IconButton>
         )}
         <Stack gap="40px">
-          <SearchBar
-            withErase
-            ref={searchRef}
-            value={searchText}
-            onChange={(val: string) => onTextChange(val)}
-            width={isMobile ? '290px' : '700px'}
-            height={isMobile ? '25px' : '79px'}
-            variant={isMobile ? 'popupMobile' : 'popupLarge'}
-            onIconClick={() => {
-              close();
-              router.push('/catalog');
-            }}
-          />
+          <form onSubmit={(e) => { 
+            e.preventDefault();
+            handleSearch();
+          }}>
+            <SearchBar
+              withErase
+              ref={searchRef}
+              value={searchText}
+              onChange={(val: string) => onTextChange(val)}
+              width={isMobile ? '290px' : '700px'}
+              height={isMobile ? '25px' : '79px'}
+              variant={isMobile ? 'popupMobile' : 'popupLarge'}
+              onIconClick={handleSearch}
+            />
+          </form>
           {!isMobile && (
             <Stack gap="24px">
               <Typography

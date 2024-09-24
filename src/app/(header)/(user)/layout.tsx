@@ -1,5 +1,6 @@
 'use client';
 
+import WelcomePage from '@/components/containers/WelcomePage';
 import UserPagesList from '@/components/nav/UserPagesList';
 import useAvatarQuery from '@/hooks/useAvatarQuery';
 import {
@@ -26,7 +27,7 @@ export default function UserLayout({
 
   return (
     <>
-      {status === 'unauthenticated' && <></>}
+      {status === 'unauthenticated' && <WelcomePage />}
       {status === 'loading' && <Typography variant="h1">Loading...</Typography>}
       {status === 'authenticated' && (
         <Stack

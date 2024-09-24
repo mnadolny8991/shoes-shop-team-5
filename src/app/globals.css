@@ -8,3 +8,7 @@ a {
   text-decoration: none;
   color: black;
 }
+
+body {
+  height: 100vh;
+}
