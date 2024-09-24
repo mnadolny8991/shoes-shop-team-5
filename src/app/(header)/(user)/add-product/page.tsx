@@ -58,7 +58,7 @@ export default function AddProduct() {
   }) => {
     product.productProps.teamName = 'team-5';
     setProductName(product.productProps.name || '');
-    // product.productProps.userID = ;
+    product.productProps.userID = session?.id;
     uploadImagesThenAddProduct(product);
   };
   return (
