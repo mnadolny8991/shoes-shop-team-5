@@ -1,6 +1,7 @@
 import ShoppingBasketOutlinedIcon from '@mui/icons-material/ShoppingBasketOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import { LoginOutlined } from '@mui/icons-material';
 
 const getMenuItems = (signedIn: boolean) => [
   {
@@ -15,12 +16,18 @@ const getMenuItems = (signedIn: boolean) => [
     icon: <SettingsOutlinedIcon sx={{ width: '20px', height: '20px' }} />,
     href: '/settings',
   },
-  {
-    id: 2,
-    name: signedIn ? 'Log Out' : 'Log In',
-    icon: <LogoutOutlinedIcon sx={{ width: '20px', height: '20px' }} />,
-    href: '/',
-  },
+  signedIn
+    ? {
+        id: 2,
+        name: 'Log Out',
+        icon: <LogoutOutlinedIcon sx={{ width: '20px', height: '20px' }} />,
+      }
+    : {
+        id: 2,
+        name: 'Log In',
+        icon: <LoginOutlined sx={{ width: '20px', height: '20px' }} />,
+        href: '/sign-in',
+      },
 ];
 
 export default getMenuItems;

@@ -2,6 +2,7 @@
 
 import {
   Avatar,
+  Badge,
   Box,
   IconButton,
   useMediaQuery,
@@ -17,6 +18,7 @@ import { useRouter } from 'next/navigation';
 import { useSearch } from '@/context/SearchContext';
 import { signIn, useSession } from 'next-auth/react';
 import useAvatarQuery from '@/hooks/useAvatarQuery';
+import { useCartContext } from '@/context/CartContext';
 
 export default function NavRight() {
   const [showMenu, setShowMenu] = useState(false);
@@ -29,6 +31,9 @@ export default function NavRight() {
   const { data: session, status } = useSession();
   const { searchText, setSearchText } = useSearch();
   const { data: avatar } = useAvatarQuery();
+
+  const { amount } = useCartContext();
+  const itemsInCart = amount.reduce((acc, curr) => acc + curr.amount, 0);
 
   return (
     <Box
@@ -67,12 +72,14 @@ export default function NavRight() {
           </IconButton>
         )}
         <IconButton onClick={() => router.push('/cart')}>
-          <Image
-            src="/bag.svg"
-            width={isMobile ? 20 : 24}
-            height={isMobile ? 20 : 24}
-            alt="bag icon"
-          />
+          <Badge badgeContent={itemsInCart} color="primary">
+            <Image
+              src="/bag.svg"
+              width={isMobile ? 20 : 24}
+              height={isMobile ? 20 : 24}
+              alt="bag icon"
+            />
+          </Badge>
         </IconButton>
       </Box>
       <Box onClick={() => setShowSearchPopup(true)}>

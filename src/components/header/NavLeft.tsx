@@ -29,7 +29,7 @@ export default function NavLeft() {
       <Logo />
       {!isMobile && (
         <Link
-          href="/"
+          href="/catalog"
           style={{ textDecoration: 'none', color: theme.palette.text.primary }}
         >
           <Typography

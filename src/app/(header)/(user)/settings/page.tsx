@@ -77,9 +77,13 @@ export default function UserSettings() {
       }
       const imageData = await response.json();
       const imageId = imageData[0]?.id;
-      const updateResponse = await updateUserData(userId, session?.accessToken!, {
-        avatar: imageId,
-      });
+      const updateResponse = await updateUserData(
+        userId,
+        session?.accessToken!,
+        {
+          avatar: imageId,
+        }
+      );
       if (!updateResponse.ok) {
         throw new Error('Error updating user avatar');
       }
