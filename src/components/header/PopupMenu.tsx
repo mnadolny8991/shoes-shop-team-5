@@ -11,8 +11,7 @@ import {
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import getMenuItems from '@/data/menuItems';
-import { useRouter } from 'next/navigation';
-import { signIn, useSession } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
 
 type PopupMenuProps = {
   showMenu: boolean;
@@ -20,7 +19,6 @@ type PopupMenuProps = {
 };
 
 export default function PopupMenu({ showMenu, onMenuClose }: PopupMenuProps) {
-  const router = useRouter();
   const { data: session, status } = useSession();
   const menuItems = getMenuItems(status === 'authenticated');
 
@@ -57,11 +55,9 @@ export default function PopupMenu({ showMenu, onMenuClose }: PopupMenuProps) {
           <ListItemButton
             sx={{ px: 0 }}
             key={menuItem.id}
-            onClick={() => {
-              if (status === 'authenticated') router.push(menuItem.href);
-              else signIn();
-              onMenuClose();
-            }}
+            {...(menuItem?.href
+              ? { href: menuItem.href }
+              : { onClick: () => signOut() })}
           >
             <ListItemIcon sx={{ minWidth: '35px' }}>
               {menuItem.icon}
