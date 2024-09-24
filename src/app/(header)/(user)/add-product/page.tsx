@@ -11,11 +11,13 @@ import {
   Typography,
 } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 export default function AddProduct() {
   const [prooductName, setProductName] = useState('');
+  const { data: session } = useSession();
 
   const {
     mutate: addProduct,
@@ -27,7 +29,7 @@ export default function AddProduct() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${session?.accessToken}`,
         },
         body: JSON.stringify({ data: productProps }),
       }),
@@ -56,7 +58,7 @@ export default function AddProduct() {
   }) => {
     product.productProps.teamName = 'team-5';
     setProductName(product.productProps.name || '');
-    // product.productProps.userID = ;
+    product.productProps.userID = session?.id;
     uploadImagesThenAddProduct(product);
   };
   return (

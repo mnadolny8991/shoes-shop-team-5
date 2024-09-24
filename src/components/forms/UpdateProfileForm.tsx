@@ -19,6 +19,7 @@ import {
   ApiFormError,
 } from '@/types/api/apiFormError';
 import { getUserData } from '@/lib/fetchUserData';
+import { useSession } from 'next-auth/react';
 
 type UserUpdateFormData = {
   email: string;
@@ -30,6 +31,7 @@ type UserUpdateFormData = {
 export default function UpdateProfileForm() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const { data: session } = useSession();
 
   const userId = 679;
 
@@ -74,7 +76,7 @@ export default function UpdateProfileForm() {
 
   const { data, status } = useQuery({
     queryKey: ['user', userId],
-    queryFn: () => getUserData(userId, token),
+    queryFn: () => getUserData(userId, session?.accessToken!),
   });
 
   useEffect(() => {
@@ -91,7 +93,7 @@ export default function UpdateProfileForm() {
       const response = await fetch(`${apiUrl}/users/${userId}`, {
         method: 'PUT',
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${session?.accessToken}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(user),
