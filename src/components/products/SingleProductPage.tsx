@@ -20,7 +20,7 @@ import { Product } from '@/types/product';
 
 type SingleProductPageProps = {
   id: number;
-  initialData: Product,
+  initialData: Product;
 };
 
 const SingleProductPage: FC<SingleProductPageProps> = ({ id, initialData }) => {
@@ -119,7 +119,7 @@ const SingleProductPage: FC<SingleProductPageProps> = ({ id, initialData }) => {
                   label={s.name}
                   variant={s.id === sizeId ? 'filled' : 'outlined'}
                   disabled={
-                    data?.sizes?.find((si) => 'EU-' + si.name === s.name) !==
+                    data?.sizes?.find((si) => 'EU-' + si.name === s.name) ===
                     undefined
                   }
                   onClick={() => setSizeId(s.id)}
@@ -153,6 +153,7 @@ const SingleProductPage: FC<SingleProductPageProps> = ({ id, initialData }) => {
                     onProductAdd(data.id);
                   }
                 }}
+                disabled={!sizeId}
               >
                 Add to Bag
               </CustomButton>

@@ -2,15 +2,12 @@
 
 import theme from '@/styles/theme';
 import { Grid, Box, Typography, Divider, useMediaQuery } from '@mui/material';
-import Image from 'next/image';
 import SignupForm from '@/components/forms/SignupForm';
 import SignupSlider from '@/components/sliders/SignupSlider';
-import { useRouter } from 'next/navigation';
 import { Logo } from '@/components/logo/Logo';
 
 export default function Signup() {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const router = useRouter();
 
   return (
     <Grid container sx={{ height: '100vh' }}>
@@ -30,6 +27,8 @@ export default function Signup() {
             top: 0,
             left: 0,
           }}
+          mt={{ xs: '18px', md: '50px' }}
+          ml={{ xs: '20px', md: '40px' }}
         >
           <Logo />
           {isMobile && (

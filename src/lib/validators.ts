@@ -69,9 +69,9 @@ const confirmPasswordValdiator = (firstPass: string) => {
  * @returns {string} - An error message if the password does not meet the criteria, otherwise an empty string.
  */
 const nameValidator = (name: string) => {
-  const nameRegex = new RegExp(/^[a-zA-Z]{3,}$/);
+  const nameRegex = new RegExp(/^[a-zA-Z]{2,}(?: [a-zA-Z]{3,})*$/);
   if (!nameRegex.test(name)) {
-    return 'Name must have minimum 3 letters and should not containe numbers';
+    return 'Name must have minimum 2 to 3 letters per word and should not containe numbers';
   } else {
     return '';
   }
