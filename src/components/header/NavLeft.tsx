@@ -10,6 +10,7 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { Logo } from '../logo/Logo';
 
 export default function NavLeft() {
   const theme = useTheme();
@@ -21,17 +22,11 @@ export default function NavLeft() {
       sx={{
         display: 'flex',
         alignItems: 'center',
+        justifyContent: 'center',
         gap: '44px',
       }}
     >
-      <IconButton onClick={() => router.push('/')}>
-        <Image
-          src="/logo.svg"
-          width={isMobile ? 35 : 40}
-          height={isMobile ? 26.5 : 30}
-          alt="website logo"
-        />
-      </IconButton>
+      <Logo />
       {!isMobile && (
         <Link
           href="/"

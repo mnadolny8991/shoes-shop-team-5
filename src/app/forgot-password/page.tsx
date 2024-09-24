@@ -12,8 +12,9 @@ import useValidate from '../../hooks/useValidate';
 import { emailValidator } from '@/lib/validators';
 import { useMutation } from '@tanstack/react-query';
 import apiUrl from '@/data/apiUrl';
+import { Logo } from '@/components/logo/Logo';
 
-const Logo = () => {
+const LogoContainer = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
@@ -25,12 +26,7 @@ const Logo = () => {
         zIndex: 1000,
       }}
     >
-      <Image
-        src="/logo.svg"
-        width={isMobile ? 35 : 40}
-        height={isMobile ? 26.5 : 30}
-        alt="website logo"
-      />
+      <Logo />
     </Box>
   );
 };
@@ -75,7 +71,7 @@ const ForgotPassword: React.FC = () => {
             gap: '15px',
           }}
         >
-          <Logo />
+          <LogoContainer />
           <Box
             sx={{
               alignItems: 'center',

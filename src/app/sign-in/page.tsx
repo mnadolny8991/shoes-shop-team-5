@@ -10,6 +10,7 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
+import { Logo } from '@/components/logo/Logo';
 
 export default function SignIn() {
   const theme = useTheme();
@@ -24,12 +25,7 @@ export default function SignIn() {
           ml={{ xs: '20px', md: '40px' }}
           display="inline-block"
         >
-          <Image
-            src="/logo.svg"
-            width={isMobile ? 35 : 40}
-            height={isMobile ? 26.5 : 30}
-            alt="website logo"
-          />
+          <Logo />
         </Link>
         {isMobile && <Divider />}
         <Box

@@ -82,8 +82,7 @@ function MessageBox() {
         Error 404
       </Typography>
       <Typography variant="subtitle2">
-        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
-        nonummy nibh euismod tincidunt ut laoreet dolore magna
+        Oops! We can&apos;t find that page.
       </Typography>
     </Box>
   );

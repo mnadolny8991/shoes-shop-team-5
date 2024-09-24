@@ -35,9 +35,9 @@ export default function SignupSlider() {
         }}
       >
         <Typography variant="body1">
-          Lorem Ipsum is a really great company because the team is passionate
+          Shose store is a really great company because the team is passionate
           about the projects they produce, the people they work with, the
-          quality of the work they do.
+          quality of the work they do!
         </Typography>
         <Box
           sx={{

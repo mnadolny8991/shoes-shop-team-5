@@ -76,6 +76,8 @@ const Catalog: FC<CatalogProps> = ({ initialData }) => {
     }
   }, [products, filters, searchText]);
 
+  console.log(products);
+
   return (
     <>
       {isLoading ? (

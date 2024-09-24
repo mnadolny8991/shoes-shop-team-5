@@ -3,9 +3,11 @@
 import theme from '@/styles/theme';
 import Image from 'next/image';
 import { useMediaQuery } from '@mui/material';
+import { useRouter } from 'next/navigation';
 
 export const Logo = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const router = useRouter();
 
   return (
     <Image
@@ -14,9 +16,9 @@ export const Logo = () => {
       height={isMobile ? 26.5 : 30}
       alt="shoes shop logo"
       style={{
-        marginTop: isMobile ? '20px' : '50px',
-        marginLeft: isMobile ? '20px' : '40px',
+        cursor: 'pointer',
       }}
+      onClick={() => router.push('/')}
     />
   );
 };
