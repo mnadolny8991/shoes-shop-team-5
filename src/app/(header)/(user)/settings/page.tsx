@@ -38,7 +38,6 @@ export default function UserSettings() {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const MAX_FILE_SIZE = 2 * 1024 * 1024;
-  const userId = 679; // Test user ID
 
   const deleteUserMutation = useMutation({
     mutationFn: async (userId: number) => {
@@ -78,7 +77,7 @@ export default function UserSettings() {
       const imageData = await response.json();
       const imageId = imageData[0]?.id;
       const updateResponse = await updateUserData(
-        userId,
+        session?.id!,
         session?.accessToken!,
         {
           avatar: imageId,
@@ -106,8 +105,8 @@ export default function UserSettings() {
   });
 
   const { data, status } = useQuery({
-    queryKey: ['user', userId],
-    queryFn: () => getUserData(userId, session?.accessToken!),
+    queryKey: ['user', session?.id],
+    queryFn: () => getUserData(session?.id!, session?.accessToken!),
   });
 
   useEffect(() => {
@@ -127,7 +126,7 @@ export default function UserSettings() {
   };
 
   const handleDelete = () => {
-    deleteUserMutation.mutate(userId);
+    deleteUserMutation.mutate(session?.id!);
   };
 
   const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
