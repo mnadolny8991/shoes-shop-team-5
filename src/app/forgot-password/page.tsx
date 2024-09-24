@@ -126,7 +126,7 @@ const ForgotPassword: React.FC = () => {
               </CustomButton>
 
               <Typography variant="caption" textAlign="center">
-                <Link href="/login">Back to log in</Link>
+                <Link href="/sign-in">Back to log in</Link>
               </Typography>
             </Box>
           </Box>

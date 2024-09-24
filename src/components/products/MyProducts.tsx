@@ -11,7 +11,7 @@ import { Product } from '@/types/product';
 
 type MyProductsProps = {
   initialData: Product[];
-}
+};
 
 export default function MyProducts({ initialData }: MyProductsProps) {
   const theme = useTheme();
@@ -58,4 +58,3 @@ export default function MyProducts({ initialData }: MyProductsProps) {
     </>
   );
 }
-
