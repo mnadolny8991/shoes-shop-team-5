@@ -1,4 +1,4 @@
-import { ApiUser } from '@/types/api/apiUser';
+import { ApiUser, ApiUserAttributes } from '@/types/api/apiUser';
 
 type ApiListMeta = {
   pagination: {
@@ -208,4 +208,23 @@ export type ApiPostProductRequest = {
 
 export type ApiPutProductRequest = {
   data: ApiPutProduct;
+};
+
+export type ApiAvatar = ApiImageAttributes & {
+  id: number;
+};
+
+export type ApiUserResponse = ApiUserAttributes & {
+  id: number;
+  avatar?: ApiAvatar;
+};
+
+export type ApiError = {
+  data?: {} | [{}];
+  error: {
+    status: number;
+    name: string;
+    message: string;
+    details: {};
+  };
 };

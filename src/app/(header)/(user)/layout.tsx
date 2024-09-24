@@ -1,6 +1,7 @@
 'use client';
 
 import UserPagesList from '@/components/nav/UserPagesList';
+import useAvatarQuery from '@/hooks/useAvatarQuery';
 import {
   Box,
   Divider,
@@ -20,16 +21,13 @@ export default function UserLayout({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { data: session, status } = useSession();
-  const signedIn = session !== null;
+
+  const { data } = useAvatarQuery();
 
   return (
     <>
-      {status === 'unauthenticated' &&
-        <></>
-      }
-      {status === 'loading' &&
-        <Typography variant="h1">Loading...</Typography>
-      }
+      {status === 'unauthenticated' && <></>}
+      {status === 'loading' && <Typography variant="h1">Loading...</Typography>}
       {status === 'authenticated' && (
         <Stack
           {...(!isMobile && {
@@ -49,8 +47,8 @@ export default function UserLayout({
             >
               <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
                 <Avatar
-                  alt="Jane Meldrum"
-                  src="/jane-meldrum.png"
+                  alt={data?.alt}
+                  src={data?.src}
                   sx={{ width: 64, height: 64 }}
                 />
                 <Box>
@@ -68,7 +66,7 @@ export default function UserLayout({
                     fontWeight={500}
                     lineHeight="18.77px"
                   >
-                    Jane Meldrum
+                    {data?.name}
                   </Typography>
                 </Box>
               </Box>

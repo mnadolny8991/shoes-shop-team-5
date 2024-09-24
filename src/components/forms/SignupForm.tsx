@@ -104,7 +104,7 @@ export default function SignupForm() {
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          maxWidth: isMobile ? '320px' : '436px',
+          maxWidth: { xs: '320px', md: '436px' },
           gap: '22px',
         }}
       >
@@ -173,7 +173,7 @@ export default function SignupForm() {
 
         <Box
           sx={{
-            marginTop: isMobile ? '29px' : '68px',
+            mt: { xs: '29px', md: '68px' },
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',

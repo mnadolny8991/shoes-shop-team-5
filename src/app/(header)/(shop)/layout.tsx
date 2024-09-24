@@ -57,7 +57,7 @@ export default function CatalogLayout({
           <Stack
             width="320px"
             spacing={4}
-            position={!isMobile ? 'sticky' : 'static'}
+            position={{ xs: 'static', md: 'sticky' }}
             top="40px"
             alignSelf="start"
           >
@@ -85,10 +85,8 @@ export default function CatalogLayout({
               flexDirection: 'row',
               justifyContent: 'space-between',
               alignItems: 'flex-end',
-              marginTop: '20px',
-              marginBottom: '20px',
-              marginLeft: isMobile ? '16px' : 0,
-              marginRight: isMobile ? '16px' : 0,
+              my: '20px',
+              mx: { xs: '16px', md: 0 },
             }}
           >
             <Stack>

@@ -23,6 +23,7 @@ import token from '@/data/token';
 import { useRouter } from 'next/navigation';
 import { useLastViewed } from '@/context/LastViewedContext';
 import { on } from 'stream';
+import { useSession } from 'next-auth/react';
 
 type ProductUpdatingProps = {
   productProps: ApiPutProduct;
@@ -39,6 +40,7 @@ export default function ProductCard({
   product,
   isAdmin = true,
 }: ProductCardProps) {
+  const { data: session } = useSession();
   const queryClient = useQueryClient();
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -54,7 +56,7 @@ export default function ProductCard({
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${session?.accessToken}`,
         },
         body: JSON.stringify({ data: productProps }),
       }),
@@ -98,7 +100,7 @@ export default function ProductCard({
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${session?.accessToken}`,
         },
       }),
     onError: (error) => console.error(error),
@@ -110,7 +112,7 @@ export default function ProductCard({
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${session?.accessToken}`,
         },
       }),
     onSuccess: () => {
@@ -184,6 +186,7 @@ export default function ProductCard({
   return (
     <Card
       square
+      elevation={0}
       sx={{ position: 'relative', cursor: !isAdmin ? 'pointer' : 'default' }}
       onClick={handleCardClick}
     >

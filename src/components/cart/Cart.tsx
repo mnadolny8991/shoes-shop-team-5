@@ -13,6 +13,9 @@ import { useCartContext } from '@/context/CartContext';
 import CartEmpty from '@/components/cart/CartEmpty';
 import { createPortal } from 'react-dom';
 import { useEffect, useState } from 'react';
+import { fetchProductById } from '@/lib/fetchProducts';
+import { useQueries } from '@tanstack/react-query';
+import { Product } from '@/types/product';
 
 type CartProps = {};
 
@@ -26,7 +29,43 @@ const Cart: React.FC<CartProps> = () => {
     setIsMounted(true);
   }, []);
 
-  const { products, amount, onDelete } = useCartContext();
+  const { amount, onDelete } = useCartContext();
+
+  const queries = amount.map((product) => {
+    return {
+      queryKey: ['product', product.id],
+      queryFn: () => fetchProductById(product.id),
+      retry: false,
+    };
+  });
+  const productsData = useQueries({ queries });
+
+  const products = productsData
+    .filter((result, index) => {
+      if (result.isSuccess) {
+        return true;
+      } else if (result.isError) {
+        const idToRemove = queries[index].queryKey[1] as number;
+        console.log(idToRemove);
+        onDelete(idToRemove);
+        return false;
+      }
+      return true;
+    })
+    .map((result) => result.data)
+    .filter((product) => product) as Product[];
+
+  // const productsData = useQueries({
+  //   queries: amount.map((p) => {
+  //     return {
+  //       queryKey: ['product', p.id],
+  //       queryFn: () => fetchProductById(p.id),
+  //     };
+  //   }),
+  // });
+  // const products = productsData
+  //   .map((response) => response.data)
+  //   .filter((product) => product ? true : false) as Product[];
 
   const empty = products.length <= 0;
 
@@ -34,7 +73,7 @@ const Cart: React.FC<CartProps> = () => {
     <Stack
       direction={totalDown ? 'column' : 'row'}
       sx={{
-        width: isMobile ? '320px' : '80%',
+        width: { xs: '320px', md: '80%' },
         maxWidth: '1800px',
         margin: 'auto',
         justifyContent: 'space-between',

@@ -133,9 +133,9 @@ const SingleProductPage: FC<SingleProductPageProps> = ({ id, initialData }) => {
               ))}
             </Stack>
             <Stack
-              direction={isMobile ? 'column' : 'row'}
-              spacing={isMobile ? '10px' : '26px'}
-              width={isMobile ? '320px' : '522px'}
+              direction={{ xs: 'column', md: 'row' }}
+              spacing={{ xs: '10px', md: '26px' }}
+              width={{ xs: '320px', md: '522px' }}
               mt="35px"
               sx={{
                 flexDirection: { xs: 'column', md: 'row' },

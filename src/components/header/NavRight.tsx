@@ -16,6 +16,7 @@ import PopupMenu from '@/components/header/PopupMenu';
 import { useRouter } from 'next/navigation';
 import { useSearch } from '@/context/SearchContext';
 import { signIn, useSession } from 'next-auth/react';
+import useAvatarQuery from '@/hooks/useAvatarQuery';
 
 export default function NavRight() {
   const [showMenu, setShowMenu] = useState(false);
@@ -27,6 +28,7 @@ export default function NavRight() {
   const router = useRouter();
   const { data: session, status } = useSession();
   const { searchText, setSearchText } = useSearch();
+  const { data: avatar } = useAvatarQuery();
 
   return (
     <Box
@@ -55,11 +57,11 @@ export default function NavRight() {
           gap: '16px',
         }}
       >
-        {(status === 'authenticated' && !isMobile) && (
+        {status === 'authenticated' && !isMobile && (
           <IconButton onClick={() => router.push('/settings')}>
             <Avatar
-              alt="Remy Sharp"
-              src="/avatar.svg"
+              alt={avatar?.alt}
+              src={avatar?.src}
               sx={{ width: 24, height: 24 }}
             />
           </IconButton>

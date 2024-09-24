@@ -18,10 +18,12 @@ import apiUrl from '@/data/apiUrl';
 import token from '@/data/token';
 import { useRouter } from 'next/navigation';
 import { getUserData, updateUserData } from '@/lib/fetchUserData';
+import { useSession } from 'next-auth/react';
 
 export default function UserSettings() {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const router = useRouter();
+  const { data: session } = useSession();
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
@@ -43,7 +45,7 @@ export default function UserSettings() {
       const response = await fetch(`${apiUrl}/users/${userId}`, {
         method: 'DELETE',
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${session?.accessToken}`,
         },
       });
 
@@ -66,7 +68,7 @@ export default function UserSettings() {
       const response = await fetch(`${apiUrl}/upload`, {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${session?.accessToken}`,
         },
         body: formData,
       });
@@ -75,7 +77,9 @@ export default function UserSettings() {
       }
       const imageData = await response.json();
       const imageId = imageData[0]?.id;
-      const updateResponse = await updateUserData(userId, token, { avatar: imageId });
+      const updateResponse = await updateUserData(userId, session?.accessToken!, {
+        avatar: imageId,
+      });
       if (!updateResponse.ok) {
         throw new Error('Error updating user avatar');
       }
@@ -99,8 +103,8 @@ export default function UserSettings() {
 
   const { data, status } = useQuery({
     queryKey: ['user', userId],
-    queryFn: () => getUserData(userId, token),
-  })
+    queryFn: () => getUserData(userId, session?.accessToken!),
+  });
 
   useEffect(() => {
     if (status === 'success') {
@@ -148,10 +152,10 @@ export default function UserSettings() {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        alignItems: isMobile ? 'center' : 'flex-start',
-        marginLeft: isMobile ? '26px' : '60px',
-        marginTop: isMobile ? '25px' : 0,
-        marginBottom: '50px',
+        alignItems: { xs: 'center', md: 'flex-start' },
+        ml: { xs: '26px', md: '60px' },
+        mt: { xs: '25px', md: 0 },
+        mb: '50px',
       }}
     >
       <Box
@@ -167,17 +171,17 @@ export default function UserSettings() {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            marginTop: isMobile ? '10px' : '33px',
-            marginBottom: isMobile ? '10px' : '47px',
-            maxWidth: isMobile ? '245px' : '370px',
+            mt: { xs: '10px', md: '33px' },
+            mb: { xs: '10px', md: '47px' },
+            maxWidth: { xs: '245px', md: '370px' },
           }}
         >
           <Avatar
             alt="User avatar"
             src={avatarUrl}
             sx={{
-              width: isMobile ? 100 : 150,
-              height: isMobile ? 100 : 150,
+              width: { xs: 100, md: 150 },
+              height: { xs: 100, md: 150 },
               border: '4px solid white',
             }}
           />
@@ -187,7 +191,7 @@ export default function UserSettings() {
               flexDirection: 'column',
               justifyContent: 'center',
               alignItems: 'center',
-              gap: isMobile ? '15px' : '23px',
+              gap: { xs: '15px', md: '23px' },
             }}
           >
             {/* Hidden File Input */}
@@ -218,7 +222,7 @@ export default function UserSettings() {
         <Typography
           variant="subtitle2"
           sx={{
-            marginBottom: isMobile ? '0px' : '23px',
+            mb: { xs: '0px', md: '23px' },
           }}
         >
           Welcome back! Please enter your details to log into your account.
