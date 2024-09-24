@@ -1,9 +1,10 @@
 import apiUrl from '@/data/apiUrl';
 import { ApiLoginResponse, ApiUserAttributes } from '@/types/api/apiUser';
+import { AuthOptions, Session } from 'next-auth';
 import NextAuth from 'next-auth/next';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
-const handler = NextAuth({
+const authOptions = {
   session: {
     strategy: 'jwt',
   },
@@ -49,7 +50,7 @@ const handler = NextAuth({
   ],
 
   callbacks: {
-    async jwt(data) {
+    async jwt(data: any) {
       // User data avaliable in user object when logged in
       const userData = data.user as ApiUserAttributes & {
         token: string;
@@ -62,13 +63,17 @@ const handler = NextAuth({
       }
       return data.token;
     },
-    async session({ token, session }) {
+    async session({ token, session }: any) {
+      let s = {} as Session;
       if (token?.accessToken) {
+        session.id = token.id as number;
         session.accessToken = token.accessToken as string;
       }
       return session;
     },
   },
-});
+};
 
-export { handler as GET, handler as POST };
+const handler = NextAuth(authOptions as AuthOptions);
+
+export { handler as GET, handler as POST, authOptions };

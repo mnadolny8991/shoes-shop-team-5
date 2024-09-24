@@ -18,10 +18,12 @@ import apiUrl from '@/data/apiUrl';
 import token from '@/data/token';
 import { useRouter } from 'next/navigation';
 import { getUserData, updateUserData } from '@/lib/fetchUserData';
+import { useSession } from 'next-auth/react';
 
 export default function UserSettings() {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const router = useRouter();
+  const { data: session } = useSession();
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
@@ -43,7 +45,7 @@ export default function UserSettings() {
       const response = await fetch(`${apiUrl}/users/${userId}`, {
         method: 'DELETE',
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${session?.accessToken}`,
         },
       });
 
@@ -66,7 +68,7 @@ export default function UserSettings() {
       const response = await fetch(`${apiUrl}/upload`, {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${session?.accessToken}`,
         },
         body: formData,
       });
@@ -75,7 +77,7 @@ export default function UserSettings() {
       }
       const imageData = await response.json();
       const imageId = imageData[0]?.id;
-      const updateResponse = await updateUserData(userId, token, {
+      const updateResponse = await updateUserData(userId, session?.accessToken!, {
         avatar: imageId,
       });
       if (!updateResponse.ok) {
@@ -101,7 +103,7 @@ export default function UserSettings() {
 
   const { data, status } = useQuery({
     queryKey: ['user', userId],
-    queryFn: () => getUserData(userId, token),
+    queryFn: () => getUserData(userId, session?.accessToken!),
   });
 
   useEffect(() => {
