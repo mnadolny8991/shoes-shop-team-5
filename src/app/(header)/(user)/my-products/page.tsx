@@ -1,6 +1,6 @@
 import { fetchProductsByUserId } from "@/lib/fetchProducts";
 import { getServerSession } from "next-auth/next"
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/lib/auth';
 import MyProducts from "@/components/products/MyProducts";
 import { AuthOptions } from "next-auth";
 
