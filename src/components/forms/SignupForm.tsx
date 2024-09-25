@@ -85,8 +85,7 @@ export default function SignupForm() {
       }
     },
     onSuccess: (data) => {
-      console.log(data.user.id);
-      router.push('/');
+      // router.push('/');
     },
   });
 
@@ -124,13 +123,13 @@ export default function SignupForm() {
           required
           name="name"
           id="name"
-          label="Name"
+          label="Username"
           min={3}
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
           onBlur={() => setIsFirstInteractionName(true)}
-          placeholder="Hayman Andrews"
+          placeholder="Hayman"
           error={nameError}
         />
         <TextField
@@ -180,6 +179,12 @@ export default function SignupForm() {
             gap: '16px',
           }}
         >
+          {mutation.status === 'pending' &&
+            <Typography variant="caption">Loading...</Typography>
+          }
+          {mutation.status === 'success' &&
+            <Typography variant="caption">Please check your email for confirmation</Typography>
+          }
           <CustomButton
             size={isMobile ? 's' : 'l'}
             variant="contained"

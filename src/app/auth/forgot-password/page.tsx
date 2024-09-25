@@ -105,12 +105,16 @@ const ForgotPassword: React.FC = () => {
                 min={5}
                 error={error}
               />
-
-              {mutation.isSuccess && (
+              {mutation.status === 'pending' && 
+                <Typography variant="caption" textAlign="center">
+                  Loading...
+                </Typography>
+              }
+              {mutation.status === 'success' && 
                 <Typography variant="caption" textAlign="center">
                   Password reset email has been sent
                 </Typography>
-              )}
+              }
 
               <CustomButton
                 size={isMobile ? 's' : 'l'}
