@@ -55,7 +55,7 @@ const ResetPasswordForm = () => {
       });
     },
     onSuccess: () => {
-      router.push('/sign-in');
+      router.push('/auth/sign-in');
     },
   });
 
@@ -107,7 +107,7 @@ const ResetPasswordForm = () => {
         Reset Password
       </CustomButton>
       <Typography variant="caption" textAlign="center">
-        <Link href="/login">Back to log in</Link>
+        <Link href="/auth/sign-in">Back to log in</Link>
       </Typography>
     </>
   );

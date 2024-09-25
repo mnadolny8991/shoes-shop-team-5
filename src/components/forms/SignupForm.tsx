@@ -203,7 +203,7 @@ export default function SignupForm() {
               sx={{
                 marginLeft: { xs: '5px', md: '7px' },
               }}
-              href="/sign-in"
+              href="/auth/sign-in"
               color="primary"
             >
               Log in

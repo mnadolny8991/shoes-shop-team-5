@@ -1,14 +1,14 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { Typography, Box, Grid } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Link from 'next/link';
 import Image from 'next/image';
 import theme from '@/styles/theme';
-import TextField from '../../components/input/TextField';
-import CustomButton from '../../components/buttons/CustomButton';
-import useValidate from '../../hooks/useValidate';
+import TextField from '@/components/input/TextField';
+import CustomButton from '@/components/buttons/CustomButton';
+import useValidate from '@/hooks/useValidate';
 import { emailValidator } from '@/lib/validators';
 import { useMutation } from '@tanstack/react-query';
 import apiUrl from '@/data/apiUrl';
@@ -95,8 +95,8 @@ const ForgotPassword: React.FC = () => {
 
               <TextField
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                onBlur={(e) => setIsFirstInteraction(true)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+                onBlur={() => setIsFirstInteraction(true)}
                 type="text"
                 required
                 name="email"
@@ -122,7 +122,7 @@ const ForgotPassword: React.FC = () => {
               </CustomButton>
 
               <Typography variant="caption" textAlign="center">
-                <Link href="/sign-in">Back to log in</Link>
+                <Link href="/auth/sign-in">Back to log in</Link>
               </Typography>
             </Box>
           </Box>

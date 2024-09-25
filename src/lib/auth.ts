@@ -9,7 +9,7 @@ export const authOptions = {
   },
 
   pages: {
-    signIn: '/sign-in',
+    signIn: '/auth/sign-in',
   },
 
   providers: [

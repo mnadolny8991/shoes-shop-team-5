@@ -45,7 +45,7 @@ export default function SignIn() {
             align="center"
             variant="body2"
           >
-            Don&apos;t have an account? <Link href="/sign-up">Sign up</Link>
+            Don&apos;t have an account? <Link href="/auth/sign-up">Sign up</Link>
           </Typography>
         </Box>
       </Box>
