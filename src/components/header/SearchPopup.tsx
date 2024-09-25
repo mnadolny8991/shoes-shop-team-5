@@ -46,7 +46,7 @@ export default function SearchPopup({
   const handleSearch = () => {
     close();
     router.push('/catalog');
-  }
+  };
 
   return (
     <Drawer
@@ -76,10 +76,12 @@ export default function SearchPopup({
           </IconButton>
         )}
         <Stack gap="40px">
-          <form onSubmit={(e) => { 
-            e.preventDefault();
-            handleSearch();
-          }}>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSearch();
+            }}
+          >
             <SearchBar
               withErase
               ref={searchRef}

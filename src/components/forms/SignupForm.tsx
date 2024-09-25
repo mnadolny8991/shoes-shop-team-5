@@ -179,12 +179,14 @@ export default function SignupForm() {
             gap: '16px',
           }}
         >
-          {mutation.status === 'pending' &&
+          {mutation.status === 'pending' && (
             <Typography variant="caption">Loading...</Typography>
-          }
-          {mutation.status === 'success' &&
-            <Typography variant="caption">Please check your email for confirmation</Typography>
-          }
+          )}
+          {mutation.status === 'success' && (
+            <Typography variant="caption">
+              Please check your email for confirmation
+            </Typography>
+          )}
           <CustomButton
             size={isMobile ? 's' : 'l'}
             variant="contained"

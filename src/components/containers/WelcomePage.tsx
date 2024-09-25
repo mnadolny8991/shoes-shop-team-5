@@ -4,9 +4,7 @@ import CustomButton from '../buttons/CustomButton';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
-type WelcomePageProps = {
-
-}
+type WelcomePageProps = {};
 
 const WelcomePage: FC<WelcomePageProps> = () => {
   const router = useRouter();
@@ -33,20 +31,16 @@ const WelcomePage: FC<WelcomePageProps> = () => {
           <Typography variant="h1" width="100%" textAlign="center">
             Welcome
           </Typography>
-          <Stack 
-            direction="row"
-            gap="15px"
-            width="100%"
-          >
-            <CustomButton 
-              size='m' 
+          <Stack direction="row" gap="15px" width="100%">
+            <CustomButton
+              size="m"
               variant="contained"
               onClick={() => signIn('credentials')}
             >
               Sign In
             </CustomButton>
-            <CustomButton 
-              size='m' 
+            <CustomButton
+              size="m"
               variant="outlined"
               onClick={() => router.push('/catalog')}
             >
@@ -56,7 +50,7 @@ const WelcomePage: FC<WelcomePageProps> = () => {
         </Stack>
       </Paper>
     </Box>
-  )
-}
+  );
+};
 
 export default WelcomePage;
