@@ -108,11 +108,6 @@ export default function UpdateProfileForm() {
       setSnackbarMessage('Profile updated successfully!');
       setSnackbarSeverity('success');
       setOpenSnackbar(true);
-
-      // setFirstName('');
-      // setLastName('');
-      // setEmail('');
-      // setPhoneNumber('');
     },
     onError: (error: ApiError | ApiErrorDetail) => {
       setSnackbarMessage(`Failed to update profile: ${error.message}`);

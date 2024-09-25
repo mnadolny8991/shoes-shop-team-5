@@ -26,7 +26,7 @@ const getMenuItems = (signedIn: boolean) => [
         id: 2,
         name: 'Log In',
         icon: <LoginOutlined sx={{ width: '20px', height: '20px' }} />,
-        href: '/sign-in',
+        href: '/auth/sign-in',
       },
 ];
 
