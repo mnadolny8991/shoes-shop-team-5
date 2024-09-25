@@ -30,7 +30,7 @@ export default function MyProducts({ initialData }: MyProductsProps) {
         direction={'row'}
         justifyContent="space-between"
         alignItems="center"
-        mx={{xs:2, md:0}}
+        mx={{ xs: 2, md: 0 }}
         mb={{ xs: '19px', md: '36px' }}
       >
         <Typography variant="h1">My products</Typography>

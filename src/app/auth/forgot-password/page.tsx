@@ -95,7 +95,9 @@ const ForgotPassword: React.FC = () => {
 
               <TextField
                 value={email}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  setEmail(e.target.value)
+                }
                 onBlur={() => setIsFirstInteraction(true)}
                 type="text"
                 required
@@ -105,16 +107,16 @@ const ForgotPassword: React.FC = () => {
                 min={5}
                 error={error}
               />
-              {mutation.status === 'pending' && 
+              {mutation.status === 'pending' && (
                 <Typography variant="caption" textAlign="center">
                   Loading...
                 </Typography>
-              }
-              {mutation.status === 'success' && 
+              )}
+              {mutation.status === 'success' && (
                 <Typography variant="caption" textAlign="center">
                   Password reset email has been sent
                 </Typography>
-              }
+              )}
 
               <CustomButton
                 size={isMobile ? 's' : 'l'}

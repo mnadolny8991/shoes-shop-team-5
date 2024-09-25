@@ -40,7 +40,7 @@ export default function DefaultProducts() {
         direction={'row'}
         justifyContent="space-between"
         alignItems="center"
-        mx={{xs:2, md:0}}
+        mx={{ xs: 2, md: 0 }}
         mb={{ xs: '19px', md: '36px' }}
       >
         {lastViewed.length > 0 && (
