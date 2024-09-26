@@ -15,7 +15,6 @@ import UpdateProfileForm from '@/components/forms/UpdateProfileForm';
 
 import { useMutation, useQuery } from '@tanstack/react-query';
 import apiUrl from '@/data/apiUrl';
-import token from '@/data/token';
 import { useRouter } from 'next/navigation';
 import { getUserData, updateUserData } from '@/lib/fetchUserData';
 import { useSession } from 'next-auth/react';
@@ -39,26 +38,20 @@ export default function UserSettings() {
 
   const MAX_FILE_SIZE = 2 * 1024 * 1024;
 
-  const deleteUserMutation = useMutation({
-    mutationFn: async (userId: number) => {
-      const response = await fetch(`${apiUrl}/users/${userId}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${session?.accessToken}`,
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error('Error deleting user');
-      }
-
-      return response.json();
-    },
+  const deleteUserAvatarMutation = useMutation({
+    mutationFn: () => updateUserData(session?.id!, session?.accessToken!, {
+      avatar: null,
+    }),
     onSuccess: () => {
-      router.push('/');
+      setAvatarUrl('/default-avatar.png');
+      setSnackbarMessage('Avatar deleted successfully!');
+      setSnackbarSeverity('success');
+      setOpenSnackbar(true);
     },
     onError: (error: any) => {
-      console.error('Failed to delete user:', error);
+      setSnackbarMessage('Error while deleting an avatar');
+      setSnackbarSeverity('error');
+      setOpenSnackbar(true);
     },
   });
 
@@ -126,7 +119,7 @@ export default function UserSettings() {
   };
 
   const handleDelete = () => {
-    deleteUserMutation.mutate(session?.id!);
+    deleteUserAvatarMutation.mutate();
   };
 
   const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
