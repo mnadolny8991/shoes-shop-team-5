@@ -5,6 +5,7 @@ import ShoeImageSlider from '@/components/sliders/ShoeImageSlider';
 import {
   Box,
   Chip,
+  Divider,
   Stack,
   Typography,
   useMediaQuery,
@@ -61,14 +62,19 @@ const SingleProductPage: FC<SingleProductPageProps> = ({ id, initialData }) => {
         >
           {data?.images && <ShoeImageSlider images={data?.images} />}
           <Box sx={{ width: { xs: '320px', md: '522px' } }}>
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'flex-end',
-              }}
+            <Stack
+              display="flex"
+              justifyContent={{ md: 'space-between' }}
+              alignItems={{ md: 'flex-end' }}
+              flexDirection={{ xs: 'column', md: 'row' }}
+              gap={{ xs: '10px', md: 'auto' }}
             >
-              <Typography variant="h1">{data?.name}</Typography>
+              <Typography 
+                variant="h1"
+                maxWidth="430px"
+              >
+                {data?.name}
+              </Typography>
               <Typography
                 sx={{
                   fontSize: '22px',
@@ -78,7 +84,7 @@ const SingleProductPage: FC<SingleProductPageProps> = ({ id, initialData }) => {
               >
                 ${data?.price}
               </Typography>
-            </Box>
+            </Stack>
             <Typography
               sx={{
                 fontSize: '20px',
