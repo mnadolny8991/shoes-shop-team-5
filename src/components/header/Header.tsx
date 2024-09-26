@@ -1,12 +1,16 @@
 'use client';
-import { AppBar, Toolbar } from '@mui/material';
+import { AppBar, Divider, Toolbar } from '@mui/material';
 import NavLeft from '@/components/header/NavLeft';
 import NavRight from '@/components/header/NavRight';
 
 export default function Header() {
   return (
     <>
-      <AppBar position="static" color="transparent">
+      <AppBar 
+        position="static" 
+        color="transparent"
+        elevation={0}
+      >
         <Toolbar
           disableGutters={true}
           sx={{
@@ -20,6 +24,7 @@ export default function Header() {
           <NavRight />
         </Toolbar>
       </AppBar>
+      <Divider sx={{ color: '#EAECF0' }}/>
     </>
   );
 }
