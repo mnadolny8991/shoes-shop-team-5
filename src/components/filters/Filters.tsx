@@ -91,7 +91,6 @@ export default function Filters() {
       <Divider />
 
       <Accordion
-        defaultExpanded
         sx={{
           border: 'none',
           boxShadow: 'none',
@@ -107,7 +106,6 @@ export default function Filters() {
       <Divider />
 
       <Accordion
-        defaultExpanded
         sx={{
           border: 'none',
           boxShadow: 'none',
@@ -140,7 +138,6 @@ export default function Filters() {
       <Divider />
 
       <Accordion
-        defaultExpanded
         sx={{
           border: 'none',
           boxShadow: 'none',
@@ -159,7 +156,6 @@ export default function Filters() {
       <Divider />
 
       <Accordion
-        defaultExpanded
         sx={{
           border: 'none',
           boxShadow: 'none',

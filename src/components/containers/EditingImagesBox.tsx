@@ -132,10 +132,7 @@ export default function EditingImagesBox({
           setImageIdToDelete(null);
         }}
         title="Are you sure to delete product image"
-        bodyText="Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis
-        perspiciatis in a quas doloribus impedit esse assumenda ut ratione,
-        asperiores fuga maiores tempora ad atque inventore dolore consequatur
-        soluta recusandae."
+        bodyText="Are you sure you want to delete this image? This action is permanent and cannot be undone."
       />
     </ImagesBox>
   );

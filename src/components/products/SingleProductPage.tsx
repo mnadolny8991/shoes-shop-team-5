@@ -153,7 +153,7 @@ const SingleProductPage: FC<SingleProductPageProps> = ({ id, initialData }) => {
                     onProductAdd(data.id);
                   }
                 }}
-                disabled={!sizeId}
+                disabled={sizeId === null}
               >
                 Add to Bag
               </CustomButton>
