@@ -27,8 +27,10 @@ export default function CatalogLayout({
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { searchText } = useSearch();
 
+  console.log(isMobile);
+
   // visibility of filters at desktop and mobile drawer
-  const [showFilters, setShowFilters] = useState(false);
+  const [showFilters, setShowFilters] = useState(isMobile);
 
   const toggleFilters = () => {
     setShowFilters((prev) => !prev);
@@ -53,7 +55,7 @@ export default function CatalogLayout({
         })}
       >
         {/* Filters Section */}
-        {!isMobile && showFilters && (
+        {!isMobile && !showFilters && (
           <Stack
             width="320px"
             spacing={4}
@@ -114,7 +116,7 @@ export default function CatalogLayout({
               onClick={toggleFilters}
               sx={{ cursor: 'pointer' }}
             >
-              {showFilters ? (
+              {!showFilters && !isMobile ? (
                 <>
                   <Typography
                     variant={isMobile ? 'subtitle2' : 'body1'}

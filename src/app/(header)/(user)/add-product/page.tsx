@@ -65,7 +65,7 @@ export default function AddProduct() {
     <>
       <ProductForm
         title="Add a product"
-        description="Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book. It usually begins with:"
+        description="Provide detailed information about your product, including name, price, color, gender, brand, description, sizes and images, to ensure a seamless experience for customers. Make sure all details are accurate and up-to-date."
         onSubmit={submitForm}
       />
       <Backdrop open={isPending || isPendingProduct || isSuccess}>
