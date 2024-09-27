@@ -8,6 +8,8 @@ import NothingFound from '@/components/products/NothingFound';
 import { Product } from '@/types/product';
 import { fetchProducts } from '@/lib/fetchProducts';
 
+import { Box, CircularProgress } from '@mui/material';
+
 type CatalogProps = {
   initialData: Product[];
 };
@@ -79,7 +81,16 @@ const Catalog: FC<CatalogProps> = ({ initialData }) => {
   return (
     <>
       {isLoading ? (
-        'Loading...'
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100vh',
+          }}
+        >
+          <CircularProgress />
+        </Box>
       ) : error ? (
         'Data loading failed'
       ) : filteredProducts.length === 0 ? (

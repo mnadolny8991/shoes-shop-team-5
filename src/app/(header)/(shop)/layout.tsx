@@ -10,6 +10,7 @@ import {
   IconButton,
   useMediaQuery,
   useTheme,
+  CircularProgress,
 } from '@mui/material';
 
 import FilterAltOffOutlinedIcon from '@mui/icons-material/FilterAltOffOutlined';
@@ -17,6 +18,7 @@ import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
 import FilterDrawer from '@/components/nav/FilterDrawer';
 
 import { useSearch } from '@/context/SearchContext';
+import { useSession } from 'next-auth/react';
 
 export default function CatalogLayout({
   children,
@@ -26,8 +28,7 @@ export default function CatalogLayout({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { searchText } = useSearch();
-
-  console.log(isMobile);
+  const { status } = useSession();
 
   // visibility of filters at desktop and mobile drawer
   const [showFilters, setShowFilters] = useState(isMobile);
@@ -35,6 +36,20 @@ export default function CatalogLayout({
   const toggleFilters = () => {
     setShowFilters((prev) => !prev);
   };
+
+  if (status === 'loading')
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh',
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
 
   return (
     <>
