@@ -11,6 +11,7 @@ import {
   useTheme,
   Stack,
   Avatar,
+  CircularProgress,
 } from '@mui/material';
 import { useSession } from 'next-auth/react';
 
@@ -28,7 +29,18 @@ export default function UserLayout({
   return (
     <>
       {status === 'unauthenticated' && <WelcomePage />}
-      {status === 'loading' && <Typography variant="h1">Loading...</Typography>}
+      {status === 'loading' && 
+        <CircularProgress 
+          color="primary" 
+          size="50px"
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+          }}
+        />
+      }
       {status === 'authenticated' && (
         <Stack
           {...(!isMobile && {
