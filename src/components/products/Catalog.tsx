@@ -34,10 +34,6 @@ const Catalog = () => {
     ? data.meta.pagination.page < data.meta.pagination.pageCount
     : false;
 
-  useEffect(() => {
-    console.log(fetchStatus);
-  }, [fetchStatus]);
-
   return (
     <>
       {status === 'pending' ? (
