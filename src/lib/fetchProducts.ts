@@ -3,6 +3,7 @@ import mapProduct, { mapProductList } from '@/mappers/productMappers';
 import { ApiError } from '@/types/api/apiError';
 import { Filters } from '@/context/SearchContext';
 import { QuizRounded } from '@mui/icons-material';
+import { ApiProductListResponse } from '@/types/api/apiTypes';
 
 export const fetchProductsByUserId = async (id: number, token: string) => {
   const response = await fetch(
@@ -46,7 +47,7 @@ const getFiltersStringArray = (filters: Filters): string[] => {
     ? filters.brand.map((brand) => `filters[brand][name]=${brand}`)
     : [];
   const colorFilters = filters.color
-    ? filters.color.map((color) => `filters[color][name]=${color}`)
+    ? filters.color.map((color) => `filters[color][name][$containsi]=${color}`)
     : [];
   const sizeFilters = filters.size
     ? filters.size.map((size) => `filters[sizes][value]=${size}`)
@@ -83,6 +84,5 @@ export const fetchProductsByFiltersAndName = async (
       cause: (await response.json()).error as ApiError,
     });
   }
-  const data = await response.json();
-  return mapProductList(data);
+   return await response.json() as ApiProductListResponse;
 };

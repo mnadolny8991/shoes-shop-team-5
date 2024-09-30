@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import {
   Accordion,
   AccordionSummary,
@@ -23,13 +23,16 @@ import { useSearch } from '@/context/SearchContext';
 
 import ALL_COLORS from '@/mock/ALL_COLORS';
 import { BRANDS } from '@/mock/BRANDS';
+import useDebounce from '@/hooks/useDebounce';
+import searchDebounceTime from '@/data/searchDebounceTime';
 
-export default function Filters() {
+const Filters = memo(() => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [brandName, setBrandName] = useState('');
 
   const { filters, searchText, updateFilter } = useSearch();
+  const searchTextDebounced = useDebounce(searchText, searchDebounceTime, '');
 
   const handleBrandChange = (selectedBrands: string[]) => {
     updateFilter('brand', selectedBrands);
@@ -66,7 +69,7 @@ export default function Filters() {
             >
               Shoes
             </Typography>
-            <Typography variant="body1">{searchText}</Typography>
+            <Typography variant="body1">{searchTextDebounced}</Typography>
           </Stack>
           <Divider />
         </>
@@ -175,4 +178,8 @@ export default function Filters() {
       <Divider />
     </Stack>
   );
-}
+});
+
+Filters.displayName = 'Filters';
+
+export default Filters;

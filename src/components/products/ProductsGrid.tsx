@@ -3,16 +3,17 @@
 import { Product } from '@/types/product';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import ProductCard from '@/components/products/ProductCard';
+import { memo } from 'react';
 
 interface ProductsGridProps {
   products: Array<Product>;
   isAdmin?: boolean;
 }
 
-export default function ProductsGrid({
+const ProductsGrid = memo(({
   products,
   isAdmin = true,
-}: ProductsGridProps) {
+}: ProductsGridProps) => {
   return (
     <Grid2 container spacing={{ xs: 2, md: 8 }} mx={{ xs: 1, md: -4 }}>
       {products.map((product) => (
@@ -22,4 +23,7 @@ export default function ProductsGrid({
       ))}
     </Grid2>
   );
-}
+});
+
+ProductsGrid.displayName = 'ProductsGrid';
+export default ProductsGrid;

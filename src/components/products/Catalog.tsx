@@ -2,86 +2,45 @@
 
 import { FC, useEffect, useState } from 'react';
 import { useSearch } from '@/context/SearchContext';
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import ProductsGrid from '@/components/products/ProductsGrid';
 import NothingFound from '@/components/products/NothingFound';
 import { Product } from '@/types/product';
 import {
   fetchProductsByFiltersAndName,
 } from '@/lib/fetchProducts';
-
-import { Box, CircularProgress } from '@mui/material';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import { Box, CircularProgress, Container, Divider, IconButton, Stack } from '@mui/material';
+import useDebounce from '@/hooks/useDebounce';
+import searchDebounceTime from '@/data/searchDebounceTime';
+import { mapProductList } from '@/mappers/productMappers';
 
 const Catalog = () => {
+  const [page, setPage] = useState<number>(1);
   const { searchText, filters } = useSearch();
+  const filtersDebounced = useDebounce(filters, 500, filters);
+  const searchTextDebounced = useDebounce(searchText, searchDebounceTime, '');
 
-  // const [products, setProducts] = useState<Product[]>([]);
-  // const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
-
-  const { data: products, isLoading, error } = useQuery({
-    queryKey: ['products', { searchText, filters }],
-    queryFn: () => fetchProductsByFiltersAndName(filters, searchText, 0, 8),
+  const { data, status, error, isPlaceholderData, fetchStatus } = useQuery({
+    queryKey: ['products', { searchTextDebounced, filtersDebounced, page }],
+    queryFn: () => fetchProductsByFiltersAndName(filtersDebounced, searchTextDebounced, page, 6),
+    placeholderData: keepPreviousData,
   });
+  const products = status === 'success' 
+    ? mapProductList(data)
+    : [];
+  const hasNextPage = status === 'success'
+    ? data.meta.pagination.page < data.meta.pagination.pageCount
+    : false;
 
   useEffect(() => {
-    console.log(searchText);
-  }, [searchText]);
-
-  // useEffect(() => {
-  //   if (data && Array.isArray(data)) setProducts(data);
-  // }, [data]);
-
-  // Handle product filtering
-  // useEffect(() => {
-  //   if (products.length > 0) {
-  //     const filtered = products.filter((product) => {
-  //       const matchesSearch = product.name
-  //         .toLowerCase()
-  //         .includes(searchText.toLowerCase());
-
-  //       const matchesGender =
-  //         filters.gender.length === 0 ||
-  //         filters.gender.includes(product.gender.name);
-
-  //       const matchesBrand =
-  //         filters.brand.length === 0 ||
-  //         filters.brand.includes(product.brand.name);
-
-  //       const matchesPrice =
-  //         filters.price.length === 2
-  //           ? product.price >= filters.price[0] &&
-  //             product.price <= filters.price[1]
-  //           : true;
-
-  //       const matchesColor =
-  //         filters.color.length === 0 ||
-  //         (product.color &&
-  //           filters.color.includes(product.color.name.toLocaleLowerCase()));
-
-  //       const matchesSizes =
-  //         filters.size.length === 0 ||
-  //         (product.sizes &&
-  //           product.sizes.some((size) =>
-  //             filters.size.includes(size.name.toLowerCase())
-  //           ));
-
-  //       return (
-  //         matchesSearch &&
-  //         matchesGender &&
-  //         matchesBrand &&
-  //         matchesPrice &&
-  //         matchesColor &&
-  //         matchesSizes
-  //       );
-  //     });
-
-  //     setFilteredProducts(filtered);
-  //   }
-  // }, [products, filters, searchText]);
+    console.log(fetchStatus);
+  }, [fetchStatus]);
 
   return (
     <>
-      {isLoading ? (
+      {status === 'pending' ? (
         <Box
           sx={{
             display: 'flex',
@@ -92,12 +51,37 @@ const Catalog = () => {
         >
           <CircularProgress />
         </Box>
-      ) : error ? (
-        'Data loading failed'
+      ) : status === 'error' ? (
+        {error}
       ) : products!.length === 0 ? (
         <NothingFound />
       ) : (
-        <ProductsGrid products={products!} isAdmin={false} />
+        <>
+          <ProductsGrid products={products!} isAdmin={false} />
+          <Stack
+            direction="row"
+            justifyContent="center"
+            marginBottom="20px"
+          >
+            <IconButton
+              onClick={() => setPage((old) => Math.max(old - 1, 0))}
+              disabled={page === 1}
+            >
+              <ArrowBackIosIcon />
+            </IconButton>
+            <IconButton 
+              onClick={() => {
+                if (!isPlaceholderData && hasNextPage) {
+                  setPage((old) => old + 1)
+                }
+              }}
+              // Disable the Next Page button until we know a next page is available
+              disabled={isPlaceholderData || !hasNextPage}
+            >
+              <ArrowForwardIosIcon />
+            </IconButton>
+          </Stack>
+        </>
       )}
     </>
   );
