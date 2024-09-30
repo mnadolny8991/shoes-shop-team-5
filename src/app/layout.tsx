@@ -13,7 +13,13 @@ import { SessionProvider } from 'next-auth/react';
 //   description: 'Shoes shop',
 // };
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 60 * 1000,
+    }
+  }
+});
 
 export default function RootLayout({
   children,
@@ -24,7 +30,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <SessionProvider>
-          <QueryClientProvider client={queryClient}>
+          <QueryClientProvider client={queryClient} >
             <AppRouterCacheProvider>
               <ThemeProvider theme={theme}>{children}</ThemeProvider>
             </AppRouterCacheProvider>

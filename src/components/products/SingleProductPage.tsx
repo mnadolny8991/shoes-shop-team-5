@@ -21,17 +21,15 @@ import { Product } from '@/types/product';
 
 type SingleProductPageProps = {
   id: number;
-  initialData: Product;
 };
 
-const SingleProductPage: FC<SingleProductPageProps> = ({ id, initialData }) => {
+const SingleProductPage: FC<SingleProductPageProps> = ({ id }) => {
   const [sizeId, setSizeId] = useState<null | number>(null);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { data, status, error } = useQuery({
     queryKey: ['product', id],
     queryFn: () => fetchProductById(id),
-    initialData,
   });
   const { onProductAdd } = useCartContext();
   const { onLastViewedAdd } = useLastViewed();
