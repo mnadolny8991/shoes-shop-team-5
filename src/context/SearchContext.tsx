@@ -2,7 +2,7 @@
 import { createContext, useContext, useState, ReactNode, FC } from 'react';
 
 // filters type
-type Filters = {
+export type Filters = {
   gender: string[];
   size: string[];
   brand: string[];

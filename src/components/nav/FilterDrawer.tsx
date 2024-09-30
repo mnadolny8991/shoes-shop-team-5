@@ -1,16 +1,17 @@
 import { Drawer, IconButton, Stack } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import Filters from '@/components/filters/Filters';
+import { memo } from 'react';
 
 type FilterDrawerProps = {
   showFilterDrawer: boolean;
   onDrawerClose: () => void;
 };
 
-export default function FilterDrawer({
+const FilterDrawer = memo(({
   showFilterDrawer,
   onDrawerClose,
-}: FilterDrawerProps) {
+}: FilterDrawerProps) => {
   return (
     <Drawer
       anchor="right"
@@ -40,4 +41,8 @@ export default function FilterDrawer({
       <Filters />
     </Drawer>
   );
-}
+});
+
+FilterDrawer.displayName = 'FilterDrawer';
+
+export default FilterDrawer;
