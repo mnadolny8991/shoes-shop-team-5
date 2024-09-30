@@ -8,7 +8,7 @@ const useAvatarQuery = () => {
   const { data: session, status } = useSession();
 
   return useQuery({
-    queryKey: ['user'],
+    queryKey: ['userAvatar'],
     queryFn: () =>
       fetch(`${apiUrl}/users/me?populate=avatar`, {
         headers: {

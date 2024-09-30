@@ -29,9 +29,9 @@ export default function UserLayout({
   return (
     <>
       {status === 'unauthenticated' && <WelcomePage />}
-      {status === 'loading' && 
-        <CircularProgress 
-          color="primary" 
+      {status === 'loading' && (
+        <CircularProgress
+          color="primary"
           size="50px"
           sx={{
             position: 'absolute',
@@ -40,7 +40,7 @@ export default function UserLayout({
             transform: 'translate(-50%, -50%)',
           }}
         />
-      }
+      )}
       {status === 'authenticated' && (
         <Stack
           {...(!isMobile && {

@@ -6,11 +6,7 @@ import NavRight from '@/components/header/NavRight';
 export default function Header() {
   return (
     <>
-      <AppBar 
-        position="static" 
-        color="transparent"
-        elevation={0}
-      >
+      <AppBar position="static" color="transparent" elevation={0}>
         <Toolbar
           disableGutters={true}
           sx={{
@@ -24,7 +20,7 @@ export default function Header() {
           <NavRight />
         </Toolbar>
       </AppBar>
-      <Divider sx={{ color: '#EAECF0' }}/>
+      <Divider sx={{ color: '#EAECF0' }} />
     </>
   );
 }

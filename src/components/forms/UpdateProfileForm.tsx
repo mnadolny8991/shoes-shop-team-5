@@ -1,17 +1,16 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { MouseEventHandler, useEffect, useState } from 'react';
 import { Box, useTheme, useMediaQuery, Snackbar, Alert } from '@mui/material';
 import TextField from '@/components/input/TextField';
 import CustomButton from '@/components/buttons/CustomButton';
-import token from '@/data/token';
 import useValidate from '@/hooks/useValidate';
 import {
   emailValidator,
   nameValidator,
   phoneValidator,
 } from '@/lib/validators';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import apiUrl from '@/data/apiUrl';
 import {
   ApiError,
@@ -32,6 +31,7 @@ export default function UpdateProfileForm() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { data: session } = useSession();
+  const queryClient = useQueryClient();
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -108,6 +108,7 @@ export default function UpdateProfileForm() {
       setSnackbarMessage('Profile updated successfully!');
       setSnackbarSeverity('success');
       setOpenSnackbar(true);
+      queryClient.invalidateQueries({queryKey:['userAvatar']})
     },
     onError: (error: ApiError | ApiErrorDetail) => {
       setSnackbarMessage(`Failed to update profile: ${error.message}`);
@@ -126,7 +127,8 @@ export default function UpdateProfileForm() {
     setOpenSnackbar(false);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit: MouseEventHandler<HTMLButtonElement> = (event) => {
+    event.preventDefault();
     mutation.mutate({
       firstName,
       lastName,

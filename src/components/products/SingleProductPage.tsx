@@ -67,10 +67,7 @@ const SingleProductPage: FC<SingleProductPageProps> = ({ id }) => {
               flexDirection={{ xs: 'column', md: 'row' }}
               gap={{ xs: '10px', md: 'auto' }}
             >
-              <Typography 
-                variant="h1"
-                maxWidth="430px"
-              >
+              <Typography variant="h1" maxWidth="430px">
                 {data?.name}
               </Typography>
               <Typography

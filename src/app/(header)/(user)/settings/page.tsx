@@ -13,16 +13,20 @@ import {
 import CustomButton from '@/components/buttons/CustomButton';
 import UpdateProfileForm from '@/components/forms/UpdateProfileForm';
 
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import apiUrl from '@/data/apiUrl';
 import { useRouter } from 'next/navigation';
 import { getUserData, updateUserData } from '@/lib/fetchUserData';
 import { useSession } from 'next-auth/react';
+import { mapApiUserResponseToAvatar } from '@/mappers/userMappers';
+import { ApiUserResponse } from '@/types/api/apiTypes';
+import { UserAvatar } from '@/types/user';
 
 export default function UserSettings() {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const router = useRouter();
   const { data: session } = useSession();
+  const queryClient = useQueryClient();
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
@@ -39,10 +43,20 @@ export default function UserSettings() {
   const MAX_FILE_SIZE = 2 * 1024 * 1024;
 
   const deleteUserAvatarMutation = useMutation({
-    mutationFn: () => updateUserData(session?.id!, session?.accessToken!, {
-      avatar: null,
-    }),
-    onSuccess: () => {
+    mutationFn: () =>
+      updateUserData(session?.id!, session?.accessToken!, {
+        avatar: null,
+      }),
+    onSuccess: (res) => {
+      res
+        .json()
+        .then((apiUserResponse: ApiUserResponse) =>
+          queryClient.setQueryData(
+            ['userAvatar'],
+            mapApiUserResponseToAvatar(apiUserResponse)
+          )
+        );
+
       setAvatarUrl('/default-avatar.png');
       setSnackbarMessage('Avatar deleted successfully!');
       setSnackbarSeverity('success');
@@ -83,6 +97,10 @@ export default function UserSettings() {
     },
 
     onSuccess: (newAvatarUrl) => {
+      queryClient.setQueryData(['userAvatar'], (old: UserAvatar) => ({
+        ...old,
+        src: newAvatarUrl,
+      }));
       console.log('Avatar uploaded successfully:', newAvatarUrl);
       setAvatarUrl(newAvatarUrl);
       setSnackbarMessage('Avatar uploaded successfully!');
