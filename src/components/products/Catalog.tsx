@@ -10,11 +10,7 @@ import { fetchProducts } from '@/lib/fetchProducts';
 
 import { Box, CircularProgress } from '@mui/material';
 
-type CatalogProps = {
-  initialData: Product[];
-};
-
-const Catalog: FC<CatalogProps> = ({ initialData }) => {
+const Catalog = () => {
   const { searchText, filters } = useSearch();
 
   const [products, setProducts] = useState<Product[]>([]);
@@ -23,7 +19,6 @@ const Catalog: FC<CatalogProps> = ({ initialData }) => {
   const { data, isLoading, error } = useQuery({
     queryKey: ['myProducts'],
     queryFn: fetchProducts,
-    initialData,
   });
 
   useEffect(() => {
