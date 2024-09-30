@@ -1,6 +1,10 @@
-import apiUrl from "@/data/apiUrl"
+import apiUrl from '@/data/apiUrl';
 
-export const updateUserData = async (id: number, token: string, data: { [key: string]: any }) => {
+export const updateUserData = async (
+  id: number,
+  token: string,
+  data: { [key: string]: any }
+) => {
   const response = await fetch(`${apiUrl}/users/${id}`, {
     method: 'PUT',
     headers: {
@@ -11,4 +15,4 @@ export const updateUserData = async (id: number, token: string, data: { [key: st
   });
   if (!response.ok) throw new Error(`Couldn't update user with id=${id}`);
   return response;
-}
+};

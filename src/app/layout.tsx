@@ -17,8 +17,8 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: 60 * 1000,
-    }
-  }
+    },
+  },
 });
 
 export default function RootLayout({
@@ -30,7 +30,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <SessionProvider>
-          <QueryClientProvider client={queryClient} >
+          <QueryClientProvider client={queryClient}>
             <AppRouterCacheProvider>
               <ThemeProvider theme={theme}>{children}</ThemeProvider>
             </AppRouterCacheProvider>

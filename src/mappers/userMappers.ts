@@ -1,8 +1,9 @@
 import { ApiUserResponse } from '@/types/api/apiTypes';
+import { UserAvatar } from '@/types/user';
 
 export const mapApiUserResponseToAvatar = (
   apiUserResponse: ApiUserResponse
-) => ({
+): UserAvatar => ({
   name:
     apiUserResponse.firstName && apiUserResponse.lastName
       ? `${apiUserResponse.firstName} ${apiUserResponse.lastName}`
