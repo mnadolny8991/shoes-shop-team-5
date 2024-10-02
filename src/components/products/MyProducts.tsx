@@ -9,18 +9,15 @@ import { useSession } from 'next-auth/react';
 import { fetchProductsByUserId } from '@/lib/fetchProducts';
 import { Product } from '@/types/product';
 
-type MyProductsProps = {
-  initialData: Product[];
-};
+type MyProductsProps = {};
 
-export default function MyProducts({ initialData }: MyProductsProps) {
+export default function MyProducts() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { data: session } = useSession();
   const { data, isLoading } = useQuery({
     queryKey: ['myProducts'],
     queryFn: () => fetchProductsByUserId(session?.id!, session?.accessToken!),
-    initialData,
   });
 
   return (
