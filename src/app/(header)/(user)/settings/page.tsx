@@ -21,6 +21,7 @@ import { useSession } from 'next-auth/react';
 import { mapApiUserResponseToAvatar } from '@/mappers/userMappers';
 import { ApiUserResponse } from '@/types/api/apiTypes';
 import { UserAvatar } from '@/types/user';
+import { ApiError } from '@/types/api/apiError';
 
 export default function UserSettings() {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -43,10 +44,18 @@ export default function UserSettings() {
   const MAX_FILE_SIZE = 2 * 1024 * 1024;
 
   const deleteUserAvatarMutation = useMutation({
-    mutationFn: () =>
-      updateUserData(session?.id!, session?.accessToken!, {
+    mutationFn: async () => {
+      const response = await updateUserData(session?.id!, session?.accessToken!, {
         avatar: null,
-      }),
+      });
+      if (!response.ok) {
+        const errorResponse = (await response.json()).error as ApiError;
+        throw new Error(errorResponse.message, {
+          cause: errorResponse.details,
+        })
+      }
+      return response;
+    },
     onSuccess: (res) => {
       res
         .json()
@@ -62,8 +71,8 @@ export default function UserSettings() {
       setSnackbarSeverity('success');
       setOpenSnackbar(true);
     },
-    onError: (error: any) => {
-      setSnackbarMessage('Error while deleting an avatar');
+    onError: (error: Error) => {
+      setSnackbarMessage(error.message);
       setSnackbarSeverity('error');
       setOpenSnackbar(true);
     },
@@ -79,7 +88,10 @@ export default function UserSettings() {
         body: formData,
       });
       if (!response.ok) {
-        throw new Error('Error uploading avatar');
+        const errorResponse = (await response.json()).error as ApiError;
+        throw new Error(errorResponse.message, {
+          cause: errorResponse.details,
+        });
       }
       const imageData = await response.json();
       const imageId = imageData[0]?.id;
@@ -91,7 +103,10 @@ export default function UserSettings() {
         }
       );
       if (!updateResponse.ok) {
-        throw new Error('Error updating user avatar');
+        const errorResponse = (await updateResponse.json()).error as ApiError;
+        throw new Error(errorResponse.message, {
+          cause: errorResponse.details,
+        });
       }
       return imageData[0]?.url; // Return the avatar URL
     },
@@ -101,15 +116,13 @@ export default function UserSettings() {
         ...old,
         src: newAvatarUrl,
       }));
-      console.log('Avatar uploaded successfully:', newAvatarUrl);
       setAvatarUrl(newAvatarUrl);
       setSnackbarMessage('Avatar uploaded successfully!');
       setSnackbarSeverity('success');
       setOpenSnackbar(true);
     },
-    onError: (error) => {
-      console.error('Failed to upload avatar:', error);
-      setSnackbarMessage('Failed to upload avatar');
+    onError: (error: Error) => {
+      setSnackbarMessage(error.message);
       setSnackbarSeverity('error');
       setOpenSnackbar(true);
     },

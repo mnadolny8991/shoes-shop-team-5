@@ -13,6 +13,8 @@ import { emailValidator } from '@/lib/validators';
 import { useMutation } from '@tanstack/react-query';
 import apiUrl from '@/data/apiUrl';
 import { Logo } from '@/components/logo/Logo';
+import { ApiError } from '@/types/api/apiError';
+import ServerErrorBox from '@/components/containers/ServerErrorBox';
 
 const LogoContainer = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -40,19 +42,23 @@ const ForgotPassword: React.FC = () => {
   const { error } = useValidate(email, emailValidator, isFirstInteraction);
 
   const mutation = useMutation({
-    mutationFn: (email: string) => {
-      return fetch(`${apiUrl}/auth/forgot-password`, {
+    mutationFn: async (email: string) => {
+      const response = await fetch(`${apiUrl}/auth/forgot-password`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email }),
       });
+      if (!response.ok) {
+        const apiError = await response.json();
+        const errorDetails = apiError.error as ApiError;
+        throw new Error(errorDetails.message);
+      }
     },
   });
 
   const handleForgotPassword = (email: string) => {
-    if (error) return;
     mutation.mutate(email);
   };
 
@@ -93,6 +99,7 @@ const ForgotPassword: React.FC = () => {
                 Don&apos;t worry, we&apos;ll send you reset instructions.
               </Typography>
 
+              <ServerErrorBox message={mutation?.error?.message ?? ''} submessages={[]} />
               <TextField
                 value={email}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>

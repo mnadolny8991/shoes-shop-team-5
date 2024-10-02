@@ -45,7 +45,7 @@ export default function SignInForm() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log('click');
+    setServerError('');
     const resp = await signIn('credentials', {
       identifier: email,
       password,
@@ -59,7 +59,7 @@ export default function SignInForm() {
       })
       return;
     }
-    setServerError(resp?.error ?? '');
+    setServerError(resp?.error || '');
   };
 
   return (
