@@ -1,15 +1,15 @@
 import { AuthOptions } from 'next-auth';
 import NextAuth from 'next-auth/next';
 import { authOptions } from '@/lib/auth';
-import { NextApiRequest, NextApiResponse } from 'next';
-import { NextRequest } from 'next/server';
 
-const POST = async (req: NextApiRequest, res: NextApiResponse) => { 
+const POST = async (req: any, res: any) => { 
   // intercept credentials here
+  // const request = req as Request;
+  // console.log(await request.body?.getReader().read());
   return await NextAuth(req, res, authOptions as AuthOptions);
 }
 
-const GET = async (req: NextApiRequest, res: NextApiResponse) => {
+const GET = async (req: any, res: any) => {
   return await NextAuth(req, res, authOptions);
 }
 
