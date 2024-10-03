@@ -38,6 +38,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({
 
   return (
     <Box
+      data-testid="cart-summary"
       sx={{
         width: {
           xs: '320px',
@@ -46,7 +47,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({
         ...sx,
       }}
     >
-      <Typography variant="h1" component="h2">
+      <Typography data-testid="summary-heading" variant="h1" component="h2">
         Summary
       </Typography>
       {isMobile && <Divider sx={{ mt: '12px' }} />}
@@ -63,12 +64,16 @@ const CartSummary: React.FC<CartSummaryProps> = ({
         <Typography variant="h4" fontWeight={400}>
           Do you have a promocode?
         </Typography>
-        <IconButton onClick={() => setHasPromocode(!hasPromocode)}>
+        <IconButton
+          data-testid="promocode-toggle"
+          onClick={() => setHasPromocode(!hasPromocode)}
+        >
           <ExpandMoreIcon />
         </IconButton>
       </Stack>
       {hasPromocode && (
         <Input
+          inputProps={{ "data-testid": "promocode-input" }}
           value={promocode}
           onChange={(e) => onPromocodeChange(e.target.value)}
         />
@@ -86,7 +91,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({
           <Typography variant="h2" component="p">
             Subtotal
           </Typography>
-          <Typography variant="h2" component="p">
+          <Typography data-testid="subtotal" variant="h2" component="p">
             ${subtotal}
           </Typography>
         </Stack>
@@ -94,7 +99,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({
           <Typography variant="h2" component="p">
             Shipping
           </Typography>
-          <Typography variant="h2" component="p">
+          <Typography data-testid="shipping" variant="h2" component="p">
             ${shipping}
           </Typography>
         </Stack>
@@ -102,7 +107,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({
           <Typography variant="h2" component="p">
             Tax
           </Typography>
-          <Typography variant="h2" component="p">
+          <Typography data-testid="tax" variant="h2" component="p">
             ${tax}
           </Typography>
         </Stack>
@@ -124,13 +129,19 @@ const CartSummary: React.FC<CartSummaryProps> = ({
           <Typography variant="h2" component="p" sx={{ fontWeight: '600' }}>
             Total
           </Typography>
-          <Typography variant="h2" component="p" sx={{ fontWeight: '600' }}>
+          <Typography
+            data-testid="total"
+            variant="h2"
+            component="p"
+            sx={{ fontWeight: '600' }}
+          >
             ${total}
           </Typography>
         </Stack>
         <Divider />
       </Stack>
       <CustomButton
+        data-testid="checkout-button"
         size="m"
         variant="contained"
         sx={{

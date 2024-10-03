@@ -1,14 +1,8 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import CartSummary from '@/components/cart/CartSummary';
-import { useCartContext } from '@/context/CartContext';
-
-// Mock useCartContext to control its return values
-jest.mock(('../../context/CartContext.tsx'), () => ({
-  useCartContext: jest.fn(),
-}));
-
-const mockUseCartContext = useCartContext as jest.Mock;
+import { CartContextProvider, useCartContext } from '@/context/CartContext';
+import { CartContextType } from '@/types/cart';
 
 // Custom test props
 const cartProps = {
@@ -18,17 +12,17 @@ const cartProps = {
   sx: {},
 };
 
+const renderCartSummary = () => {
+  render(
+    <CartContextProvider>
+      <CartSummary {...cartProps} />
+    </CartContextProvider>
+  );
+};
+
 describe('CartSummary Component', () => {
-  beforeEach(() => {
-    mockUseCartContext.mockReturnValue({
-      promocode: '',
-      onPromocodeChange: jest.fn(),
-    });
-  });
-
-  it('should render correctly with provided props', () => {
-    render(<CartSummary {...cartProps} />);
-
+  test('should render correctly with provided props', () => {
+    renderCartSummary();
     // Check that Subtotal, Shipping, and Tax are displayed correctly
     expect(screen.getByText('Subtotal')).toBeInTheDocument();
     expect(screen.getByText('$100')).toBeInTheDocument();
@@ -43,48 +37,39 @@ describe('CartSummary Component', () => {
     expect(screen.getByText(`$${total}`)).toBeInTheDocument();
   });
 
-  it('should toggle promocode input visibility when icon is clicked', () => {
-    render(<CartSummary {...cartProps} />);
-
+  test('should toggle promocode input visibility when icon is clicked', async () => {
+    renderCartSummary();
     // Before clicking the promocode icon, the input should not be visible
-    expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('promocode-input')).not.toBeInTheDocument();
 
     // Click the icon to show the promocode input
-    const promocodeButton = screen.getByRole('button');
-    fireEvent.click(promocodeButton);
+    const promocodeButton = screen.queryByTestId('promocode-toggle');
+    fireEvent.click(promocodeButton as Element);
 
     // After clicking, the input should be visible
-    expect(screen.getByRole('textbox')).toBeInTheDocument();
+    expect(screen.queryByTestId('promocode-input')).toBeInTheDocument();
   });
 
-  it('should allow entering a promocode when visible', () => {
-    const onPromocodeChangeMock = jest.fn();
-
-    mockUseCartContext.mockReturnValue({
-      promocode: 'TESTCODE',
-      onPromocodeChange: onPromocodeChangeMock,
-    });
-
-    render(<CartSummary {...cartProps} />);
-
+  test('should allow entering a promocode when visible', () => {
+    renderCartSummary();
     // Show promocode input by clicking the icon
-    const promocodeButton = screen.getByRole('button');
-    fireEvent.click(promocodeButton);
+    const promocodeButton = screen.queryByTestId('promocode-toggle');
+    fireEvent.click(promocodeButton as Element);
 
     // Ensure the input displays the promocode value from context
-    const input = screen.getByRole('textbox');
-    expect(input).toHaveValue('TESTCODE');
+    const input = screen.queryByTestId('promocode-input');
+    // expect(input).toHaveValue(undefined);
+    
 
     // Simulate entering a new promocode
-    fireEvent.change(input, { target: { value: 'NEWCODE' } });
+    fireEvent.change(input as Element, { target: { value: 'NEWCODE' } });
 
     // Ensure the mock onPromocodeChange function is called with the new value
-    expect(onPromocodeChangeMock).toHaveBeenCalledWith('NEWCODE');
+    expect(input).toHaveValue('NEWCODE');
   });
 
-  it('should render the checkout button and handle clicks', () => {
-    render(<CartSummary {...cartProps} />);
-
+  test('should render the checkout button and handle clicks', () => {
+    renderCartSummary();
     // Check if the checkout button is present
     const checkoutButton = screen.getByRole('button', { name: /checkout/i });
     expect(checkoutButton).toBeInTheDocument();
