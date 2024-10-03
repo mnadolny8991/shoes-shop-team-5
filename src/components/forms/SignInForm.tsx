@@ -16,6 +16,7 @@ import useValidate from '@/hooks/useValidate';
 import { emailValidator, passwordValidator } from '@/lib/validators';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import ServerErrorBox from '../containers/ServerErrorBox';
 
 export default function SignInForm() {
   const theme = useTheme();
@@ -24,6 +25,8 @@ export default function SignInForm() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  
+  const [serverError, setServerError] = useState('');
 
   const [isFirstInteractionEmail, setIsFirstInteractionEmail] = useState(false);
   const [isFirstInteractionPassword, setIsFirstInteractionPass] =
@@ -42,26 +45,28 @@ export default function SignInForm() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log('click');
-    try {
-      const resp = await signIn('credentials', {
+    setServerError('');
+    const resp = await signIn('credentials', {
+      identifier: email,
+      password,
+      redirect: false,
+    });
+    if (resp?.ok) {
+      signIn('credentials', {
         identifier: email,
         password,
-        redirect: false,
-      });
-      if (resp) {
-        console.log('auth success!');
-        router.push('/');
-      }
-    } catch (e) {
-      console.log('login failed: ' + e);
+        callbackUrl: '/',
+      })
+      return;
     }
+    setServerError(resp?.error || '');
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <Box maxWidth={{ xs: 320, md: 436 }}>
         <Stack spacing={2} mt={{ xs: '25px', md: '48px' }}>
+          <ServerErrorBox message={serverError} submessages={[]}/>
           <TextField
             value={email}
             onBlur={(e) => setIsFirstInteractionEmail(true)}

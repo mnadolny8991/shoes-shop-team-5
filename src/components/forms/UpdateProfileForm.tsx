@@ -100,8 +100,10 @@ export default function UpdateProfileForm() {
       if (response.ok) {
         return response.json();
       } else {
-        const errorResponse: ApiFormError = await response.json();
-        throw errorResponse.error;
+        const errorResponse: ApiError = (await response.json()).error;
+        throw new Error(errorResponse.message, {
+          cause: errorResponse.details,
+        });
       }
     },
     onSuccess: (_data) => {
@@ -110,7 +112,7 @@ export default function UpdateProfileForm() {
       setOpenSnackbar(true);
       queryClient.invalidateQueries({queryKey:['userAvatar']})
     },
-    onError: (error: ApiError | ApiErrorDetail) => {
+    onError: (error: Error) => {
       setSnackbarMessage(`Failed to update profile: ${error.message}`);
       setSnackbarSeverity('error');
       setOpenSnackbar(true);
@@ -180,6 +182,7 @@ export default function UpdateProfileForm() {
           name="email"
           id="email"
           label="Email"
+          disabled={true}
           min={8}
           error={emailError}
         />

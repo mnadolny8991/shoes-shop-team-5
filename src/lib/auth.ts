@@ -1,13 +1,10 @@
 import apiUrl from '@/data/apiUrl';
+import { ApiError } from '@/types/api/apiError';
 import { ApiLoginResponse, ApiUserAttributes } from '@/types/api/apiUser';
 import { AuthOptions, Session } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
 export const authOptions = {
-  session: {
-    strategy: 'jwt',
-  },
-
   pages: {
     signIn: '/auth/sign-in',
   },
@@ -21,29 +18,26 @@ export const authOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.identifier || !credentials?.password) return null;
-        try {
-          const response = await fetch(`${apiUrl}/auth/local`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              identifier: credentials.identifier,
-              password: credentials.password,
-            }),
-          });
-          if (!response.ok) {
-            return null;
-          }
-          const userResponseData: ApiLoginResponse = await response.json();
-          return {
-            ...userResponseData.user,
-            token: userResponseData.jwt,
-            id: userResponseData.user.id.toString(),
-          };
-        } catch (error) {
-          throw new Error('Validation Error');
+        const response = await fetch(`${apiUrl}/auth/local`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            identifier: credentials.identifier,
+            password: credentials.password,
+          }),
+        });
+        if (!response.ok) {
+          const apiError = (await response.json()).error as ApiError; 
+          throw new Error(apiError.message);
         }
+        const userResponseData: ApiLoginResponse = await response.json();
+        return {
+          ...userResponseData.user,
+          token: userResponseData.jwt,
+          id: userResponseData.user.id.toString(),
+        };
       },
     }),
   ],
@@ -70,5 +64,9 @@ export const authOptions = {
       }
       return session;
     },
+  },
+
+  session: {
+    strategy: 'jwt',
   },
 } as AuthOptions;
