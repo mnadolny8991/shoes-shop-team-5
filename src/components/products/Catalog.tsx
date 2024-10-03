@@ -8,7 +8,7 @@ import NothingFound from '@/components/products/NothingFound';
 import { Product } from '@/types/product';
 import {
   fetchProductsByFiltersAndName,
-} from '@/lib/fetchProducts';
+} from '@/lib/api/fetchProducts';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { Box, CircularProgress, Container, Divider, IconButton, Stack } from '@mui/material';

@@ -15,9 +15,10 @@ import { useQuery } from '@tanstack/react-query';
 import allSizes from '@/data/allSizes';
 import { useCartContext } from '@/context/CartContext';
 import { useLastViewed } from '@/context/LastViewedContext';
-import { fetchProductById } from '@/lib/fetchProducts';
+import { fetchProductById } from '@/lib/api/fetchProducts';
 import CustomButton from '@/components/buttons/CustomButton';
 import { Product } from '@/types/product';
+import mapProduct from '@/mappers/productMappers';
 
 type SingleProductPageProps = {
   id: number;
@@ -29,7 +30,7 @@ const SingleProductPage: FC<SingleProductPageProps> = ({ id }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { data, status, error } = useQuery({
     queryKey: ['product', id],
-    queryFn: () => fetchProductById(id),
+    queryFn: async () => mapProduct(await fetchProductById(id)),
   });
   const { onProductAdd } = useCartContext();
   const { onLastViewedAdd } = useLastViewed();

@@ -16,7 +16,7 @@ import UpdateProfileForm from '@/components/forms/UpdateProfileForm';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import apiUrl from '@/data/apiUrl';
 import { useRouter } from 'next/navigation';
-import { getUserData, updateUserData } from '@/lib/fetchUserData';
+import { getUserData, updateUserData } from '@/lib/api/fetchUserData';
 import { useSession } from 'next-auth/react';
 import { mapApiUserResponseToAvatar } from '@/mappers/userMappers';
 import { ApiUserResponse } from '@/types/api/apiTypes';

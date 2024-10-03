@@ -5,15 +5,16 @@ import ProductsGrid from '@/components/products/ProductsGrid';
 import ProductsHeader from '@/components/products/ProductsHeader';
 import { useLastViewed } from '@/context/LastViewedContext';
 import { useQueries } from '@tanstack/react-query';
-import { fetchProductById } from '@/lib/fetchProducts';
+import { fetchProductById } from '@/lib/api/fetchProducts';
 import { Product } from '@/types/product';
+import mapProduct from '@/mappers/productMappers';
 
 export default function DefaultProducts() {
   const { lastViewedIds, onLastViewedRemove } = useLastViewed();
   const queries = lastViewedIds.map((id: number) => {
     return {
       queryKey: ['product', id],
-      queryFn: () => fetchProductById(id),
+      queryFn: async () => mapProduct(await fetchProductById(id)),
       retry: false,
     };
   });

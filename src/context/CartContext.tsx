@@ -1,19 +1,13 @@
 'use client';
 import {
   createContext,
-  SetStateAction,
   useContext,
   useEffect,
   useState,
 } from 'react';
-import cartProducts from '@/mock/cartProducts';
 import { CartContextType } from '@/types/cart';
-import { useQueries } from '@tanstack/react-query';
-import apiUrl from '@/data/apiUrl';
 import { CartProduct } from '@/types/cartProduct';
-import mapProduct from '@/mappers/productMappers';
 import useLocalStorage from '@/hooks/useLocalStorage';
-import { fetchProductById } from '@/lib/fetchProducts';
 
 const CartContext = createContext<CartContextType | null>(null);
 

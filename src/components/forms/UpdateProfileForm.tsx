@@ -17,7 +17,7 @@ import {
   ApiErrorDetail,
   ApiFormError,
 } from '@/types/api/apiFormError';
-import { getUserData } from '@/lib/fetchUserData';
+import { getUserData } from '@/lib/api/fetchUserData';
 import { useSession } from 'next-auth/react';
 
 type UserUpdateFormData = {

@@ -13,9 +13,10 @@ import { useCartContext } from '@/context/CartContext';
 import CartEmpty from '@/components/cart/CartEmpty';
 import { createPortal } from 'react-dom';
 import { useEffect, useState } from 'react';
-import { fetchProductById } from '@/lib/fetchProducts';
+import { fetchProductById } from '@/lib/api/fetchProducts';
 import { useQueries } from '@tanstack/react-query';
 import { Product } from '@/types/product';
+import mapProduct from '@/mappers/productMappers';
 
 type CartProps = {};
 
@@ -34,7 +35,7 @@ const Cart: React.FC<CartProps> = () => {
   const queries = amount.map((product) => {
     return {
       queryKey: ['product', product.id],
-      queryFn: () => fetchProductById(product.id),
+      queryFn: async () => mapProduct(await fetchProductById(product.id)),
       retry: false,
     };
   });
@@ -54,18 +55,6 @@ const Cart: React.FC<CartProps> = () => {
     })
     .map((result) => result.data)
     .filter((product) => product) as Product[];
-
-  // const productsData = useQueries({
-  //   queries: amount.map((p) => {
-  //     return {
-  //       queryKey: ['product', p.id],
-  //       queryFn: () => fetchProductById(p.id),
-  //     };
-  //   }),
-  // });
-  // const products = productsData
-  //   .map((response) => response.data)
-  //   .filter((product) => product ? true : false) as Product[];
 
   const empty = products.length <= 0;
 

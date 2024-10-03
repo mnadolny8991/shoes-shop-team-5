@@ -6,8 +6,9 @@ import AddProductButton from '@/components/products/AddProductButton';
 import ProductsHeader from '@/components/products/ProductsHeader';
 import { useQuery } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
-import { fetchProductsByUserId } from '@/lib/fetchProducts';
+import { fetchProductsByUserId } from '@/lib/api/fetchProducts';
 import { Product } from '@/types/product';
+import { mapProductList } from '@/mappers/productMappers';
 
 type MyProductsProps = {};
 
@@ -17,7 +18,7 @@ export default function MyProducts() {
   const { data: session } = useSession();
   const { data, isLoading } = useQuery({
     queryKey: ['myProducts'],
-    queryFn: () => fetchProductsByUserId(session?.id!, session?.accessToken!),
+    queryFn: async () => mapProductList(await fetchProductsByUserId(session?.id!, session?.accessToken!)),
   });
 
   return (
