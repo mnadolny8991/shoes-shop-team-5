@@ -13,16 +13,9 @@ import Textarea from '@/components/input/Textarea';
 import InputField from '@/components/input/InputField';
 import EditingImagesBox from '@/components/containers/EditingImagesBox';
 import CheckboxesGroup from '@/components/input/CheckboxesGroup';
-import { useQuery } from '@tanstack/react-query';
-import apiUrl from '@/data/apiUrl';
-import {
-  mapAllColors,
-  mapAllSizes,
-  mapBrands,
-  mapGenders,
-} from '@/mappers/productMappers';
 import { useForm } from 'react-hook-form';
 import { ApiPutProduct } from '@/types/api/apiTypes';
+import { useBrands, useColors, useGenders, useSizes } from '@/hooks/categories';
 
 type ProductFormProps = {
   title: string;
@@ -68,37 +61,10 @@ export default function ProductForm({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  const { data: colors, isLoading: isColorsLoading } = useQuery({
-    queryKey: ['colors'],
-    queryFn: () =>
-      fetch(`${apiUrl}/colors?fields=name`)
-        .then((res) => res.json())
-        .then((data) => mapAllColors(data)),
-  });
-
-  const { data: sizes, isLoading: isSizesLoading } = useQuery({
-    queryKey: ['sizes'],
-    queryFn: () =>
-      fetch(`${apiUrl}/sizes?fields=value`)
-        .then((res) => res.json())
-        .then((data) => mapAllSizes(data)),
-  });
-
-  const { data: brands, isLoading: isBrandLoading } = useQuery({
-    queryKey: ['brands'],
-    queryFn: () =>
-      fetch(`${apiUrl}/brands?fields=name`)
-        .then((res) => res.json())
-        .then((data) => mapBrands(data)),
-  });
-
-  const { data: genders, isLoading: isGenderLoading } = useQuery({
-    queryKey: ['genders'],
-    queryFn: () =>
-      fetch(`${apiUrl}/genders?fields=name`)
-        .then((res) => res.json())
-        .then((data) => mapGenders(data)),
-  });
+  const { data: colors, isLoading: isColorsLoading } = useColors();
+  const { data: sizes, isLoading: isSizesLoading } = useSizes();
+  const { data: brands, isLoading: isBrandLoading } = useBrands();
+  const { data: genders, isLoading: isGenderLoading } = useGenders();
 
   const {
     register,

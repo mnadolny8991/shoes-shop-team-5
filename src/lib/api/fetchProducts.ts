@@ -1,11 +1,13 @@
 import apiUrl from '@/data/apiUrl';
-import mapProduct, { mapProductList } from '@/mappers/productMappers';
-import { ApiError } from '@/types/api/apiError';
 import { Filters } from '@/context/SearchContext';
-import { ApiProductListResponse } from '@/types/api/apiTypes';
+import fetchData from '@/lib/api/fetchData';
 
-export const fetchProductsByUserId = async (id: number, token: string, populate?: string) => {
-  const response = await fetch(
+export const fetchProductsByUserId = async (
+  id: number,
+  token: string,
+  populate?: string
+) => {
+  return await fetchData(
     `${apiUrl}/products?filters[teamName]=team-5&filters[userID]=${id}&populate=${populate ?? '*'}`,
     {
       headers: {
@@ -13,34 +15,18 @@ export const fetchProductsByUserId = async (id: number, token: string, populate?
       },
     }
   );
-  if (!response.ok) {
-    throw new Error('Error while fetching products', {
-      cause: (await response.json()).error as ApiError,
-    });
-  }
-  return await response.json();
-  // return mapProductList(await response.json());
 };
 
 export const fetchProductById = async (id: number, populate?: string) => {
-  const response = await fetch(`${apiUrl}/products/${id}?populate=${populate ?? '*'}`);
-  if (!response.ok) throw new Error('There is no product with this id');
-  return await response.json();
-  // return mapProduct(data);
+  return await fetchData(
+    `${apiUrl}/products/${id}?populate=${populate ?? '*'}`
+  );
 };
 
-export const fetchProducts = async (populate?: string) => {
-  const response = await fetch(
+export const fetchProducts = async (populate?: string) =>
+  await fetchData(
     `${apiUrl}/products?filters[teamName]=team-5&populate=${populate ?? '*'}`
   );
-  if (!response.ok) {
-    throw new Error('Error while fetching products', {
-      cause: (await response.json()).error as ApiError,
-    });
-  }
-  return await response.json();
-  // return mapProductList(data);
-};
 
 const getFiltersStringArray = (filters: Filters): string[] => {
   const genderFilters = filters.gender
@@ -73,7 +59,7 @@ export const fetchProductsByFiltersAndName = async (
   name: string,
   page: number,
   pageSize: number,
-  populate?: string,
+  populate?: string
 ) => {
   const filtersStrArray = getFiltersStringArray(filters);
   const nameQuery = name ? `filters[name][$containsi]=${name}` : '';
@@ -82,11 +68,5 @@ export const fetchProductsByFiltersAndName = async (
     `${filtersStrArray.join('&')}&${nameQuery}&` +
     `filters[teamName]=team-5&populate=${populate ?? '*'}`;
   // console.log(queryString);
-  const response = await fetch(queryString);
-  if (!response.ok) {
-    throw new Error('Error while fetching products', {
-      cause: (await response.json()).error as ApiError,
-    });
-  }
-   return await response.json() as ApiProductListResponse;
+  return await fetchData(queryString);
 };
