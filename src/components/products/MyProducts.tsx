@@ -13,7 +13,10 @@ export default function MyProducts() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { data: session } = useSession();
-  const { data, isLoading } = useProductsByUserId(session?.id!, session?.accessToken!);
+  const { data, isLoading } = useProductsByUserId(
+    session?.id!,
+    session?.accessToken!
+  );
 
   return (
     <>

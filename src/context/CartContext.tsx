@@ -1,10 +1,5 @@
 'use client';
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { CartContextType } from '@/types/cart';
 import { CartProduct } from '@/types/cartProduct';
 import useLocalStorage from '@/hooks/useLocalStorage';

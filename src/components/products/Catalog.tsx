@@ -20,15 +20,14 @@ const Catalog = () => {
   const { data, status, error, isPlaceholderData } = useFilteredProducts(
     searchTextDebounced,
     filtersDebounced,
-    page,
+    page
   );
 
-  const products = status === 'success' 
-    ? mapProductList(data)
-    : [];
-  const hasNextPage = status === 'success'
-    ? data.meta.pagination.page < data.meta.pagination.pageCount
-    : false;
+  const products = status === 'success' ? mapProductList(data) : [];
+  const hasNextPage =
+    status === 'success'
+      ? data.meta.pagination.page < data.meta.pagination.pageCount
+      : false;
 
   return (
     <>
@@ -44,27 +43,23 @@ const Catalog = () => {
           <CircularProgress />
         </Box>
       ) : status === 'error' ? (
-        {error}
+        { error }
       ) : products!.length === 0 ? (
         <NothingFound />
       ) : (
         <>
           <ProductsGrid products={products!} isAdmin={false} />
-          <Stack
-            direction="row"
-            justifyContent="center"
-            marginBottom="20px"
-          >
+          <Stack direction="row" justifyContent="center" marginBottom="20px">
             <IconButton
               onClick={() => setPage((old) => Math.max(old - 1, 0))}
               disabled={page === 1}
             >
               <ArrowBackIosIcon />
             </IconButton>
-            <IconButton 
+            <IconButton
               onClick={() => {
                 if (!isPlaceholderData && hasNextPage) {
-                  setPage((old) => old + 1)
+                  setPage((old) => old + 1);
                 }
               }}
               // Disable the Next Page button until we know a next page is available

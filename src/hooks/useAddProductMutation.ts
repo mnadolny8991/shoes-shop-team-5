@@ -3,9 +3,7 @@ import { saveProduct } from '@/lib/api/fetchProducts';
 import { ApiPostProduct, ApiPutProduct } from '@/types/api/apiTypes';
 import { useMutation } from '@tanstack/react-query';
 
-export const useAddProductMutation = (
-  token: string
-) => {
+export const useAddProductMutation = (token: string) => {
   const {
     mutate: addProduct,
     isPending: isPendingProduct,
@@ -37,5 +35,5 @@ export const useAddProductMutation = (
     isPendingProduct,
     isSuccess,
     error,
-  }
+  };
 };

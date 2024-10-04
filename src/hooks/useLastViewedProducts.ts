@@ -1,11 +1,11 @@
 'use client';
-import { useLastViewed } from "@/context/LastViewedContext";
-import { fetchProductById } from "@/lib/api/fetchProducts";
-import mapProduct from "@/mappers/productMappers";
-import { Product } from "@/types/product";
-import { useQueries } from "@tanstack/react-query";
+import { useLastViewed } from '@/context/LastViewedContext';
+import { fetchProductById } from '@/lib/api/fetchProducts';
+import mapProduct from '@/mappers/productMappers';
+import { Product } from '@/types/product';
+import { useQueries } from '@tanstack/react-query';
 
-const useLastViewedProducts = () => { 
+const useLastViewedProducts = () => {
   const { lastViewedIds, onLastViewedRemove } = useLastViewed();
   const queries = lastViewedIds.map((id: number) => {
     return {
@@ -28,8 +28,8 @@ const useLastViewedProducts = () => {
     })
     .map((result) => result.data)
     .filter((product) => product) as Product[];
-  
+
   return products;
-}
+};
 
 export default useLastViewedProducts;

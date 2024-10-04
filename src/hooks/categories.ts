@@ -1,6 +1,16 @@
 'use client';
-import { fetchBrands, fetchColors, fetchGenders, fetchSizes } from '@/lib/api/fetchCategories';
-import { mapAllColors, mapAllSizes, mapBrands, mapGenders } from '@/mappers/productMappers';
+import {
+  fetchBrands,
+  fetchColors,
+  fetchGenders,
+  fetchSizes,
+} from '@/lib/api/fetchCategories';
+import {
+  mapAllColors,
+  mapAllSizes,
+  mapBrands,
+  mapGenders,
+} from '@/mappers/productMappers';
 import { useQuery } from '@tanstack/react-query';
 
 export const useColors = () => {
@@ -30,5 +40,3 @@ export const useSizes = () => {
     queryFn: async () => mapAllSizes(await fetchSizes()),
   });
 };
-
-

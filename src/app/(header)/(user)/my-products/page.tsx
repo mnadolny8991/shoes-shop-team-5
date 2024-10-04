@@ -12,7 +12,10 @@ const Page = async () => {
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
     queryKey: ['myProducts'],
-    queryFn: async () => mapProductList(await fetchProductsByUserId(session?.id!, session?.accessToken!)),
+    queryFn: async () =>
+      mapProductList(
+        await fetchProductsByUserId(session?.id!, session?.accessToken!)
+      ),
   });
 
   return (

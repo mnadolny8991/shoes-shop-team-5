@@ -37,9 +37,9 @@ export default function AddProduct() {
   };
   return (
     <>
-      <ServerErrorBox 
-        message={error?.message || ''} 
-        submessages={[]} 
+      <ServerErrorBox
+        message={error?.message || ''}
+        submessages={[]}
         sx={{ width: 'fit-content', my: '1rem' }}
       />
       <ProductForm

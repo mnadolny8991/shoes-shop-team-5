@@ -1,9 +1,9 @@
 'use client';
-import { useCartContext } from "@/context/CartContext";
-import { fetchProductById } from "@/lib/api/fetchProducts";
-import mapProduct from "@/mappers/productMappers";
-import { Product } from "@/types/product";
-import { useQueries } from "@tanstack/react-query";
+import { useCartContext } from '@/context/CartContext';
+import { fetchProductById } from '@/lib/api/fetchProducts';
+import mapProduct from '@/mappers/productMappers';
+import { Product } from '@/types/product';
+import { useQueries } from '@tanstack/react-query';
 
 const useCartProducts = () => {
   const { amount, onDelete } = useCartContext();
@@ -32,6 +32,6 @@ const useCartProducts = () => {
     .filter((product) => product) as Product[];
 
   return products;
-}
+};
 
 export default useCartProducts;

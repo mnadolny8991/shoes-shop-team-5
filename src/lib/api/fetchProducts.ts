@@ -72,7 +72,10 @@ export const fetchProductsByFiltersAndName = async (
   return await fetchData(queryString);
 };
 
-export const saveProduct = async (productProps: ApiPostProduct, token: string) => {
+export const saveProduct = async (
+  productProps: ApiPostProduct,
+  token: string
+) => {
   return await fetchData(`${apiUrl}/products`, {
     method: 'POST',
     headers: {
@@ -81,4 +84,4 @@ export const saveProduct = async (productProps: ApiPostProduct, token: string) =
     },
     body: JSON.stringify({ data: productProps }),
   });
-}
+};

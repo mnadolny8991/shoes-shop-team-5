@@ -10,11 +10,11 @@ type UserInfo = {
 };
 
 export const getUserData = async (id: number, token: string) => {
-  return await fetchData(`${apiUrl}/users/${id}?populate=*`, {
+  return (await fetchData(`${apiUrl}/users/${id}?populate=*`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-  }) as UserInfo; 
+  })) as UserInfo;
 };
 
 export const updateUserData = async (

@@ -25,7 +25,7 @@ export default function SignInForm() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  
+
   const [serverError, setServerError] = useState('');
 
   const [isFirstInteractionEmail, setIsFirstInteractionEmail] = useState(false);
@@ -56,7 +56,7 @@ export default function SignInForm() {
         identifier: email,
         password,
         callbackUrl: '/',
-      })
+      });
       return;
     }
     setServerError(resp?.error || '');
@@ -66,7 +66,7 @@ export default function SignInForm() {
     <form onSubmit={handleSubmit}>
       <Box maxWidth={{ xs: 320, md: 436 }}>
         <Stack spacing={2} mt={{ xs: '25px', md: '48px' }}>
-          <ServerErrorBox message={serverError} submessages={[]}/>
+          <ServerErrorBox message={serverError} submessages={[]} />
           <TextField
             value={email}
             onBlur={(e) => setIsFirstInteractionEmail(true)}

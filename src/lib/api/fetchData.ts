@@ -1,4 +1,4 @@
-import { ApiError } from "@/types/api/apiError";
+import { ApiError } from '@/types/api/apiError';
 
 const fetchData = async (url: string, options?: RequestInit) => {
   const response = await fetch(url, options);
@@ -9,6 +9,6 @@ const fetchData = async (url: string, options?: RequestInit) => {
     });
   }
   return await response.json();
-}
+};
 
 export default fetchData;
