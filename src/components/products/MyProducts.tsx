@@ -4,11 +4,8 @@ import ProductsGrid from '@/components/products/ProductsGrid';
 import MyProductsEmptyState from '@/components/products/MyProductsEmptyState';
 import AddProductButton from '@/components/products/AddProductButton';
 import ProductsHeader from '@/components/products/ProductsHeader';
-import { useQuery } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
-import { fetchProductsByUserId } from '@/lib/api/fetchProducts';
-import { Product } from '@/types/product';
-import { mapProductList } from '@/mappers/productMappers';
+import { useProductsById } from '@/hooks/useProductsById';
 
 type MyProductsProps = {};
 
@@ -16,10 +13,7 @@ export default function MyProducts() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { data: session } = useSession();
-  const { data, isLoading } = useQuery({
-    queryKey: ['myProducts'],
-    queryFn: async () => mapProductList(await fetchProductsByUserId(session?.id!, session?.accessToken!)),
-  });
+  const { data, isLoading } = useProductsById(session?.id!, session?.accessToken!);
 
   return (
     <>
