@@ -24,12 +24,16 @@ export const useAddProductMutation = (token: string) => {
       return uploadFile(formData);
     },
     onSuccess: (data, { productProps }) => {
-      productProps.images = data.map(({ id }: { id: number }) => id);
+      const addedImages = data.map(({ id }: { id: number }) => id);
+      productProps.images = productProps.images
+        ? productProps.images.concat(addedImages)
+        : addedImages;
       addProduct(productProps as ApiPostProduct);
     },
   });
 
   return {
+    addProduct,
     uploadImagesThenAddProduct,
     isPending,
     isPendingProduct,

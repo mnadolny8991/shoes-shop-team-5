@@ -1,5 +1,5 @@
 import ProductForm from '@/components/forms/ProductForm';
-import apiUrl from '@/data/apiUrl';
+import { useAddProductMutation } from '@/hooks/useAddProductMutation';
 import { ApiPostProduct, ApiPutProduct } from '@/types/api/apiTypes';
 import { Product } from '@/types/product';
 import {
@@ -9,9 +9,9 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import { useMutation } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
+import ServerErrorBox from '@/components/containers/ServerErrorBox';
 
 type AddProductProps = {
   title: string;
@@ -30,37 +30,13 @@ export default function AddProduct({
   const { data: session } = useSession();
 
   const {
-    mutate: addProduct,
-    isPending: isPendingProduct,
+    addProduct,
+    uploadImagesThenAddProduct,
+    isPending,
+    isPendingProduct,
     isSuccess,
-  } = useMutation({
-    mutationFn: (productProps: ApiPostProduct) =>
-      fetch(`${apiUrl}/products`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${session?.accessToken}`,
-        },
-        body: JSON.stringify({ data: productProps }),
-      }),
-    onError: (error) => console.error(error),
-  });
-
-  const { mutate: uploadImagesThenAddProduct, isPending } = useMutation({
-    mutationFn: ({ files }: { productProps: ApiPutProduct; files: File[] }) => {
-      const formData = new FormData();
-      files.forEach((file) => formData.append('files', file));
-      return fetch(`${apiUrl}/upload`, { method: 'POST', body: formData });
-    },
-    onSuccess: (res, { productProps }) =>
-      res.json().then((data: { id: number }[]) => {
-        productProps.images = productProps.images
-          ? productProps.images.concat(data.map(({ id }) => id))
-          : data.map(({ id }) => id);
-        addProduct(productProps as ApiPostProduct);
-      }),
-    onError: (error) => console.error(error),
-  });
+    error,
+  } = useAddProductMutation(session?.accessToken!);
 
   const submitForm = (product: {
     productProps: ApiPutProduct;
@@ -69,10 +45,17 @@ export default function AddProduct({
     product.productProps.teamName = 'team-5';
     setProductName(product.productProps.name || '');
     product.productProps.userID = session?.id;
-    uploadImagesThenAddProduct(product);
+    product.files.length
+      ? uploadImagesThenAddProduct(product)
+      : addProduct(product.productProps as ApiPostProduct);
   };
   return (
     <>
+      <ServerErrorBox
+        message={error?.message || ''}
+        submessages={[]}
+        sx={{ width: 'fit-content', my: '1rem' }}
+      />
       <ProductForm
         title={title}
         description={description}
