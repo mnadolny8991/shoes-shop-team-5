@@ -29,7 +29,7 @@ export const authOptions = {
           }),
         });
         if (!response.ok) {
-          const apiError = (await response.json()).error as ApiError; 
+          const apiError = (await response.json()).error as ApiError;
           throw new Error(apiError.message);
         }
         const userResponseData: ApiLoginResponse = await response.json();

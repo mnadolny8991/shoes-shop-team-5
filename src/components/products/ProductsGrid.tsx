@@ -10,10 +10,7 @@ interface ProductsGridProps {
   isAdmin?: boolean;
 }
 
-const ProductsGrid = memo(({
-  products,
-  isAdmin = true,
-}: ProductsGridProps) => {
+const ProductsGrid = memo(({ products, isAdmin = true }: ProductsGridProps) => {
   return (
     <Grid2 container spacing={{ xs: 2, md: 8 }} mx={{ xs: 1, md: -4 }}>
       {products.map((product) => (

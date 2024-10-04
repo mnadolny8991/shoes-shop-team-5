@@ -1,5 +1,4 @@
 'use client';
-
 import WelcomePage from '@/components/containers/WelcomePage';
 import UserPagesList from '@/components/nav/UserPagesList';
 import useAvatarQuery from '@/hooks/useAvatarQuery';
@@ -22,8 +21,7 @@ export default function UserLayout({
 }>) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const { data: session, status } = useSession();
-
+  const { status } = useSession();
   const { data } = useAvatarQuery();
 
   return (

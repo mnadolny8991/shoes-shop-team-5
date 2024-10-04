@@ -1,8 +1,6 @@
 'use client';
 import ProductForm from '@/components/forms/ProductForm';
-import apiUrl from '@/data/apiUrl';
-import token from '@/data/token';
-import { ApiPostProduct, ApiPutProduct } from '@/types/api/apiTypes';
+import { ApiPutProduct } from '@/types/api/apiTypes';
 import {
   Alert,
   Backdrop,
@@ -10,46 +8,22 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import { useMutation } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import ServerErrorBox from '@/components/containers/ServerErrorBox';
+import { useAddProductMutation } from '@/hooks/useAddProductMutation';
 
 export default function AddProduct() {
   const [prooductName, setProductName] = useState('');
   const { data: session } = useSession();
-
   const {
-    mutate: addProduct,
-    isPending: isPendingProduct,
+    uploadImagesThenAddProduct,
+    isPending,
+    isPendingProduct,
     isSuccess,
-  } = useMutation({
-    mutationFn: (productProps: ApiPostProduct) =>
-      fetch(`${apiUrl}/products`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${session?.accessToken}`,
-        },
-        body: JSON.stringify({ data: productProps }),
-      }),
-    onError: (error) => console.error(error),
-  });
-
-  const { mutate: uploadImagesThenAddProduct, isPending } = useMutation({
-    mutationFn: ({ files }: { productProps: ApiPutProduct; files: File[] }) => {
-      const formData = new FormData();
-      files.forEach((file) => formData.append('files', file));
-      return fetch(`${apiUrl}/upload`, { method: 'POST', body: formData });
-    },
-    onSuccess: (res, { productProps }) =>
-      res.json().then((data: { id: number }[]) => {
-        (productProps.images = data.map(({ id }) => id)),
-          addProduct(productProps as ApiPostProduct);
-      }),
-    onError: (error) => console.error(error),
-  });
-
+    error,
+  } = useAddProductMutation(session?.accessToken!);
   const router = useRouter();
 
   const submitForm = (product: {
@@ -63,6 +37,11 @@ export default function AddProduct() {
   };
   return (
     <>
+      <ServerErrorBox
+        message={error?.message || ''}
+        submessages={[]}
+        sx={{ width: 'fit-content', my: '1rem' }}
+      />
       <ProductForm
         title="Add a product"
         description="Provide detailed information about your product, including name, price, color, gender, brand, description, sizes and images, to ensure a seamless experience for customers. Make sure all details are accurate and up-to-date."

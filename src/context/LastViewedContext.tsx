@@ -1,12 +1,5 @@
 'use client';
-import apiUrl from '@/data/apiUrl';
 import useLocalStorage from '@/hooks/useLocalStorage';
-import { fetchProductById } from '@/lib/fetchProducts';
-import mapProduct from '@/mappers/productMappers';
-import { ApiProductResponse } from '@/types/api/apiTypes';
-import { Product } from '@/types/product';
-import { LastPageTwoTone } from '@mui/icons-material';
-import { useQueries } from '@tanstack/react-query';
 import { createContext, useContext, ReactNode, FC, useEffect } from 'react';
 
 type LastViewedContextType = {

@@ -8,40 +8,39 @@ type FilterDrawerProps = {
   onDrawerClose: () => void;
 };
 
-const FilterDrawer = memo(({
-  showFilterDrawer,
-  onDrawerClose,
-}: FilterDrawerProps) => {
-  return (
-    <Drawer
-      anchor="right"
-      open={showFilterDrawer}
-      onClose={onDrawerClose}
-      sx={{
-        '& .MuiDrawer-paper': {
-          width: '320px',
-          padding: '16px',
-        },
-      }}
-    >
-      <IconButton
-        onClick={onDrawerClose}
+const FilterDrawer = memo(
+  ({ showFilterDrawer, onDrawerClose }: FilterDrawerProps) => {
+    return (
+      <Drawer
+        anchor="right"
+        open={showFilterDrawer}
+        onClose={onDrawerClose}
         sx={{
-          position: 'absolute',
-          right: 24,
-          top: 24,
-          color: '#494949',
+          '& .MuiDrawer-paper': {
+            width: '320px',
+            padding: '16px',
+          },
         }}
       >
-        <CloseIcon sx={{ width: '20px', height: '20px' }} />
-      </IconButton>
-      <Stack sx={{ paddingTop: '56px' }}></Stack>
+        <IconButton
+          onClick={onDrawerClose}
+          sx={{
+            position: 'absolute',
+            right: 24,
+            top: 24,
+            color: '#494949',
+          }}
+        >
+          <CloseIcon sx={{ width: '20px', height: '20px' }} />
+        </IconButton>
+        <Stack sx={{ paddingTop: '56px' }}></Stack>
 
-      {/* Filters Component */}
-      <Filters />
-    </Drawer>
-  );
-});
+        {/* Filters Component */}
+        <Filters />
+      </Drawer>
+    );
+  }
+);
 
 FilterDrawer.displayName = 'FilterDrawer';
 

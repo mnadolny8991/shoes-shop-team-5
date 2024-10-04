@@ -99,7 +99,10 @@ const ForgotPassword: React.FC = () => {
                 Don&apos;t worry, we&apos;ll send you reset instructions.
               </Typography>
 
-              <ServerErrorBox message={mutation?.error?.message ?? ''} submessages={[]} />
+              <ServerErrorBox
+                message={mutation?.error?.message ?? ''}
+                submessages={[]}
+              />
               <TextField
                 value={email}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>

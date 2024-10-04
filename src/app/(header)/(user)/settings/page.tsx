@@ -16,122 +16,64 @@ import UpdateProfileForm from '@/components/forms/UpdateProfileForm';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import apiUrl from '@/data/apiUrl';
 import { useRouter } from 'next/navigation';
-import { getUserData, updateUserData } from '@/lib/fetchUserData';
+import { getUserData, updateUserData } from '@/lib/api/fetchUserData';
 import { useSession } from 'next-auth/react';
 import { mapApiUserResponseToAvatar } from '@/mappers/userMappers';
 import { ApiUserResponse } from '@/types/api/apiTypes';
 import { UserAvatar } from '@/types/user';
 import { ApiError } from '@/types/api/apiError';
+import { uploadFile } from '@/lib/api/fetchFiles';
+import useUpdateAvatarMutation from '@/hooks/useUpdateAvatarMutation';
+import useUserData from '@/hooks/useUserData';
 
 export default function UserSettings() {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const router = useRouter();
   const { data: session } = useSession();
-  const queryClient = useQueryClient();
-
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-
+  const [_selectedFile, setSelectedFile] = useState<File | null>(null);
   const [avatarUrl, setAvatarUrl] = useState('/default-avatar.png');
-
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error'>(
     'success'
   );
-
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-
-  const MAX_FILE_SIZE = 2 * 1024 * 1024;
-
-  const deleteUserAvatarMutation = useMutation({
-    mutationFn: async () => {
-      const response = await updateUserData(session?.id!, session?.accessToken!, {
-        avatar: null,
-      });
-      if (!response.ok) {
-        const errorResponse = (await response.json()).error as ApiError;
-        throw new Error(errorResponse.message, {
-          cause: errorResponse.details,
-        })
-      }
-      return response;
-    },
-    onSuccess: (res) => {
-      res
-        .json()
-        .then((apiUserResponse: ApiUserResponse) =>
-          queryClient.setQueryData(
-            ['userAvatar'],
-            mapApiUserResponseToAvatar(apiUserResponse)
-          )
-        );
-
-      setAvatarUrl('/default-avatar.png');
-      setSnackbarMessage('Avatar deleted successfully!');
-      setSnackbarSeverity('success');
-      setOpenSnackbar(true);
-    },
-    onError: (error: Error) => {
-      setSnackbarMessage(error.message);
-      setSnackbarSeverity('error');
-      setOpenSnackbar(true);
-    },
-  });
-
-  const uploadAvatarMutation = useMutation({
-    mutationFn: async (formData: FormData) => {
-      const response = await fetch(`${apiUrl}/upload`, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${session?.accessToken}`,
-        },
-        body: formData,
-      });
-      if (!response.ok) {
-        const errorResponse = (await response.json()).error as ApiError;
-        throw new Error(errorResponse.message, {
-          cause: errorResponse.details,
-        });
-      }
-      const imageData = await response.json();
-      const imageId = imageData[0]?.id;
-      const updateResponse = await updateUserData(
-        session?.id!,
-        session?.accessToken!,
-        {
-          avatar: imageId,
-        }
-      );
-      if (!updateResponse.ok) {
-        const errorResponse = (await updateResponse.json()).error as ApiError;
-        throw new Error(errorResponse.message, {
-          cause: errorResponse.details,
-        });
-      }
-      return imageData[0]?.url; // Return the avatar URL
-    },
-
-    onSuccess: (newAvatarUrl) => {
-      queryClient.setQueryData(['userAvatar'], (old: UserAvatar) => ({
-        ...old,
-        src: newAvatarUrl,
-      }));
-      setAvatarUrl(newAvatarUrl);
-      setSnackbarMessage('Avatar uploaded successfully!');
-      setSnackbarSeverity('success');
-      setOpenSnackbar(true);
-    },
-    onError: (error: Error) => {
-      setSnackbarMessage(error.message);
-      setSnackbarSeverity('error');
-      setOpenSnackbar(true);
-    },
-  });
-
-  const { data, status } = useQuery({
-    queryKey: ['user', session?.id],
-    queryFn: () => getUserData(session?.id!, session?.accessToken!),
-  });
+  const { data, status } = useUserData(session?.id!, session?.accessToken!);
+  const { deleteAvatarMutation, updateAvatarMutation } =
+    useUpdateAvatarMutation(session?.id!, session?.accessToken!);
+  useEffect(() => {
+    switch (deleteAvatarMutation.status) {
+      case 'success':
+        setAvatarUrl('/default-avatar.png');
+        setSnackbarMessage('Avatar deleted successfully!');
+        setSnackbarSeverity('success');
+        setOpenSnackbar(true);
+        break;
+      case 'error':
+        setSnackbarMessage(deleteAvatarMutation.error.message);
+        setSnackbarSeverity('error');
+        setOpenSnackbar(true);
+        break;
+    }
+  }, [deleteAvatarMutation.status, deleteAvatarMutation.error]);
+  useEffect(() => {
+    switch (updateAvatarMutation.status) {
+      case 'success':
+        setAvatarUrl(updateAvatarMutation.data);
+        setSnackbarMessage('Avatar uploaded successfully!');
+        setSnackbarSeverity('success');
+        setOpenSnackbar(true);
+        break;
+      case 'error':
+        setSnackbarMessage(updateAvatarMutation.error.message);
+        setSnackbarSeverity('error');
+        setOpenSnackbar(true);
+        break;
+    }
+  }, [
+    updateAvatarMutation.status,
+    updateAvatarMutation.error,
+    updateAvatarMutation.data,
+  ]);
 
   useEffect(() => {
     if (status === 'success') {
@@ -150,14 +92,17 @@ export default function UserSettings() {
   };
 
   const handleDelete = () => {
-    deleteUserAvatarMutation.mutate();
+    deleteAvatarMutation.mutate();
   };
 
   const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
+    const MAX_FILE_SIZE = 2 * 1024 * 1024;
     if (file) {
       if (file.size > MAX_FILE_SIZE) {
-        console.error('File size exceeds 2MB limit');
+        setSnackbarMessage('File exceeds 2MB limit');
+        setSnackbarSeverity('error');
+        setOpenSnackbar(true);
         return;
       }
       setSelectedFile(file);
@@ -166,7 +111,7 @@ export default function UserSettings() {
       formData.append('files', file);
 
       // Trigger the mutation to upload the avatar
-      uploadAvatarMutation.mutate(formData);
+      updateAvatarMutation.mutate(formData);
     }
   };
 

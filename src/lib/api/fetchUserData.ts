@@ -1,4 +1,5 @@
 import apiUrl from '@/data/apiUrl';
+import fetchData from '@/lib/api/fetchData';
 
 type UserInfo = {
   firstName?: string | null;
@@ -9,15 +10,11 @@ type UserInfo = {
 };
 
 export const getUserData = async (id: number, token: string) => {
-  const response = await fetch(`${apiUrl}/users/${id}?populate=*`, {
+  return (await fetchData(`${apiUrl}/users/${id}?populate=*`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-  });
-  if (!response.ok)
-    throw new Error(`Couldn't fetch data for user with id = ${id}`);
-  const data = await response.json();
-  return data as UserInfo;
+  })) as UserInfo;
 };
 
 export const updateUserData = async (
@@ -25,7 +22,7 @@ export const updateUserData = async (
   token: string,
   data: object
 ) => {
-  return fetch(`${apiUrl}/users/${id}`, {
+  return fetchData(`${apiUrl}/users/${id}`, {
     method: 'PUT',
     headers: {
       Authorization: `Bearer ${token}`,

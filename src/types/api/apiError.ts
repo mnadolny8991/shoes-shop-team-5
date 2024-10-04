@@ -1,8 +1,8 @@
 export type ApiError = {
-  status: number,
-  name: string,
-  message: string,
+  status: number;
+  name: string;
+  message: string;
   details: {
-    [key: string]: any,
-  },
-}
+    [key: string]: any;
+  };
+};
