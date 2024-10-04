@@ -1,6 +1,7 @@
 import apiUrl from '@/data/apiUrl';
 import { Filters } from '@/context/SearchContext';
 import fetchData from '@/lib/api/fetchData';
+import { ApiPostProduct } from '@/types/api/apiTypes';
 
 export const fetchProductsByUserId = async (
   id: number,
@@ -70,3 +71,14 @@ export const fetchProductsByFiltersAndName = async (
   // console.log(queryString);
   return await fetchData(queryString);
 };
+
+export const saveProduct = async (productProps: ApiPostProduct, token: string) => {
+  return await fetchData(`${apiUrl}/products`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ data: productProps }),
+  });
+}

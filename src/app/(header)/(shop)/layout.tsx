@@ -26,8 +26,6 @@ export default function CatalogLayout({
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { searchText } = useSearch();
   const { status } = useSession();
-
-  // visibility of filters at desktop and mobile drawer
   const [showFilters, setShowFilters] = useState(isMobile);
 
   const toggleFilters = () => {

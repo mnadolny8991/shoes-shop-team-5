@@ -4,9 +4,10 @@ import { ReactNode, FC } from 'react';
 type ServerErrorBoxProps = {
   message: string;
   submessages: string[];
+  sx?: object;
 };
 
-const ServerErrorBox: FC<ServerErrorBoxProps> = ({ message, submessages }) => {
+const ServerErrorBox: FC<ServerErrorBoxProps> = ({ message, submessages, sx }) => {
   return (
     <>
     {message &&
@@ -16,6 +17,7 @@ const ServerErrorBox: FC<ServerErrorBoxProps> = ({ message, submessages }) => {
           color: 'white',
           p: { xs: '10px', md: '15px' },
           borderRadius: '8px',
+          ...sx,
         }}
       >
         <Typography variant="body2">{message}</Typography>
