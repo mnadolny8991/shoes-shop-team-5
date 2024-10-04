@@ -5,19 +5,16 @@ import ShoeImageSlider from '@/components/sliders/ShoeImageSlider';
 import {
   Box,
   Chip,
-  Divider,
   Stack,
   Typography,
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
 import allSizes from '@/data/allSizes';
 import { useCartContext } from '@/context/CartContext';
 import { useLastViewed } from '@/context/LastViewedContext';
-import { fetchProductById } from '@/lib/fetchProducts';
 import CustomButton from '@/components/buttons/CustomButton';
-import { Product } from '@/types/product';
+import useProduct from '@/hooks/useProduct';
 
 type SingleProductPageProps = {
   id: number;
@@ -27,10 +24,7 @@ const SingleProductPage: FC<SingleProductPageProps> = ({ id }) => {
   const [sizeId, setSizeId] = useState<null | number>(null);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const { data, status, error } = useQuery({
-    queryKey: ['product', id],
-    queryFn: () => fetchProductById(id),
-  });
+  const { data, status, error } = useProduct(id);
   const { onProductAdd } = useCartContext();
   const { onLastViewedAdd } = useLastViewed();
 

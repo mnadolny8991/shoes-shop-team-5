@@ -1,5 +1,4 @@
 'use client';
-
 import { useState } from 'react';
 import Filters from '@/components/filters/Filters';
 import {
@@ -12,11 +11,9 @@ import {
   useTheme,
   CircularProgress,
 } from '@mui/material';
-
 import FilterAltOffOutlinedIcon from '@mui/icons-material/FilterAltOffOutlined';
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
 import FilterDrawer from '@/components/nav/FilterDrawer';
-
 import { useSearch } from '@/context/SearchContext';
 import { useSession } from 'next-auth/react';
 
@@ -29,8 +26,6 @@ export default function CatalogLayout({
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { searchText } = useSearch();
   const { status } = useSession();
-
-  // visibility of filters at desktop and mobile drawer
   const [showFilters, setShowFilters] = useState(isMobile);
 
   const toggleFilters = () => {

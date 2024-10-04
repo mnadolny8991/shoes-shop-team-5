@@ -1,6 +1,7 @@
 'use client';
 import AddProduct from '@/components/products/AddProduct';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 export default function AddProductPage() {
   const router = useRouter();

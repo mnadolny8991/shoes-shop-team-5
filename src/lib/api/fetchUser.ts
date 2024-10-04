@@ -1,11 +1,13 @@
 import apiUrl from '@/data/apiUrl';
+import { ApiError } from '@/types/api/apiError';
+import fetchData from '@/lib/api/fetchData';
 
 export const updateUserData = async (
   id: number,
   token: string,
   data: { [key: string]: any }
 ) => {
-  const response = await fetch(`${apiUrl}/users/${id}`, {
+  return await fetchData(`${apiUrl}/users/${id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -13,6 +15,4 @@ export const updateUserData = async (
     },
     body: JSON.stringify(data),
   });
-  if (!response.ok) throw new Error(`Couldn't update user with id=${id}`);
-  return response;
 };
