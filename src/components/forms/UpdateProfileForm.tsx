@@ -67,7 +67,10 @@ export default function UpdateProfileForm() {
     }
   }, [data, status]);
 
-  const mutation = useUpdateUserDataMutation(session?.id!, session?.accessToken!);
+  const mutation = useUpdateUserDataMutation(
+    session?.id!,
+    session?.accessToken!
+  );
   useEffect(() => {
     switch (mutation.status) {
       case 'success':
@@ -76,7 +79,9 @@ export default function UpdateProfileForm() {
         setOpenSnackbar(true);
         break;
       case 'error':
-        setSnackbarMessage(`Failed to update profile: ${mutation.error.message}`);
+        setSnackbarMessage(
+          `Failed to update profile: ${mutation.error.message}`
+        );
         setSnackbarSeverity('error');
         setOpenSnackbar(true);
         break;
