@@ -23,7 +23,6 @@ export default function UserLayout({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { data: session, status } = useSession();
-
   const { data } = useAvatarQuery();
 
   return (

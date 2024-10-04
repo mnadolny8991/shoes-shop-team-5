@@ -5,7 +5,7 @@ import MyProductsEmptyState from '@/components/products/MyProductsEmptyState';
 import AddProductButton from '@/components/products/AddProductButton';
 import ProductsHeader from '@/components/products/ProductsHeader';
 import { useSession } from 'next-auth/react';
-import { useProductsById } from '@/hooks/useProductsById';
+import { useProductsByUserId } from '@/hooks/useProductsByUserId';
 
 type MyProductsProps = {};
 
@@ -13,7 +13,7 @@ export default function MyProducts() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { data: session } = useSession();
-  const { data, isLoading } = useProductsById(session?.id!, session?.accessToken!);
+  const { data, isLoading } = useProductsByUserId(session?.id!, session?.accessToken!);
 
   return (
     <>

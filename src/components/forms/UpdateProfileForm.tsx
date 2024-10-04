@@ -1,5 +1,4 @@
 'use client';
-
 import { MouseEventHandler, useEffect, useState } from 'react';
 import { Box, useTheme, useMediaQuery, Snackbar, Alert } from '@mui/material';
 import TextField from '@/components/input/TextField';
@@ -10,28 +9,14 @@ import {
   nameValidator,
   phoneValidator,
 } from '@/lib/validators';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import apiUrl from '@/data/apiUrl';
-import {
-  ApiError,
-  ApiErrorDetail,
-  ApiFormError,
-} from '@/types/api/apiFormError';
-import { getUserData } from '@/lib/api/fetchUserData';
 import { useSession } from 'next-auth/react';
-
-type UserUpdateFormData = {
-  email: string;
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
-};
+import useUserData from '@/hooks/useUserData';
+import useUpdateUserDataMutation from '@/hooks/useUpdateUserDataMutation';
 
 export default function UpdateProfileForm() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { data: session } = useSession();
-  const queryClient = useQueryClient();
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -71,11 +56,7 @@ export default function UpdateProfileForm() {
   const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error'>(
     'success'
   );
-
-  const { data, status } = useQuery({
-    queryKey: ['user', session?.id!],
-    queryFn: () => getUserData(session?.id!, session?.accessToken!),
-  });
+  const { data, status } = useUserData(session?.id!, session?.accessToken!);
 
   useEffect(() => {
     if (status === 'success') {
@@ -86,38 +67,21 @@ export default function UpdateProfileForm() {
     }
   }, [data, status]);
 
-  const mutation = useMutation({
-    mutationFn: async (user: UserUpdateFormData) => {
-      const response = await fetch(`${apiUrl}/users/${session?.id!}`, {
-        method: 'PUT',
-        headers: {
-          Authorization: `Bearer ${session?.accessToken}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(user),
-      });
-
-      if (response.ok) {
-        return response.json();
-      } else {
-        const errorResponse: ApiError = (await response.json()).error;
-        throw new Error(errorResponse.message, {
-          cause: errorResponse.details,
-        });
-      }
-    },
-    onSuccess: (_data) => {
-      setSnackbarMessage('Profile updated successfully!');
-      setSnackbarSeverity('success');
-      setOpenSnackbar(true);
-      queryClient.invalidateQueries({queryKey:['userAvatar']})
-    },
-    onError: (error: Error) => {
-      setSnackbarMessage(`Failed to update profile: ${error.message}`);
-      setSnackbarSeverity('error');
-      setOpenSnackbar(true);
-    },
-  });
+  const mutation = useUpdateUserDataMutation(session?.id!, session?.accessToken!);
+  useEffect(() => {
+    switch (mutation.status) {
+      case 'success':
+        setSnackbarMessage('Profile updated successfully!');
+        setSnackbarSeverity('success');
+        setOpenSnackbar(true);
+        break;
+      case 'error':
+        setSnackbarMessage(`Failed to update profile: ${mutation.error.message}`);
+        setSnackbarSeverity('error');
+        setOpenSnackbar(true);
+        break;
+    }
+  }, [mutation.status, mutation.error]);
 
   const handleCloseSnackbar = (
     event?: React.SyntheticEvent | Event,
