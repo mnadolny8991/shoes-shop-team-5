@@ -42,6 +42,7 @@ export default function EditProductModal({
         description=""
         onSubmit={onSave}
         product={product}
+        submitDirty
       />
     </Dialog>
   );

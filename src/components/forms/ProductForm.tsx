@@ -35,6 +35,7 @@ type ProductFormProps = {
     files: File[];
   }) => void;
   product?: Product;
+  submitDirty?: boolean;
 };
 
 const SaveButton = (
@@ -64,6 +65,7 @@ export default function ProductForm({
   description,
   product,
   onSubmit,
+  submitDirty = false,
 }: ProductFormProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -157,13 +159,23 @@ export default function ProductForm({
   };
 
   const onSubmitForm = (data: ProductFormData) => {
-    const changedData: ApiPutProduct = Object.fromEntries(
-      Object.keys(dirtyFields).map((key) => [
-        key,
-        data[key as keyof ProductFormData],
-      ])
+    // const changedData: ApiPutProduct = Object.fromEntries(
+    //   Object.keys(dirtyFields).map((key) => [
+    //     key,
+    //     data[key as keyof ProductFormData],
+    //   ])
+    // );
+    // onSubmit({ productProps: changedData, files: data.uploadImages });
+
+    const productProps: ApiPutProduct = Object.fromEntries(
+      Object.entries(data).filter(
+        submitDirty
+          ? ([key]) => key in dirtyFields && key !== 'uploadImages'
+          : ([key]) => key !== 'uploadImages'
+      )
     );
-    onSubmit({ productProps: changedData, files: data.uploadImages });
+
+    onSubmit({ productProps, files: data.uploadImages });
   };
 
   return (

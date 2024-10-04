@@ -59,7 +59,6 @@ describe('CartSummary Component', () => {
     // Ensure the input displays the promocode value from context
     const input = screen.queryByTestId('promocode-input');
     // expect(input).toHaveValue(undefined);
-    
 
     // Simulate entering a new promocode
     fireEvent.change(input as Element, { target: { value: 'NEWCODE' } });

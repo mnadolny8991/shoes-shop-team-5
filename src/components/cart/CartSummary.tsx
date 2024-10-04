@@ -73,7 +73,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({
       </Stack>
       {hasPromocode && (
         <Input
-          inputProps={{ "data-testid": "promocode-input" }}
+          inputProps={{ 'data-testid': 'promocode-input' }}
           value={promocode}
           onChange={(e) => onPromocodeChange(e.target.value)}
         />

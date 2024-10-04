@@ -110,7 +110,7 @@ export default function UpdateProfileForm() {
       setSnackbarMessage('Profile updated successfully!');
       setSnackbarSeverity('success');
       setOpenSnackbar(true);
-      queryClient.invalidateQueries({queryKey:['userAvatar']})
+      queryClient.invalidateQueries({ queryKey: ['userAvatar'] });
     },
     onError: (error: Error) => {
       setSnackbarMessage(`Failed to update profile: ${error.message}`);

@@ -84,5 +84,5 @@ export const fetchProductsByFiltersAndName = async (
       cause: (await response.json()).error as ApiError,
     });
   }
-   return await response.json() as ApiProductListResponse;
+  return (await response.json()) as ApiProductListResponse;
 };

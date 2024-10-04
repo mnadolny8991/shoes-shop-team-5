@@ -6,12 +6,17 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import ProductsGrid from '@/components/products/ProductsGrid';
 import NothingFound from '@/components/products/NothingFound';
 import { Product } from '@/types/product';
-import {
-  fetchProductsByFiltersAndName,
-} from '@/lib/fetchProducts';
+import { fetchProductsByFiltersAndName } from '@/lib/fetchProducts';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { Box, CircularProgress, Container, Divider, IconButton, Stack } from '@mui/material';
+import {
+  Box,
+  CircularProgress,
+  Container,
+  Divider,
+  IconButton,
+  Stack,
+} from '@mui/material';
 import useDebounce from '@/hooks/useDebounce';
 import searchDebounceTime from '@/data/searchDebounceTime';
 import { mapProductList } from '@/mappers/productMappers';
@@ -24,15 +29,20 @@ const Catalog = () => {
 
   const { data, status, error, isPlaceholderData, fetchStatus } = useQuery({
     queryKey: ['products', { searchTextDebounced, filtersDebounced, page }],
-    queryFn: () => fetchProductsByFiltersAndName(filtersDebounced, searchTextDebounced, page, 6),
+    queryFn: () =>
+      fetchProductsByFiltersAndName(
+        filtersDebounced,
+        searchTextDebounced,
+        page,
+        6
+      ),
     placeholderData: keepPreviousData,
   });
-  const products = status === 'success' 
-    ? mapProductList(data)
-    : [];
-  const hasNextPage = status === 'success'
-    ? data.meta.pagination.page < data.meta.pagination.pageCount
-    : false;
+  const products = status === 'success' ? mapProductList(data) : [];
+  const hasNextPage =
+    status === 'success'
+      ? data.meta.pagination.page < data.meta.pagination.pageCount
+      : false;
 
   return (
     <>
@@ -48,27 +58,23 @@ const Catalog = () => {
           <CircularProgress />
         </Box>
       ) : status === 'error' ? (
-        {error}
+        { error }
       ) : products!.length === 0 ? (
         <NothingFound />
       ) : (
         <>
           <ProductsGrid products={products!} isAdmin={false} />
-          <Stack
-            direction="row"
-            justifyContent="center"
-            marginBottom="20px"
-          >
+          <Stack direction="row" justifyContent="center" marginBottom="20px">
             <IconButton
               onClick={() => setPage((old) => Math.max(old - 1, 0))}
               disabled={page === 1}
             >
               <ArrowBackIosIcon />
             </IconButton>
-            <IconButton 
+            <IconButton
               onClick={() => {
                 if (!isPlaceholderData && hasNextPage) {
-                  setPage((old) => old + 1)
+                  setPage((old) => old + 1);
                 }
               }}
               // Disable the Next Page button until we know a next page is available

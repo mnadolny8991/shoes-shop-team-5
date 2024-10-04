@@ -45,14 +45,18 @@ export default function UserSettings() {
 
   const deleteUserAvatarMutation = useMutation({
     mutationFn: async () => {
-      const response = await updateUserData(session?.id!, session?.accessToken!, {
-        avatar: null,
-      });
+      const response = await updateUserData(
+        session?.id!,
+        session?.accessToken!,
+        {
+          avatar: null,
+        }
+      );
       if (!response.ok) {
         const errorResponse = (await response.json()).error as ApiError;
         throw new Error(errorResponse.message, {
           cause: errorResponse.details,
-        })
+        });
       }
       return response;
     },
