@@ -24,6 +24,8 @@ import {
 } from '@/hooks/useEditProductMutation';
 import ServerErrorBox from '@/components/containers/ServerErrorBox';
 import { useDeleteProductMutation } from '@/hooks/useDeleteProductMutation';
+import AddProduct from '@/components/products/AddProduct';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface ProductCardProps {
   product: Product;
@@ -38,7 +40,9 @@ export default function ProductCard({
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isDuplicateModalOpen, setIsDuplicateModalOpen] = useState(false);
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const { id, name, price, images, gender } = product;
 
@@ -60,6 +64,10 @@ export default function ProductCard({
     setIsEditModalOpen(true);
   };
 
+  const handleDuplicateClick = () => {
+    setIsDuplicateModalOpen(true);
+  };
+
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
@@ -68,6 +76,9 @@ export default function ProductCard({
   };
   const handleEditClose = () => {
     setIsEditModalOpen(false);
+  };
+  const handleDuplicateClose = () => {
+    setIsDuplicateModalOpen(false);
   };
 
   const saveEdited = (productUpdatingProps: ProductUpdatingProps) => {
@@ -84,6 +95,12 @@ export default function ProductCard({
       ? uploadImagesThenEditProduct(productUpdatingProps)
       : editProduct(productUpdatingProps);
     handleEditClose();
+    handleMenuClose();
+  };
+
+  const onAddDuplicated = () => {
+    queryClient.invalidateQueries({ queryKey: ['myProducts'] });
+    handleDuplicateClose();
     handleMenuClose();
   };
 
@@ -156,6 +173,9 @@ export default function ProductCard({
             <MenuItem onClick={handleEditClick} divider disableGutters>
               <Typography variant="subtitle2">Edit</Typography>
             </MenuItem>
+            <MenuItem onClick={handleDuplicateClick} divider disableGutters>
+              <Typography variant="subtitle2">Duplicate</Typography>
+            </MenuItem>
             <MenuItem onClick={handleDeleteClick} disableGutters>
               <Typography variant="subtitle2">Delete</Typography>
             </MenuItem>
@@ -184,6 +204,17 @@ export default function ProductCard({
               onSubmit={saveEdited}
               product={product}
               submitDirty
+            />
+          </EditProductModal>
+          <EditProductModal
+            isOpen={isDuplicateModalOpen}
+            onClose={handleDuplicateClose}
+          >
+            <AddProduct
+              title="Duplicate product"
+              description=""
+              initialProduct={product}
+              onSuccessClose={onAddDuplicated}
             />
           </EditProductModal>
         </>
