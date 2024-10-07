@@ -30,7 +30,12 @@ export default function NavRight() {
   const router = useRouter();
   const [searchSubmitted, setSearchSubmitted] = useState(false);
   const { data: session, status } = useSession();
-  const { searchText, setSearchText, getSearchParams } = useSearch();
+  const {
+    searchText,
+    setSearchText,
+    getSearchParams,
+    getSearchParamsWithEmptyFilters,
+  } = useSearch();
   const { data: avatar } = useAvatarQuery();
 
   const { amount } = useCartContext();
@@ -39,14 +44,14 @@ export default function NavRight() {
   const onSearchPopupSubmit = (query: string) => {
     setSearchSubmitted(true);
     setSearchText(query);
-  }
+  };
 
   useEffect(() => {
     if (searchSubmitted) {
-      router.push('/catalog?' + getSearchParams());
+      router.push('/catalog?' + getSearchParamsWithEmptyFilters());
       setSearchSubmitted(false); // Reset submission state after navigating
     }
-  }, [searchSubmitted, getSearchParams, router]); 
+  }, [searchSubmitted, getSearchParamsWithEmptyFilters, router]);
 
   return (
     <Box

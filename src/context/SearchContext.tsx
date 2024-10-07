@@ -1,11 +1,6 @@
 'use client';
 import { Box, CircularProgress } from '@mui/material';
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useState,
-} from 'react';
+import { createContext, useCallback, useContext, useState } from 'react';
 
 // filters type
 export type Filters = {
@@ -24,6 +19,7 @@ type SearchContextType = {
   setFilters: (filters: Filters) => void;
   updateFilter: <K extends keyof Filters>(key: K, value: Filters[K]) => void;
   getSearchParams: () => string;
+  getSearchParamsWithEmptyFilters: () => string;
 };
 
 const defaultFilters: Filters = {
@@ -63,9 +59,19 @@ const SearchContextProvider: React.FC<{ children: React.ReactNode }> = ({
     params.set('gender', JSON.stringify(filters.gender));
     params.set('price', JSON.stringify(filters.price));
     params.set('size', JSON.stringify(filters.size));
-    // console.log(params.toString());
     return params.toString();
   }, [filters, searchText]);
+
+  const getSearchParamsWithEmptyFilters = useCallback(() => {
+    const params = new URLSearchParams();
+    params.set('search', searchText);
+    params.set('brand', 'null');
+    params.set('color', 'null');
+    params.set('gender', 'null');
+    params.set('price', 'null');
+    params.set('size', 'null');
+    return params.toString();
+  }, [searchText]);
 
   return (
     <SearchContext.Provider
@@ -76,6 +82,7 @@ const SearchContextProvider: React.FC<{ children: React.ReactNode }> = ({
         setFilters,
         updateFilter,
         getSearchParams,
+        getSearchParamsWithEmptyFilters,
       }}
     >
       {children}
