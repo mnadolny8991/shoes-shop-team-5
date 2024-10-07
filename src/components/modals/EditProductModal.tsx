@@ -1,28 +1,13 @@
 'use client';
 import { Dialog } from '@mui/material';
-import ProductForm from '@/components/forms/ProductForm';
-import { Product } from '@/types/product';
-import { ApiPutProduct } from '@/types/api/apiTypes';
 
 type Props = {
   isOpen: boolean;
   onClose: () => void;
-  product: Product;
-  onSave: ({
-    productProps,
-    files,
-  }: {
-    productProps: ApiPutProduct;
-    files: File[];
-  }) => void;
+  children: React.ReactNode;
 };
 
-export default function EditProductModal({
-  isOpen,
-  onClose,
-  product,
-  onSave,
-}: Props) {
+export default function EditProductModal({ isOpen, onClose, children }: Props) {
   return (
     <Dialog
       open={isOpen}
@@ -37,12 +22,7 @@ export default function EditProductModal({
         },
       }}
     >
-      <ProductForm
-        title="Edit product"
-        description=""
-        onSubmit={onSave}
-        product={product}
-      />
+      {children}
     </Dialog>
   );
 }

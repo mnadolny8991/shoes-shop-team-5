@@ -1,7 +1,7 @@
 import apiUrl from '@/data/apiUrl';
 import { Filters } from '@/context/SearchContext';
 import fetchData from '@/lib/api/fetchData';
-import { ApiPostProduct } from '@/types/api/apiTypes';
+import { ApiPostProduct, ApiPutProduct } from '@/types/api/apiTypes';
 
 export const fetchProductsByUserId = async (
   id: number,
@@ -85,3 +85,29 @@ export const saveProduct = async (
     body: JSON.stringify({ data: productProps }),
   });
 };
+
+export const updateProduct = async (
+  productProps: ApiPutProduct,
+  id: number,
+  token: string
+) =>
+  await fetchData(`${apiUrl}/products/${id}?populate=*`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ data: productProps }),
+  });
+
+export const deleteProductReturnImages = async (id: number, token: string) =>
+  await fetchData(
+    `${apiUrl}/products/${id}?populate[images][fields][0]=id&populate[images][populate][related][fields][0]=id`,
+    {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
