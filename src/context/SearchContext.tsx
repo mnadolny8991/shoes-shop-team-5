@@ -1,12 +1,10 @@
 'use client';
+import { Box, CircularProgress } from '@mui/material';
 import { useSearchParams } from 'next/navigation';
 import {
   createContext,
   useContext,
   useState,
-  ReactNode,
-  FC,
-  useCallback,
   useEffect,
   Suspense,
 } from 'react';
@@ -84,7 +82,20 @@ const SearchContextProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   return (
-    <Suspense>
+    <Suspense
+      fallback={
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100vh',
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      }
+    >
       <SearchContext.Provider
         value={{
           searchText,
