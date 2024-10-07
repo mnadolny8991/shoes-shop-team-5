@@ -8,6 +8,7 @@ import {
   FC,
   useCallback,
   useEffect,
+  Suspense,
 } from 'react';
 
 // filters type
@@ -83,18 +84,20 @@ const SearchContextProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   return (
-    <SearchContext.Provider
-      value={{
-        searchText,
-        setSearchText,
-        filters,
-        setFilters,
-        updateFilter,
-        getSearchParams,
-      }}
-    >
-      {children}
-    </SearchContext.Provider>
+    <Suspense>
+      <SearchContext.Provider
+        value={{
+          searchText,
+          setSearchText,
+          filters,
+          setFilters,
+          updateFilter,
+          getSearchParams,
+        }}
+      >
+        {children}
+      </SearchContext.Provider>
+    </Suspense>
   );
 };
 
