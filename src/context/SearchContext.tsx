@@ -1,12 +1,10 @@
 'use client';
 import { Box, CircularProgress } from '@mui/material';
-import { useSearchParams } from 'next/navigation';
 import {
   createContext,
+  useCallback,
   useContext,
   useState,
-  useEffect,
-  Suspense,
 } from 'react';
 
 // filters type
@@ -52,25 +50,12 @@ const SearchContextProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [searchText, setSearchText] = useState('');
   const [filters, setFilters] = useState<Filters>(defaultFilters);
-  const searchParams = useSearchParams();
 
   const updateFilter = <K extends keyof Filters>(key: K, value: Filters[K]) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
   };
 
-  useEffect(() => {
-    // init filters and search text from the searchParams
-    setSearchText(searchParams.get('search') ?? '');
-    setFilters({
-      brand: JSON.parse(searchParams.get('brand') ?? 'null') ?? [],
-      color: JSON.parse(searchParams.get('color') ?? 'null') ?? [],
-      gender: JSON.parse(searchParams.get('gender') ?? 'null') ?? [],
-      price: JSON.parse(searchParams.get('price') ?? 'null') ?? [0, 999],
-      size: JSON.parse(searchParams.get('size') ?? 'null') ?? [],
-    });
-  }, [searchParams]);
-
-  const getSearchParams = () => {
+  const getSearchParams = useCallback(() => {
     const params = new URLSearchParams();
     params.set('search', searchText);
     params.set('brand', JSON.stringify(filters.brand));
@@ -78,37 +63,23 @@ const SearchContextProvider: React.FC<{ children: React.ReactNode }> = ({
     params.set('gender', JSON.stringify(filters.gender));
     params.set('price', JSON.stringify(filters.price));
     params.set('size', JSON.stringify(filters.size));
+    // console.log(params.toString());
     return params.toString();
-  };
+  }, [filters, searchText]);
 
   return (
-    <Suspense
-      fallback={
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '100vh',
-          }}
-        >
-          <CircularProgress />
-        </Box>
-      }
+    <SearchContext.Provider
+      value={{
+        searchText,
+        setSearchText,
+        filters,
+        setFilters,
+        updateFilter,
+        getSearchParams,
+      }}
     >
-      <SearchContext.Provider
-        value={{
-          searchText,
-          setSearchText,
-          filters,
-          setFilters,
-          updateFilter,
-          getSearchParams,
-        }}
-      >
-        {children}
-      </SearchContext.Provider>
-    </Suspense>
+      {children}
+    </SearchContext.Provider>
   );
 };
 
