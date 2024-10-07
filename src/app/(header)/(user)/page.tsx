@@ -2,10 +2,11 @@
 import { Stack, Typography } from '@mui/material';
 import ProductsGrid from '@/components/products/ProductsGrid';
 import ProductsHeader from '@/components/products/ProductsHeader';
-import useLastViewedProducts from '@/hooks/useLastViewedProducts';
+import useProducts from '@/hooks/useProducts';
+import { useLastViewed } from '@/context/LastViewedContext';
 
 export default function DefaultProducts() {
-  const products = useLastViewedProducts();
+  const products = useProducts(useLastViewed);
 
   return (
     <>

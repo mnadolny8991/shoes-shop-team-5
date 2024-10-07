@@ -26,7 +26,7 @@ const SingleProductPage: FC<SingleProductPageProps> = ({ id }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { data, status, error } = useProduct(id);
   const { onProductAdd } = useCartContext();
-  const { onLastViewedAdd } = useLastViewed();
+  const { onProductAdd: onLastViewedAdd } = useLastViewed();
 
   useEffect(() => {
     onLastViewedAdd(id);
