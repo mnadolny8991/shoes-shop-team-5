@@ -1,5 +1,6 @@
 'use client';
-import { createContext, useContext, useState, ReactNode, FC } from 'react';
+import { Box, CircularProgress } from '@mui/material';
+import { createContext, useCallback, useContext, useState } from 'react';
 
 // filters type
 export type Filters = {
@@ -17,6 +18,8 @@ type SearchContextType = {
   filters: Filters;
   setFilters: (filters: Filters) => void;
   updateFilter: <K extends keyof Filters>(key: K, value: Filters[K]) => void;
+  getSearchParams: () => string;
+  getSearchParamsWithEmptyFilters: () => string;
 };
 
 const defaultFilters: Filters = {
@@ -48,6 +51,28 @@ const SearchContextProvider: React.FC<{ children: React.ReactNode }> = ({
     setFilters((prev) => ({ ...prev, [key]: value }));
   };
 
+  const getSearchParams = useCallback(() => {
+    const params = new URLSearchParams();
+    params.set('search', searchText);
+    params.set('brand', JSON.stringify(filters.brand));
+    params.set('color', JSON.stringify(filters.color));
+    params.set('gender', JSON.stringify(filters.gender));
+    params.set('price', JSON.stringify(filters.price));
+    params.set('size', JSON.stringify(filters.size));
+    return params.toString();
+  }, [filters, searchText]);
+
+  const getSearchParamsWithEmptyFilters = useCallback(() => {
+    const params = new URLSearchParams();
+    params.set('search', searchText);
+    params.set('brand', 'null');
+    params.set('color', 'null');
+    params.set('gender', 'null');
+    params.set('price', 'null');
+    params.set('size', 'null');
+    return params.toString();
+  }, [searchText]);
+
   return (
     <SearchContext.Provider
       value={{
@@ -56,6 +81,8 @@ const SearchContextProvider: React.FC<{ children: React.ReactNode }> = ({
         filters,
         setFilters,
         updateFilter,
+        getSearchParams,
+        getSearchParamsWithEmptyFilters,
       }}
     >
       {children}
