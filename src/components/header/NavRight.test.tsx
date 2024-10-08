@@ -2,18 +2,13 @@ import { screen } from '@testing-library/react';
 import { render } from '@/testing/testUtils';
 import NavRight from '@/components/header/NavRight';
 import '@testing-library/jest-dom';
-import { useSession } from 'next-auth/react';
-import useAvatarQuery from '@/hooks/useAvatarQuery';
+import { useAvatarQuery } from '@/hooks/useAvatarQuery';
 import { Session } from 'next-auth';
-import { UserAvatar } from '@/types/user';
-import nock from 'nock';
-import apiUrl from '@/data/apiUrl';
-import { userAvatarResponseMock } from '@/testing/mocks/userAvatarResponse';
 
-jest.mock("next-auth/react", () => {
+jest.mock('next-auth/react', () => {
   const mockSession: Session = {
     id: 679,
-    accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Njc5LCJpYXQiOjE3MjgzNzYwMTgsImV4cCI6MTczMDk2ODAxOH0.BRXVE7-M2uKiQjES9lKSo-zl0NNEUlERzDGY_Mk70lA',
+    accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Njc5LCJpYXQiOjE3MjYwNDY3NTYsImV4cCI6MTcyODYzODc1Nn0.En7ZyMPzfDsSQuCffuraEgpj0LoO10Jt0K-HuOWRfVs',
     refreshToken: 'aaa',
     expires: new Date(Date.now() + 2 * 86400).toISOString(),
   };
@@ -27,20 +22,27 @@ jest.mock("next-auth/react", () => {
   };
 });
 jest.mock('next/navigation');
+jest.mock('../../hooks/useAvatarQuery', () => ({
+  useAvatarQuery: jest.fn(),
+}));
 
 describe('Right side of the header component', () => {
   beforeEach(() => {
-    nock(`${apiUrl}`)
-      .get('/users/me?populate=avatar')
-      .reply(200, userAvatarResponseMock);
-  })
+    (useAvatarQuery as jest.Mock).mockImplementation(() => ({
+      data: {
+        name: 'Michal Nadolny',
+        src: '/default-avatar.png',
+        alt: 'user avatar',
+      },
+    }))
+  });
 
   test('Show avatar when signed in', async () => {
-    const avatarElement = screen.getByAltText('user avatar');
+    render(<NavRight />);
+
+    const avatarElement = await screen.findByAltText('user avatar');
 
     expect(avatarElement).toBeInTheDocument();
     expect(avatarElement).toHaveAttribute('src', '/default-avatar.png');
   });
-  render(<NavRight />);
-
 });

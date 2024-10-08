@@ -1,7 +1,7 @@
 'use client';
 import WelcomePage from '@/components/containers/WelcomePage';
 import UserPagesList from '@/components/nav/UserPagesList';
-import useAvatarQuery from '@/hooks/useAvatarQuery';
+import { useAvatarQuery } from '@/hooks/useAvatarQuery';
 import {
   Box,
   Divider,
