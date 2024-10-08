@@ -12,27 +12,25 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import Image from 'next/image';
 import SearchBar from '@/components/input/SearchBar';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import popularSearchTerms from '@/mock/popularSearchTerms';
 import { useRouter } from 'next/navigation';
 
 type SearchPopupProps = {
   show: boolean;
   close: () => void;
-  searchText: string;
-  onTextChange: (val: string) => void;
+  onSubmit: (val: string) => void;
 };
 
 export default function SearchPopup({
   show,
   close,
-  searchText,
-  onTextChange,
+  onSubmit,
 }: SearchPopupProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const searchRef = useRef<HTMLInputElement>(null);
-  const router = useRouter();
+  const [searchText, setSearchText] = useState<string>('');
 
   useEffect(() => {
     if (show) {
@@ -45,7 +43,7 @@ export default function SearchPopup({
 
   const handleSearch = () => {
     close();
-    router.push('/catalog');
+    onSubmit(searchText);
   };
 
   return (
@@ -86,7 +84,7 @@ export default function SearchPopup({
               withErase
               ref={searchRef}
               value={searchText}
-              onChange={(val: string) => onTextChange(val)}
+              onChange={(val: string) => setSearchText(val)}
               width={isMobile ? '290px' : '700px'}
               height={isMobile ? '25px' : '79px'}
               variant={isMobile ? 'popupMobile' : 'popupLarge'}
@@ -108,7 +106,7 @@ export default function SearchPopup({
               {popularSearchTerms.map((term) => (
                 <Typography
                   onClick={() => {
-                    onTextChange(term.value);
+                    setSearchText(term.value);
                     searchRef.current?.focus();
                   }}
                   key={term.id}
@@ -127,7 +125,7 @@ export default function SearchPopup({
           )}
         </Stack>
         <IconButton
-          onClick={close}
+          onClick={handleSearch}
           sx={{
             color: '#494949',
           }}

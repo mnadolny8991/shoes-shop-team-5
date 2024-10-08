@@ -8,7 +8,7 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import SearchBar from '@/components/input/SearchBar';
 import SearchPopup from '@/components/header/SearchPopup';
@@ -28,12 +28,30 @@ export default function NavRight() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const router = useRouter();
+  const [searchSubmitted, setSearchSubmitted] = useState(false);
   const { data: session, status } = useSession();
-  const { searchText, setSearchText } = useSearch();
+  const {
+    searchText,
+    setSearchText,
+    getSearchParams,
+    getSearchParamsWithEmptyFilters,
+  } = useSearch();
   const { data: avatar } = useAvatarQuery();
 
   const { amount } = useCartContext();
   const itemsInCart = amount.reduce((acc, curr) => acc + curr.amount, 0);
+
+  const onSearchPopupSubmit = (query: string) => {
+    setSearchSubmitted(true);
+    setSearchText(query);
+  };
+
+  useEffect(() => {
+    if (searchSubmitted) {
+      router.push('/catalog?' + getSearchParamsWithEmptyFilters());
+      setSearchSubmitted(false); // Reset submission state after navigating
+    }
+  }, [searchSubmitted, getSearchParamsWithEmptyFilters, router]);
 
   return (
     <Box
@@ -95,7 +113,7 @@ export default function NavRight() {
         ) : (
           <SearchBar
             value={searchText}
-            onChange={(val: string) => setSearchText(val)}
+            onChange={() => null}
             width={424}
             height={48}
             variant="header"
@@ -105,8 +123,7 @@ export default function NavRight() {
       <SearchPopup
         show={showSearchPopup}
         close={() => setShowSearchPopup(false)}
-        searchText={searchText}
-        onTextChange={(val: string) => setSearchText(val)}
+        onSubmit={onSearchPopupSubmit}
       />
       {status === 'unauthenticated' && !isMobile && (
         <CustomButton
