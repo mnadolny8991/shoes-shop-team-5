@@ -1,7 +1,7 @@
 'use client';
 import { fetchProductById } from '@/lib/api/fetchProducts';
 import mapProduct from '@/mappers/productMappers';
-import { ProductsContextType } from '@/types/api/ProductsContext';
+import { ProductsContextType } from '@/types/ProductsContext';
 import { Product } from '@/types/product';
 import { useQueries } from '@tanstack/react-query';
 

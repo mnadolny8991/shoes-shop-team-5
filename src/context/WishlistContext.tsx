@@ -1,6 +1,6 @@
 'use client';
 import useLocalStorage from '@/hooks/useLocalStorage';
-import { ProductsContextType } from '@/types/api/ProductsContext';
+import { ProductsContextType } from '@/types/ProductsContext';
 import { createContext, useContext, ReactNode, FC } from 'react';
 
 const WishlistContext = createContext<ProductsContextType | undefined>(

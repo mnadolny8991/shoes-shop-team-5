@@ -15,6 +15,7 @@ import { useCartContext } from '@/context/CartContext';
 import { useLastViewed } from '@/context/LastViewedContext';
 import CustomButton from '@/components/buttons/CustomButton';
 import useProduct from '@/hooks/useProduct';
+import { useWishlist } from '@/context/WishlistContext';
 
 type SingleProductPageProps = {
   id: number;
@@ -25,8 +26,15 @@ const SingleProductPage: FC<SingleProductPageProps> = ({ id }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { data, status, error } = useProduct(id);
-  const { onProductAdd } = useCartContext();
+  const { onProductAdd: onProductAddToCart } = useCartContext();
   const { onProductAdd: onLastViewedAdd } = useLastViewed();
+  const {
+    ids: wishlistIds,
+    onProductAdd: onProductAddToWishlist,
+    onProductRemove: onProductRemoveFromWishlist,
+  } = useWishlist();
+
+  const isInWishlist = !!data && wishlistIds.includes(data.id);
 
   useEffect(() => {
     onLastViewedAdd(id);
@@ -137,15 +145,24 @@ const SingleProductPage: FC<SingleProductPageProps> = ({ id }) => {
                 gap: { xs: '10px', md: '26px' },
               }}
             >
-              <CustomButton size={isMobile ? 'm' : 'xl'} variant="outlined">
-                Favorite
+              <CustomButton
+                size={isMobile ? 'm' : 'xl'}
+                variant="outlined"
+                onClick={() =>
+                  isInWishlist
+                    ? onProductRemoveFromWishlist(data.id)
+                    : onProductAddToWishlist(data.id)
+                }
+                disabled={!data}
+              >
+                {isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'}
               </CustomButton>
               <CustomButton
                 size={isMobile ? 'm' : 'xl'}
                 variant="contained"
                 onClick={() => {
                   if (data) {
-                    onProductAdd(data.id);
+                    onProductAddToCart(data.id);
                   }
                 }}
                 disabled={sizeId === null}

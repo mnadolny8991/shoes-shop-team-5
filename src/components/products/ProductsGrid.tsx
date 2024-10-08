@@ -7,20 +7,27 @@ import { memo } from 'react';
 
 interface ProductsGridProps {
   products: Array<Product>;
+  isInWishlist?: boolean;
   isAdmin?: boolean;
 }
 
-const ProductsGrid = memo(({ products, isAdmin = true }: ProductsGridProps) => {
-  return (
-    <Grid2 container spacing={{ xs: 2, md: 8 }} mx={{ xs: 1, md: -4 }}>
-      {products.map((product) => (
-        <Grid2 xs={6} sm={4} md={6} lg={4} xl={3} key={product.id}>
-          <ProductCard product={product} isAdmin={isAdmin} />
-        </Grid2>
-      ))}
-    </Grid2>
-  );
-});
+const ProductsGrid = memo(
+  ({ products, isAdmin = true, isInWishlist = false }: ProductsGridProps) => {
+    return (
+      <Grid2 container spacing={{ xs: 2, md: 8 }} mx={{ xs: 1, md: -4 }}>
+        {products.map((product) => (
+          <Grid2 xs={6} sm={4} md={6} lg={4} xl={3} key={product.id}>
+            <ProductCard
+              product={product}
+              isAdmin={isAdmin}
+              isInWishlist={isInWishlist}
+            />
+          </Grid2>
+        ))}
+      </Grid2>
+    );
+  }
+);
 
 ProductsGrid.displayName = 'ProductsGrid';
 export default ProductsGrid;
