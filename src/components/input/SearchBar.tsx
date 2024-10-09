@@ -117,6 +117,7 @@ const SearchBar = forwardRef<HTMLInputElement, SearchBarProps>(
           />
           {withErase && (
             <IconButton
+              data-testid="search-btn"
               onClick={() => {
                 onChange('');
                 setTimeout(() => inputRef.current?.focus(), 100);

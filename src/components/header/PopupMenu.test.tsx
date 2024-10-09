@@ -2,7 +2,6 @@ import { screen, fireEvent } from '@testing-library/react';
 import { render } from '@/testing/testUtils';
 import '@testing-library/jest-dom';
 import PopupMenu from '@/components/header/PopupMenu';
-import getMenuItems from '@/data/menuItems';
 
 describe('Mobile popup menu', () => {
   let showMenu = true;
