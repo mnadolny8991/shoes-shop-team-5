@@ -1,27 +1,26 @@
 'use client';
-import { useLastViewed } from '@/context/LastViewedContext';
 import { fetchProductById } from '@/lib/api/fetchProducts';
 import mapProduct from '@/mappers/productMappers';
+import { ProductsContextType } from '@/types/ProductsContext';
 import { Product } from '@/types/product';
 import { useQueries } from '@tanstack/react-query';
 
-const useLastViewedProducts = () => {
-  const { lastViewedIds, onLastViewedRemove } = useLastViewed();
-  const queries = lastViewedIds.map((id: number) => {
+const useProducts = (useProductsContext: () => ProductsContextType) => {
+  const { ids, onProductRemove } = useProductsContext();
+  const queries = ids.map((id: number) => {
     return {
       queryKey: ['product', id],
       queryFn: async () => mapProduct(await fetchProductById(id)),
       retry: false,
     };
   });
-  const lastViewed = useQueries({ queries });
-  const products = lastViewed
+  const products = useQueries({ queries })
     .filter((result, index) => {
       if (result.isSuccess) {
         return true;
       } else if (result.isError) {
         const idToRemove = queries[index].queryKey[1] as number;
-        onLastViewedRemove(idToRemove);
+        onProductRemove(idToRemove);
         return false;
       }
       return true;
@@ -32,4 +31,4 @@ const useLastViewedProducts = () => {
   return products;
 };
 
-export default useLastViewedProducts;
+export default useProducts;

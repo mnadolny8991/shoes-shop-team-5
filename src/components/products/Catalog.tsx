@@ -19,7 +19,8 @@ const Catalog = () => {
   const searchParams = useSearchParams();
 
   const [page, setPage] = useState<number>(1);
-  const { searchText, filters, setSearchText, setFilters, getSearchParams } = useSearch();
+  const { searchText, filters, setSearchText, setFilters, getSearchParams } =
+    useSearch();
   const filtersDebounced = useDebounce(filters, 500, filters);
   const searchTextDebounced = useDebounce(searchText, searchDebounceTime, '');
   const { data, status, error, isPlaceholderData } = useFilteredProducts(
