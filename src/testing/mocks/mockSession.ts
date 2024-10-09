@@ -1,3 +1,1 @@
-export const mockSession = () => {
-  
-}
+export const mockSession = () => {};

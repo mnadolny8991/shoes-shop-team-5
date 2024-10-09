@@ -11,8 +11,8 @@ describe('Mobile popup menu', () => {
 
   beforeEach(() => {
     showMenu = true;
-    render(<PopupMenu showMenu={showMenu} onMenuClose={onMenuClose}/>);
-  })
+    render(<PopupMenu showMenu={showMenu} onMenuClose={onMenuClose} />);
+  });
 
   test('is closing on close button click', () => {
     const closeBtn = screen.getByTestId('close-btn');

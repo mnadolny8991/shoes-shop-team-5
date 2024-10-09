@@ -6,20 +6,13 @@ import UserPagesList from '@/components/nav/UserPagesList';
 
 describe('popup menu list', () => {
   beforeEach(() => {
-    render(
-      <UserPagesList />
-    );
+    render(<UserPagesList />);
   });
 
   test('should have all list elements', () => {
-    const menuItemsText = 
-      getMenuItems(true).map((item) => item.name);
-    const menuItems = menuItemsText.map((item) => 
-      screen.getByText(item)
-    );
+    const menuItemsText = getMenuItems(true).map((item) => item.name);
+    const menuItems = menuItemsText.map((item) => screen.getByText(item));
 
-    menuItems.forEach((item) => 
-      expect(item).toBeInTheDocument()
-    )
+    menuItems.forEach((item) => expect(item).toBeInTheDocument());
   });
 });

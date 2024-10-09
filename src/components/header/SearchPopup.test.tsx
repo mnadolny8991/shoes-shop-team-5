@@ -7,19 +7,13 @@ import { useMediaQuery } from '@mui/material';
 describe('Search popup', () => {
   let show = true;
   const useMediaQueryMock = useMediaQuery as jest.Mock;
-  const close = jest.fn(() => show = false);
+  const close = jest.fn(() => (show = false));
   const onSubmit = jest.fn((val: string) => console.log(val));
 
   beforeEach(() => {
     show = true;
-    render(
-      <SearchPopup 
-        show={show}
-        onSubmit={onSubmit}
-        close={close}
-      />
-    );
-  })
+    render(<SearchPopup show={show} onSubmit={onSubmit} close={close} />);
+  });
 
   test('closes when close button clicked', () => {
     const closeBtn = screen.getByTestId('close-btn');
@@ -34,11 +28,11 @@ describe('Search popup', () => {
     expect(search).toBeInTheDocument();
 
     const searchBtn = screen.getByTestId('search-btn');
-    expect(searchBtn).toBeInTheDocument(); 
+    expect(searchBtn).toBeInTheDocument();
     fireEvent.change(search, {
       target: {
         value: 'search text',
-      }
+      },
     });
     fireEvent.click(searchBtn);
     expect(onSubmit).toHaveBeenCalled();

@@ -32,7 +32,7 @@ describe('Right side of the header component', () => {
       status: 'authenticated',
     });
   });
-  
+
   test('show avatar when signed in', async () => {
     render(<NavRight />);
 
@@ -90,7 +90,7 @@ describe('Right side of the header component', () => {
     useSessionMock.mockReturnValue({
       data: null,
       status: 'unauthenticated',
-    })
+    });
     render(<NavRight />);
 
     const menu = screen.queryByAltText('menu icon');

@@ -138,7 +138,7 @@ export default function NavRight() {
           Sign In
         </CustomButton>
       )}
-      {(isMobile && showMenu) && (
+      {isMobile && showMenu && (
         <PopupMenu showMenu onMenuClose={() => setShowMenu(false)} />
       )}
     </Box>

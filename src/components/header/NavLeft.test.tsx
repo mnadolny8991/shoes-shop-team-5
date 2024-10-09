@@ -28,4 +28,4 @@ describe('left side of the header component', () => {
     expect(logo).toBeInTheDocument();
     expect(products).toBeInTheDocument();
   });
-})
+});

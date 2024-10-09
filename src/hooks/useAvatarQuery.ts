@@ -33,8 +33,8 @@ export const useAvatarQuery = () => {
           console.log('requested data:', data);
           return mapApiUserResponseToAvatar(data);
         })
-        .catch((error) => console.error(error))
-      },
+        .catch((error) => console.error(error));
+    },
     enabled: status === 'authenticated',
   });
 };
