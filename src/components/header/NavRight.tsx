@@ -107,7 +107,7 @@ export default function NavRight() {
               src="/search-normal.svg"
               width={20}
               height={20}
-              alt="website logo"
+              alt="search icon"
             />
           </IconButton>
         ) : (
@@ -138,7 +138,7 @@ export default function NavRight() {
           Sign In
         </CustomButton>
       )}
-      {isMobile && showMenu && (
+      {isMobile && (
         <PopupMenu showMenu onMenuClose={() => setShowMenu(false)} />
       )}
     </Box>

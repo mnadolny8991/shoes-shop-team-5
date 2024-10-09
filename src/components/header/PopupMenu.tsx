@@ -25,6 +25,7 @@ export default function PopupMenu({ showMenu, onMenuClose }: PopupMenuProps) {
   return (
     <Drawer
       anchor="right"
+      data-testid="menuPopup"
       open={showMenu}
       sx={{
         '& .MuiDrawer-paper': {

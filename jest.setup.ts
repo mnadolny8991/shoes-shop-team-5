@@ -18,3 +18,11 @@ jest.mock('next-auth/react', () => {
   };
 });
 jest.mock('next/navigation');
+jest.mock('@mui/material', () => {
+  const originalModule = jest.requireActual('@mui/material');
+  return {
+    __esModule: true,
+    ...originalModule,
+    useMediaQuery: jest.fn(),
+  };
+});
