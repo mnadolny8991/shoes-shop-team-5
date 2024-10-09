@@ -30,7 +30,7 @@ describe('Right side of the header component', () => {
         expires: new Date(Date.now() + 2 * 86400).toISOString(),
       },
       status: 'authenticated',
-    })
+    });
   });
   
   test('show avatar when signed in', async () => {
