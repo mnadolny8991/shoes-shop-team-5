@@ -11,6 +11,7 @@ export default function PopupMenu({ showMenu, onMenuClose }: PopupMenuProps) {
   return (
     <Drawer
       anchor="right"
+      data-testid="menuPopup"
       open={showMenu}
       sx={{
         '& .MuiDrawer-paper': {
@@ -19,6 +20,7 @@ export default function PopupMenu({ showMenu, onMenuClose }: PopupMenuProps) {
       }}
     >
       <IconButton
+        data-testid="close-btn"
         onClick={() => onMenuClose()}
         sx={{
           zIndex: 10,

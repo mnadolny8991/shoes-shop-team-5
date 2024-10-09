@@ -69,7 +69,7 @@ export default function SearchPopup({
         }}
       >
         {!isMobile && (
-          <IconButton>
+          <IconButton data-testid="website-logo">
             <Image src="/logo.svg" width={40} height={30} alt="website logo" />
           </IconButton>
         )}
@@ -125,6 +125,7 @@ export default function SearchPopup({
           )}
         </Stack>
         <IconButton
+          data-testid="close-btn"
           onClick={handleSearch}
           sx={{
             color: '#494949',

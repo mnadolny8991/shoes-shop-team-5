@@ -7,15 +7,12 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { Logo } from '../logo/Logo';
 
 export default function NavLeft() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const router = useRouter();
 
   return (
     <Box

@@ -17,7 +17,7 @@ import PopupMenu from '@/components/header/PopupMenu';
 import { useRouter } from 'next/navigation';
 import { useSearch } from '@/context/SearchContext';
 import { signIn, useSession } from 'next-auth/react';
-import useAvatarQuery from '@/hooks/useAvatarQuery';
+import { useAvatarQuery } from '@/hooks/useAvatarQuery';
 import { useCartContext } from '@/context/CartContext';
 
 export default function NavRight() {
@@ -107,7 +107,7 @@ export default function NavRight() {
               src="/search-normal.svg"
               width={20}
               height={20}
-              alt="website logo"
+              alt="search icon"
             />
           </IconButton>
         ) : (

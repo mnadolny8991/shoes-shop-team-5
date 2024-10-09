@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 import Image from 'next/image';
 import unsplash from '/public/pawel-czerwinski-unsplash-3.png';
-import useAvatarQuery from '@/hooks/useAvatarQuery';
+import { useAvatarQuery } from '@/hooks/useAvatarQuery';
 
 const ProductsHeader = () => {
   const theme = useTheme();
