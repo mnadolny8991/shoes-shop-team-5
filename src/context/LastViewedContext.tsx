@@ -1,14 +1,9 @@
 'use client';
 import useLocalStorage from '@/hooks/useLocalStorage';
+import { ProductsContextType } from '@/types/ProductsContext';
 import { createContext, useContext, ReactNode, FC, useEffect } from 'react';
 
-type LastViewedContextType = {
-  lastViewedIds: number[];
-  onLastViewedAdd: (id: number) => void;
-  onLastViewedRemove: (id: number) => void;
-};
-
-const LastViewedContext = createContext<LastViewedContextType | undefined>(
+const LastViewedContext = createContext<ProductsContextType | undefined>(
   undefined
 );
 
@@ -33,10 +28,10 @@ const LastViewedContextProvider: FC<{ children: ReactNode }> = ({
       const lastViewedHashSet = new Set(prev);
       if (lastViewedHashSet.has(id)) return prev; // No duplicates allowed
 
-      const updatedIds = [...prev, id];
+      const updatedIds = [id, ...prev];
 
       if (updatedIds.length > 4) {
-        return updatedIds.slice(1);
+        updatedIds.pop();
       }
 
       return updatedIds;
@@ -50,9 +45,9 @@ const LastViewedContextProvider: FC<{ children: ReactNode }> = ({
   return (
     <LastViewedContext.Provider
       value={{
-        lastViewedIds,
-        onLastViewedAdd: handleLastViewedAdd,
-        onLastViewedRemove: handleLastViewedRemove,
+        ids: lastViewedIds,
+        onProductAdd: handleLastViewedAdd,
+        onProductRemove: handleLastViewedRemove,
       }}
     >
       {children}
