@@ -20,6 +20,7 @@ export default function PopupMenu({ showMenu, onMenuClose }: PopupMenuProps) {
       }}
     >
       <IconButton
+        data-testid="close-btn"
         onClick={() => onMenuClose()}
         sx={{
           zIndex: 10,
