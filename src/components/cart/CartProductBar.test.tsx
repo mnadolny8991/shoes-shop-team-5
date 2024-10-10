@@ -1,7 +1,6 @@
 import { screen, fireEvent } from '@testing-library/react';
 import { render } from '@/testing/testUtils';
 import '@testing-library/jest-dom';
-import SearchPopup from '@/components/header/SearchPopup';
 import { useMediaQuery } from '@mui/material';
 import CartProductBar from '@/components/cart/CartProductBar';
 import { useState } from 'react';
