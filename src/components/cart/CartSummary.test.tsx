@@ -1,8 +1,7 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import CartSummary from '@/components/cart/CartSummary';
-import { CartContextProvider, useCartContext } from '@/context/CartContext';
-import { CartContextType } from '@/types/cart';
+import { render } from '@/testing/testUtils';
 
 // Custom test props
 const cartProps = {
@@ -12,17 +11,10 @@ const cartProps = {
   sx: {},
 };
 
-const renderCartSummary = () => {
-  render(
-    <CartContextProvider>
-      <CartSummary {...cartProps} />
-    </CartContextProvider>
-  );
-};
 
 describe('CartSummary Component', () => {
   test('should render correctly with provided props', () => {
-    renderCartSummary();
+    render(<CartSummary {...cartProps}/>);
     // Check that Subtotal, Shipping, and Tax are displayed correctly
     expect(screen.getByText('Subtotal')).toBeInTheDocument();
     expect(screen.getByText('$100')).toBeInTheDocument();
@@ -38,7 +30,7 @@ describe('CartSummary Component', () => {
   });
 
   test('should toggle promocode input visibility when icon is clicked', async () => {
-    renderCartSummary();
+    render(<CartSummary {...cartProps}/>);
     // Before clicking the promocode icon, the input should not be visible
     expect(screen.queryByTestId('promocode-input')).not.toBeInTheDocument();
 
@@ -51,7 +43,7 @@ describe('CartSummary Component', () => {
   });
 
   test('should allow entering a promocode when visible', () => {
-    renderCartSummary();
+    render(<CartSummary {...cartProps}/>);
     // Show promocode input by clicking the icon
     const promocodeButton = screen.queryByTestId('promocode-toggle');
     fireEvent.click(promocodeButton as Element);
@@ -68,7 +60,7 @@ describe('CartSummary Component', () => {
   });
 
   test('should render the checkout button and handle clicks', () => {
-    renderCartSummary();
+    render(<CartSummary {...cartProps}/>);
     // Check if the checkout button is present
     const checkoutButton = screen.getByRole('button', { name: /checkout/i });
     expect(checkoutButton).toBeInTheDocument();
