@@ -46,7 +46,7 @@ const CartProductBar: React.FC<CartProductBarProps> = ({
     >
       {!isMobile && (
         <>
-          <IconButton onClick={onSubtractClick}>
+          <IconButton onClick={onSubtractClick} data-testid="subtract-btn">
             <RemoveCircleRoundedIcon width="32px" height="32px" />
           </IconButton>
           <Typography
@@ -59,7 +59,7 @@ const CartProductBar: React.FC<CartProductBarProps> = ({
           >
             {amount}
           </Typography>
-          <IconButton onClick={onAddClick}>
+          <IconButton onClick={onAddClick} data-testid="add-btn">
             <AddCircleIcon color="primary" width="32px" height="32px" />
           </IconButton>
           <Stack
@@ -79,7 +79,7 @@ const CartProductBar: React.FC<CartProductBarProps> = ({
               Quantity
             </Typography>
             <Stack direction="row" alignItems="center">
-              <IconButton onClick={onDeleteClick}>
+              <IconButton onClick={onDeleteClick} data-testid="delete-btn">
                 <DeleteOutlineRoundedIcon
                   width="32px"
                   height="32px"
@@ -114,22 +114,24 @@ const CartProductBar: React.FC<CartProductBarProps> = ({
               >
                 Quantity
               </Typography>
-              <IconButton sx={{ p: 0 }}>
-                <KeyboardArrowDownIcon
-                  fontSize="small"
-                  onClick={() => {
-                    if (openQuantityInput) {
-                      Number.isNaN(amountMobile)
-                        ? onAmountChange(amount)
-                        : onAmountChange(amountMobile);
-                    }
-                    setOpenQuantityInput(!openQuantityInput);
-                  }}
-                />
+              <IconButton
+                sx={{ p: 0 }}
+                data-testid="down-btn"
+                onClick={() => {
+                  if (openQuantityInput) {
+                    Number.isNaN(amountMobile)
+                      ? onAmountChange(amount)
+                      : onAmountChange(amountMobile);
+                  }
+                  setOpenQuantityInput(!openQuantityInput);
+                }}
+              >
+                <KeyboardArrowDownIcon fontSize="small" />
               </IconButton>
             </Stack>
             {openQuantityInput && (
               <Input
+                data-testid="qty-input"
                 type="number"
                 value={amountMobile}
                 placeholder="Quantity"
