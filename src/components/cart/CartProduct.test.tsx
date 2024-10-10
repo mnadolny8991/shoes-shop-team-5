@@ -1,8 +1,6 @@
 import { screen, fireEvent } from '@testing-library/react';
 import { render } from '@/testing/testUtils';
 import '@testing-library/jest-dom';
-import { useMediaQuery } from '@mui/material';
-import CartProductBar from '@/components/cart/CartProductBar';
 import CartProduct from '@/components/cart/CartProduct';
 
 describe('cart product', () => {
