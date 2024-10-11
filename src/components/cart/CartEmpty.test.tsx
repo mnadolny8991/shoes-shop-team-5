@@ -4,7 +4,6 @@ import '@testing-library/jest-dom';
 import { useMediaQuery } from '@mui/material';
 import CartEmpty from '@/components/cart/CartEmpty';
 import { useRouter } from 'next/navigation';
-import { NavigateOptions } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
 describe('cart empty screen', () => {
   const useRouterMock = useRouter as jest.Mock;

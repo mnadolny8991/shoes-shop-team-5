@@ -77,6 +77,7 @@ export default function CustomModal({
           Cancel
         </CustomButton>
         <CustomButton
+          data-testid="delete-btn-modal"
           size={isMobile ? 'm' : 'xl'}
           variant="contained"
           onClick={() => {

@@ -50,6 +50,7 @@ const CartProductBar: React.FC<CartProductBarProps> = ({
             <RemoveCircleRoundedIcon width="32px" height="32px" />
           </IconButton>
           <Typography
+            data-testid="amount"
             sx={{
               fontSize: '24px',
               fontWeight: '400',

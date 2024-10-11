@@ -6,16 +6,18 @@ import CartProduct from '@/components/cart/CartProduct';
 describe('cart product', () => {
   const onDelete = jest.fn();
 
-  test('has all required elements and triggers delete', () => {
-    render(<CartProduct 
-      id={1}
-      name="Nike Air Max"
-      price={200}
-      gender={"Men"}
-      inStock={true}
-      url="https://res.cloudinary.com/devc11z9p/image/upload/v1727117288/thumbnail_irene_kredenets_a910c8d96f.png"
-      onDelete={onDelete}
-    />);
+  test('has all required elements and triggers delete', async () => {
+    render(
+      <CartProduct
+        id={1}
+        name="Nike Air Max"
+        price={200}
+        gender={'Men'}
+        inStock={true}
+        url="https://res.cloudinary.com/devc11z9p/image/upload/v1727117288/thumbnail_irene_kredenets_a910c8d96f.png"
+        onDelete={onDelete}
+      />
+    );
 
     const image = screen.getByAltText('product image');
     expect(image).toBeInTheDocument();
@@ -32,6 +34,9 @@ describe('cart product', () => {
     const deleteBtn = screen.getByTestId('delete-btn');
     expect(deleteBtn).toBeInTheDocument();
     fireEvent.click(deleteBtn);
+    const modalDeleteBtn = await screen.findByTestId('delete-btn-modal');
+    fireEvent.click(modalDeleteBtn);
+
     expect(onDelete).toHaveBeenCalled();
-  })
-})
+  });
+});

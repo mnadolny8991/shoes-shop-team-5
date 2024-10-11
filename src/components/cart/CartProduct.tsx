@@ -51,7 +51,7 @@ const CartProduct: React.FC<CartProductProps> = ({
         },
       }}
     >
-      <DeleteModal 
+      <DeleteModal
         isOpen={openDeleteModal}
         onClose={() => setOpenDeleteModal(false)}
         onDelete={() => onDelete()}
