@@ -92,21 +92,21 @@ describe('ResetPasswordForm', () => {
       json: () => Promise.resolve({}),
     });
 
-    //   renderComponent();
-    //   const passwordInput = screen.getByLabelText(/^password$/i);
-    //   const confirmPasswordInput = screen.getByLabelText(/^confirm password$/i);
-    //   const submitButton = screen.getByRole('button', {
-    //     name: /reset password/i,
-    //   });
+    renderComponent();
+    const passwordInput = screen.getByLabelText('Password*');
+    const confirmPasswordInput = screen.getByLabelText('Confirm password*');
+    const submitButton = screen.getByRole('button', {
+      name: 'Reset Password',
+    });
 
-    //   fireEvent.change(passwordInput, { target: { value: 'StrongPass1' } });
-    //   fireEvent.change(confirmPasswordInput, {
-    //     target: { value: 'StrongPass1' },
-    //   });
-    //   fireEvent.click(submitButton);
+    fireEvent.change(passwordInput, { target: { value: 'StrongPass1' } });
+    fireEvent.change(confirmPasswordInput, {
+      target: { value: 'StrongPass1' },
+    });
+    fireEvent.click(submitButton);
 
-    //   await waitFor(() => {
-    //     expect(mockPush).toHaveBeenCalledWith('/auth/sign-in');
-    //   });
+    await waitFor(() => {
+      expect(mockPush).toHaveBeenCalledWith('/auth/sign-in');
+    });
   });
 });
