@@ -68,8 +68,8 @@ export default function UpdateProfileForm() {
   }, [data, status]);
 
   const mutation = useUpdateUserDataMutation(
-    session?.id!,
-    session?.accessToken!
+    session?.id ? Number(session.id) : undefined,
+    session?.accessToken
   );
   useEffect(() => {
     switch (mutation.status) {
@@ -100,6 +100,12 @@ export default function UpdateProfileForm() {
 
   const handleSubmit: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.preventDefault();
+    if (!session?.id || !session?.accessToken) {
+      setSnackbarMessage('User session is not available');
+      setSnackbarSeverity('error');
+      setOpenSnackbar(true);
+      return;
+    }
     mutation.mutate({
       firstName,
       lastName,
