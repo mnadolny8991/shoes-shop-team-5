@@ -78,4 +78,20 @@ describe('ForgotPasswordForm', () => {
       ).toBeInTheDocument();
     });
   });
+
+  test('disables submit button when email is invalid or empty', () => {
+    renderComponent();
+    const emailInput = screen.getByLabelText('Email*');
+    const submitButton = screen.getByRole('button', { name: 'Reset Password' });
+
+    expect(submitButton).toBeDisabled();
+
+    fireEvent.change(emailInput, { target: { value: 'invalid-email' } });
+    fireEvent.blur(emailInput);
+    expect(submitButton).toBeDisabled();
+
+    fireEvent.change(emailInput, { target: { value: 'valid@email.com' } });
+    fireEvent.blur(emailInput);
+    expect(submitButton).not.toBeDisabled();
+  });
 });
