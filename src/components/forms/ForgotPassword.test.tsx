@@ -39,4 +39,23 @@ describe('ForgotPasswordForm', () => {
       ).not.toBeInTheDocument();
     });
   });
+
+  test('handles server error', async () => {
+    global.fetch = jest.fn().mockResolvedValue({
+      ok: false,
+      json: () =>
+        Promise.resolve({ error: { message: 'Server error occurred' } }),
+    });
+
+    renderComponent();
+    const emailInput = screen.getByLabelText('Email*');
+    const submitButton = screen.getByRole('button', { name: 'Reset Password' });
+
+    fireEvent.change(emailInput, { target: { value: 'valid@email.com' } });
+    fireEvent.click(submitButton);
+
+    await waitFor(() => {
+      expect(screen.getByText('Server error occurred')).toBeInTheDocument();
+    });
+  });
 });
