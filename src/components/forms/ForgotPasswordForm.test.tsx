@@ -1,22 +1,15 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ThemeProvider } from '@mui/material';
-import theme from '@/styles/theme';
+import { QueryClient } from '@tanstack/react-query';
 import ForgotPasswordForm from './ForgotPasswordForm';
+import { render } from '@/testing/testUtils';
 
 describe('ForgotPasswordForm', () => {
   const queryClient = new QueryClient();
 
   const renderComponent = () => {
-    render(
-      <QueryClientProvider client={queryClient}>
-        <ThemeProvider theme={theme}>
-          <ForgotPasswordForm />
-        </ThemeProvider>
-      </QueryClientProvider>
-    );
+    render(<ForgotPasswordForm />);
   };
 
   test('validates email field', async () => {

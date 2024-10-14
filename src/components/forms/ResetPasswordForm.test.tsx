@@ -1,11 +1,10 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ThemeProvider } from '@mui/material';
-import theme from '@/styles/theme';
+import { QueryClient } from '@tanstack/react-query';
 import ResetPasswordForm from './ResetPasswordForm';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { render } from '@/testing/testUtils';
 
 // Mock the next/navigation hooks
 jest.mock('next/navigation', () => ({
@@ -25,13 +24,7 @@ describe('ResetPasswordForm', () => {
   });
 
   const renderComponent = () => {
-    render(
-      <QueryClientProvider client={queryClient}>
-        <ThemeProvider theme={theme}>
-          <ResetPasswordForm />
-        </ThemeProvider>
-      </QueryClientProvider>
-    );
+    render(<ResetPasswordForm />);
   };
 
   test('validates password fields', async () => {
