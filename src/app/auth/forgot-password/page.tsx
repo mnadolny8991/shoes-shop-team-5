@@ -4,7 +4,7 @@ import React from 'react';
 import { Typography, Box, Grid } from '@mui/material';
 import theme from '@/styles/theme';
 import { Logo } from '@/components/logo/Logo';
-import ForgotPasswordForm from '@/components/forms/ForgotPassword';
+import ForgotPasswordForm from '@/components/forms/ForgotPasswordForm';
 
 const LogoContainer = () => {
   return (

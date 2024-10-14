@@ -4,7 +4,7 @@ import '@testing-library/jest-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider } from '@mui/material';
 import theme from '@/styles/theme';
-import ForgotPasswordForm from './ForgotPassword';
+import ForgotPasswordForm from './ForgotPasswordForm';
 
 describe('ForgotPasswordForm', () => {
   const queryClient = new QueryClient();
