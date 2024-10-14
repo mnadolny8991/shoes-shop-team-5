@@ -33,7 +33,6 @@ export default function NavRight() {
   const {
     searchText,
     setSearchText,
-    getSearchParams,
     getSearchParamsWithEmptyFilters,
   } = useSearch();
   const { data: avatar } = useAvatarQuery();

@@ -9,10 +9,14 @@ import {
 } from '@mui/material';
 import Link from 'next/link';
 import { Logo } from '../logo/Logo';
+import { useSearch } from '@/context/SearchContext';
 
 export default function NavLeft() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const {
+    getSearchParamsWithEmptyFilters,
+  } = useSearch();
 
   return (
     <Box
@@ -26,7 +30,7 @@ export default function NavLeft() {
       <Logo />
       {!isMobile && (
         <Link
-          href="/catalog"
+          href={'/catalog?' + getSearchParamsWithEmptyFilters()} 
           style={{ textDecoration: 'none', color: theme.palette.text.primary }}
         >
           <Typography

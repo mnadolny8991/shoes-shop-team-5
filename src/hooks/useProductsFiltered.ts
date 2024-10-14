@@ -1,5 +1,6 @@
 'use client';
 import { Filters } from '@/context/SearchContext';
+import pageSize from '@/data/pageSize';
 import { fetchProductsByFiltersAndName } from '@/lib/api/fetchProducts';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
@@ -9,8 +10,8 @@ const useFilteredProducts = (
   page: number
 ) => {
   const query = useQuery({
-    queryKey: ['products', { searchText, filters, page }],
-    queryFn: () => fetchProductsByFiltersAndName(filters, searchText, page, 6),
+    queryKey: ['products', { filters: JSON.stringify(filters), searchText, page }],
+    queryFn: () => fetchProductsByFiltersAndName(filters, searchText, page, pageSize),
     placeholderData: keepPreviousData,
   });
 
