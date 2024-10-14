@@ -55,12 +55,6 @@ describe('SignInForm', () => {
     });
   });
 
-  // UI Interactions
-  test('forgot password link redirects correctly', () => {
-    const forgotPasswordLink = screen.getByText('Forgot password?');
-    expect(forgotPasswordLink).toHaveAttribute('href', '/auth/forgot-password');
-  });
-
   test('forgot password link redirects correctly', () => {
     const forgotPasswordLink = screen.getByText('Forgot password?');
     expect(forgotPasswordLink).toHaveAttribute('href', '/auth/forgot-password');
@@ -76,7 +70,6 @@ describe('SignInForm', () => {
     expect(rememberMeCheckbox.checked).toBe(true);
   });
 
-  // Session Management
   test('sign in with remember me checked', async () => {
     mockSignIn.mockResolvedValue({ ok: true });
 
