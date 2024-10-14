@@ -25,13 +25,11 @@ const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
   return (
     <LastViewedContextProvider>
       <CartContextProvider>
-        <SearchContextProvider>
-          <MockAppRouterCacheProvider>
-            <QueryClientProvider client={queryClient}>
-              <ThemeProvider theme={theme}>{children}</ThemeProvider>
-            </QueryClientProvider>
-          </MockAppRouterCacheProvider>
-        </SearchContextProvider>
+        <MockAppRouterCacheProvider>
+          <QueryClientProvider client={queryClient}>
+            <ThemeProvider theme={theme}>{children}</ThemeProvider>
+          </QueryClientProvider>
+        </MockAppRouterCacheProvider>
       </CartContextProvider>
     </LastViewedContextProvider>
   );
