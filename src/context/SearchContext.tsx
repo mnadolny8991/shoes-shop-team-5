@@ -47,7 +47,7 @@ const SearchContextProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const searchParams = useSearchParams();
-  const [searchText, setSearchText] = useState( () => searchParams.get('search') ?? '');
+  const [searchText, setSearchText] = useState(() => searchParams.get('search') ?? '');
   const [filters, setFilters] = useState<Filters>(() => generateFilters(searchParams));
 
   const updateFilter = <K extends keyof Filters>(key: K, value: Filters[K]) => {

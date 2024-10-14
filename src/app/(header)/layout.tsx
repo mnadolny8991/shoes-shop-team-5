@@ -4,6 +4,7 @@ import { CartContextProvider } from '@/context/CartContext';
 import LastViewedContextProvider from '@/context/LastViewedContext';
 import { SearchContextProvider } from '@/context/SearchContext';
 import WishlistContextProvider from '@/context/WishlistContext';
+import { Suspense } from 'react';
 
 export default function HeaderLayout({
   children,
@@ -14,10 +15,12 @@ export default function HeaderLayout({
     <WishlistContextProvider>
       <LastViewedContextProvider>
         <CartContextProvider>
-          <SearchContextProvider>
-            <Header />
-            {children}
-          </SearchContextProvider>
+          <Suspense>
+            <SearchContextProvider>
+              <Header />
+              {children}
+            </SearchContextProvider>
+          </Suspense>
         </CartContextProvider>
       </LastViewedContextProvider>
     </WishlistContextProvider>
