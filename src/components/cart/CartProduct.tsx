@@ -4,6 +4,8 @@ import { Box, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import ImageContainer from '@/components/containers/ImageContainer';
 import CartProductBar from '@/components/cart/CartProductBar';
 import { useCartContext } from '@/context/CartContext';
+import DeleteModal from '../modals/DeleteModal';
+import { useState } from 'react';
 
 type CartProductProps = {
   id: number;
@@ -27,6 +29,7 @@ const CartProduct: React.FC<CartProductProps> = ({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { amount, onAmountIncrement, onAmountChange } = useCartContext();
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
   const prodAmount = amount.find((p) => p.id === id)?.amount!;
 
@@ -48,6 +51,13 @@ const CartProduct: React.FC<CartProductProps> = ({
         },
       }}
     >
+      <DeleteModal
+        isOpen={openDeleteModal}
+        onClose={() => setOpenDeleteModal(false)}
+        onDelete={() => onDelete()}
+        title="Delete Product"
+        bodyText="Are you sure?"
+      />
       <ImageContainer
         src={url}
         alt="product image"
@@ -116,7 +126,7 @@ const CartProduct: React.FC<CartProductProps> = ({
             onSubtractClick={() => {
               if (prodAmount > 0) onAmountIncrement(id, '-');
             }}
-            onDeleteClick={onDelete}
+            onDeleteClick={() => setOpenDeleteModal(true)}
             onAmountChange={(newValue: number) => onAmountChange(id, newValue)}
           />
         </Box>
