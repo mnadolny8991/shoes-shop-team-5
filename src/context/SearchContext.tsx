@@ -62,6 +62,7 @@ const SearchContextProvider: React.FC<{ children: React.ReactNode }> = ({
     params.set('gender', 'null');
     params.set('price', 'null');
     params.set('size', 'null');
+    params.set('page', '1');
     return params.toString();
   }, [searchText]);
 
