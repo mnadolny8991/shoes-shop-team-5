@@ -25,6 +25,8 @@ const ResetPasswordForm = () => {
   const [isFirstInteractionConfPass, setIsFirstInteractionConfPass] =
     useState(false);
 
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
   const { error: passError } = useValidate(
     password,
     passwordValidator,
@@ -37,7 +39,7 @@ const ResetPasswordForm = () => {
   );
 
   const mutation = useMutation({
-    mutationFn: ({
+    mutationFn: async ({
       password,
       passwordConfirmation,
       code,
@@ -46,16 +48,27 @@ const ResetPasswordForm = () => {
       passwordConfirmation: string;
       code: string;
     }) => {
-      return fetch(`${apiUrl}/auth/reset-password`, {
+      const response = await fetch(`${apiUrl}/auth/reset-password`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ password, passwordConfirmation, code }),
       });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Invalid or expired reset code');
+      }
+
+      return response.json();
     },
     onSuccess: () => {
+      setErrorMessage(null);
       router.push('/auth/sign-in');
+    },
+    onError: (error: Error) => {
+      setErrorMessage(error.message);
     },
   });
 
@@ -98,13 +111,24 @@ const ResetPasswordForm = () => {
         min={8}
         error={confPassError!}
       />
+      {errorMessage && (
+        <Typography color="error" variant="body2">
+          {errorMessage}
+        </Typography>
+      )}
       <CustomButton
         size={isMobile ? 's' : 'l'}
         variant="contained"
-        disabled={!!passError || !password || !!confPassError || !confPass}
+        disabled={
+          !!passError ||
+          !password ||
+          !!confPassError ||
+          !confPass ||
+          mutation.isPending
+        }
         onClick={onResetPassword}
       >
-        Reset Password
+        {mutation.isPending ? 'Resetting...' : 'Reset Password'}
       </CustomButton>
       <Typography variant="caption" textAlign="center">
         <Link href="/auth/sign-in">Back to log in</Link>
