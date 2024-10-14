@@ -8,6 +8,18 @@ import { CartContextProvider } from '@/context/CartContext';
 import { SearchContextProvider } from '@/context/SearchContext';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
+// Mock AppRouterCacheProvider
+const MockAppRouterCacheProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => <>{children}</>;
+
+// Mock the entire @mui/material-nextjs/v13-appRouter module
+jest.mock('@mui/material-nextjs/v13-appRouter', () => ({
+  AppRouterCacheProvider: MockAppRouterCacheProvider,
+}));
+
 const queryClient = new QueryClient();
 
 const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
@@ -15,11 +27,11 @@ const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
     <LastViewedContextProvider>
       <CartContextProvider>
         <SearchContextProvider>
-          <AppRouterCacheProvider>
+          <MockAppRouterCacheProvider>
             <QueryClientProvider client={queryClient}>
               <ThemeProvider theme={theme}>{children}</ThemeProvider>
             </QueryClientProvider>
-          </AppRouterCacheProvider>
+          </MockAppRouterCacheProvider>
         </SearchContextProvider>
       </CartContextProvider>
     </LastViewedContextProvider>
