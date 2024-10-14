@@ -6,17 +6,8 @@ import { useSession } from 'next-auth/react';
 import useUserData from '@/hooks/useUserData';
 import useUpdateUserDataMutation from '@/hooks/useUpdateUserDataMutation';
 
-jest.mock('next-auth/react', () => ({
-  useSession: jest.fn(),
-}));
-jest.mock('../../hooks/useUserData', () => ({
-  __esModule: true,
-  default: jest.fn(),
-}));
-jest.mock('../../hooks/useUpdateUserDataMutation', () => ({
-  __esModule: true,
-  default: jest.fn(),
-}));
+jest.mock('../../hooks/useUserData');
+jest.mock('../../hooks/useUpdateUserDataMutation');
 
 describe('UpdateProfileForm', () => {
   beforeEach(() => {
