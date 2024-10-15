@@ -14,7 +14,7 @@ const Page = async () => {
     queryKey: ['myProducts'],
     queryFn: async () =>
       mapProductList(
-        await fetchProductsByUserId(session?.id!, session?.accessToken!)
+        await fetchProductsByUserId(session?.id!, session?.accessToken!, '*', 'updatedAt', 'desc')
       ),
   });
 

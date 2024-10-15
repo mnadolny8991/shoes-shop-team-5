@@ -21,7 +21,7 @@ export default async function Page({ searchParams }: {
   console.log('prefetching data...');
   await queryClient.prefetchQuery({
     queryKey: ['products', { filters: JSON.stringify(filters), searchText, page }],
-    queryFn: () => fetchProductsByFiltersAndName(filters, searchText, page, pageSize),
+    queryFn: () => fetchProductsByFiltersAndName(filters, searchText, page, pageSize, '*', 'updatedAt', 'desc'),
   });
 
   return (
