@@ -5,6 +5,6 @@ import { useQuery } from '@tanstack/react-query';
 export const useProductsByUserId = (id: number, token: string) => {
   return useQuery({
     queryKey: ['myProducts'],
-    queryFn: async () => mapProductList(await fetchProductsByUserId(id, token)),
+    queryFn: async () => mapProductList(await fetchProductsByUserId(id, token, '*', 'updatedAt', 'desc')),
   });
 };
