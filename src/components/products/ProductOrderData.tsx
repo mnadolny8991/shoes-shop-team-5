@@ -14,15 +14,15 @@ const ProductOrderData: FC<ProductOrderDataProps> = ({ data }) => {
     >
       <Stack direction="row" justifyContent="center" gap="40px">
         <Stack direction="row" gap={1}>
-          <OrderTypography sx={{ color: '#8C9196' }}>Delivery</OrderTypography>
+          <OrderTypography sx={{ color: '#8C9196' }}>Delivery:</OrderTypography>
           <OrderTypography>{data.delivery}</OrderTypography>
         </Stack>
         <Stack direction="row" gap={1}>
-          <OrderTypography sx={{ color: '#8C9196' }}>Contacts</OrderTypography>
+          <OrderTypography sx={{ color: '#8C9196' }}>Contacts:</OrderTypography>
           <OrderTypography>{data.contacts}</OrderTypography>
         </Stack>
         <Stack direction="row" gap={1}>
-          <OrderTypography sx={{ color: '#8C9196' }}>Payment status</OrderTypography>
+          <OrderTypography sx={{ color: '#8C9196' }}>Payment status:</OrderTypography>
           <OrderTypography>{data.paymentStatus}</OrderTypography>
         </Stack>
       </Stack>

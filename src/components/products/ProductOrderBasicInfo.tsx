@@ -30,18 +30,18 @@ const ProductOrderBasicInfo: FC<ProductOrderBasicInfoProps> = ({
     <Box padding="16px 24px" sx={{ backgroundColor: '#FAFAFA' }}>
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         <Stack direction="row" gap={1}>
-          <OrderTypography>&#8470;{orderNumber} </OrderTypography>
+          <OrderTypography>&#8470;{orderNumber}:</OrderTypography>
           <OrderTypography sx={{ color: '#8C9196' }}>
             {date.toLocaleDateString()}
           </OrderTypography>
         </Stack>
         <Stack direction="row" gap={1}>
-          <OrderTypography sx={{ color: '#8C9196' }}>Products</OrderTypography>
+          <OrderTypography sx={{ color: '#8C9196' }}>Products:</OrderTypography>
           <OrderTypography>{amount}</OrderTypography>
         </Stack>
         <Stack direction="row" gap={4} alignItems="center">
           <Stack direction="row" gap={1}>
-            <OrderTypography sx={{ color: '#8C9196' }}>Summary</OrderTypography>
+            <OrderTypography sx={{ color: '#8C9196' }}>Summary:</OrderTypography>
             <OrderTypography sx={{ fontSize: '16px' }}>{summaryPrice}$</OrderTypography>
           </Stack>
           <Stack direction="row" gap={1} alignItems="center">
