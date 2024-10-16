@@ -8,12 +8,16 @@ export const fetchProductsByUserId = async (
   token: string,
   populate?: string,
   sort?: string,
-  sortDir?: string
+  sortDir?: string,
+  page?: number,
+  itemsPerPage?: number
 ) => {
   return await fetchData(
     `${apiUrl}/products?filters[teamName]=team-5&` +
     `filters[userID]=${id}` +
-    `&populate=${populate ?? '*'}${sort ? '&sort=' + sort + (sortDir ? ':' + sortDir : '') : ''}`,
+    `&populate=${populate ?? '*'}${sort ? '&sort=' + sort + (sortDir ? ':' + sortDir : '') : ''}` +
+    `${page ? `&pagination[page]=${page}` : ''}` +
+    `${itemsPerPage ? `&pagination[pageSize]=${itemsPerPage}` : ''}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

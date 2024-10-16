@@ -15,7 +15,9 @@ export default function MyProducts() {
   const { data: session } = useSession();
   const { data, isLoading } = useProductsByUserId(
     session?.id!,
-    session?.accessToken!
+    session?.accessToken!,
+    1,
+    1
   );
 
   return (
