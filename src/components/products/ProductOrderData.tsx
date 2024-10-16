@@ -12,7 +12,7 @@ const ProductOrderData: FC<ProductOrderDataProps> = ({ data }) => {
       padding="16px 24px"
       sx={{ backgroundColor: '#FAFAFA' }}
     >
-      <Stack direction="row" justifyContent="center" gap="40px">
+      <Stack direction={{ md: 'row' }} justifyContent="center" gap={{ xs: 1, md: '40px' }}>
         <Stack direction="row" gap={1}>
           <OrderTypography sx={{ color: '#8C9196' }}>Delivery:</OrderTypography>
           <OrderTypography>{data.delivery}</OrderTypography>

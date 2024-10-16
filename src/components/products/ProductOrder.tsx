@@ -66,6 +66,7 @@ const ProductOrder: FC<ProductOrderProps> = ({
             if (query.status === 'success') {
               return (
                 <ProductOrderDetails 
+                  key={query.data.id}
                   productInfo={{
                     product: query.data,
                     quantity: products.find((p) => p.productId === query.data.id)?.quantity!,
@@ -73,10 +74,6 @@ const ProductOrder: FC<ProductOrderProps> = ({
                   }}
                 />
               );
-            } else if (query.status === 'pending') {
-              return <Typography variant="h2">Loading...</Typography>;
-            } else {
-              return <Typography variant="h2">Cannot load product data</Typography>
             }
           })}
           <ProductOrderInvoice discount={discount}/>

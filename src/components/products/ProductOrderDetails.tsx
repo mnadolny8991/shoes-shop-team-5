@@ -12,9 +12,9 @@ const ProductOrderDetails: FC<ProductOrderDetailsProps> = ({ productInfo }) => {
   return (
     <Box padding="16px 24px" sx={{ backgroundColor: '#FAFAFA' }}>
       <Stack
-        direction="row"
-        justifyContent="space-between"
-        alignItems="center"
+        direction={{ sm: "row" }}
+        justifyContent={{ sm: 'space-between' }}
+        alignItems={{ sm: "center", xs: 'flex-start' }}
       >
         <Stack 
           direction="row"
@@ -58,7 +58,7 @@ const ProductOrderDetails: FC<ProductOrderDetailsProps> = ({ productInfo }) => {
             <OrderTypography sx={{ lineHeight: '20px' }}>Size: {productInfo.size} EU</OrderTypography>
           </Stack>
         </Stack>
-        <Stack direction="row" gap={1}>
+        <Stack direction="row" gap={1} sx={{ mt: { xs: 1, sm: 0 } }}>
           <OrderTypography sx={{ color: '#8C9196' }}>Quantity:</OrderTypography>
           <OrderTypography >{productInfo.quantity}</OrderTypography>
         </Stack>
