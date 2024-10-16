@@ -1,5 +1,5 @@
 import OrderTypography from '@/styles/OrderTypography';
-import { Box, IconButton, Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import { FC } from 'react';
 import ImageContainer from '../containers/ImageContainer';
 import { Product } from '@/types/product';

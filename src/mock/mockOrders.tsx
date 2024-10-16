@@ -2,6 +2,7 @@ import ProductOrder from "@/components/products/ProductOrder";
 
 const mockOrders = [
   <ProductOrder 
+    key={1}
     orderNumber={1}
     date={new Date()}
     products={[
@@ -25,6 +26,7 @@ const mockOrders = [
     discount={20}
   />,
   <ProductOrder 
+    key={2}
     orderNumber={1}
     date={new Date()}
     products={[
@@ -43,6 +45,7 @@ const mockOrders = [
     discount={20}
   />,
   <ProductOrder 
+    key={3}
     orderNumber={1}
     date={new Date()}
     products={[

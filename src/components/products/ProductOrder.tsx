@@ -3,7 +3,7 @@
 import { FC, useState } from 'react';
 import ProductOrderBasicInfo from './ProductOrderBasicInfo';
 import ProductOrderData from './ProductOrderData';
-import { Divider, Stack, Typography } from '@mui/material';
+import { Divider, Stack } from '@mui/material';
 import ProductOrderDetails from './ProductOrderDetails';
 import mapProduct from '@/mappers/productMappers';
 import { fetchProductById } from '@/lib/api/fetchProducts';

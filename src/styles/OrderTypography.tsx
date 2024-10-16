@@ -1,5 +1,11 @@
 import { styled, Typography } from "@mui/material";
-import { nunitoSans } from "@/styles/theme";
+import { Nunito_Sans } from "next/font/google";
+
+const nunitoSans = Nunito_Sans({
+  weight: ['300', '400', '500', '700'],
+  subsets: ['latin'],
+  display: 'swap',
+});
 
 const OrderTypography = styled(Typography)(({ theme }) => ({
   fontFamily: nunitoSans.style.fontFamily,
