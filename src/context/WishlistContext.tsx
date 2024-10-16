@@ -1,5 +1,5 @@
 'use client';
-import useLocalStorage from '@/hooks/useLocalStorage';
+import { useLocalStorage } from "@uidotdev/usehooks";
 import { ProductsContextType } from '@/types/ProductsContext';
 import { createContext, useContext, ReactNode, FC } from 'react';
 

@@ -2,7 +2,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { CartContextType } from '@/types/cart';
 import { CartProduct } from '@/types/cartProduct';
-import useLocalStorage from '@/hooks/useLocalStorage';
+import { useLocalStorage } from "@uidotdev/usehooks";
 
 const CartContext = createContext<CartContextType | null>(null);
 
