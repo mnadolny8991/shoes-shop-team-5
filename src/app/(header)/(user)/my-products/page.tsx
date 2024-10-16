@@ -6,15 +6,27 @@ import { AuthOptions } from 'next-auth';
 import { dehydrate, QueryClient } from '@tanstack/query-core';
 import { HydrationBoundary } from '@tanstack/react-query';
 import { mapProductList } from '@/mappers/productMappers';
+import pageSize from '@/data/pageSize';
 
-const Page = async () => {
+const Page = async ({
+  searchParams,
+}: {
+  searchParams?: { [key: string]: string | string[] | undefined | null };
+}) => {
   const session = await getServerSession(authOptions as AuthOptions);
   const queryClient = new QueryClient();
+  const page = searchParams?.page ? parseInt(searchParams.page as string) : 1;
   await queryClient.prefetchQuery({
-    queryKey: ['myProducts'],
+    queryKey: ['myProducts', page],
     queryFn: async () =>
-      mapProductList(
-        await fetchProductsByUserId(session?.id!, session?.accessToken!, '*', 'updatedAt', 'desc')
+      await fetchProductsByUserId(
+        session?.id!,
+        session?.accessToken!,
+        '*',
+        'updatedAt',
+        'desc',
+        page,
+        pageSize
       ),
   });
 
