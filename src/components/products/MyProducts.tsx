@@ -17,12 +17,18 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { mapProductList } from '@/mappers/productMappers';
+import { useEffect } from 'react';
 
 export default function MyProducts() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const searchParams = useSearchParams();
   const router = useRouter();
+
+  useEffect(() => {
+    if (!searchParams.get('page')) router.push('/my-products?page=1');
+  }, [searchParams]);
+
   const page = searchParams.get('page')
     ? parseInt(searchParams.get('page') as string)
     : 1;
