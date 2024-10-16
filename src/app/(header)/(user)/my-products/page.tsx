@@ -17,18 +17,16 @@ const Page = async ({
   const queryClient = new QueryClient();
   const page = searchParams?.page ? parseInt(searchParams.page as string) : 1;
   await queryClient.prefetchQuery({
-    queryKey: ['myProducts'],
+    queryKey: ['myProducts', page],
     queryFn: async () =>
-      mapProductList(
-        await fetchProductsByUserId(
-          session?.id!,
-          session?.accessToken!,
-          '*',
-          'updatedAt',
-          'desc',
-          page,
-          1
-        )
+      await fetchProductsByUserId(
+        session?.id!,
+        session?.accessToken!,
+        '*',
+        'updatedAt',
+        'desc',
+        page,
+        pageSize
       ),
   });
 

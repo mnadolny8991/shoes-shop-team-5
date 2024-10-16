@@ -18,6 +18,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { mapProductList } from '@/mappers/productMappers';
 import { useEffect } from 'react';
+import pageSize from '@/data/pageSize';
 
 export default function MyProducts() {
   const theme = useTheme();
@@ -37,7 +38,7 @@ export default function MyProducts() {
     session?.id!,
     session?.accessToken!,
     page,
-    1
+    pageSize
   );
 
   const products = isSuccess ? mapProductList(data) : [];
