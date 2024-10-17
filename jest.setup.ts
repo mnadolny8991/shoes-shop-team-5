@@ -1,4 +1,5 @@
 import { Session } from 'next-auth';
+import { useSearchParams } from 'next/navigation';
 
 jest.mock('next-auth/react', () => {
   const mockSession: Session = {
@@ -18,6 +19,26 @@ jest.mock('next-auth/react', () => {
   };
 });
 jest.mock('next/navigation');
+(useSearchParams as jest.Mock).mockReturnValue({
+  get: (key: string) => {
+    switch (key) {
+      case 'search':
+        return 'defaultSearch'; // Default search value
+      case 'brand':
+        return JSON.stringify(['DefaultBrand']);
+      case 'color':
+        return JSON.stringify(['DefaultColor']);
+      case 'gender':
+        return JSON.stringify(['DefaultGender']);
+      case 'price':
+        return JSON.stringify([0, 999]);
+      case 'size':
+        return JSON.stringify(['DefaultSize']);
+      default:
+        return null;
+    }
+  },
+});
 jest.mock('@mui/material', () => {
   const originalModule = jest.requireActual('@mui/material');
   return {

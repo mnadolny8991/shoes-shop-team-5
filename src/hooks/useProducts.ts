@@ -13,7 +13,7 @@ const useProducts = (useProductsContext: () => ProductsContextType) => {
       queryFn: async () => mapProduct(await fetchProductById(id)),
       retry: false,
     };
-  });
+  }).reverse();
   const products = useQueries({ queries })
     .filter((result, index) => {
       if (result.isSuccess) {

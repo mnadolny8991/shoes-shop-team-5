@@ -1,7 +1,7 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { useSearch } from '@/context/SearchContext';
+import { FC, useCallback, useEffect, useRef, useState } from 'react';
+import { Filters, useSearch } from '@/context/SearchContext';
 import ProductsGrid from '@/components/products/ProductsGrid';
 import NothingFound from '@/components/products/NothingFound';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
@@ -18,38 +18,42 @@ const Catalog = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const [page, setPage] = useState<number>(1);
-  const { searchText, filters, setSearchText, setFilters, getSearchParams } =
-    useSearch();
-  const filtersDebounced = useDebounce(filters, 500, filters);
-  const searchTextDebounced = useDebounce(searchText, searchDebounceTime, '');
+  const [page, setPage] = useState<number>(() => parseInt(searchParams.get('page') ?? '1'));
+  const { searchText, filters } = useSearch();
+  const filtersDebounced = useDebounce(filters, 300, filters);
   const { data, status, error, isPlaceholderData } = useFilteredProducts(
-    searchTextDebounced,
+    searchText,
     filtersDebounced,
     page
   );
 
   useEffect(() => {
-    // init filters and search text from the searchParams
-    setSearchText(searchParams.get('search') ?? '');
-    setFilters({
-      brand: JSON.parse(searchParams.get('brand') ?? 'null') ?? [],
-      color: JSON.parse(searchParams.get('color') ?? 'null') ?? [],
-      gender: JSON.parse(searchParams.get('gender') ?? 'null') ?? [],
-      price: JSON.parse(searchParams.get('price') ?? 'null') ?? [0, 999],
-      size: JSON.parse(searchParams.get('size') ?? 'null') ?? [],
-    });
-  }, [searchParams, setFilters, setSearchText]);
+    router.push(pathname + '?' + getSearchParams(searchText, filtersDebounced, page));
+  }, [searchText, filtersDebounced, page, pathname, router]);
 
-  useEffect(() => {
-    router.push(pathname + '?' + getSearchParams());
-  }, [
-    searchTextDebounced,
-    filtersDebounced,
-    pathname,
-    router,
-    getSearchParams,
-  ]);
+  // useEffect(() => {
+  //   // init filters and search text from the searchParams
+  //   setSearchText(searchParams.get('search') ?? '');
+  //   setFilters({
+  //     brand: JSON.parse(searchParams.get('brand') ?? 'null') ?? [],
+  //     color: JSON.parse(searchParams.get('color') ?? 'null') ?? [],
+  //     gender: JSON.parse(searchParams.get('gender') ?? 'null') ?? [],
+  //     price: JSON.parse(searchParams.get('price') ?? 'null') ?? [0, 999],
+  //     size: JSON.parse(searchParams.get('size') ?? 'null') ?? [],
+  //   });
+  //   setPage(JSON.parse(searchParams.get('page') ?? 'null') ?? 1);
+  // }, [searchParams, setFilters, setSearchText]);
+
+  // useEffect(() => {
+  //   router.push(pathname + '?' + getSearchParams() + `&page=${page}`);
+  // }, [
+  //   searchTextDebounced,
+  //   filtersDebounced,
+  //   pathname,
+  //   router,
+  //   getSearchParams,
+  //   page,
+  // ]);
 
   const products = status === 'success' ? mapProductList(data) : [];
   const hasNextPage =
@@ -101,5 +105,17 @@ const Catalog = () => {
     </>
   );
 };
+
+function getSearchParams(search: string, filters: Filters, page: number) {
+  const params = new URLSearchParams();
+  params.set('search', search);
+  params.set('brand', JSON.stringify(filters.brand));
+  params.set('color', JSON.stringify(filters.color));
+  params.set('gender', JSON.stringify(filters.gender));
+  params.set('price', JSON.stringify(filters.price));
+  params.set('size', JSON.stringify(filters.size));
+  params.set('page', page.toString());
+  return params.toString();
+}
 
 export default Catalog;
