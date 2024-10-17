@@ -1,10 +1,12 @@
 'use client';
 
 import {
+  Alert,
   Box,
   Checkbox,
   FormControlLabel,
   Link,
+  Snackbar,
   Stack,
   useMediaQuery,
   useTheme,
@@ -16,7 +18,6 @@ import useValidate from '@/hooks/useValidate';
 import { emailValidator, passwordValidator } from '@/lib/validators';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import ServerErrorBox from '../containers/ServerErrorBox';
 
 export default function SignInForm() {
   const theme = useTheme();
@@ -66,7 +67,15 @@ export default function SignInForm() {
     <form onSubmit={handleSubmit}>
       <Box maxWidth={{ xs: 320, md: 436 }}>
         <Stack spacing={2} mt={{ xs: '25px', md: '48px' }}>
-          <ServerErrorBox message={serverError} submessages={[]} />
+          <Snackbar
+            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            open={!!serverError}
+            autoHideDuration={2000}
+          >
+            <Alert severity="error">
+              {serverError}
+            </Alert>
+          </Snackbar>
           <TextField
             value={email}
             onBlur={(e) => setIsFirstInteractionEmail(true)}

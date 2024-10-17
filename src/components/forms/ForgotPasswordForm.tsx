@@ -1,4 +1,4 @@
-import { Typography, useMediaQuery } from '@mui/material';
+import { Alert, Snackbar, Typography, useMediaQuery } from '@mui/material';
 import ServerErrorBox from '../containers/ServerErrorBox';
 import TextField from '../input/TextField';
 import Link from 'next/link';
@@ -41,11 +41,20 @@ const ForgotPasswordForm = () => {
   };
   return (
     <>
-      {' '}
-      <ServerErrorBox
-        message={mutation?.error?.message ?? ''}
-        submessages={[]}
-      />
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        open={mutation.status === 'error'}
+        autoHideDuration={2000}
+      >
+        <Alert severity="error">{mutation.error?.message || 'Server error'}</Alert>
+      </Snackbar>
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        open={mutation.status === 'success'}
+        autoHideDuration={2000}
+      >
+        <Alert severity="success">Reset password instructions have been sent</Alert>
+      </Snackbar>
       <TextField
         value={email}
         onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -63,11 +72,6 @@ const ForgotPasswordForm = () => {
       {mutation.status === 'pending' && (
         <Typography variant="caption" textAlign="center">
           Loading...
-        </Typography>
-      )}
-      {mutation.status === 'success' && (
-        <Typography variant="caption" textAlign="center">
-          Password reset email has been sent
         </Typography>
       )}
       <CustomButton
