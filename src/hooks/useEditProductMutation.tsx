@@ -18,7 +18,7 @@ export const useEditProductMutation = (id: number, token: string) => {
     mutationFn: (id: number) => deleteFile(id, token),
   });
 
-  const { mutate: editProduct, error: errorEditingProduct } = useMutation({
+  const { mutate: editProduct, error: errorEditingProduct, status: editingStatus } = useMutation({
     mutationFn: ({ productProps }: ProductUpdatingProps) =>
       updateProduct(productProps, id, token),
     onSuccess: async (res, { imagesToDelete }) => {
@@ -29,16 +29,18 @@ export const useEditProductMutation = (id: number, token: string) => {
         images.forEach((image) => image.related ?? deleteImage(image.id));
       }
 
-      queryClient.setQueryData(['myProducts'], (old: Product[]) =>
-        old.with(
-          old.findIndex((oldProduct) => oldProduct.id === id),
-          product
-        )
-      );
+      queryClient.invalidateQueries({ queryKey: ['myProducts'] });
+      
+      // queryClient.setQueryData(['myProducts'], (old: Product[]) =>
+      //   old.with(
+      //     old.findIndex((oldProduct) => oldProduct.id === id),
+      //     product
+      //   )
+      // );
     },
   });
 
-  const { mutate: uploadImagesThenEditProduct, error: errorUploading } =
+  const { mutate: uploadImagesThenEditProduct, error: errorUploading, status: uploadingStatus } =
     useMutation({
       mutationFn: ({ files }: ProductUpdatingProps) => {
         const formData = new FormData();
@@ -59,5 +61,7 @@ export const useEditProductMutation = (id: number, token: string) => {
     uploadImagesThenEditProduct,
     errorUploading,
     errorEditingProduct,
+    uploadingStatus,
+    editingStatus,
   };
 };
