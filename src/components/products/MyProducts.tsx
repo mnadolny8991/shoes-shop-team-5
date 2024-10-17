@@ -28,7 +28,7 @@ export default function MyProducts() {
 
   useEffect(() => {
     if (!searchParams.get('page')) router.push('/my-products?page=1');
-  }, [searchParams]);
+  }, [searchParams, router]);
 
   const page = searchParams.get('page')
     ? parseInt(searchParams.get('page') as string)

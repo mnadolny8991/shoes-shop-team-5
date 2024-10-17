@@ -1,5 +1,4 @@
 import { Alert, Snackbar, Typography, useMediaQuery } from '@mui/material';
-import ServerErrorBox from '../containers/ServerErrorBox';
 import TextField from '../input/TextField';
 import Link from 'next/link';
 import CustomButton from '../buttons/CustomButton';

@@ -1,6 +1,5 @@
 import { MoreHoriz } from '@mui/icons-material';
-import { IconButton, Menu, MenuItem, Typography } from '@mui/material';
-import ServerErrorBox from '@/components/containers/ServerErrorBox';
+import { Alert, IconButton, Menu, MenuItem, Snackbar, Typography } from '@mui/material';
 import ProductForm from '@/components/forms/ProductForm';
 import DeleteModal from '@/components/modals/DeleteModal';
 import EditProductModal from '@/components/modals/EditProductModal';
@@ -140,16 +139,20 @@ export default function AdminMenu({ product }: { product: Product }) {
         bodyText={`${name}  $${price}`}
       />
       <EditProductModal isOpen={isEditModalOpen} onClose={handleEditClose}>
-        <ServerErrorBox
-          message={errorUploading?.message || ''}
-          submessages={[]}
-          sx={{ width: 'fit-content', my: '1rem' }}
-        />
-        <ServerErrorBox
-          message={errorEditingProduct?.message || ''}
-          submessages={[]}
-          sx={{ width: 'fit-content', my: '1rem' }}
-        />
+        <Snackbar
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          open={!!errorUploading}
+          autoHideDuration={2000}
+        >
+          <Alert severity="error">{errorUploading?.message || 'Server error'}</Alert>
+        </Snackbar>
+        <Snackbar
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          open={!!errorEditingProduct}
+          autoHideDuration={2000}
+        >
+          <Alert severity="error">{errorEditingProduct?.message || 'Server error'}</Alert>
+        </Snackbar>
         <ProductForm
           title="Edit product"
           description=""
