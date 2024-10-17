@@ -67,7 +67,7 @@ describe('ForgotPasswordForm', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText('Password reset email has been sent')
+        screen.getByText('Reset password instructions have been sent')
       ).toBeInTheDocument();
     });
   });
