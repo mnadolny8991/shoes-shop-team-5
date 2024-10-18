@@ -15,7 +15,7 @@ import CartEmpty from '@/components/cart/CartEmpty';
 import { createPortal } from 'react-dom';
 import { useEffect, useState } from 'react';
 import useCartProducts from '@/hooks/useCartProducts';
-import DeleteModal from '@/components/modals/DeleteModal';
+import CustomButton from '@/components/buttons/CustomButton';
 
 type CartProps = {};
 
@@ -80,17 +80,32 @@ const Cart: React.FC<CartProps> = () => {
         </Stack>
       </Box>
       {!empty && (
-        <CartSummary
-          subtotal={products.reduce(
-            (acc, val) =>
-              val.price * amount.find((a) => a.id === val.id)?.amount! + acc,
-            0
-          )}
-          shipping={20}
-          tax={0}
-          sx={{ mt: totalDown ? '80px' : 0 }}
-        />
-      )}
+        <Box width={{xs:320, md:400}}>
+          <CartSummary
+            subtotal={products.reduce(
+              (acc, val) =>
+                val.price * amount.find((a) => a.id === val.id)?.amount! + acc,
+              0
+            )}
+            shipping={20}
+            tax={0}
+            sx={{ mt: totalDown ? '80px' : 0 }}
+          />
+          <CustomButton
+            href="/checkout"
+            size="m"
+            variant="contained"
+            sx={{
+              mt: {
+                md: '113px',
+                xs: '84px',
+              }
+            }}
+          >
+          Checkout
+        </CustomButton>
+      </Box>
+    )}
     </Stack>
   );
 };
