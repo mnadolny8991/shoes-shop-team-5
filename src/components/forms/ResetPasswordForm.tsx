@@ -1,6 +1,6 @@
 'use client';
 
-import { Typography, useMediaQuery } from '@mui/material';
+import { Alert, Snackbar, Typography, useMediaQuery } from '@mui/material';
 import { useState } from 'react';
 import CustomButton from '@/components/buttons/CustomButton';
 import Link from 'next/link';
@@ -24,8 +24,6 @@ const ResetPasswordForm = () => {
   const [isFirstInteractionPass, setIsFirstInteractionPass] = useState(false);
   const [isFirstInteractionConfPass, setIsFirstInteractionConfPass] =
     useState(false);
-
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const { error: passError } = useValidate(
     password,
@@ -64,11 +62,7 @@ const ResetPasswordForm = () => {
       return response.json();
     },
     onSuccess: () => {
-      setErrorMessage(null);
-      router.push('/auth/sign-in');
-    },
-    onError: (error: Error) => {
-      setErrorMessage(error.message);
+      setTimeout(() => router.push('/auth/sign-in'), 2000);
     },
   });
 
@@ -111,11 +105,20 @@ const ResetPasswordForm = () => {
         min={8}
         error={confPassError!}
       />
-      {errorMessage && (
-        <Typography color="error" variant="body2">
-          {errorMessage}
-        </Typography>
-      )}
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        open={mutation.status === 'error'}
+        autoHideDuration={2000}
+      >
+        <Alert severity="error">{mutation.error?.message || 'Server error'}</Alert>
+      </Snackbar>
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        open={mutation.status === 'success'}
+        autoHideDuration={2000}
+      >
+        <Alert severity="success">The password has been successfully reset</Alert>
+      </Snackbar>
       <CustomButton
         size={isMobile ? 's' : 'l'}
         variant="contained"

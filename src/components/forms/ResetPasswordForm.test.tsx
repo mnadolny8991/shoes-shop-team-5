@@ -100,6 +100,6 @@ describe('ResetPasswordForm', () => {
 
     await waitFor(() => {
       expect(mockPush).toHaveBeenCalledWith('/auth/sign-in');
-    });
+    }, { timeout: 3000 });
   });
 });

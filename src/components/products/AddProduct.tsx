@@ -6,12 +6,12 @@ import {
   Alert,
   Backdrop,
   CircularProgress,
+  Snackbar,
   Stack,
   Typography,
 } from '@mui/material';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
-import ServerErrorBox from '@/components/containers/ServerErrorBox';
 
 type AddProductProps = {
   title: string;
@@ -51,11 +51,13 @@ export default function AddProduct({
   };
   return (
     <>
-      <ServerErrorBox
-        message={error?.message || ''}
-        submessages={[]}
-        sx={{ width: 'fit-content', my: '1rem' }}
-      />
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        open={!!error}
+        autoHideDuration={2000}
+      >
+        <Alert severity="error">{error?.message || 'Server error'}</Alert>
+      </Snackbar>
       <ProductForm
         title={title}
         description={description}

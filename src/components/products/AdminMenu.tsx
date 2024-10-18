@@ -1,6 +1,5 @@
 import { MoreHoriz } from '@mui/icons-material';
-import { IconButton, Menu, MenuItem, Typography } from '@mui/material';
-import ServerErrorBox from '@/components/containers/ServerErrorBox';
+import { Alert, IconButton, Menu, MenuItem, Snackbar, Typography } from '@mui/material';
 import ProductForm from '@/components/forms/ProductForm';
 import DeleteModal from '@/components/modals/DeleteModal';
 import EditProductModal from '@/components/modals/EditProductModal';
@@ -13,7 +12,8 @@ import {
 } from '@/hooks/useEditProductMutation';
 import { useQueryClient } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { updateProduct } from '@/lib/api/fetchProducts';
 
 export default function AdminMenu({ product }: { product: Product }) {
   const { data: session } = useSession();
@@ -22,6 +22,7 @@ export default function AdminMenu({ product }: { product: Product }) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDuplicateModalOpen, setIsDuplicateModalOpen] = useState(false);
   const queryClient = useQueryClient();
+  const [editPromptStatus, setEditPromptStatus] = useState('');
 
   const { id, name, price, images } = product;
 
@@ -31,7 +32,13 @@ export default function AdminMenu({ product }: { product: Product }) {
     uploadImagesThenEditProduct,
     errorUploading,
     errorEditingProduct,
+    editingStatus,
+    uploadingStatus,
   } = useEditProductMutation(id, session?.accessToken!);
+
+  useEffect(() => {
+    setEditPromptStatus(editingStatus);
+  }, [editingStatus]);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -139,17 +146,23 @@ export default function AdminMenu({ product }: { product: Product }) {
         title="Are you sure to delete selected product?"
         bodyText={`${name}  $${price}`}
       />
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        open={editPromptStatus === 'success'}
+        autoHideDuration={2000}
+        onClose={() => setEditPromptStatus('')}
+      >
+        <Alert severity="success">Product saved</Alert>
+      </Snackbar>
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        open={editPromptStatus === 'error'}
+        autoHideDuration={2000}
+        onClose={() => setEditPromptStatus('')}
+      >
+        <Alert severity="error">{JSON.stringify(errorEditingProduct?.message) || 'Server error'}</Alert>
+      </Snackbar>
       <EditProductModal isOpen={isEditModalOpen} onClose={handleEditClose}>
-        <ServerErrorBox
-          message={errorUploading?.message || ''}
-          submessages={[]}
-          sx={{ width: 'fit-content', my: '1rem' }}
-        />
-        <ServerErrorBox
-          message={errorEditingProduct?.message || ''}
-          submessages={[]}
-          sx={{ width: 'fit-content', my: '1rem' }}
-        />
         <ProductForm
           title="Edit product"
           description=""
