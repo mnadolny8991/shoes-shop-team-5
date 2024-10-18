@@ -13,7 +13,6 @@ import {
 import { useQueryClient } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
-import { updateProduct } from '@/lib/api/fetchProducts';
 
 export default function AdminMenu({ product }: { product: Product }) {
   const { data: session } = useSession();
@@ -26,7 +25,13 @@ export default function AdminMenu({ product }: { product: Product }) {
 
   const { id, name, price, images } = product;
 
-  const { deleteProduct } = useDeleteProductMutation(id, session?.accessToken!);
+  const handleDeleteSuccess = () => {
+    handleEditClose();
+    handleMenuClose();
+  }
+
+  const { mutate: deleteProduct, status: deletingStatus, error: deletingError } 
+    = useDeleteProductMutation(id, session?.accessToken!, handleDeleteSuccess);
   const {
     editProduct,
     uploadImagesThenEditProduct,
@@ -146,6 +151,14 @@ export default function AdminMenu({ product }: { product: Product }) {
         title="Are you sure to delete selected product?"
         bodyText={`${name}  $${price}`}
       />
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        open={deletingStatus === 'success'}
+        autoHideDuration={2000}
+        onClose={() => setEditPromptStatus('')}
+      >
+        <Alert severity="success">Product deleted</Alert>
+      </Snackbar>
       <Snackbar
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         open={editPromptStatus === 'success'}
