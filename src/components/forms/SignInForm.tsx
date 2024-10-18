@@ -72,9 +72,7 @@ export default function SignInForm() {
             open={!!serverError}
             autoHideDuration={2000}
           >
-            <Alert severity="error">
-              {serverError}
-            </Alert>
+            <Alert severity="error">{serverError}</Alert>
           </Snackbar>
           <TextField
             value={email}

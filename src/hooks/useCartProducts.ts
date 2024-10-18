@@ -33,7 +33,7 @@ const useCartProducts = () => {
     .map((result) => result.data)
     .filter((product) => product) as Product[];
 
-  return {products, isLoading};
+  return { products, isLoading };
 };
 
 export default useCartProducts;

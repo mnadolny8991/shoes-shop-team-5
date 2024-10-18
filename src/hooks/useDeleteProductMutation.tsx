@@ -3,7 +3,11 @@ import { deleteProductReturnImages } from '@/lib/api/fetchProducts';
 import { Product } from '@/types/product';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-export const useDeleteProductMutation = (id: number, token: string, onSuccess: () => void) => {
+export const useDeleteProductMutation = (
+  id: number,
+  token: string,
+  onSuccess: () => void
+) => {
   const queryClient = useQueryClient();
 
   return useMutation({

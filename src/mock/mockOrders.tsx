@@ -1,7 +1,7 @@
-import ProductOrder from "@/components/products/ProductOrder";
+import ProductOrder from '@/components/products/ProductOrder';
 
 const mockOrders = [
-  <ProductOrder 
+  <ProductOrder
     key={1}
     orderNumber={1}
     date={new Date()}
@@ -15,7 +15,7 @@ const mockOrders = [
         productId: 1983,
         size: 38,
         quantity: 1,
-      }
+      },
     ]}
     shipmentStatus="Shipped"
     data={{
@@ -25,7 +25,7 @@ const mockOrders = [
     }}
     discount={20}
   />,
-  <ProductOrder 
+  <ProductOrder
     key={2}
     orderNumber={1}
     date={new Date()}
@@ -34,7 +34,7 @@ const mockOrders = [
         productId: 1983,
         size: 38,
         quantity: 1,
-      }
+      },
     ]}
     shipmentStatus="Cancelled"
     data={{
@@ -44,7 +44,7 @@ const mockOrders = [
     }}
     discount={20}
   />,
-  <ProductOrder 
+  <ProductOrder
     key={3}
     orderNumber={1}
     date={new Date()}
@@ -58,7 +58,7 @@ const mockOrders = [
         productId: 1983,
         size: 38,
         quantity: 1,
-      }
+      },
     ]}
     shipmentStatus="Recieved"
     data={{
@@ -67,7 +67,7 @@ const mockOrders = [
       paymentStatus: 'After payment',
     }}
     discount={20}
-  />
+  />,
 ];
 
 export default mockOrders;

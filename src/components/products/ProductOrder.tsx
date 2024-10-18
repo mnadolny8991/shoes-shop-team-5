@@ -29,7 +29,7 @@ const ProductOrder: FC<ProductOrderProps> = ({
   products,
   shipmentStatus,
   data,
-  discount
+  discount,
 }) => {
   const [expanded, setExpanded] = useState<boolean>(false);
   const queriesData = products.map((product) => ({
@@ -37,12 +37,16 @@ const ProductOrder: FC<ProductOrderProps> = ({
     queryFn: async () => mapProduct(await fetchProductById(product.productId)),
   }));
   const queries = useQueries({ queries: queriesData });
-  const totalPrice = queries.reduce((total, query) => 
-    query.data
-      ? total + (query.data.price * products.find((p) => p.productId === query.data.id)!.quantity)
-      : total
-  , 0);
-  const isLoading = queries.some(query => query.isLoading);
+  const totalPrice = queries.reduce(
+    (total, query) =>
+      query.data
+        ? total +
+          query.data.price *
+            products.find((p) => p.productId === query.data.id)!.quantity
+        : total,
+    0
+  );
+  const isLoading = queries.some((query) => query.isLoading);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -59,26 +63,29 @@ const ProductOrder: FC<ProductOrderProps> = ({
         expand={expanded}
         onExpandClick={handleExpandClick}
       />
-      {expanded &&
+      {expanded && (
         <Stack divider={<Divider sx={{ color: '#E7EBEF' }} />}>
           <ProductOrderData data={data} />
           {queries.map((query) => {
             if (query.status === 'success') {
               return (
-                <ProductOrderDetails 
+                <ProductOrderDetails
                   key={query.data.id}
                   productInfo={{
                     product: query.data,
-                    quantity: products.find((p) => p.productId === query.data.id)?.quantity!,
-                    size: products.find((p) => p.productId === query.data.id)?.size!,
+                    quantity: products.find(
+                      (p) => p.productId === query.data.id
+                    )?.quantity!,
+                    size: products.find((p) => p.productId === query.data.id)
+                      ?.size!,
                   }}
                 />
               );
             }
           })}
-          <ProductOrderInvoice discount={discount}/>
+          <ProductOrderInvoice discount={discount} />
         </Stack>
-      }
+      )}
     </Stack>
   );
 };

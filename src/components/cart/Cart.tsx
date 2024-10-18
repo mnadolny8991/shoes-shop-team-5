@@ -30,7 +30,7 @@ const Cart: React.FC<CartProps> = () => {
   useEffect(() => {
     setIsMounted(true);
   }, []);
-  
+
   if (!isMounted || isLoading) {
     return <CircularProgress />;
   }
@@ -80,7 +80,7 @@ const Cart: React.FC<CartProps> = () => {
         </Stack>
       </Box>
       {!empty && (
-        <Box width={{xs:320, md:400}}>
+        <Box width={{ xs: 320, md: 400 }}>
           <CartSummary
             subtotal={products.reduce(
               (acc, val) =>
@@ -99,13 +99,13 @@ const Cart: React.FC<CartProps> = () => {
               mt: {
                 md: '113px',
                 xs: '84px',
-              }
+              },
             }}
           >
-          Checkout
-        </CustomButton>
-      </Box>
-    )}
+            Checkout
+          </CustomButton>
+        </Box>
+      )}
     </Stack>
   );
 };

@@ -10,8 +10,20 @@ const useFilteredProducts = (
   page: number
 ) => {
   const query = useQuery({
-    queryKey: ['products', { filters: JSON.stringify(filters), searchText, page }],
-    queryFn: () => fetchProductsByFiltersAndName(filters, searchText, page, pageSize, '*', 'updatedAt', 'desc'),
+    queryKey: [
+      'products',
+      { filters: JSON.stringify(filters), searchText, page },
+    ],
+    queryFn: () =>
+      fetchProductsByFiltersAndName(
+        filters,
+        searchText,
+        page,
+        pageSize,
+        '*',
+        'updatedAt',
+        'desc'
+      ),
     placeholderData: keepPreviousData,
   });
 

@@ -18,10 +18,10 @@ export default function HeaderLayout({
         <LastViewedContextProvider>
           <CartContextProvider>
             <Suspense>
-                <SearchContextProvider>
-                  <Header />
-                  {children}
-                </SearchContextProvider>
+              <SearchContextProvider>
+                <Header />
+                {children}
+              </SearchContextProvider>
             </Suspense>
           </CartContextProvider>
         </LastViewedContextProvider>

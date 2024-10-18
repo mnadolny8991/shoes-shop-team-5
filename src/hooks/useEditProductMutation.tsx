@@ -20,7 +20,11 @@ export const useEditProductMutation = (id: number, token: string) => {
     },
   });
 
-  const { mutate: editProduct, error: errorEditingProduct, status: editingStatus } = useMutation({
+  const {
+    mutate: editProduct,
+    error: errorEditingProduct,
+    status: editingStatus,
+  } = useMutation({
     mutationFn: ({ productProps }: ProductUpdatingProps) => {
       return updateProduct(productProps, id, token);
     },
@@ -30,7 +34,7 @@ export const useEditProductMutation = (id: number, token: string) => {
         const images: { id: number; related?: { id: number } }[] =
           await fetchFilesByIds(imagesToDelete);
         images.forEach((image) => image.related ?? deleteImage(image.id));
-      } 
+      }
       queryClient.invalidateQueries({ queryKey: ['myProducts'] });
       queryClient.invalidateQueries({ queryKey: ['product', id] });
       // queryClient.refetchQueries({ queryKey: ['product', id] });
@@ -44,21 +48,24 @@ export const useEditProductMutation = (id: number, token: string) => {
     },
   });
 
-  const { mutate: uploadImagesThenEditProduct, error: errorUploading, status: uploadingStatus } =
-    useMutation({
-      mutationFn: ({ files }: ProductUpdatingProps) => {
-        const formData = new FormData();
-        files.forEach((file) => formData.append('files', file));
-        return uploadFile(formData);
-      },
-      onSuccess: (res, productUpdatingProps) => {
-        productUpdatingProps.productProps.images = [
-          ...productUpdatingProps.productProps.images!,
-          ...res.map(({ id }: { id: number }) => id),
-        ];
-        editProduct(productUpdatingProps);
-      },
-    });
+  const {
+    mutate: uploadImagesThenEditProduct,
+    error: errorUploading,
+    status: uploadingStatus,
+  } = useMutation({
+    mutationFn: ({ files }: ProductUpdatingProps) => {
+      const formData = new FormData();
+      files.forEach((file) => formData.append('files', file));
+      return uploadFile(formData);
+    },
+    onSuccess: (res, productUpdatingProps) => {
+      productUpdatingProps.productProps.images = [
+        ...productUpdatingProps.productProps.images!,
+        ...res.map(({ id }: { id: number }) => id),
+      ];
+      editProduct(productUpdatingProps);
+    },
+  });
 
   return {
     editProduct,

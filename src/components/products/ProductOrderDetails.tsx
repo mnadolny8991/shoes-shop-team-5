@@ -12,29 +12,25 @@ const ProductOrderDetails: FC<ProductOrderDetailsProps> = ({ productInfo }) => {
   return (
     <Box padding="16px 24px" sx={{ backgroundColor: '#FAFAFA' }}>
       <Stack
-        direction={{ sm: "row" }}
+        direction={{ sm: 'row' }}
         justifyContent={{ sm: 'space-between' }}
-        alignItems={{ sm: "center", xs: 'flex-start' }}
+        alignItems={{ sm: 'center', xs: 'flex-start' }}
       >
-        <Stack 
-          direction="row"
-          gap="20px"
-          alignItems="center"
-        >
-          <ImageContainer 
+        <Stack direction="row" gap="20px" alignItems="center">
+          <ImageContainer
             src={productInfo.product.images[0].url}
             alt={productInfo.product.images[0].alternativeText}
             width={104}
             height={104}
           />
-          <Stack 
+          <Stack
             gap={1}
             sx={{
               minWidth: { lg: '426px', xs: 'none' },
             }}
           >
             <Stack>
-              <Typography 
+              <Typography
                 sx={{
                   fontSize: '24px',
                   lineHeight: '28.15px',
@@ -55,16 +51,20 @@ const ProductOrderDetails: FC<ProductOrderDetailsProps> = ({ productInfo }) => {
                 {productInfo.product.gender.name}&apos;s shoes
               </Typography>
             </Stack>
-            <OrderTypography sx={{ lineHeight: '20px' }}>Size: {productInfo.size} EU</OrderTypography>
+            <OrderTypography sx={{ lineHeight: '20px' }}>
+              Size: {productInfo.size} EU
+            </OrderTypography>
           </Stack>
         </Stack>
         <Stack direction="row" gap={1} sx={{ mt: { xs: 1, sm: 0 } }}>
           <OrderTypography sx={{ color: '#8C9196' }}>Quantity:</OrderTypography>
-          <OrderTypography >{productInfo.quantity}</OrderTypography>
+          <OrderTypography>{productInfo.quantity}</OrderTypography>
         </Stack>
         <Stack direction="row" gap={1}>
           <OrderTypography sx={{ color: '#8C9196' }}>Price:</OrderTypography>
-          <OrderTypography sx={{ fontSize: '16px' }}>{productInfo.product.price}$</OrderTypography>
+          <OrderTypography sx={{ fontSize: '16px' }}>
+            {productInfo.product.price}$
+          </OrderTypography>
         </Stack>
       </Stack>
     </Box>

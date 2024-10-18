@@ -3,7 +3,7 @@ import { fetchProductById } from '@/lib/api/fetchProducts';
 import mapProduct from '@/mappers/productMappers';
 import { dehydrate, hydrate, QueryClient } from '@tanstack/query-core';
 import { HydrationBoundary } from '@tanstack/react-query';
-import { revalidatePath } from 'next/cache'
+import { revalidatePath } from 'next/cache';
 
 export const dynamic = 'force-dynamic';
 
@@ -22,8 +22,7 @@ export default async function Page({ params }: { params: { id: string } }) {
       <SingleProductPage id={id} />
     </HydrationBoundary>
   );
-  
-  
+
   // const id = parseInt(params.id);
   // return <SingleProductPage id={id} />;
 }

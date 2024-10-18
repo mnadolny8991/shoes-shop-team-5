@@ -18,7 +18,9 @@ const Catalog = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const [page, setPage] = useState<number>(() => parseInt(searchParams.get('page') ?? '1'));
+  const [page, setPage] = useState<number>(() =>
+    parseInt(searchParams.get('page') ?? '1')
+  );
   const { searchText, filters } = useSearch();
   const filtersDebounced = useDebounce(filters, 300, filters);
   const { data, status, error, isPlaceholderData } = useFilteredProducts(
@@ -28,7 +30,9 @@ const Catalog = () => {
   );
 
   useEffect(() => {
-    router.push(pathname + '?' + getSearchParams(searchText, filtersDebounced, page));
+    router.push(
+      pathname + '?' + getSearchParams(searchText, filtersDebounced, page)
+    );
   }, [searchText, filtersDebounced, page, pathname, router]);
 
   // useEffect(() => {

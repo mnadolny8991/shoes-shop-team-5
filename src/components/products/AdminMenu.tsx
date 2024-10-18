@@ -1,5 +1,12 @@
 import { MoreHoriz } from '@mui/icons-material';
-import { Alert, IconButton, Menu, MenuItem, Snackbar, Typography } from '@mui/material';
+import {
+  Alert,
+  IconButton,
+  Menu,
+  MenuItem,
+  Snackbar,
+  Typography,
+} from '@mui/material';
 import ProductForm from '@/components/forms/ProductForm';
 import DeleteModal from '@/components/modals/DeleteModal';
 import EditProductModal from '@/components/modals/EditProductModal';
@@ -28,10 +35,13 @@ export default function AdminMenu({ product }: { product: Product }) {
   const handleDeleteSuccess = () => {
     handleEditClose();
     handleMenuClose();
-  }
+  };
 
-  const { mutate: deleteProduct, status: deletingStatus, error: deletingError } 
-    = useDeleteProductMutation(id, session?.accessToken!, handleDeleteSuccess);
+  const {
+    mutate: deleteProduct,
+    status: deletingStatus,
+    error: deletingError,
+  } = useDeleteProductMutation(id, session?.accessToken!, handleDeleteSuccess);
   const {
     editProduct,
     uploadImagesThenEditProduct,
@@ -173,7 +183,9 @@ export default function AdminMenu({ product }: { product: Product }) {
         autoHideDuration={2000}
         onClose={() => setEditPromptStatus('')}
       >
-        <Alert severity="error">{JSON.stringify(errorEditingProduct?.message) || 'Server error'}</Alert>
+        <Alert severity="error">
+          {JSON.stringify(errorEditingProduct?.message) || 'Server error'}
+        </Alert>
       </Snackbar>
       <EditProductModal isOpen={isEditModalOpen} onClose={handleEditClose}>
         <ProductForm

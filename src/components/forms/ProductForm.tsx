@@ -307,7 +307,6 @@ export default function ProductForm({
               rows={isMobile ? 1 : 15}
               error={errors.description ? 'Description is required.' : ''}
               {...register('description', { required: true, maxLength: 300 })}
-              
             />
             {/* AI Generate Icon */}
             <Image

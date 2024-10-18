@@ -98,8 +98,11 @@ describe('ResetPasswordForm', () => {
     });
     fireEvent.click(submitButton);
 
-    await waitFor(() => {
-      expect(mockPush).toHaveBeenCalledWith('/auth/sign-in');
-    }, { timeout: 3000 });
+    await waitFor(
+      () => {
+        expect(mockPush).toHaveBeenCalledWith('/auth/sign-in');
+      },
+      { timeout: 3000 }
+    );
   });
 });

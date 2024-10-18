@@ -1,5 +1,5 @@
-import mockOrders from "@/mock/mockOrders";
-import { Stack, Typography } from "@mui/material";
+import mockOrders from '@/mock/mockOrders';
+import { Stack, Typography } from '@mui/material';
 
 export default function Page() {
   return (
@@ -11,9 +11,7 @@ export default function Page() {
       >
         Order history
       </Typography>
-      <Stack gap={2}>
-        {mockOrders}
-      </Stack>
+      <Stack gap={2}>{mockOrders}</Stack>
     </>
-  ) 
+  );
 }

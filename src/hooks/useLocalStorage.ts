@@ -10,10 +10,10 @@ const useLocalStorage = <T>(key: string, initialValue: T) => {
   }, []);
 
   useEffect(() => {
-      const dataJson = localStorage.getItem(key);
-      if (dataJson) {
-        setData(JSON.parse(dataJson) as T);
-      }
+    const dataJson = localStorage.getItem(key);
+    if (dataJson) {
+      setData(JSON.parse(dataJson) as T);
+    }
   }, [key]);
 
   useEffect(() => {

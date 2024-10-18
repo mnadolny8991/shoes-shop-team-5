@@ -23,10 +23,7 @@ import { useMutation } from '@tanstack/react-query';
 import { UserFormData } from '@/types/userFormData';
 import apiUrl from '@/data/apiUrl';
 import { useRouter } from 'next/navigation';
-import {
-  ApiError,
-  ApiErrorDetails,
-} from '@/types/api/apiFormError';
+import { ApiError, ApiErrorDetails } from '@/types/api/apiFormError';
 
 export default function SignupForm() {
   const theme = useTheme();
@@ -112,9 +109,9 @@ export default function SignupForm() {
           <Alert severity="error">
             <>{mutation.error?.message || 'Server error'}</>
             <ul>
-            {(mutation.error?.cause as ApiErrorDetails)?.errors?.map((error, index) => 
-              <li key={index}>{error.message}</li>
-            )}
+              {(mutation.error?.cause as ApiErrorDetails)?.errors?.map(
+                (error, index) => <li key={index}>{error.message}</li>
+              )}
             </ul>
           </Alert>
         </Snackbar>
