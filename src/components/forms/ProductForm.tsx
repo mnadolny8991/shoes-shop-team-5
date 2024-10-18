@@ -16,7 +16,7 @@ import CheckboxesGroup from '@/components/input/CheckboxesGroup';
 import { useForm } from 'react-hook-form';
 import { ApiPutProduct } from '@/types/api/apiTypes';
 import { useBrands, useColors, useGenders, useSizes } from '@/hooks/categories';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Image from 'next/image';
 
 type ProductFormProps = {
@@ -84,7 +84,7 @@ export default function ProductForm({
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            prompt: `Generate a product description for: ${productName}. Please keep it short.`,
+            prompt: `Generate an one short sentence (max 300 characters) product description for: ${productName}`,
           }),
         });
 
@@ -95,7 +95,10 @@ export default function ProductForm({
         const data = await response.json();
         console.log(data);
 
-        setValue('description', data.code);
+        setValue('description', (data.code as string).slice(0, 300), {
+          shouldValidate: true,
+          shouldDirty: true,
+        });
       } catch (error) {
         setAIError('Failed to generate description. Please try again later.');
         console.error(error);
@@ -304,6 +307,7 @@ export default function ProductForm({
               rows={isMobile ? 1 : 15}
               error={errors.description ? 'Description is required.' : ''}
               {...register('description', { required: true, maxLength: 300 })}
+              
             />
             {/* AI Generate Icon */}
             <Image

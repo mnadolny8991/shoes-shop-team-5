@@ -18,10 +18,6 @@ export const useEditProductMutation = (id: number, token: string) => {
     mutationFn: (id: number) => {
       return deleteFile(id, token);
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['myProducts'] });
-      queryClient.invalidateQueries({ queryKey: ['product', id] });
-    }
   });
 
   const { mutate: editProduct, error: errorEditingProduct, status: editingStatus } = useMutation({
@@ -34,10 +30,11 @@ export const useEditProductMutation = (id: number, token: string) => {
         const images: { id: number; related?: { id: number } }[] =
           await fetchFilesByIds(imagesToDelete);
         images.forEach((image) => image.related ?? deleteImage(image.id));
-      }
+      } 
       queryClient.invalidateQueries({ queryKey: ['myProducts'] });
       queryClient.invalidateQueries({ queryKey: ['product', id] });
-      
+      // queryClient.refetchQueries({ queryKey: ['product', id] });
+      // queryClient.refetchQueries({ queryKey: ['myProducts'] });
       // queryClient.setQueryData(['myProducts'], (old: Product[]) =>
       //   old.with(
       //     old.findIndex((oldProduct) => oldProduct.id === id),
@@ -60,8 +57,6 @@ export const useEditProductMutation = (id: number, token: string) => {
           ...res.map(({ id }: { id: number }) => id),
         ];
         editProduct(productUpdatingProps);
-        queryClient.invalidateQueries({ queryKey: ['myProducts'] });
-        queryClient.invalidateQueries({ queryKey: ['product', id] });
       },
     });
 

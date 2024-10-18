@@ -45,13 +45,6 @@ export default function AdminMenu({ product }: { product: Product }) {
     setEditPromptStatus(editingStatus);
   }, [editingStatus]);
 
-  useEffect(() => {
-    console.log(deletingStatus);
-    if (deletingError) {
-      console.log(deletingError);
-    }
-  }, [deletingStatus, deletingError]);
-
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
