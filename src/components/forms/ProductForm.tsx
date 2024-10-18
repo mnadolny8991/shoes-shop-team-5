@@ -16,6 +16,8 @@ import CheckboxesGroup from '@/components/input/CheckboxesGroup';
 import { useForm } from 'react-hook-form';
 import { ApiPutProduct } from '@/types/api/apiTypes';
 import { useBrands, useColors, useGenders, useSizes } from '@/hooks/categories';
+import { useRef, useState } from 'react';
+import Image from 'next/image';
 
 type ProductFormProps = {
   title: string;
@@ -62,6 +64,49 @@ export default function ProductForm({
 }: ProductFormProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+  const [loading, setLoading] = useState(false);
+  const [AIerror, setAIError] = useState('');
+  const [isHovered, setIsHovered] = useState(false);
+
+  //AI generated description
+  const handleAISuggestion = async () => {
+    const productName = getValues('name');
+
+    if (productName) {
+      setLoading(true);
+      setAIError('');
+
+      try {
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            prompt: `Generate an one short sentence (max 300 characters) product description for: ${productName}`,
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to generate description');
+        }
+
+        const data = await response.json();
+        console.log(data);
+
+        setValue('description', (data.code as string).slice(0, 300), {
+          shouldValidate: true,
+          shouldDirty: true,
+        });
+      } catch (error) {
+        setAIError('Failed to generate description. Please try again later.');
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
 
   const { data: colors, isLoading: isColorsLoading } = useColors();
   const { data: sizes, isLoading: isSizesLoading } = useSizes();
@@ -254,18 +299,35 @@ export default function ProductForm({
             )}
           </Stack>
 
-          <Textarea
-            id="description"
-            label="Description"
-            placeholder="Do not exceed 300 characters."
-            rows={isMobile ? 1 : 15}
-            error={
-              errors.description
-                ? 'Description is required and should not exceed 300 characters.'
-                : ''
-            }
-            {...register('description', { required: true, maxLength: 300 })}
-          />
+          <div style={{ position: 'relative' }}>
+            <Textarea
+              id="description"
+              label="Description"
+              placeholder="Do not exceed 300 characters."
+              rows={isMobile ? 1 : 15}
+              error={errors.description ? 'Description is required.' : ''}
+              {...register('description', { required: true, maxLength: 300 })}
+              
+            />
+            {/* AI Generate Icon */}
+            <Image
+              src={
+                isHovered ? '/AI-helper-hover.png' : '/AI-helper-default.png'
+              }
+              alt="Generate AI Description"
+              width={isHovered ? 120 : 32}
+              height={25}
+              style={{
+                position: 'absolute',
+                right: '10px',
+                bottom: '10px',
+                cursor: 'pointer',
+              }}
+              onClick={handleAISuggestion}
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            />
+          </div>
 
           {sizes && (
             <CheckboxesGroup

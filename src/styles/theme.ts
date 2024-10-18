@@ -1,5 +1,5 @@
 'use client';
-import { Work_Sans } from 'next/font/google';
+import { Nunito_Sans, Work_Sans } from 'next/font/google';
 import { createTheme } from '@mui/material/styles';
 
 const workSans = Work_Sans({

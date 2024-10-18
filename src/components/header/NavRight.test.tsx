@@ -5,6 +5,8 @@ import '@testing-library/jest-dom';
 import { useAvatarQuery } from '@/hooks/useAvatarQuery';
 import { useSession } from 'next-auth/react';
 import { useMediaQuery } from '@mui/material';
+import { SearchContextProvider } from '@/context/SearchContext';
+import NavLeft from './NavLeft';
 
 jest.mock('../../hooks/useAvatarQuery');
 
@@ -12,6 +14,14 @@ describe('Right side of the header component', () => {
   const useAvatarQueryMock = useAvatarQuery as jest.Mock;
   const useSessionMock = useSession as jest.Mock;
   const useMediaQueryMock = useMediaQuery as jest.Mock;
+
+  const renderWithProvider = () => {
+    render(
+      <SearchContextProvider>
+        <NavRight />
+      </SearchContextProvider>
+    );
+  }
 
   beforeEach(() => {
     useAvatarQueryMock.mockReturnValue({
@@ -34,7 +44,7 @@ describe('Right side of the header component', () => {
   });
 
   test('show avatar when signed in', async () => {
-    render(<NavRight />);
+    renderWithProvider();
 
     const avatarElement = await screen.findByAltText('user avatar');
 
@@ -48,7 +58,7 @@ describe('Right side of the header component', () => {
       data: null,
       status: 'unauthenticated',
     });
-    render(<NavRight />);
+    renderWithProvider();
 
     const avatarElement = screen.queryByAltText('user avatar');
 
@@ -57,7 +67,7 @@ describe('Right side of the header component', () => {
 
   test('shows appropriate icons in the mobile viewport (auth + notauth)', async () => {
     useMediaQueryMock.mockReturnValue(true);
-    render(<NavRight />);
+    renderWithProvider();
 
     const menu = screen.getByAltText('menu icon');
     const avatar = screen.queryByAltText('user avatar');
@@ -72,7 +82,7 @@ describe('Right side of the header component', () => {
 
   test('shows appropriate icons in the desktop viewport (auth)', async () => {
     useMediaQueryMock.mockReturnValue(false);
-    render(<NavRight />);
+    renderWithProvider();
 
     const menu = screen.queryByAltText('menu icon');
     const avatar = await screen.findByAltText('user avatar');
@@ -91,7 +101,7 @@ describe('Right side of the header component', () => {
       data: null,
       status: 'unauthenticated',
     });
-    render(<NavRight />);
+    renderWithProvider();
 
     const menu = screen.queryByAltText('menu icon');
     const avatar = screen.queryByAltText('user avatar');
@@ -108,7 +118,7 @@ describe('Right side of the header component', () => {
 
   test('shows mobile menu on menu button click', async () => {
     useMediaQueryMock.mockReturnValue(true);
-    render(<NavRight />);
+    renderWithProvider();
 
     const mobileMenuButton = screen.getByAltText('menu icon').closest('button');
     expect(mobileMenuButton).toBeInTheDocument();
@@ -121,7 +131,7 @@ describe('Right side of the header component', () => {
 
   test('shows search popup on search click (desktop)', async () => {
     useMediaQueryMock.mockReturnValue(false);
-    render(<NavRight />);
+    renderWithProvider();
 
     const search = screen.getByPlaceholderText('Search');
     fireEvent.click(search);
@@ -132,7 +142,7 @@ describe('Right side of the header component', () => {
 
   test('shows search popup on search click (mobile)', async () => {
     useMediaQueryMock.mockReturnValue(true);
-    render(<NavRight />);
+    renderWithProvider();
 
     const search = screen.getByAltText('search icon');
     fireEvent.click(search);

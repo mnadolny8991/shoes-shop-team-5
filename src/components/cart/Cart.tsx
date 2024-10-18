@@ -15,6 +15,7 @@ import CartEmpty from '@/components/cart/CartEmpty';
 import { createPortal } from 'react-dom';
 import { useEffect, useState } from 'react';
 import useCartProducts from '@/hooks/useCartProducts';
+import DeleteModal from '@/components/modals/DeleteModal';
 
 type CartProps = {};
 

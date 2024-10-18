@@ -1,6 +1,6 @@
 'use client';
 
-import { Typography, useMediaQuery } from '@mui/material';
+import { Alert, Snackbar, Typography, useMediaQuery } from '@mui/material';
 import { useState } from 'react';
 import CustomButton from '@/components/buttons/CustomButton';
 import Link from 'next/link';
@@ -37,7 +37,7 @@ const ResetPasswordForm = () => {
   );
 
   const mutation = useMutation({
-    mutationFn: ({
+    mutationFn: async ({
       password,
       passwordConfirmation,
       code,
@@ -46,16 +46,23 @@ const ResetPasswordForm = () => {
       passwordConfirmation: string;
       code: string;
     }) => {
-      return fetch(`${apiUrl}/auth/reset-password`, {
+      const response = await fetch(`${apiUrl}/auth/reset-password`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ password, passwordConfirmation, code }),
       });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Invalid or expired reset code');
+      }
+
+      return response.json();
     },
     onSuccess: () => {
-      router.push('/auth/sign-in');
+      setTimeout(() => router.push('/auth/sign-in'), 2000);
     },
   });
 
@@ -98,13 +105,33 @@ const ResetPasswordForm = () => {
         min={8}
         error={confPassError!}
       />
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        open={mutation.status === 'error'}
+        autoHideDuration={2000}
+      >
+        <Alert severity="error">{mutation.error?.message || 'Server error'}</Alert>
+      </Snackbar>
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        open={mutation.status === 'success'}
+        autoHideDuration={2000}
+      >
+        <Alert severity="success">The password has been successfully reset</Alert>
+      </Snackbar>
       <CustomButton
         size={isMobile ? 's' : 'l'}
         variant="contained"
-        disabled={!!passError || !password || !!confPassError || !confPass}
+        disabled={
+          !!passError ||
+          !password ||
+          !!confPassError ||
+          !confPass ||
+          mutation.isPending
+        }
         onClick={onResetPassword}
       >
-        Reset Password
+        {mutation.isPending ? 'Resetting...' : 'Reset Password'}
       </CustomButton>
       <Typography variant="caption" textAlign="center">
         <Link href="/auth/sign-in">Back to log in</Link>

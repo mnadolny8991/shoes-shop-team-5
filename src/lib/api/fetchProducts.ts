@@ -6,10 +6,18 @@ import { ApiPostProduct, ApiPutProduct } from '@/types/api/apiTypes';
 export const fetchProductsByUserId = async (
   id: number,
   token: string,
-  populate?: string
+  populate?: string,
+  sort?: string,
+  sortDir?: string,
+  page?: number,
+  itemsPerPage?: number
 ) => {
   return await fetchData(
-    `${apiUrl}/products?filters[teamName]=team-5&filters[userID]=${id}&populate=${populate ?? '*'}`,
+    `${apiUrl}/products?filters[teamName]=team-5&` +
+    `filters[userID]=${id}` +
+    `&populate=${populate ?? '*'}${sort ? '&sort=' + sort + (sortDir ? ':' + sortDir : '') : ''}` +
+    `${page ? `&pagination[page]=${page}` : ''}` +
+    `${itemsPerPage ? `&pagination[pageSize]=${itemsPerPage}` : ''}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -18,15 +26,20 @@ export const fetchProductsByUserId = async (
   );
 };
 
-export const fetchProductById = async (id: number, populate?: string) => {
+export const fetchProductById = async (
+  id: number,
+  populate?: string,
+  options?: RequestInit
+) => {
   return await fetchData(
-    `${apiUrl}/products/${id}?populate=${populate ?? '*'}`
+    `${apiUrl}/products/${id}?populate=${populate ?? '*'}`, options
   );
 };
 
-export const fetchProducts = async (populate?: string) =>
+export const fetchProducts = async (populate?: string, sort?: string, sortDir?: string) =>
   await fetchData(
-    `${apiUrl}/products?filters[teamName]=team-5&populate=${populate ?? '*'}`
+    `${apiUrl}/products?filters[teamName]=team-5&populate=${populate ?? '*'}` +
+    `${sort ? '&sort=' + sort + (sortDir ? ':' + sortDir : '') : ''}`
   );
 
 const getFiltersStringArray = (filters: Filters): string[] => {
@@ -60,16 +73,20 @@ export const fetchProductsByFiltersAndName = async (
   name: string,
   page: number,
   pageSize: number,
-  populate?: string
+  populate?: string,
+  sort?: string,
+  sortDir?: string,
+  options?: RequestInit,
 ) => {
   const filtersStrArray = getFiltersStringArray(filters);
   const nameQuery = name ? `filters[name][$containsi]=${name}` : '';
   const queryString =
     `${apiUrl}/products?pagination[page]=${page}&pagination[pageSize]=${pageSize}&` +
     `${filtersStrArray.join('&')}&${nameQuery}&` +
-    `filters[teamName]=team-5&populate=${populate ?? '*'}`;
+    `filters[teamName]=team-5&populate=${populate ?? '*'}` +
+    `${sort ? '&sort=' + sort + (sortDir ? ':' + sortDir : '') : ''}`;
   // console.log(queryString);
-  return await fetchData(queryString);
+  return await fetchData(queryString, options);
 };
 
 export const saveProduct = async (

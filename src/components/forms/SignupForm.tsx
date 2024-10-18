@@ -6,7 +6,8 @@ import {
   Link,
   useTheme,
   useMediaQuery,
-  Stack,
+  Snackbar,
+  Alert,
 } from '@mui/material';
 import TextField from '@/components/input/TextField';
 import CustomButton from '@/components/buttons/CustomButton';
@@ -24,10 +25,8 @@ import apiUrl from '@/data/apiUrl';
 import { useRouter } from 'next/navigation';
 import {
   ApiError,
-  ApiErrorDetail,
-  ApiFormError,
+  ApiErrorDetails,
 } from '@/types/api/apiFormError';
-import ServerErrorBox from '@/components/containers/ServerErrorBox';
 
 export default function SignupForm() {
   const theme = useTheme();
@@ -79,13 +78,11 @@ export default function SignupForm() {
 
       if (response.ok) {
         return response.json();
-      } else {
-        const errorResponse: ApiFormError = await response.json();
-        throw errorResponse.error;
       }
-    },
-    onSuccess: (data) => {
-      // router.push('/');
+      const errorResponse = (await response.json()).error as ApiError;
+      throw new Error(errorResponse.message, {
+        cause: errorResponse.details,
+      });
     },
   });
 
@@ -107,18 +104,29 @@ export default function SignupForm() {
           gap: '22px',
         }}
       >
-        {mutation.isError && (
-          <>
-            <ServerErrorBox
-              message={(mutation.error as ApiError).message}
-              submessages={
-                (mutation.error as ApiError)?.details?.errors?.map(
-                  (e) => e.message
-                ) || []
-              }
-            />
-          </>
-        )}
+        <Snackbar
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          open={mutation.status === 'error'}
+          autoHideDuration={2000}
+        >
+          <Alert severity="error">
+            <>{mutation.error?.message || 'Server error'}</>
+            <ul>
+            {(mutation.error?.cause as ApiErrorDetails)?.errors?.map((error, index) => 
+              <li key={index}>{error.message}</li>
+            )}
+            </ul>
+          </Alert>
+        </Snackbar>
+        <Snackbar
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          open={mutation.status === 'success'}
+          autoHideDuration={2000}
+        >
+          <Alert severity="success">
+            Account successfully created. Please check your email.
+          </Alert>
+        </Snackbar>
         <TextField
           required
           name="name"
@@ -181,11 +189,6 @@ export default function SignupForm() {
         >
           {mutation.status === 'pending' && (
             <Typography variant="caption">Loading...</Typography>
-          )}
-          {mutation.status === 'success' && (
-            <Typography variant="caption">
-              Please check your email for confirmation
-            </Typography>
           )}
           <CustomButton
             size={isMobile ? 's' : 'l'}
