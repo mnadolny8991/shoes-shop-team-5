@@ -84,7 +84,7 @@ export default function ProductForm({
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            prompt: `Generate a product description for: ${productName}`,
+            prompt: `Generate a product description for: ${productName}. Please keep it short.`,
           }),
         });
 
