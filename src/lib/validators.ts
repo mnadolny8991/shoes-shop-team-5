@@ -71,7 +71,7 @@ const confirmPasswordValdiator = (firstPass: string) => {
 const nameValidator = (name: string) => {
   const nameRegex = new RegExp(/^[a-zA-Z]{2,}(?: [a-zA-Z]{3,})*$/);
   if (!nameRegex.test(name)) {
-    return 'Name must have minimum 2 to 3 letters per word and should not containe numbers';
+    return 'Name must have minimum 2 to 3 letters per word and should not contain numbers';
   } else {
     return '';
   }
@@ -94,10 +94,47 @@ const phoneValidator = (inputVal: string) => {
   }
 };
 
+/**
+ * Validates the input address (street, appartment, block) based on the following rules:
+ * - Must contain at least 6 characters.
+ * - Numbers and both uppercase and lowercase letters are allowed.
+ * - Whitespace characters (spaces, tabs, etc.) are allowed.
+ * - Common punctuation characters often found in addresses are allowed.
+ *
+ * @param {string} inputVal - The address to validate.
+ * @returns {string} - An error message if the address does not meet the criteria, otherwise an empty string.
+ */
+const addressValidator = (name: string) => {
+  const nameRegex = new RegExp(/^[0-9A-Za-z\s\.,#'-]{6,}$/);
+  if (!nameRegex.test(name)) {
+    return 'Address must contain at least 6 characters';
+  } else {
+    return '';
+  }
+};
+
+/**
+ * Validates the input zip code based on the following rules:
+ * - Must be 5 digits possibly followed by a hyphen and 4 digits that designated a more specific location
+ *
+ * @param {string} inputVal - The zip code to validate.
+ * @returns {string} - An error message if the zip code does not meet the criteria, otherwise an empty string.
+ */
+const zipCodeValidator = (inputVal: string) => {
+  const zipCodeRegex = new RegExp(/^\d{5}(?:-?\d{4})?$/);
+  if (!zipCodeRegex.test(inputVal)) {
+    return 'zip code must be 5 digits possibly followed by a hyphen and 4 digits';
+  } else {
+    return '';
+  }
+};
+
 export {
   emailValidator,
   passwordValidator,
   confirmPasswordValdiator,
   nameValidator,
   phoneValidator,
+  addressValidator,
+  zipCodeValidator,
 };

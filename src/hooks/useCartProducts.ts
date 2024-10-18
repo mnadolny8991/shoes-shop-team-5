@@ -17,6 +17,8 @@ const useCartProducts = () => {
   });
   const productsData = useQueries({ queries });
 
+  const isLoading = productsData.some((q) => q.isLoading);
+
   const products = productsData
     .filter((result, index) => {
       if (result.isSuccess) {
@@ -31,7 +33,7 @@ const useCartProducts = () => {
     .map((result) => result.data)
     .filter((product) => product) as Product[];
 
-  return products;
+  return {products, isLoading};
 };
 
 export default useCartProducts;

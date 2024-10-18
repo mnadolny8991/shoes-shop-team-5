@@ -141,6 +141,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({
         <Divider />
       </Stack>
       <CustomButton
+        href="/checkout"
         data-testid="checkout-button"
         size="m"
         variant="contained"

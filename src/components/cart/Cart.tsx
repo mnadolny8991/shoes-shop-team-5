@@ -1,6 +1,7 @@
 'use client';
 import {
   Box,
+  CircularProgress,
   Divider,
   Stack,
   Typography,
@@ -23,11 +24,15 @@ const Cart: React.FC<CartProps> = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [isMounted, setIsMounted] = useState(false);
   const { amount, onDelete } = useCartContext();
-  const products = useCartProducts();
+  const { products, isLoading } = useCartProducts();
   const empty = products.length <= 0;
   useEffect(() => {
     setIsMounted(true);
   }, []);
+  
+  if (!isMounted || isLoading) {
+    return <CircularProgress />;
+  }
 
   return (
     <Stack

@@ -32,6 +32,11 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({
     setProducts(products.filter((product) => product.id !== productId));
   };
 
+  const handleCartClear = () => {
+    setProducts([])
+    setPromocode(null)
+  }
+
   const handlePromocodeChange = (value: string) => {
     setPromocode(value);
   };
@@ -88,6 +93,7 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({
         onAmountChange: applyAmountChange,
         onPromocodeChange: handlePromocodeChange,
         onProductAdd: handleProductAdd,
+        onCartClear : handleCartClear
       }}
     >
       {children}
