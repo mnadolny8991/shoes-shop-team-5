@@ -29,9 +29,10 @@ export const fetchProductsByUserId = async (
 export const fetchProductById = async (
   id: number,
   populate?: string,
+  options?: RequestInit
 ) => {
   return await fetchData(
-    `${apiUrl}/products/${id}?populate=${populate ?? '*'}`
+    `${apiUrl}/products/${id}?populate=${populate ?? '*'}`, options
   );
 };
 
@@ -75,6 +76,7 @@ export const fetchProductsByFiltersAndName = async (
   populate?: string,
   sort?: string,
   sortDir?: string,
+  options?: RequestInit,
 ) => {
   const filtersStrArray = getFiltersStringArray(filters);
   const nameQuery = name ? `filters[name][$containsi]=${name}` : '';
@@ -84,7 +86,7 @@ export const fetchProductsByFiltersAndName = async (
     `filters[teamName]=team-5&populate=${populate ?? '*'}` +
     `${sort ? '&sort=' + sort + (sortDir ? ':' + sortDir : '') : ''}`;
   // console.log(queryString);
-  return await fetchData(queryString);
+  return await fetchData(queryString, options);
 };
 
 export const saveProduct = async (
