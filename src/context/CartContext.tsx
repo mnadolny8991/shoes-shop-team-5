@@ -71,10 +71,10 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const handleProductAdd = (productId: number, size: number) => {
     const searchResult = products.find((p) => p.id === productId);
-    if (searchResult)
+    if (searchResult && searchResult.size === size)
       setProducts(
         products.map((p) =>
-          p.id === productId ? { id: p.id, amount: p.amount + 1, size } : p
+          (p.id === productId) ? { id: p.id, amount: p.amount + 1, size } : p
         )
       );
     else

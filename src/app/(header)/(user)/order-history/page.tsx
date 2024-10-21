@@ -1,7 +1,28 @@
+'use client';
+
+import ProductOrder, { ProductOrderProps } from '@/components/products/ProductOrder';
+import ProductOrderDetails from '@/components/products/ProductOrderDetails';
 import mockOrders from '@/mock/mockOrders';
 import { Stack, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
 
 export default function Page() {
+  const [orderHistory, setOrderHistory] = useState<ProductOrderProps[] | null>(null);
+
+  useEffect(() => {
+    const dateReviver = (key: string, value: string) => {
+      if (key === 'date') return new Date(value);
+      return value;
+    }
+
+    const oh = JSON.parse(localStorage.getItem('orderHistory') || '[]', dateReviver) as ProductOrderProps[];
+    if (!oh.length) {
+      setOrderHistory(null);
+      return;
+    }
+    setOrderHistory(oh);
+  }, []);
+
   return (
     <>
       <Typography
@@ -11,7 +32,18 @@ export default function Page() {
       >
         Order history
       </Typography>
-      <Stack gap={2}>{mockOrders}</Stack>
+      {orderHistory 
+        ? <Stack gap={2}>
+            {orderHistory.map((order, i) => 
+              <ProductOrder
+                key={i}
+                {...order}
+              />
+            )}
+          </Stack>
+        : <></>
+      }
+      
     </>
   );
 }

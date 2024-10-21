@@ -65,9 +65,9 @@ const Cart: React.FC<CartProps> = () => {
           }}
           divider={!isMobile && <Divider />}
         >
-          {products.map((product) => (
+          {products.map((product, index) => (
             <CartProduct
-              key={product.id}
+              key={index}
               id={product.id}
               name={product.name}
               price={product.price}

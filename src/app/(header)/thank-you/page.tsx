@@ -36,10 +36,10 @@ export default function ThankYou() {
       orderHistory.unshift(pending);
       orderHistory.map((record, i) => ({ ...record, orderNumber: i }));
       localStorage.setItem('orderHistory', JSON.stringify(orderHistory));   
-        
+
       onCartClear();
     }
-  }, [payment]);
+  }, [payment, onCartClear, searchParams, setPayment]);
 
   return (
     <Stack
