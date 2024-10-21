@@ -10,7 +10,7 @@ import { fetchProductById } from '@/lib/api/fetchProducts';
 import { useQueries } from '@tanstack/react-query';
 import ProductOrderInvoice from '@/components/products/ProductOrderInvoice';
 
-type ProductOrderProps = {
+export type ProductOrderProps = {
   orderNumber: number;
   date: Date;
   products: { productId: number; size: number; quantity: number }[];

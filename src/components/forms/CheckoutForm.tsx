@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Backdrop,
   CircularProgress,
@@ -28,10 +30,15 @@ import { useSession } from 'next-auth/react';
 import { countries, CountryType } from '@/data/countries';
 import CountryAutocomplete from '@/components/input/CountryAutocomplete';
 import Grid2 from '@mui/material/Unstable_Grid2';
+import { ProductOrderProps } from '../products/ProductOrder';
+import addressFormatter from '@fragaria/address-formatter';
+import { useCartContext } from '@/context/CartContext';
 
 export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
+
+  const { promocode, amount } = useCartContext();
 
   const { data: session } = useSession();
   const [confirmPaymentErrorMessage, setConfirmPaymentErrorMessage] = useState<
@@ -160,42 +167,57 @@ export default function CheckoutForm() {
 
     setIsLoading(true);
 
-    try {
-      const { error } = await stripe.confirmPayment({
-        elements,
-        confirmParams: {
-          return_url: `${window.location.origin}/thank-you`,
-          payment_method_data: {
-            billing_details: {
-              name: `${firstName} ${lastName}`,
-              email,
-              phone: phoneNumber,
-              address: {
-                country: country.code,
-                state,
-                city,
-                postal_code: zipCode,
-                line1: address,
-                line2: null,
-              },
+    const orderRecord: ProductOrderProps = {
+      orderNumber: 0,
+      data: {
+        delivery: `${address}, ${city}, ${zipCode}`,
+        contacts: `${firstName} ${lastName}, ${phoneNumber}, ${email}`,
+        paymentStatus: 'After payment',
+      },
+      date: new Date(),
+      shipmentStatus: 'Recieved',
+      discount: promocode ? 10 : 0,
+      products: amount.map((productAmount) => ({
+        productId: productAmount.id,
+        size: productAmount.size,
+        quantity: productAmount.amount,
+      })),
+    };
+    localStorage.removeItem('pending');
+    localStorage.setItem('pending', JSON.stringify(orderRecord)); 
+
+    stripe.confirmPayment({
+      elements,
+      confirmParams: {
+        return_url: `${window.location.origin}/thank-you`,
+        payment_method_data: {
+          billing_details: {
+            name: `${firstName} ${lastName}`,
+            email,
+            phone: phoneNumber,
+            address: {
+              country: country.code,
+              state,
+              city,
+              postal_code: zipCode,
+              line1: address,
+              line2: null,
             },
           },
         },
-      });
-
-      if (error) {
-        console.error('error confirmPayment  ', error);
-        if (error.type === 'card_error' || error.type === 'validation_error') {
-          setConfirmPaymentErrorMessage(error.message || 'An error occurred.');
+      },
+    }).then((result) => {
+      if (result.error) {
+        console.error('error confirmPayment  ', result.error);
+        if (result.error.type === 'card_error' || result.error.type === 'validation_error') {
+          setConfirmPaymentErrorMessage(result.error.message || 'An error occurred.');
         } else {
           setConfirmPaymentErrorMessage('An unexpected error occurred.');
         }
       }
-    } catch (error) {
-      console.error('Integration Error: ', error);
-    }
-
-    setIsLoading(false);
+    }).finally(() => {
+      setIsLoading(false);
+    });
   };
 
   return (

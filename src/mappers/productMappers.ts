@@ -52,7 +52,7 @@ const mapApiGenderToGender = (apiGender: ApiGender): Gender => ({
   name: apiGender.attributes.name,
 });
 
-const mapApiSizeToSize = (apiSize: ApiSize): Size => ({
+export const mapApiSizeToSize = (apiSize: ApiSize): Size => ({
   id: apiSize.id,
   name: apiSize.attributes.value.toString(),
 });

@@ -7,6 +7,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import illustrations from '/public/vctrly-business-illustrations-9.png';
 import Image from 'next/image';
+import { ProductOrderProps } from '@/components/products/ProductOrder';
 
 export default function ThankYou() {
   const theme = useTheme();
@@ -26,6 +27,16 @@ export default function ThankYou() {
     ) {
       setOrderId(payment.orderId);
       setPayment(null);
+
+      const pending = JSON.parse(localStorage.getItem('pending')!);
+      localStorage.removeItem('pending');
+      const orderHistory = JSON.parse(
+        localStorage.getItem('orderHistory') ?? '[]'
+      ) as ProductOrderProps[];
+      orderHistory.unshift(pending);
+      orderHistory.map((record, i) => ({ ...record, orderNumber: i }));
+      localStorage.setItem('orderHistory', JSON.stringify(orderHistory));   
+        
       onCartClear();
     }
   }, [payment]);

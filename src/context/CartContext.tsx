@@ -46,7 +46,9 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({
       products.map((p) => {
         if (p.id === productId) {
           const newVal = eval(`p.amount ${operation} 1`);
-          return { id: productId, amount: newVal };
+          const prod = products.find((p) => p.id === productId);
+          if (!prod) throw new Error(`Cannot find a product with id ${productId}`);
+          return { ...prod, amount: newVal };
         }
         return p;
       })
@@ -58,19 +60,21 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({
       products.map((p) => {
         if (p.id === productId) {
           if (newValue <= 0) handleDelete(productId);
-          return { id: productId, amount: newValue };
+          const prod = products.find((p) => p.id === productId);
+          if (!prod) throw new Error(`Cannot find a product with id ${productId}`);
+          return { ...prod, amount: newValue };
         }
         return p;
       })
     );
   };
 
-  const handleProductAdd = (productId: number) => {
+  const handleProductAdd = (productId: number, size: number) => {
     const searchResult = products.find((p) => p.id === productId);
     if (searchResult)
       setProducts(
         products.map((p) =>
-          p.id === productId ? { id: p.id, amount: p.amount + 1 } : p
+          p.id === productId ? { id: p.id, amount: p.amount + 1, size } : p
         )
       );
     else
@@ -79,6 +83,7 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({
         {
           id: productId,
           amount: 1,
+          size,
         },
       ]);
   };
