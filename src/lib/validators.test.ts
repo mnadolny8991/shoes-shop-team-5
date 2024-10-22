@@ -74,4 +74,14 @@ describe('validators', () => {
     expect(validator(",#'-ASc 1")).toBe('');
     expect(validator(";,#'-ASc 1")).not.toBe('');
   });
+
+  test('zip code validator', () => {
+    const validator = validators.zipCodeValidator;
+    // Must be 5 digits possibly followed by a hyphen and 4 digits that designated a more specific location
+    expect(validator('12345')).toBe('');
+    expect(validator('1234')).not.toBe('');
+    expect(validator('12345-1234')).toBe('');
+    expect(validator('12345-12345')).not.toBe('');
+    expect(validator('12345-345')).not.toBe('');
+  })
 });
