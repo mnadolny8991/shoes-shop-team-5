@@ -1,7 +1,7 @@
 'use client';
 import CartSummary from '@/components/cart/CartSummary';
-import ServerErrorBox from '@/components/containers/ServerErrorBox';
 import {
+  Alert,
   Box,
   CircularProgress,
   Link,
@@ -80,7 +80,6 @@ export default function Checkout() {
   });
 
   useEffect(() => {
-    // console.log('useEfect  isLoadingCartProducts=', isLoadingCartProducts, '  empty=', empty, " payment=", payment)
     if (!empty)
       if (!payment)
         createPaymentIntentMutation.mutate({
@@ -121,7 +120,7 @@ export default function Checkout() {
       ) : empty ? (
         <Typography variant="h1">No Products in the Cart</Typography>
       ) : error ? (
-        <ServerErrorBox message={error.message} submessages={[]} />
+        <Alert severity='error'>{error.message}</Alert>
       ) : (
         payment && (
           <Stack

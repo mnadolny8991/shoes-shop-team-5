@@ -1,9 +1,11 @@
 'use client';
 
 import {
+  Alert,
   Backdrop,
   CircularProgress,
   Divider,
+  Snackbar,
   Stack,
   Typography,
 } from '@mui/material';
@@ -26,7 +28,6 @@ import {
   zipCodeValidator,
 } from '@/lib/validators';
 import InputField from '@/components/input/InputField';
-import ServerErrorBox from '@/components/containers/ServerErrorBox';
 import useUserData from '@/hooks/useUserData';
 import { useSession } from 'next-auth/react';
 import { countries, CountryType } from '@/data/countries';
@@ -370,9 +371,15 @@ export default function CheckoutForm() {
       <Backdrop open={isLoading}>
         <CircularProgress size={200} />
       </Backdrop>
-      {confirmPaymentErrorMessage && (
-        <ServerErrorBox message={confirmPaymentErrorMessage} submessages={[]} />
-      )}
+      <Snackbar
+        open={!!confirmPaymentErrorMessage}
+        autoHideDuration={2000}
+        onClose={()=>setConfirmPaymentErrorMessage(null)}
+      >
+        <Alert severity='error' onClose={()=>setConfirmPaymentErrorMessage(null)}>
+          {confirmPaymentErrorMessage}
+        </Alert>
+      </Snackbar>
     </form>
   );
 }
