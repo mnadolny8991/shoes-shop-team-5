@@ -1,5 +1,5 @@
-import { styled, Typography } from "@mui/material";
-import { Nunito_Sans } from "next/font/google";
+import { styled, Typography } from '@mui/material';
+import { Nunito_Sans } from 'next/font/google';
 
 const nunitoSans = Nunito_Sans({
   weight: ['300', '400', '500', '700'],

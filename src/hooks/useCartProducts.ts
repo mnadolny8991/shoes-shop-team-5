@@ -10,12 +10,15 @@ const useCartProducts = () => {
 
   const queries = amount.map((product) => {
     return {
-      queryKey: ['product', product.id],
-      queryFn: async () => mapProduct(await fetchProductById(product.id)),
+      queryKey: ['product', product.productId],
+      queryFn: async () =>
+        mapProduct(await fetchProductById(product.productId)),
       retry: false,
     };
   });
   const productsData = useQueries({ queries });
+
+  const isLoading = productsData.some((q) => q.isLoading);
 
   const products = productsData
     .filter((result, index) => {
@@ -23,7 +26,9 @@ const useCartProducts = () => {
         return true;
       } else if (result.isError) {
         const idToRemove = queries[index].queryKey[1] as number;
-        onDelete(idToRemove);
+        amount.forEach((cartEntry) =>
+          cartEntry.productId === idToRemove ? onDelete(cartEntry.id) : null
+        );
         return false;
       }
       return true;
@@ -31,7 +36,7 @@ const useCartProducts = () => {
     .map((result) => result.data)
     .filter((product) => product) as Product[];
 
-  return products;
+  return { products, isLoading };
 };
 
 export default useCartProducts;

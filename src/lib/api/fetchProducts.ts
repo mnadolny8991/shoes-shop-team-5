@@ -14,10 +14,10 @@ export const fetchProductsByUserId = async (
 ) => {
   return await fetchData(
     `${apiUrl}/products?filters[teamName]=team-5&` +
-    `filters[userID]=${id}` +
-    `&populate=${populate ?? '*'}${sort ? '&sort=' + sort + (sortDir ? ':' + sortDir : '') : ''}` +
-    `${page ? `&pagination[page]=${page}` : ''}` +
-    `${itemsPerPage ? `&pagination[pageSize]=${itemsPerPage}` : ''}`,
+      `filters[userID]=${id}` +
+      `&populate=${populate ?? '*'}${sort ? '&sort=' + sort + (sortDir ? ':' + sortDir : '') : ''}` +
+      `${page ? `&pagination[page]=${page}` : ''}` +
+      `${itemsPerPage ? `&pagination[pageSize]=${itemsPerPage}` : ''}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -32,14 +32,19 @@ export const fetchProductById = async (
   options?: RequestInit
 ) => {
   return await fetchData(
-    `${apiUrl}/products/${id}?populate=${populate ?? '*'}`, options
+    `${apiUrl}/products/${id}?populate=${populate ?? '*'}`,
+    options
   );
 };
 
-export const fetchProducts = async (populate?: string, sort?: string, sortDir?: string) =>
+export const fetchProducts = async (
+  populate?: string,
+  sort?: string,
+  sortDir?: string
+) =>
   await fetchData(
     `${apiUrl}/products?filters[teamName]=team-5&populate=${populate ?? '*'}` +
-    `${sort ? '&sort=' + sort + (sortDir ? ':' + sortDir : '') : ''}`
+      `${sort ? '&sort=' + sort + (sortDir ? ':' + sortDir : '') : ''}`
   );
 
 const getFiltersStringArray = (filters: Filters): string[] => {
@@ -76,7 +81,7 @@ export const fetchProductsByFiltersAndName = async (
   populate?: string,
   sort?: string,
   sortDir?: string,
-  options?: RequestInit,
+  options?: RequestInit
 ) => {
   const filtersStrArray = getFiltersStringArray(filters);
   const nameQuery = name ? `filters[name][$containsi]=${name}` : '';

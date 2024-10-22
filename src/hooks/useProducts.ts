@@ -7,13 +7,15 @@ import { useQueries } from '@tanstack/react-query';
 
 const useProducts = (useProductsContext: () => ProductsContextType) => {
   const { ids, onProductRemove } = useProductsContext();
-  const queries = ids.map((id: number) => {
-    return {
-      queryKey: ['product', id],
-      queryFn: async () => mapProduct(await fetchProductById(id)),
-      retry: false,
-    };
-  }).reverse();
+  const queries = ids
+    .map((id: number) => {
+      return {
+        queryKey: ['product', id],
+        queryFn: async () => mapProduct(await fetchProductById(id)),
+        retry: false,
+      };
+    })
+    .reverse();
   const products = useQueries({ queries })
     .filter((result, index) => {
       if (result.isSuccess) {

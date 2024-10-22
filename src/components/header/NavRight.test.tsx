@@ -21,7 +21,7 @@ describe('Right side of the header component', () => {
         <NavRight />
       </SearchContextProvider>
     );
-  }
+  };
 
   beforeEach(() => {
     useAvatarQueryMock.mockReturnValue({

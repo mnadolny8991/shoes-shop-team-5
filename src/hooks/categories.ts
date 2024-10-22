@@ -3,11 +3,13 @@ import {
   fetchBrands,
   fetchColors,
   fetchGenders,
+  fetchSize,
   fetchSizes,
 } from '@/lib/api/fetchCategories';
 import {
   mapAllColors,
   mapAllSizes,
+  mapApiSizeToSize,
   mapBrands,
   mapGenders,
 } from '@/mappers/productMappers';

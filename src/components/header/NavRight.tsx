@@ -30,11 +30,8 @@ export default function NavRight() {
   const router = useRouter();
   const [searchSubmitted, setSearchSubmitted] = useState(false);
   const { data: session, status } = useSession();
-  const {
-    searchText,
-    setSearchText,
-    getSearchParamsWithEmptyFilters,
-  } = useSearch();
+  const { searchText, setSearchText, getSearchParamsWithEmptyFilters } =
+    useSearch();
   const { data: avatar } = useAvatarQuery();
 
   const { amount } = useCartContext();

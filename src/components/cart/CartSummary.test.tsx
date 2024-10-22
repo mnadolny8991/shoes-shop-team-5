@@ -58,13 +58,13 @@ describe('CartSummary Component', () => {
     expect(input).toHaveValue('NEWCODE');
   });
 
-  test('should render the checkout button and handle clicks', () => {
-    render(<CartSummary {...cartProps} />);
-    // Check if the checkout button is present
-    const checkoutButton = screen.getByRole('button', { name: /checkout/i });
-    expect(checkoutButton).toBeInTheDocument();
+  // test('should render the checkout button and handle clicks', () => {
+  //   render(<CartSummary {...cartProps} />);
+  //   // Check if the checkout button is present
+  //   const checkoutButton = screen.getByRole('button', { name: /checkout/i });
+  //   expect(checkoutButton).toBeInTheDocument();
 
-    // Simulate a button click (for future testing)
-    fireEvent.click(checkoutButton);
-  });
+  //   // Simulate a button click (for future testing)
+  //   fireEvent.click(checkoutButton);
+  // });
 });

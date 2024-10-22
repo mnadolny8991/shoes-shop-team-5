@@ -45,14 +45,18 @@ const ForgotPasswordForm = () => {
         open={mutation.status === 'error'}
         autoHideDuration={2000}
       >
-        <Alert severity="error">{mutation.error?.message || 'Server error'}</Alert>
+        <Alert severity="error">
+          {mutation.error?.message || 'Server error'}
+        </Alert>
       </Snackbar>
       <Snackbar
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         open={mutation.status === 'success'}
         autoHideDuration={2000}
       >
-        <Alert severity="success">Reset password instructions have been sent</Alert>
+        <Alert severity="success">
+          Reset password instructions have been sent
+        </Alert>
       </Snackbar>
       <TextField
         value={email}

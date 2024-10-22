@@ -14,7 +14,7 @@ describe('left side of the header component', () => {
         <NavLeft />
       </SearchContextProvider>
     );
-  }
+  };
 
   test('displays only one icon (mobile)', () => {
     useMediaQueryMock.mockReturnValue(true);

@@ -10,10 +10,10 @@ import { fetchProductById } from '@/lib/api/fetchProducts';
 import { useQueries } from '@tanstack/react-query';
 import ProductOrderInvoice from '@/components/products/ProductOrderInvoice';
 
-type ProductOrderProps = {
+export type ProductOrderProps = {
   orderNumber: number;
   date: Date;
-  products: { productId: number; size: number; quantity: number }[];
+  records: { id: string; productId: number; size: number; quantity: number }[];
   shipmentStatus: 'Shipped' | 'Recieved' | 'Cancelled';
   data: {
     delivery: string;
@@ -26,23 +26,33 @@ type ProductOrderProps = {
 const ProductOrder: FC<ProductOrderProps> = ({
   orderNumber,
   date,
-  products,
+  records,
   shipmentStatus,
   data,
-  discount
+  discount,
 }) => {
-  const [expanded, setExpanded] = useState<boolean>(false);
-  const queriesData = products.map((product) => ({
-    queryKey: ['products', product.productId],
-    queryFn: async () => mapProduct(await fetchProductById(product.productId)),
+  const [expanded, setExpanded] = useState<boolean>(orderNumber === 0);
+  const queriesData = records.map((productRecord) => ({
+    queryKey: ['productRecord', productRecord.id],
+    queryFn: async () =>
+      mapProduct(await fetchProductById(productRecord.productId)),
   }));
   const queries = useQueries({ queries: queriesData });
-  const totalPrice = queries.reduce((total, query) => 
-    query.data
-      ? total + (query.data.price * products.find((p) => p.productId === query.data.id)!.quantity)
-      : total
-  , 0);
-  const isLoading = queries.some(query => query.isLoading);
+  const totalPrice = records.reduce((total, recordData, index) => {
+    // Access the query result based on the index, which aligns with the records array
+    const productQuery = queries[index];
+
+    // Check if the query has successfully fetched data
+    if (productQuery?.data) {
+      const productPrice = productQuery.data.price || 0;
+      // Assume recordData has a quantity field, adjust the total price calculation
+      return total + productPrice * recordData.quantity;
+    }
+
+    // If the query data is not ready, return the current total without modification
+    return total;
+  }, 0);
+  const isLoading = queries.some((query) => query.isLoading);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -55,30 +65,31 @@ const ProductOrder: FC<ProductOrderProps> = ({
         date={date}
         shipmentStatus={shipmentStatus}
         summaryPrice={isLoading ? NaN : totalPrice - discount}
-        amount={products.length}
+        amount={records.length}
         expand={expanded}
         onExpandClick={handleExpandClick}
       />
-      {expanded &&
+      {expanded && (
         <Stack divider={<Divider sx={{ color: '#E7EBEF' }} />}>
           <ProductOrderData data={data} />
-          {queries.map((query) => {
+          {records.map((record, index) => {
+            const query = queries[index];
             if (query.status === 'success') {
               return (
-                <ProductOrderDetails 
-                  key={query.data.id}
+                <ProductOrderDetails
+                  key={record.id}
                   productInfo={{
                     product: query.data,
-                    quantity: products.find((p) => p.productId === query.data.id)?.quantity!,
-                    size: products.find((p) => p.productId === query.data.id)?.size!,
+                    quantity: record.quantity,
+                    size: record.size,
                   }}
                 />
               );
             }
           })}
-          <ProductOrderInvoice discount={discount}/>
+          <ProductOrderInvoice discount={discount} />
         </Stack>
-      }
+      )}
     </Stack>
   );
 };

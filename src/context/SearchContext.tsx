@@ -1,7 +1,13 @@
 'use client';
 import { Box, CircularProgress } from '@mui/material';
 import { ReadonlyURLSearchParams, useSearchParams } from 'next/navigation';
-import { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
 // filters type
 export type Filters = {
@@ -41,14 +47,18 @@ const generateFilters = (searchParams: ReadonlyURLSearchParams): Filters => {
     price: JSON.parse(searchParams.get('price') ?? 'null') ?? [0, 999],
     size: JSON.parse(searchParams.get('size') ?? 'null') ?? [],
   };
-}
+};
 
 const SearchContextProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const searchParams = useSearchParams();
-  const [searchText, setSearchText] = useState(() => searchParams.get('search') ?? '');
-  const [filters, setFilters] = useState<Filters>(() => generateFilters(searchParams));
+  const [searchText, setSearchText] = useState(
+    () => searchParams.get('search') ?? ''
+  );
+  const [filters, setFilters] = useState<Filters>(() =>
+    generateFilters(searchParams)
+  );
 
   const updateFilter = <K extends keyof Filters>(key: K, value: Filters[K]) => {
     setFilters((prev) => ({ ...prev, [key]: value }));

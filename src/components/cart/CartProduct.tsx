@@ -8,7 +8,7 @@ import DeleteModal from '../modals/DeleteModal';
 import { useState } from 'react';
 
 type CartProductProps = {
-  id: number;
+  id: string;
   name: string;
   price: number;
   gender: string;
@@ -96,7 +96,8 @@ const CartProduct: React.FC<CartProductProps> = ({
               color: '#5C5C5C',
             }}
           >
-            {gender}&apos;s shoes
+            {gender}&apos;s shoes: EU-
+            {amount.find((entry) => entry.id === id)!.size}
           </Typography>
           {!isMobile && inStock && (
             <Typography

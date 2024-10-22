@@ -34,24 +34,27 @@ const ProductOrderBasicInfo: FC<ProductOrderBasicInfoProps> = ({
     case 'Shipped':
       statusInfo = (
         <Stack direction="row" gap={1}>
-          <LocalShippingOutlinedIcon sx={{ color: '#8C9196' }} fontSize="small" />
-          {!isMobile &&
+          <LocalShippingOutlinedIcon
+            sx={{ color: '#8C9196' }}
+            fontSize="small"
+          />
+          {!isMobile && (
             <OrderTypography sx={{ color: '#8C9196' }}>
               {shipmentStatus}
             </OrderTypography>
-          }
-      </Stack>
+          )}
+        </Stack>
       );
       break;
     case 'Recieved':
       statusInfo = (
         <Stack direction="row" gap={1}>
           <CheckIcon sx={{ color: '#3D9D41' }} fontSize="small" />
-          {!isMobile &&
+          {!isMobile && (
             <OrderTypography sx={{ color: '#8C9196' }}>
               {shipmentStatus}
             </OrderTypography>
-          }
+          )}
         </Stack>
       );
       break;
@@ -59,11 +62,11 @@ const ProductOrderBasicInfo: FC<ProductOrderBasicInfoProps> = ({
       statusInfo = (
         <Stack direction="row" gap={1}>
           <CloseIcon sx={{ color: '#CD3C37' }} fontSize="small" />
-          {!isMobile &&
+          {!isMobile && (
             <OrderTypography sx={{ color: '#8C9196' }}>
               {shipmentStatus}
             </OrderTypography>
-          }
+          )}
         </Stack>
       );
       break;
@@ -73,33 +76,33 @@ const ProductOrderBasicInfo: FC<ProductOrderBasicInfoProps> = ({
     <Box padding="16px 24px" sx={{ backgroundColor: '#FAFAFA' }}>
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         <Stack direction="row" gap={1}>
-          {!isMobile && <OrderTypography>&#8470;{orderNumber}:</OrderTypography>}
+          {!isMobile && (
+            <OrderTypography>&#8470;{orderNumber}:</OrderTypography>
+          )}
           <OrderTypography sx={{ color: '#8C9196' }}>
             {date.toLocaleDateString()}
           </OrderTypography>
         </Stack>
         <Stack direction="row" gap={1}>
-          <OrderTypography sx={{ color: '#8C9196' }}>{isMobile ? '#:' : 'Products:'}</OrderTypography>
+          <OrderTypography sx={{ color: '#8C9196' }}>
+            {isMobile ? '#:' : 'Products:'}
+          </OrderTypography>
           <OrderTypography>{amount}</OrderTypography>
         </Stack>
-        <Stack 
-          direction="row" 
-          gap={{ sm: 4, xs: 1 }} 
-          alignItems="center"
-        >
+        <Stack direction="row" gap={{ sm: 4, xs: 1 }} alignItems="center">
           <Stack direction="row" gap={1}>
-            {!isMobile &&
+            {!isMobile && (
               <OrderTypography sx={{ color: '#8C9196' }}>
                 Summary:
               </OrderTypography>
-            }
+            )}
             <OrderTypography sx={{ fontSize: '16px' }}>
               {summaryPrice}$
             </OrderTypography>
           </Stack>
-          <Stack 
-            direction="row" 
-            gap={1} 
+          <Stack
+            direction="row"
+            gap={1}
             alignItems="center"
             sx={{ minWidth: { sm: '95px' } }}
           >

@@ -1,6 +1,7 @@
 'use client';
 import {
   Box,
+  CircularProgress,
   Divider,
   Stack,
   Typography,
@@ -14,7 +15,7 @@ import CartEmpty from '@/components/cart/CartEmpty';
 import { createPortal } from 'react-dom';
 import { useEffect, useState } from 'react';
 import useCartProducts from '@/hooks/useCartProducts';
-import DeleteModal from '@/components/modals/DeleteModal';
+import CustomButton from '@/components/buttons/CustomButton';
 
 type CartProps = {};
 
@@ -24,11 +25,25 @@ const Cart: React.FC<CartProps> = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [isMounted, setIsMounted] = useState(false);
   const { amount, onDelete } = useCartContext();
-  const products = useCartProducts();
+  const { products, isLoading } = useCartProducts();
   const empty = products.length <= 0;
+
   useEffect(() => {
     setIsMounted(true);
   }, []);
+
+  if (!isMounted || isLoading) {
+    return (
+      <CircularProgress
+        sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+        }}
+      />
+    );
+  }
 
   return (
     <Stack
@@ -60,31 +75,53 @@ const Cart: React.FC<CartProps> = () => {
           }}
           divider={!isMobile && <Divider />}
         >
-          {products.map((product) => (
-            <CartProduct
-              key={product.id}
-              id={product.id}
-              name={product.name}
-              price={product.price}
-              gender={product.gender.name}
-              url={product.images[0].url}
-              inStock={true}
-              onDelete={() => onDelete(product.id)}
-            />
-          ))}
+          {amount.map((productCartEntry) => {
+            const product = products.find(
+              (p) => p.id === productCartEntry.productId
+            )!;
+            return (
+              <CartProduct
+                key={productCartEntry.id}
+                id={productCartEntry.id}
+                name={product.name}
+                price={product.price}
+                gender={product.gender.name}
+                url={product.images[0].url}
+                inStock={true}
+                onDelete={() => onDelete(productCartEntry.id)}
+              />
+            );
+          })}
         </Stack>
       </Box>
       {!empty && (
-        <CartSummary
-          subtotal={products.reduce(
-            (acc, val) =>
-              val.price * amount.find((a) => a.id === val.id)?.amount! + acc,
-            0
-          )}
-          shipping={20}
-          tax={0}
-          sx={{ mt: totalDown ? '80px' : 0 }}
-        />
+        <Box width={{ xs: 320, md: 400 }}>
+          <CartSummary
+            subtotal={amount.reduce(
+              (acc, cartEntry) =>
+                products.find((p) => p.id === cartEntry.productId)!.price *
+                  cartEntry.amount +
+                acc,
+              0
+            )}
+            shipping={20}
+            tax={0}
+            sx={{ mt: totalDown ? '80px' : 0 }}
+          />
+          <CustomButton
+            href="/checkout"
+            size="m"
+            variant="contained"
+            sx={{
+              mt: {
+                md: '113px',
+                xs: '84px',
+              },
+            }}
+          >
+            Checkout
+          </CustomButton>
+        </Box>
       )}
     </Stack>
   );

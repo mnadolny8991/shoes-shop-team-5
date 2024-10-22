@@ -11,7 +11,6 @@ import {
   useTheme,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import CustomButton from '@/components/buttons/CustomButton';
 import { useState } from 'react';
 import { useCartContext } from '@/context/CartContext';
 
@@ -140,19 +139,6 @@ const CartSummary: React.FC<CartSummaryProps> = ({
         </Stack>
         <Divider />
       </Stack>
-      <CustomButton
-        data-testid="checkout-button"
-        size="m"
-        variant="contained"
-        sx={{
-          mt: {
-            md: '113px',
-            xs: '84px',
-          },
-        }}
-      >
-        Checkout
-      </CustomButton>
     </Box>
   );
 };

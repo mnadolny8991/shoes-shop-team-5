@@ -110,14 +110,18 @@ const ResetPasswordForm = () => {
         open={mutation.status === 'error'}
         autoHideDuration={2000}
       >
-        <Alert severity="error">{mutation.error?.message || 'Server error'}</Alert>
+        <Alert severity="error">
+          {mutation.error?.message || 'Server error'}
+        </Alert>
       </Snackbar>
       <Snackbar
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         open={mutation.status === 'success'}
         autoHideDuration={2000}
       >
-        <Alert severity="success">The password has been successfully reset</Alert>
+        <Alert severity="success">
+          The password has been successfully reset
+        </Alert>
       </Snackbar>
       <CustomButton
         size={isMobile ? 's' : 'l'}
