@@ -3,7 +3,6 @@
  * - No special characters befor "@".
  * - Dots allowed but not at start/end.
  * - No consecutive dots.
- * - Must contain at least one number.
  * - The domain can consist of alphanumeric characters, hyphens (-), and dots (.).
  * - Hyphens cannot be at the start or end of a domain name component and cannot appear consecutively.
  * - The domain must end with a valid TLD consisting of at least two alphabetic characters.
