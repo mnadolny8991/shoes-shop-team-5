@@ -18,9 +18,11 @@ import TextField from '@/components/input/TextField';
 import useValidate from '@/hooks/useValidate';
 import {
   addressValidator,
+  cityValidator,
   emailValidator,
   nameValidator,
   phoneValidator,
+  stateValidator,
   zipCodeValidator,
 } from '@/lib/validators';
 import InputField from '@/components/input/InputField';
@@ -30,7 +32,7 @@ import { useSession } from 'next-auth/react';
 import { countries, CountryType } from '@/data/countries';
 import CountryAutocomplete from '@/components/input/CountryAutocomplete';
 import Grid2 from '@mui/material/Unstable_Grid2';
-import { ProductOrderProps } from '../products/ProductOrder';
+import { ProductOrderProps } from '@/components/products/ProductOrder';
 import { useCartContext } from '@/context/CartContext';
 
 export default function CheckoutForm() {
@@ -95,12 +97,12 @@ export default function CheckoutForm() {
     isFirstInteractionCountry && !country ? 'Please specify your country' : '';
   const { error: cityError } = useValidate(
     city,
-    nameValidator,
+    cityValidator,
     isFirstInteractionCity
   );
   const { error: stateError } = useValidate(
     state,
-    nameValidator,
+    stateValidator,
     isFirstInteractionState
   );
   const { error: zipCodeError } = useValidate(

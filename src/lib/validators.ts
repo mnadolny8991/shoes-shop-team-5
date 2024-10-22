@@ -129,6 +129,41 @@ const zipCodeValidator = (inputVal: string) => {
   }
 };
 
+/**
+ * Validates the input city name based on the following rules:
+ * - Must contain at least 2 characters.
+ * - Must only contains letters, spaces, apostrophes, hyphens, and periods.
+ *
+ * @param {string} inputVal - The city name to validate.
+ * @returns {string} - An error message if the city name does not meet the criteria, otherwise an empty string.
+ */
+const cityValidator = (inputVal: string): string => {
+  const nameRegex = new RegExp(/^[A-Za-zÀ-ÿ\s'-\.]{2,100}$/);
+  if (!nameRegex.test(inputVal)) {
+    return 'City name must have minimum 2 letters and should contain only letters, spaces, apostrophes, hyphens, and periods';
+  } else {
+    return '';
+  }
+};
+
+
+/**
+ * Validates the input state name based on the following rules:
+ * - Must contain at least 2 characters.
+ * - Must only contains letters, spaces, apostrophes, hyphens, and periods.
+ *
+ * @param {string} inputVal - The state name to validate.
+ * @returns {string} - An error message if the state name does not meet the criteria, otherwise an empty string.
+ */
+const stateValidator = (inputVal: string): string => {
+  const nameRegex = new RegExp(/^[A-Za-zÀ-ÿ\s'-\.]{2,100}$/);
+  if (!nameRegex.test(inputVal)) {
+    return 'State name must have minimum 2 letters and should contain only letters, spaces, apostrophes, hyphens, and periods';
+  } else {
+    return '';
+  }
+};
+
 export {
   emailValidator,
   passwordValidator,
@@ -137,4 +172,6 @@ export {
   phoneValidator,
   addressValidator,
   zipCodeValidator,
+  cityValidator,
+  stateValidator
 };
