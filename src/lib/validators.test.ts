@@ -49,4 +49,13 @@ describe('validators', () => {
     // Should not contain a number
     expect(validator('123a')).not.toBe('');
   });
+
+  test('phone validator', () => {
+    const validator = validators.phoneValidator;
+    // must contain only digits
+    expect(validator('777222333a')).not.toBe('');
+    // must contain at least 10 up to 15 characters
+    expect(validator('7772223332')).toBe('');
+    expect(validator('123456789')).not.toBe('');
+  });
 });
