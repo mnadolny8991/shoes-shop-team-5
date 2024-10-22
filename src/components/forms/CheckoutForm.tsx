@@ -114,9 +114,7 @@ export default function CheckoutForm() {
     isFirstInteractionAddress
   );
 
-  const { data, status } = session
-    ? useUserData(session.id, session.accessToken)
-    : {};
+  const { data, status } = useUserData(session?.id!, session?.accessToken!)
 
   useEffect(() => {
     if (data && status === 'success') {
