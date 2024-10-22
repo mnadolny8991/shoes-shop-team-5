@@ -9,5 +9,5 @@ export const fetchBrands = async () =>
   await fetchData(`${apiUrl}/brands?fields=name`);
 export const fetchGenders = async () =>
   await fetchData(`${apiUrl}/genders?fields=name`);
-export const fetchSize = async (id: number) => 
+export const fetchSize = async (id: number) =>
   await fetchData(`${apiUrl}/sizes/${id}`);

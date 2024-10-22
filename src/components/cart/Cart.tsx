@@ -33,14 +33,16 @@ const Cart: React.FC<CartProps> = () => {
   }, []);
 
   if (!isMounted || isLoading) {
-    return <CircularProgress 
-      sx={{
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-      }}
-    />;
+    return (
+      <CircularProgress
+        sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+        }}
+      />
+    );
   }
 
   return (
@@ -74,9 +76,11 @@ const Cart: React.FC<CartProps> = () => {
           divider={!isMobile && <Divider />}
         >
           {amount.map((productCartEntry) => {
-            const product = products.find((p) => p.id === productCartEntry.productId)!;
+            const product = products.find(
+              (p) => p.id === productCartEntry.productId
+            )!;
             return (
-              <CartProduct 
+              <CartProduct
                 key={productCartEntry.id}
                 id={productCartEntry.id}
                 name={product.name}
@@ -93,10 +97,13 @@ const Cart: React.FC<CartProps> = () => {
       {!empty && (
         <Box width={{ xs: 320, md: 400 }}>
           <CartSummary
-            subtotal={
-              amount.reduce((acc, cartEntry) => 
-                products.find((p) => p.id === cartEntry.productId)!.price * cartEntry.amount + acc, 0)
-            }
+            subtotal={amount.reduce(
+              (acc, cartEntry) =>
+                products.find((p) => p.id === cartEntry.productId)!.price *
+                  cartEntry.amount +
+                acc,
+              0
+            )}
             shipping={20}
             tax={0}
             sx={{ mt: totalDown ? '80px' : 0 }}

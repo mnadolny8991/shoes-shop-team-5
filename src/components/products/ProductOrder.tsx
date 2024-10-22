@@ -34,20 +34,21 @@ const ProductOrder: FC<ProductOrderProps> = ({
   const [expanded, setExpanded] = useState<boolean>(orderNumber === 0);
   const queriesData = records.map((productRecord) => ({
     queryKey: ['productRecord', productRecord.id],
-    queryFn: async () => mapProduct(await fetchProductById(productRecord.productId)),
+    queryFn: async () =>
+      mapProduct(await fetchProductById(productRecord.productId)),
   }));
   const queries = useQueries({ queries: queriesData });
   const totalPrice = records.reduce((total, recordData, index) => {
     // Access the query result based on the index, which aligns with the records array
     const productQuery = queries[index];
-  
+
     // Check if the query has successfully fetched data
     if (productQuery?.data) {
       const productPrice = productQuery.data.price || 0;
       // Assume recordData has a quantity field, adjust the total price calculation
       return total + productPrice * recordData.quantity;
     }
-  
+
     // If the query data is not ready, return the current total without modification
     return total;
   }, 0);

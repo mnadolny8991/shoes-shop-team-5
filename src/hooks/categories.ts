@@ -42,4 +42,3 @@ export const useSizes = () => {
     queryFn: async () => mapAllSizes(await fetchSizes()),
   });
 };
-

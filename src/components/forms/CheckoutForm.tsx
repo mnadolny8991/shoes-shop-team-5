@@ -114,7 +114,7 @@ export default function CheckoutForm() {
     isFirstInteractionAddress
   );
 
-  const { data, status } = useUserData(session?.id!, session?.accessToken!)
+  const { data, status } = useUserData(session?.id!, session?.accessToken!);
 
   useEffect(() => {
     if (data && status === 'success') {
@@ -182,40 +182,48 @@ export default function CheckoutForm() {
       })),
     };
     localStorage.removeItem('pending');
-    localStorage.setItem('pending', JSON.stringify(orderRecord)); 
+    localStorage.setItem('pending', JSON.stringify(orderRecord));
 
-    stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        return_url: `${window.location.origin}/thank-you`,
-        payment_method_data: {
-          billing_details: {
-            name: `${firstName} ${lastName}`,
-            email,
-            phone: phoneNumber,
-            address: {
-              country: country.code,
-              state,
-              city,
-              postal_code: zipCode,
-              line1: address,
-              line2: null,
+    stripe
+      .confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: `${window.location.origin}/thank-you`,
+          payment_method_data: {
+            billing_details: {
+              name: `${firstName} ${lastName}`,
+              email,
+              phone: phoneNumber,
+              address: {
+                country: country.code,
+                state,
+                city,
+                postal_code: zipCode,
+                line1: address,
+                line2: null,
+              },
             },
           },
         },
-      },
-    }).then((result) => {
-      if (result.error) {
-        console.error('error confirmPayment  ', result.error);
-        if (result.error.type === 'card_error' || result.error.type === 'validation_error') {
-          setConfirmPaymentErrorMessage(result.error.message || 'An error occurred.');
-        } else {
-          setConfirmPaymentErrorMessage('An unexpected error occurred.');
+      })
+      .then((result) => {
+        if (result.error) {
+          console.error('error confirmPayment  ', result.error);
+          if (
+            result.error.type === 'card_error' ||
+            result.error.type === 'validation_error'
+          ) {
+            setConfirmPaymentErrorMessage(
+              result.error.message || 'An error occurred.'
+            );
+          } else {
+            setConfirmPaymentErrorMessage('An unexpected error occurred.');
+          }
         }
-      }
-    }).finally(() => {
-      setIsLoading(false);
-    });
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   return (

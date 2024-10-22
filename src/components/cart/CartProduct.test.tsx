@@ -6,10 +6,26 @@ import CartProduct from '@/components/cart/CartProduct';
 describe('cart product', () => {
   const onDelete = jest.fn();
 
+  beforeEach(() => {
+    localStorage.setItem(
+      'cart',
+      JSON.stringify([
+        {
+          amount: 1,
+          id: '1816da03-04c2-412e-b785-48ca3c7e3755',
+          productId: 1476,
+          size: 41,
+        },
+      ])
+    );
+  });
+
   test('has all required elements and triggers delete', async () => {
+    expect(localStorage.getItem('cart')).not.toBe(null);
+
     render(
       <CartProduct
-        id={1}
+        id={'1816da03-04c2-412e-b785-48ca3c7e3755'}
         name="Nike Air Max"
         price={200}
         gender={'Men'}

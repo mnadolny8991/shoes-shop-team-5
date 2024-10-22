@@ -96,7 +96,8 @@ const CartProduct: React.FC<CartProductProps> = ({
               color: '#5C5C5C',
             }}
           >
-            {gender}&apos;s shoes: EU-{amount.find((entry) => entry.id== id)!.size}
+            {gender}&apos;s shoes: EU-
+            {amount.find((entry) => entry.id === id)!.size}
           </Typography>
           {!isMobile && inStock && (
             <Typography

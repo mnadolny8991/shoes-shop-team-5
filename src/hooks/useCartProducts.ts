@@ -11,7 +11,8 @@ const useCartProducts = () => {
   const queries = amount.map((product) => {
     return {
       queryKey: ['product', product.productId],
-      queryFn: async () => mapProduct(await fetchProductById(product.productId)),
+      queryFn: async () =>
+        mapProduct(await fetchProductById(product.productId)),
       retry: false,
     };
   });
@@ -25,10 +26,8 @@ const useCartProducts = () => {
         return true;
       } else if (result.isError) {
         const idToRemove = queries[index].queryKey[1] as number;
-        amount.forEach(
-          (cartEntry) => cartEntry.productId === idToRemove 
-            ? onDelete(cartEntry.id) 
-            : null
+        amount.forEach((cartEntry) =>
+          cartEntry.productId === idToRemove ? onDelete(cartEntry.id) : null
         );
         return false;
       }

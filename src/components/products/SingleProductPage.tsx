@@ -165,8 +165,12 @@ const SingleProductPage: FC<SingleProductPageProps> = ({ id }) => {
                 variant="contained"
                 onClick={async () => {
                   if (data && sizeId) {
-                    const sizeIdReal = data?.sizes?.find((si) => 'EU-' + si.name === allSizes[sizeId].name)!.id!;
-                    const sizeNum = parseInt(mapApiSizeToSize((await fetchSize(sizeIdReal)).data).name);
+                    const sizeIdReal = data?.sizes?.find(
+                      (si) => 'EU-' + si.name === allSizes[sizeId].name
+                    )!.id!;
+                    const sizeNum = parseInt(
+                      mapApiSizeToSize((await fetchSize(sizeIdReal)).data).name
+                    );
                     const id = uuidv4();
                     onProductAddToCart(id, data.id, sizeNum);
                   }

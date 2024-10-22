@@ -16,7 +16,11 @@ const useCartSubtotal = () => {
     queries,
     combine: (productsData) => ({
       productsData: productsData.filter(({ isError }, i) =>
-        isError ? onDelete(amount.find((e) => e.productId === queries[i].queryKey[1])!.id) : true
+        isError
+          ? onDelete(
+              amount.find((e) => e.productId === queries[i].queryKey[1])!.id
+            )
+          : true
       ) as { data: Product }[],
       isPending: productsData.some(({ isPending }) => isPending),
     }),
@@ -28,7 +32,8 @@ const useCartSubtotal = () => {
         .map(({ data }) => data)
         .reduce(
           (acc, val) =>
-            val.price * amount.find((a) => a.productId === val.id)?.amount! + acc,
+            val.price * amount.find((a) => a.productId === val.id)?.amount! +
+            acc,
           0
         );
   return { subtotal, isPending };
