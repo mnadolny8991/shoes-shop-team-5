@@ -1,4 +1,4 @@
-import * as validators from "./validators";
+import * as validators from "@/lib/validators";
 
 describe('validators', () => {
   test('email validator', () => {
@@ -29,5 +29,24 @@ describe('validators', () => {
     // At least one number
     expect(validator('ABC;abc;')).not.toBe('');
     expect(validator('ABC;ab1;')).toBe('');
+  });
+
+  test('confirm password validator', () => {
+    const firstPassword = 'ABC;ab1;';
+    const validator = validators.confirmPasswordValdiator(firstPassword);
+    // Passwords are the same
+    expect(validator('ABC;ab1;')).toBe('');
+    expect(validator('ABC;ab1')).not.toBe('');
+  });
+
+  test('name validator', () => {
+    const validator = validators.nameValidator;
+    // Name must have minimum 2 to 3 letters per word
+    expect(validator('AA')).toBe('');
+    expect(validator('A')).not.toBe('');
+    // Contain only english characters
+    expect(validator('chrząszć')).not.toBe('');
+    // Should not contain a number
+    expect(validator('123a')).not.toBe('');
   });
 });
