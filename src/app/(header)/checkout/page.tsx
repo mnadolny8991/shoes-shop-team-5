@@ -37,7 +37,7 @@ export default function Checkout() {
   const empty = products.length <= 0;
   const subtotal = products.reduce(
     (acc, val) =>
-      val.price * amount.find((a) => a.id === val.id)?.amount! + acc,
+      val.price * amount.find((a) => a.productId === val.id)?.amount! + acc,
     0
   );
   const shipping = 20;

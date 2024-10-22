@@ -31,7 +31,6 @@ import { countries, CountryType } from '@/data/countries';
 import CountryAutocomplete from '@/components/input/CountryAutocomplete';
 import Grid2 from '@mui/material/Unstable_Grid2';
 import { ProductOrderProps } from '../products/ProductOrder';
-import addressFormatter from '@fragaria/address-formatter';
 import { useCartContext } from '@/context/CartContext';
 
 export default function CheckoutForm() {
@@ -175,10 +174,11 @@ export default function CheckoutForm() {
         paymentStatus: 'After payment',
       },
       date: new Date(),
-      shipmentStatus: 'Recieved',
+      shipmentStatus: 'Shipped',
       discount: promocode ? 10 : 0,
-      products: amount.map((productAmount) => ({
-        productId: productAmount.id,
+      records: amount.map((productAmount) => ({
+        id: productAmount.id,
+        productId: productAmount.productId,
         size: productAmount.size,
         quantity: productAmount.amount,
       })),

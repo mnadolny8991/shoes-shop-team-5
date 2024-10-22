@@ -28,8 +28,8 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   }, [products, setProducts]);
 
-  const handleDelete = (productId: number) => {
-    setProducts(products.filter((product) => product.id !== productId));
+  const handleDelete = (id: string) => {
+    setProducts(products.filter((product) => product.id !== id));
   };
 
   const handleCartClear = () => {
@@ -41,27 +41,26 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({
     setPromocode(value);
   };
 
-  const handleAmountChange = (productId: number, operation: '+' | '-') => {
+  const handleAmountChange = (id: string, operation: '+' | '-') => {
+    console.log(id);
     setProducts(
       products.map((p) => {
-        if (p.id === productId) {
+        if (p.id === id) {
           const newVal = eval(`p.amount ${operation} 1`);
-          const prod = products.find((p) => p.id === productId);
-          if (!prod) throw new Error(`Cannot find a product with id ${productId}`);
-          return { ...prod, amount: newVal };
+          return { ...p, amount: newVal };
         }
         return p;
       })
     );
   };
 
-  const applyAmountChange = (productId: number, newValue: number) => {
+  const applyAmountChange = (id: string, newValue: number) => {
     setProducts(
       products.map((p) => {
-        if (p.id === productId) {
-          if (newValue <= 0) handleDelete(productId);
-          const prod = products.find((p) => p.id === productId);
-          if (!prod) throw new Error(`Cannot find a product with id ${productId}`);
+        if (p.id === id) {
+          if (newValue <= 0) handleDelete(id);
+          const prod = products.find((p) => p.id === id);
+          if (!prod) throw new Error(`Cannot find an bag entry with id ${id}`);
           return { ...prod, amount: newValue };
         }
         return p;
@@ -69,23 +68,25 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({
     );
   };
 
-  const handleProductAdd = (productId: number, size: number) => {
-    const searchResult = products.find((p) => p.id === productId);
+  const handleProductAdd = (id: string, productId: number, size: number) => {
+    const searchResult = products.find((p) => p.id === id);
     if (searchResult && searchResult.size === size)
       setProducts(
         products.map((p) =>
-          (p.id === productId) ? { id: p.id, amount: p.amount + 1, size } : p
+          (p.id === id) ? { ...searchResult, id: p.id, amount: p.amount + 1, size } : p
         )
       );
-    else
+    else {
       setProducts([
         ...products,
         {
-          id: productId,
+          id,
+          productId,
           amount: 1,
           size,
         },
       ]);
+    }
   };
 
   return (

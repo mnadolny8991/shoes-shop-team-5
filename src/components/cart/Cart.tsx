@@ -27,6 +27,7 @@ const Cart: React.FC<CartProps> = () => {
   const { amount, onDelete } = useCartContext();
   const { products, isLoading } = useCartProducts();
   const empty = products.length <= 0;
+
   useEffect(() => {
     setIsMounted(true);
   }, []);
@@ -65,28 +66,52 @@ const Cart: React.FC<CartProps> = () => {
           }}
           divider={!isMobile && <Divider />}
         >
-          {products.map((product, index) => (
+          {/* {products.map((product) => (
             <CartProduct
-              key={index}
-              id={product.id}
+              key={amount.find((p) => p.productId === product.id)!.id}
+              id={amount.find((cartEntry) => 
+                cartEntry.productId === product.id)!.id}
               name={product.name}
               price={product.price}
               gender={product.gender.name}
               url={product.images[0].url}
               inStock={true}
-              onDelete={() => onDelete(product.id)}
+              onDelete={() => 
+                onDelete(amount.find((cartEntry) => 
+                  cartEntry.productId === product.id)!.id
+                )
+              }
             />
-          ))}
+          ))} */}
+          {amount.map((productCartEntry) => {
+            const product = products.find((p) => p.id === productCartEntry.productId)!;
+            return (
+              <CartProduct 
+                key={productCartEntry.id}
+                id={productCartEntry.id}
+                name={product.name}
+                price={product.price}
+                gender={product.gender.name}
+                url={product.images[0].url}
+                inStock={true}
+                onDelete={() => onDelete(productCartEntry.id)}
+              />
+            );
+          })}
         </Stack>
       </Box>
       {!empty && (
         <Box width={{ xs: 320, md: 400 }}>
           <CartSummary
-            subtotal={products.reduce(
-              (acc, val) =>
-                val.price * amount.find((a) => a.id === val.id)?.amount! + acc,
-              0
-            )}
+            // subtotal={products.reduce(
+            //   (acc, val) =>
+            //     val.price * amount.find((a) => a.productId === val.id)?.amount! + acc,
+            //   0
+            // )}
+            subtotal={
+              amount.reduce((acc, cartEntry) => 
+                products.find((p) => p.id === cartEntry.productId)!.price * cartEntry.amount + acc, 0)
+            }
             shipping={20}
             tax={0}
             sx={{ mt: totalDown ? '80px' : 0 }}

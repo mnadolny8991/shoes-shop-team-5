@@ -8,7 +8,7 @@ import DeleteModal from '../modals/DeleteModal';
 import { useState } from 'react';
 
 type CartProductProps = {
-  id: number;
+  id: string;
   name: string;
   price: number;
   gender: string;
