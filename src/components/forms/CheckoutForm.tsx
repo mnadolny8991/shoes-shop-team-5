@@ -374,9 +374,12 @@ export default function CheckoutForm() {
       <Snackbar
         open={!!confirmPaymentErrorMessage}
         autoHideDuration={2000}
-        onClose={()=>setConfirmPaymentErrorMessage(null)}
+        onClose={() => setConfirmPaymentErrorMessage(null)}
       >
-        <Alert severity='error' onClose={()=>setConfirmPaymentErrorMessage(null)}>
+        <Alert
+          severity="error"
+          onClose={() => setConfirmPaymentErrorMessage(null)}
+        >
           {confirmPaymentErrorMessage}
         </Alert>
       </Snackbar>

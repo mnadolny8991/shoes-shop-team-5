@@ -120,7 +120,7 @@ export default function Checkout() {
       ) : empty ? (
         <Typography variant="h1">No Products in the Cart</Typography>
       ) : error ? (
-        <Alert severity='error'>{error.message}</Alert>
+        <Alert severity="error">{error.message}</Alert>
       ) : (
         payment && (
           <Stack

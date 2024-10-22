@@ -146,7 +146,6 @@ const cityValidator = (inputVal: string): string => {
   }
 };
 
-
 /**
  * Validates the input state name based on the following rules:
  * - Must contain at least 2 characters.
@@ -173,5 +172,5 @@ export {
   addressValidator,
   zipCodeValidator,
   cityValidator,
-  stateValidator
+  stateValidator,
 };
