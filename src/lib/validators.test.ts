@@ -58,4 +58,20 @@ describe('validators', () => {
     expect(validator('7772223332')).toBe('');
     expect(validator('123456789')).not.toBe('');
   });
+
+  test('address validator', () => {
+    const validator = validators.addressValidator;
+    // At least 6 characters
+    expect(validator('123456')).toBe('');
+    expect(validator('12345')).not.toBe('');
+    // Numbers and both uppercase and lowercase letters are allowed
+    expect(validator('1234aAvV')).toBe('');
+    expect(validator('1234aAvV;')).not.toBe('');
+    // Whitespace allowed
+    expect(validator('Wieczysta 79')).toBe('');
+    expect(validator('  Wieczysta   79  ')).toBe('');
+    // Common punctuation characters often found in addresses are allowed
+    expect(validator(",#'-ASc 1")).toBe('');
+    expect(validator(";,#'-ASc 1")).not.toBe('');
+  });
 });
