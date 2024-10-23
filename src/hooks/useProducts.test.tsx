@@ -55,20 +55,20 @@ describe('products hook', () => {
       .mockResolvedValueOnce(apiResponses[0])
       .mockResolvedValueOnce(apiResponses[1]);
 
-      const { result } = renderHook(() => useProducts(useWishlist), { wrapper });
+    const { result } = renderHook(() => useProducts(useWishlist), { wrapper });
 
-      // Expect to have two products when successfull
-      await waitFor(() => expect(result.current).toHaveLength(2));
+    // Expect to have two products when successfull
+    await waitFor(() => expect(result.current).toHaveLength(2));
   });
 
   test('to not fetch nonexisting items', async () => { 
     (fetchProductById as jest.Mock)
-      .mockResolvedValueOnce('error')
+      .mockRejectedValueOnce('error')
       .mockResolvedValueOnce(apiResponses[1]);
 
-      const { result } = renderHook(() => useProducts(useWishlist), { wrapper });
+    const { result } = renderHook(() => useProducts(useWishlist), { wrapper });
 
-      // Expect to have only one product if successfull
-      await waitFor(() => expect(result.current).toHaveLength(1));
+    // Expect to have only one product if successfull
+    await waitFor(() => expect(result.current).toHaveLength(1));
   });
 })
