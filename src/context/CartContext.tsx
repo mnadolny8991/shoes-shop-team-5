@@ -3,6 +3,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { CartContextType } from '@/types/cart';
 import { CartProduct } from '@/types/cartProduct';
 import useLocalStorage from '@/hooks/useLocalStorage';
+import { v4 as uuidv4 } from 'uuid';
 
 const CartContext = createContext<CartContextType | null>(null);
 
@@ -68,13 +69,15 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({
     );
   };
 
-  const handleProductAdd = (id: string, productId: number, size: number) => {
-    const searchResult = products.find((p) => p.id === id);
-    if (searchResult && searchResult.size === size)
+  const handleProductAdd = (productId: number, size: number) => {
+    const searchResult = products.find(
+      (p) => p.productId === productId && p.size === size
+    );
+    if (searchResult)
       setProducts(
         products.map((p) =>
-          p.id === id
-            ? { ...searchResult, id: p.id, amount: p.amount + 1, size }
+          p.productId === productId && p.size === size
+            ? { ...p, amount: p.amount + 1 }
             : p
         )
       );
@@ -82,7 +85,7 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({
       setProducts([
         ...products,
         {
-          id,
+          id: uuidv4(),
           productId,
           amount: 1,
           size,

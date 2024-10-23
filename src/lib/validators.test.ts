@@ -1,4 +1,4 @@
-import * as validators from "@/lib/validators";
+import * as validators from '@/lib/validators';
 
 describe('validators', () => {
   test('email validator', () => {
@@ -83,5 +83,5 @@ describe('validators', () => {
     expect(validator('12345-1234')).toBe('');
     expect(validator('12345-12345')).not.toBe('');
     expect(validator('12345-345')).not.toBe('');
-  })
+  });
 });
