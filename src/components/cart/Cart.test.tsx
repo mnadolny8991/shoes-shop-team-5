@@ -8,6 +8,7 @@ import { Product } from '@/types/product';
 import { useCartContext } from '@/context/CartContext';
 import { CartProduct } from '@/types/cartProduct';
 import mockProduct from '@/testing/mocks/mockProduct';
+import { v4 as uuidv4 } from 'uuid';
 
 jest.mock('../../hooks/useCartProducts');
 
@@ -20,12 +21,14 @@ describe('Cart component', () => {
       'cart',
       JSON.stringify([
         {
-          id: 1564,
+          id: uuidv4(),
+          productId: 1564,
           amount: 2,
+          size: 36
         },
       ])
     );
-    useCartProductsMock.mockReturnValue([mockProduct]);
+    useCartProductsMock.mockReturnValue({ products: [mockProduct], isLoading: false });
   });
 
   test('summary values are changed on product quantity change', () => {
