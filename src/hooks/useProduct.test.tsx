@@ -14,9 +14,9 @@ describe('useProduct', () => {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
-        retry: false,
+       retry: false,
       },
-    },
+    }, 
   });
 
   const wrapper = ({ children }: { children: React.ReactNode }) => {
