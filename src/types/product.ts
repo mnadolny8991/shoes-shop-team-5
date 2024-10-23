@@ -1,7 +1,7 @@
 export type ProductImage = {
   id: number;
-  name: string;
-  alternativeText: string;
+  name?: string;
+  alternativeText?: string | null;
   url: string;
 };
 
