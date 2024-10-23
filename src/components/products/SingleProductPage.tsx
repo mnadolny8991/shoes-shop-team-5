@@ -164,7 +164,7 @@ const SingleProductPage: FC<SingleProductPageProps> = ({ id }) => {
                 size={isMobile ? 'm' : 'xl'}
                 variant="contained"
                 onClick={async () => {
-                  if (data && sizeId) {
+                  if (data && sizeId !== null) {
                     const sizeIdReal = data?.sizes?.find(
                       (si) => 'EU-' + si.name === allSizes[sizeId].name
                     )!.id!;
