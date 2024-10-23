@@ -18,7 +18,6 @@ import useProduct from '@/hooks/useProduct';
 import { useWishlist } from '@/context/WishlistContext';
 import { mapApiSizeToSize } from '@/mappers/productMappers';
 import { fetchSize } from '@/lib/api/fetchCategories';
-import { v4 as uuidv4 } from 'uuid';
 
 type SingleProductPageProps = {
   id: number;
@@ -171,8 +170,7 @@ const SingleProductPage: FC<SingleProductPageProps> = ({ id }) => {
                     const sizeNum = parseInt(
                       mapApiSizeToSize((await fetchSize(sizeIdReal)).data).name
                     );
-                    const id = uuidv4();
-                    onProductAddToCart(id, data.id, sizeNum);
+                    onProductAddToCart(data.id, sizeNum);
                   }
                 }}
                 disabled={sizeId === null}
