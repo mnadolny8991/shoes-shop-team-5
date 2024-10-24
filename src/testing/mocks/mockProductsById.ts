@@ -24,6 +24,7 @@ const apiResponses: ApiProductResponse[] = [
                 height: 380,
                 formats: {
                   thumbnail: {
+                    path: null,
                     ext: '.png',
                     url: 'https://res.cloudinary.com/devc11z9p/image/upload/v1726762533/thumbnail_pexels_ray_piedra_1456737_1781498332.png',
                     hash: 'thumbnail_pexels_ray_piedra_1456737_1781498332',
@@ -160,6 +161,7 @@ const apiResponses: ApiProductResponse[] = [
                 height: 380,
                 formats: {
                   thumbnail: {
+                    path: null,
                     ext: '.png',
                     url: 'https://res.cloudinary.com/devc11z9p/image/upload/v1727117288/thumbnail_irene_kredenets_a910c8d96f.png',
                     hash: 'thumbnail_irene_kredenets_a910c8d96f',
@@ -199,6 +201,7 @@ const apiResponses: ApiProductResponse[] = [
                 height: 380,
                 formats: {
                   thumbnail: {
+                    path: null,
                     ext: '.png',
                     url: 'https://res.cloudinary.com/devc11z9p/image/upload/v1727263245/thumbnail_luis_felipe_lins_1d7e68dca0.png',
                     hash: 'thumbnail_luis_felipe_lins_1d7e68dca0',
