@@ -1,5 +1,4 @@
 import { render } from '@/testing/testUtils';
-import ImageContainer from './ImageContainer';
 import { screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import InputFieldContainer, { InputProps } from './InputFieldContainer';
