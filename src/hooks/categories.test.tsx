@@ -42,18 +42,20 @@ describe('category hooks', () => {
       .mockResolvedValueOnce(apiResponseColors)
       .mockRejectedValueOnce(new Error('error'));
 
-    const { result: resultSuccess } = renderHook(categories.useColors, { wrapper });
+    const { result: resultSuccess } = renderHook(categories.useColors, {
+      wrapper,
+    });
     expect(resultSuccess.current.status).toBe('pending');
 
     await waitFor(() =>
-      expect(resultSuccess.current.data).toStrictEqual(mapAllColors(apiResponseColors))
+      expect(resultSuccess.current.data).toStrictEqual(
+        mapAllColors(apiResponseColors)
+      )
     );
 
     const { result } = renderHook(categories.useColors, { wrapper });
 
-    await waitFor(() =>
-      expect(result.current.isError).toBeTruthy()
-    );
+    await waitFor(() => expect(result.current.isError).toBeTruthy());
   });
 
   test('use genders hook', async () => {
@@ -61,18 +63,20 @@ describe('category hooks', () => {
       .mockResolvedValueOnce(apiResponseGenders)
       .mockRejectedValueOnce(new Error('error'));
 
-    const { result: resultSuccess } = renderHook(categories.useGenders, { wrapper });
+    const { result: resultSuccess } = renderHook(categories.useGenders, {
+      wrapper,
+    });
     expect(resultSuccess.current.status).toBe('pending');
 
     await waitFor(() =>
-      expect(resultSuccess.current.data).toStrictEqual(mapGenders(apiResponseGenders))
+      expect(resultSuccess.current.data).toStrictEqual(
+        mapGenders(apiResponseGenders)
+      )
     );
 
     const { result } = renderHook(categories.useGenders, { wrapper });
 
-    await waitFor(() =>
-      expect(result.current.isError).toBeTruthy()
-    );
+    await waitFor(() => expect(result.current.isError).toBeTruthy());
   });
 
   test('use sizes hook', async () => {
@@ -80,36 +84,40 @@ describe('category hooks', () => {
       .mockResolvedValueOnce(apiResponseSizes)
       .mockRejectedValueOnce(new Error('error'));
 
-    const { result: resultSuccess } = renderHook(categories.useSizes, { wrapper });
+    const { result: resultSuccess } = renderHook(categories.useSizes, {
+      wrapper,
+    });
     expect(resultSuccess.current.status).toBe('pending');
 
     await waitFor(() =>
-      expect(resultSuccess.current.data).toStrictEqual(mapAllSizes(apiResponseSizes))
+      expect(resultSuccess.current.data).toStrictEqual(
+        mapAllSizes(apiResponseSizes)
+      )
     );
 
     const { result } = renderHook(categories.useSizes, { wrapper });
 
-    await waitFor(() =>
-      expect(result.current.isError).toBeTruthy()
-    );
+    await waitFor(() => expect(result.current.isError).toBeTruthy());
   });
 
   test('use brands hook', async () => {
     (fetchCategories.fetchBrands as jest.Mock)
-    .mockResolvedValueOnce(apiResponseBrands)
-    .mockRejectedValueOnce(new Error('error'));
+      .mockResolvedValueOnce(apiResponseBrands)
+      .mockRejectedValueOnce(new Error('error'));
 
-    const { result: resultSuccess } = renderHook(categories.useBrands, { wrapper });
+    const { result: resultSuccess } = renderHook(categories.useBrands, {
+      wrapper,
+    });
     expect(resultSuccess.current.status).toBe('pending');
 
     await waitFor(() =>
-      expect(resultSuccess.current.data).toStrictEqual(mapBrands(apiResponseBrands))
+      expect(resultSuccess.current.data).toStrictEqual(
+        mapBrands(apiResponseBrands)
+      )
     );
 
     const { result } = renderHook(categories.useBrands, { wrapper });
 
-    await waitFor(() =>
-      expect(result.current.isError).toBeTruthy()
-    );
+    await waitFor(() => expect(result.current.isError).toBeTruthy());
   });
 });
