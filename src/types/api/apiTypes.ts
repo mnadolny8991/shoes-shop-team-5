@@ -164,7 +164,7 @@ export type ApiProduct = {
   sizes: {
     data: ApiSize[];
   };
-  userID: ApiUser;
+  userID?: ApiUser;
 };
 
 export type ApiProductResponseDataObject = {

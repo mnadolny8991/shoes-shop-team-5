@@ -26,7 +26,7 @@ const Cart: React.FC<CartProps> = () => {
   const [isMounted, setIsMounted] = useState(false);
   const { amount, onDelete } = useCartContext();
   const { products, isLoading } = useCartProducts();
-  const empty = products.length <= 0;
+  const empty = isLoading ? true : products.length <= 0;
 
   useEffect(() => {
     setIsMounted(true);
