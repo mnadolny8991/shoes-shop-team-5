@@ -14,18 +14,16 @@ describe('use filtered products', () => {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
-       retry: false,
+        retry: false,
       },
-    }, 
+    },
   });
 
   const wrapper = ({ children }: { children: React.ReactNode }) => {
     return (
-      <QueryClientProvider client={queryClient}>
-        {children}
-      </QueryClientProvider>
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     );
-  }
+  };
 
   afterEach(() => {
     queryClient.clear();
@@ -33,30 +31,44 @@ describe('use filtered products', () => {
   });
 
   test('finds products', async () => {
-    (fetchProductsByFiltersAndName as jest.Mock)
-      .mockResolvedValue(apiResponse);
-    
-    const { result } = renderHook(() => useFilteredProducts('example text', {
-      gender: [],
-      size: [],
-      brand: [],
-      price: [1, 999],
-      color: [],
-    }, 1), { wrapper });
+    (fetchProductsByFiltersAndName as jest.Mock).mockResolvedValue(apiResponse);
+
+    const { result } = renderHook(
+      () =>
+        useFilteredProducts(
+          'example text',
+          {
+            gender: [],
+            size: [],
+            brand: [],
+            price: [1, 999],
+            color: [],
+          },
+          1
+        ),
+      { wrapper }
+    );
     await waitFor(() => expect(result.current.data.data).toHaveLength(7));
   });
 
   test('have error on failure', async () => {
-    (fetchProductsByFiltersAndName as jest.Mock)
-      .mockRejectedValue(new Error());
+    (fetchProductsByFiltersAndName as jest.Mock).mockRejectedValue(new Error());
 
-    const { result } = renderHook(() => useFilteredProducts('example text', {
-      gender: [],
-      size: [],
-      brand: [],
-      price: [1, 999],
-      color: [],
-    }, 1), { wrapper });
+    const { result } = renderHook(
+      () =>
+        useFilteredProducts(
+          'example text',
+          {
+            gender: [],
+            size: [],
+            brand: [],
+            price: [1, 999],
+            color: [],
+          },
+          1
+        ),
+      { wrapper }
+    );
 
     await waitFor(() => expect(result.current.isError).toBe(true));
   });

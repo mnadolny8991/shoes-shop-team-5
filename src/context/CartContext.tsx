@@ -43,7 +43,6 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const handleAmountChange = (id: string, operation: '+' | '-') => {
-    console.log(id);
     setProducts(
       products.map((p) => {
         if (p.id === id) {

@@ -93,8 +93,6 @@ export default function ProductForm({
         }
 
         const data = await response.json();
-        console.log(data);
-
         setValue('description', (data.code as string).slice(0, 300), {
           shouldValidate: true,
           shouldDirty: true,
@@ -170,14 +168,6 @@ export default function ProductForm({
   };
 
   const onSubmitForm = (data: ProductFormData) => {
-    // const changedData: ApiPutProduct = Object.fromEntries(
-    //   Object.keys(dirtyFields).map((key) => [
-    //     key,
-    //     data[key as keyof ProductFormData],
-    //   ])
-    // );
-    // onSubmit({ productProps: changedData, files: data.uploadImages });
-
     const productProps: ApiPutProduct = Object.fromEntries(
       Object.entries(data).filter(
         submitDirty

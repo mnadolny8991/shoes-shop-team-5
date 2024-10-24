@@ -299,7 +299,6 @@ export default function CheckoutForm() {
             value={country}
             onBlur={(e) => {
               setIsFirstInteractionCountry(true);
-              console.log('country blur');
             }}
             onChange={setCountry}
             error={countryError}

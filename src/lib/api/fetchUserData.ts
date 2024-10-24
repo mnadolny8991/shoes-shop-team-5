@@ -24,7 +24,7 @@ export const getUserDataWithAvatar = async (token: string) => {
       Authorization: `Bearer ${token}`,
     },
   });
-}
+};
 
 export const updateUserData = async (
   id: number,
