@@ -10,7 +10,16 @@ const createJestConfig = nextJest({
 const config: Config = {
   coverageProvider: 'v8',
   collectCoverage: true,
-  collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}'],
+  collectCoverageFrom: [
+    'src/**/*.{js,jsx,ts,tsx}',
+    '!src/types/**',
+    '!src/testing/**',
+    '!src/styles/**',
+    '!src/mock/**',
+    '!src/lib/api/**',
+    '!src/data/**',
+    '!src/svgIcons/**',
+  ],
   coverageThreshold: {
     global: {
       branches: 75,
