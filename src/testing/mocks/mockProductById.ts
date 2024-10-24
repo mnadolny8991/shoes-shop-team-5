@@ -23,6 +23,7 @@ const apiResponse: ApiProductResponse = {
               height: 380,
               formats: {
                 thumbnail: {
+                  path: null,
                   ext: '.png',
                   url: 'https://res.cloudinary.com/devc11z9p/image/upload/v1726762533/thumbnail_pexels_ray_piedra_1456737_1781498332.png',
                   hash: 'thumbnail_pexels_ray_piedra_1456737_1781498332',
