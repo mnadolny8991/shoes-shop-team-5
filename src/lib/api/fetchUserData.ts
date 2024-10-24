@@ -17,6 +17,15 @@ export const getUserData = async (id: number, token: string) => {
   })) as UserInfo;
 };
 
+export const getUserDataWithAvatar = async (token: string) => {
+  return await fetchData(`${apiUrl}/users/me?populate=avatar`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
 export const updateUserData = async (
   id: number,
   token: string,
