@@ -9,11 +9,11 @@ import {
 import Image from 'next/image';
 import unsplash from '/public/pawel-czerwinski-unsplash-3.png';
 import { useAvatarQuery } from '@/hooks/useAvatarQuery';
+import { useSession } from 'next-auth/react';
 
 const ProductsHeader = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-
   const { data } = useAvatarQuery();
 
   return (
