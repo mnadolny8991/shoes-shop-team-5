@@ -9,6 +9,16 @@ const createJestConfig = nextJest({
 // Add any custom config to be passed to Jest
 const config: Config = {
   coverageProvider: 'v8',
+  collectCoverage: true,
+  collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}'],
+  coverageThreshold: {
+    global: {
+      branches: 75,
+      functions: 75,
+      lines: 75,
+      statements: 75,
+    },
+  },
   testEnvironment: 'jsdom',
   globals: {
     fetch: globalThis.fetch,
