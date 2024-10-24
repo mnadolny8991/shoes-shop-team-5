@@ -24,7 +24,7 @@ import {
 } from '@/testing/mocks/products';
 import mockProduct from '@/testing/mocks/mockProduct';
 
-describe('mappers', () => {
+describe('product mappers', () => {
   test('mapApiSizeToSize', () => {
     const apiSize: ApiSize = {
       id: 135,

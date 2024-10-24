@@ -24,11 +24,14 @@ describe('Cart component', () => {
           id: uuidv4(),
           productId: 1564,
           amount: 2,
-          size: 36
+          size: 36,
         },
       ])
     );
-    useCartProductsMock.mockReturnValue({ products: [mockProduct], isLoading: false });
+    useCartProductsMock.mockReturnValue({
+      products: [mockProduct],
+      isLoading: false,
+    });
   });
 
   test('summary values are changed on product quantity change', () => {
