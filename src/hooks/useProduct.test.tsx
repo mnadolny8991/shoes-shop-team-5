@@ -1,6 +1,6 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import useProduct from '@/hooks/useProduct';
-import '@testing-library/jest-dom'
+import '@testing-library/jest-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { fetchProductById } from '@/lib/api/fetchProducts';
 import mapProduct from '@/mappers/productMappers';
@@ -14,14 +14,16 @@ describe('useProduct', () => {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
-       retry: false,
+        retry: false,
       },
-    }, 
+    },
   });
 
   const wrapper = ({ children }: { children: React.ReactNode }) => {
-    return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-  }
+    return (
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    );
+  };
 
   afterEach(() => {
     queryClient.clear();
@@ -29,7 +31,6 @@ describe('useProduct', () => {
   });
 
   test('should return product data when fetch is successful', async () => {
-    
     // Mock fetchProductById return value
     (fetchProductById as jest.Mock).mockResolvedValue(apiResponse);
 
@@ -40,10 +41,14 @@ describe('useProduct', () => {
     expect(result.current.isLoading).toBe(true);
 
     // Wait for the query to finish
-    await waitFor(() => expect(result.current.isSuccess).toBe(true), { timeout: 5000 });
+    await waitFor(() => expect(result.current.isSuccess).toBe(true), {
+      timeout: 5000,
+    });
 
     // Check if product is mapped
-    await waitFor(async () => expect(result.current.data).toEqual(await mapProduct(apiResponse)));
+    await waitFor(async () =>
+      expect(result.current.data).toEqual(await mapProduct(apiResponse))
+    );
   });
 
   test('should handle error when fetch fails', async () => {
@@ -58,7 +63,9 @@ describe('useProduct', () => {
     expect(result.current.isLoading).toBe(true);
 
     // Wait for the query to finish
-    await waitFor(() => expect(result.current.isError).toBe(true), { timeout: 5000 });
+    await waitFor(() => expect(result.current.isError).toBe(true), {
+      timeout: 5000,
+    });
 
     // Check if the error message is correct
     expect(result.current.error?.message).toBe(errorMessage);

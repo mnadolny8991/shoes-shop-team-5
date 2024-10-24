@@ -9,6 +9,7 @@ export type ApiUserAttributes = {
   phoneNumber: string | null;
   firstName: string | null;
   lastName: string | null;
+  customerId: number | null;
 };
 
 export type ApiUser = {
