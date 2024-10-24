@@ -14,7 +14,9 @@ describe('Input field container', () => {
     } as InputProps;
 
     render(
-      <InputFieldContainer {...props}><p>children</p></InputFieldContainer>
+      <InputFieldContainer {...props}>
+        <p>children</p>
+      </InputFieldContainer>
     );
 
     const label = screen.getByText(props.label);

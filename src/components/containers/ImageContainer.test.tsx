@@ -15,9 +15,7 @@ describe('Image container', () => {
       onClick,
     };
 
-    render(
-      <ImageContainer {...props} />
-    );
+    render(<ImageContainer {...props} />);
 
     const image = screen.getByAltText(props.alt);
     expect(image).toBeInTheDocument();
