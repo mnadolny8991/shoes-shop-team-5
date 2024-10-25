@@ -16,6 +16,7 @@ import { createPortal } from 'react-dom';
 import { useEffect, useState } from 'react';
 import useCartProducts from '@/hooks/useCartProducts';
 import CustomButton from '@/components/buttons/CustomButton';
+import shippingCost from '@/data/shippingCost';
 
 type CartProps = {};
 
@@ -104,7 +105,7 @@ const Cart: React.FC<CartProps> = () => {
                 acc,
               0
             )}
-            shipping={20}
+            shipping={shippingCost}
             tax={0}
             sx={{ mt: totalDown ? '80px' : 0 }}
           />
