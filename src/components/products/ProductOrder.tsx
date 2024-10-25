@@ -9,6 +9,7 @@ import mapProduct from '@/mappers/productMappers';
 import { fetchProductById } from '@/lib/api/fetchProducts';
 import { useQueries } from '@tanstack/react-query';
 import ProductOrderInvoice from '@/components/products/ProductOrderInvoice';
+import shippingCost from '@/data/shippingCost';
 
 export type ProductOrderProps = {
   orderNumber: number;
@@ -51,7 +52,7 @@ const ProductOrder: FC<ProductOrderProps> = ({
 
     // If the query data is not ready, return the current total without modification
     return total;
-  }, 0);
+  }, 0) + shippingCost;
   const isLoading = queries.some((query) => query.isLoading);
 
   const handleExpandClick = () => {
