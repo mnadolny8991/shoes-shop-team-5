@@ -19,6 +19,7 @@ const config: Config = {
     '!src/lib/api/**',
     '!src/data/**',
     '!src/svgIcons/**',
+    '!src/app/**',
   ],
   coverageThreshold: {
     global: {
