@@ -116,7 +116,12 @@ export default function Checkout() {
         </Link>
       </Box>
       {isLoading ? (
-        <CircularProgress />
+        <CircularProgress sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+        }}/>
       ) : empty ? (
         <Typography variant="h1">No Products in the Cart</Typography>
       ) : error ? (
