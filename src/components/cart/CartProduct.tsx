@@ -32,6 +32,7 @@ const CartProduct: React.FC<CartProductProps> = ({
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
   const prodAmount = amount.find((p) => p.id === id)?.amount!;
+  const prodSize = amount.find((entry) => entry.id === id)?.size ?? 'N/A';
 
   return (
     <Stack
@@ -96,8 +97,7 @@ const CartProduct: React.FC<CartProductProps> = ({
               color: '#5C5C5C',
             }}
           >
-            {gender}&apos;s shoes: EU-
-            {amount.find((entry) => entry.id === id)!.size}
+            {gender}&apos;s shoes: EU-{prodSize}
           </Typography>
           {!isMobile && inStock && (
             <Typography
