@@ -11,7 +11,9 @@ describe('useSessionStorage', () => {
   test('initializes with provided initial value if sessionStorage is empty', () => {
     (sessionStorage.getItem as jest.Mock).mockReturnValue(null);
 
-    const { result } = renderHook(() => useSessionStorage<string>('testKey', 'initialValue'));
+    const { result } = renderHook(() =>
+      useSessionStorage<string>('testKey', 'initialValue')
+    );
     const [data] = result.current;
 
     expect(data).toBe('initialValue');
@@ -19,9 +21,13 @@ describe('useSessionStorage', () => {
   });
 
   test('retrieves and parses data from sessionStorage if available', () => {
-    (sessionStorage.getItem as jest.Mock).mockReturnValue(JSON.stringify('storedValue'));
+    (sessionStorage.getItem as jest.Mock).mockReturnValue(
+      JSON.stringify('storedValue')
+    );
 
-    const { result } = renderHook(() => useSessionStorage<string>('testKey', 'initialValue'));
+    const { result } = renderHook(() =>
+      useSessionStorage<string>('testKey', 'initialValue')
+    );
     const [data] = result.current;
 
     expect(data).toBe('storedValue');
@@ -31,7 +37,9 @@ describe('useSessionStorage', () => {
   test('sets sessionStorage when data is updated after mounting', () => {
     (sessionStorage.getItem as jest.Mock).mockReturnValue(null);
 
-    const { result } = renderHook(() => useSessionStorage<string>('testKey', 'initialValue'));
+    const { result } = renderHook(() =>
+      useSessionStorage<string>('testKey', 'initialValue')
+    );
     const [, setData] = result.current;
 
     // Update data
@@ -40,13 +48,18 @@ describe('useSessionStorage', () => {
     });
 
     // Ensure sessionStorage.setItem was called with the updated value
-    expect(sessionStorage.setItem).toHaveBeenCalledWith('testKey', JSON.stringify('newValue'));
+    expect(sessionStorage.setItem).toHaveBeenCalledWith(
+      'testKey',
+      JSON.stringify('newValue')
+    );
   });
 
   test('does not set sessionStorage before mounting', () => {
     (sessionStorage.getItem as jest.Mock).mockReturnValue(null);
 
-    const { result } = renderHook(() => useSessionStorage<string>('testKey', 'initialValue'));
+    const { result } = renderHook(() =>
+      useSessionStorage<string>('testKey', 'initialValue')
+    );
 
     // Update data after mounting
     act(() => {
@@ -55,7 +68,10 @@ describe('useSessionStorage', () => {
     });
 
     // Confirm that sessionStorage.setItem has been called once after the update
-    expect(sessionStorage.setItem).toHaveBeenCalledWith('testKey', JSON.stringify('anotherValue'));
+    expect(sessionStorage.setItem).toHaveBeenCalledWith(
+      'testKey',
+      JSON.stringify('anotherValue')
+    );
     expect(sessionStorage.setItem).toHaveBeenCalledTimes(2);
   });
 });

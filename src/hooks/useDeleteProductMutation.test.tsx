@@ -10,7 +10,7 @@ jest.mock('../lib/api/fetchFiles', () => ({
 }));
 jest.mock('../lib/api/fetchProducts', () => ({
   deleteProductReturnImages: jest.fn(),
-}))
+}));
 
 // Create a mock for the QueryClient
 const mockInvalidateQueries = jest.fn();
@@ -29,11 +29,15 @@ describe('useDeleteProductMutation', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    jest.spyOn(QueryClient.prototype, 'invalidateQueries').mockImplementation(mockInvalidateQueries);
+    jest
+      .spyOn(QueryClient.prototype, 'invalidateQueries')
+      .mockImplementation(mockInvalidateQueries);
   });
 
   const wrapper = ({ children }: { children: React.ReactNode }) => {
-    return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
+    return (
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    );
   };
 
   test('successfully deletes a product and its images', async () => {
@@ -53,17 +57,27 @@ describe('useDeleteProductMutation', () => {
 
     (deleteProductReturnImages as jest.Mock).mockResolvedValue(mockResponse);
 
-    const { result } = renderHook(() => useDeleteProductMutation(mockProductId, token, onSuccess), { wrapper });
+    const { result } = renderHook(
+      () => useDeleteProductMutation(mockProductId, token, onSuccess),
+      { wrapper }
+    );
 
     await act(async () => {
       await result.current.mutateAsync();
     });
 
-    expect(deleteProductReturnImages).toHaveBeenCalledWith(mockProductId, token);
+    expect(deleteProductReturnImages).toHaveBeenCalledWith(
+      mockProductId,
+      token
+    );
     expect(deleteFile).toHaveBeenCalledWith(101, token);
     expect(deleteFile).toHaveBeenCalledWith(102, token);
-    expect(queryClient.invalidateQueries).toHaveBeenCalledWith({ queryKey: ['myProducts'] });
-    expect(queryClient.invalidateQueries).toHaveBeenCalledWith({ queryKey: ['product', mockProductId] });
+    expect(queryClient.invalidateQueries).toHaveBeenCalledWith({
+      queryKey: ['myProducts'],
+    });
+    expect(queryClient.invalidateQueries).toHaveBeenCalledWith({
+      queryKey: ['product', mockProductId],
+    });
     expect(onSuccess).toHaveBeenCalled();
   });
 
@@ -85,7 +99,10 @@ describe('useDeleteProductMutation', () => {
 
     (deleteProductReturnImages as jest.Mock).mockResolvedValue(mockResponse);
 
-    const { result } = renderHook(() => useDeleteProductMutation(mockProductId, token, onSuccess), { wrapper });
+    const { result } = renderHook(
+      () => useDeleteProductMutation(mockProductId, token, onSuccess),
+      { wrapper }
+    );
 
     await act(async () => {
       await result.current.mutateAsync();
