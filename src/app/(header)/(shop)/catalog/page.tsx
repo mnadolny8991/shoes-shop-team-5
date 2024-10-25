@@ -23,7 +23,6 @@ export default async function Page({
   };
   const page = JSON.parse((searchParams!['page'] as string) ?? 'null') ?? 1;
   const queryClient = new QueryClient();
-  console.log('prefetching data...');
   await queryClient.prefetchQuery({
     queryKey: [
       'products',
