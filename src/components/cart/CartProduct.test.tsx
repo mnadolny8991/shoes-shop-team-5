@@ -42,7 +42,7 @@ describe('cart product', () => {
     expect(name).toBeInTheDocument();
     const price = screen.getByText('$200');
     expect(price).toBeInTheDocument();
-    const desc = screen.getByText("Men's shoes");
+    const desc = screen.getByText("Men's shoes: EU-41");
     expect(desc).toBeInTheDocument();
     const inStock = screen.getByText('In Stock');
     expect(inStock).toBeInTheDocument();

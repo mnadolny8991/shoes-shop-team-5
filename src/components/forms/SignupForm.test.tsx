@@ -23,7 +23,7 @@ describe('SignupForm', () => {
     await waitFor(() => {
       expect(
         screen.getByText(
-          'Name must have minimum 2 to 3 letters per word and should not containe numbers'
+          'Name must have minimum 2 to 3 letters per word and should not contain numbers'
         )
       ).toBeInTheDocument();
     });
@@ -34,7 +34,7 @@ describe('SignupForm', () => {
     await waitFor(() => {
       expect(
         screen.queryByText(
-          'Name must have minimum 2 to 3 letters per word and should not containe numbers'
+          'Name must have minimum 2 to 3 letters per word and should not contain numberss'
         )
       ).not.toBeInTheDocument();
     });
