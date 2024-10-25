@@ -22,6 +22,7 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
 }) => {
   return (
     <Box
+      data-testid="image-container"
       width={width}
       height={height}
       position="relative"
