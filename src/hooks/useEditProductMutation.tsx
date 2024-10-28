@@ -28,8 +28,7 @@ export const useEditProductMutation = (id: number, token: string) => {
     mutationFn: ({ productProps }: ProductUpdatingProps) => {
       return updateProduct(productProps, id, token);
     },
-    onSuccess: async (res, { imagesToDelete }) => {
-      const product = await mapProduct(res);
+    onSuccess: async (_res, { imagesToDelete }) => {
       if (imagesToDelete) {
         const images: { id: number; related?: { id: number } }[] =
           await fetchFilesByIds(imagesToDelete);
