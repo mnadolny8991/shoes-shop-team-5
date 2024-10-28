@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { renderHook, act, waitFor } from '@testing-library/react';
+import { renderHook, waitFor } from '@testing-library/react';
 import useUpdateAvatarMutation from '@/hooks/useUpdateAvatarMutation';
 import { updateUserData } from '@/lib/api/fetchUserData';
 import { uploadFile } from '@/lib/api/fetchFiles';
