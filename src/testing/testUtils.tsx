@@ -23,15 +23,17 @@ const queryClient = new QueryClient();
 
 const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
   return (
-    <LastViewedContextProvider>
-      <CartContextProvider>
-        <MockAppRouterCacheProvider>
-          <QueryClientProvider client={queryClient}>
-            <ThemeProvider theme={theme}>{children}</ThemeProvider>
-          </QueryClientProvider>
-        </MockAppRouterCacheProvider>
-      </CartContextProvider>
-    </LastViewedContextProvider>
+    <SearchContextProvider>
+      <LastViewedContextProvider>
+        <CartContextProvider>
+          <MockAppRouterCacheProvider>
+            <QueryClientProvider client={queryClient}>
+              <ThemeProvider theme={theme}>{children}</ThemeProvider>
+            </QueryClientProvider>
+          </MockAppRouterCacheProvider>
+        </CartContextProvider>
+      </LastViewedContextProvider>
+    </SearchContextProvider>
   );
 };
 

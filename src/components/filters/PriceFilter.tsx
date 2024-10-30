@@ -18,6 +18,7 @@ const PriceFilter: React.FC<PriceFilterProps> = ({ value, onChange }) => {
         Price Range: ${value[0]} - ${value[1]}
       </Typography>
       <Slider
+        data-testid="slider"
         value={value}
         onChange={handleChange}
         valueLabelDisplay="auto"
