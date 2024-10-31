@@ -36,9 +36,7 @@ describe('product order basic info component', () => {
       expand: true,
       onExpandClick,
     } as ProductOrderBasicInfoProps;
-    const { rerender } = render(
-      <ProductOrderBasicInfo {...productOrderBasicInfoProps} />
-    );
+    render(<ProductOrderBasicInfo {...productOrderBasicInfoProps} />);
 
     const orderNumber = screen.getByText(/1:/i);
     expect(orderNumber).toBeInTheDocument();
@@ -56,7 +54,7 @@ describe('product order basic info component', () => {
 
     expect(summaryHeader).toBeInTheDocument();
     expect(summaryPrice).toBeInTheDocument();
-    
+
     const shipmentStatus = screen.getByText(/cancelled/i);
     expect(shipmentStatus).toBeInTheDocument();
   });
