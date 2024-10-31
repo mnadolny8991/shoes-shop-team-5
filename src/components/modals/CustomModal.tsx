@@ -54,6 +54,7 @@ export default function CustomModal({
       </DialogTitle>
       <IconButton
         onClick={onClose}
+        data-testid="close-button"
         sx={{
           position: 'absolute',
           right: 8,
