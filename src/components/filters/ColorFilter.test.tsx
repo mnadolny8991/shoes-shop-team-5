@@ -15,7 +15,7 @@ describe('Color filter tests', () => {
     };
 
     render(
-      <ColorFilter 
+      <ColorFilter
         colors={filterProps.colors}
         selected={filterProps.selected}
         onChange={onChange}

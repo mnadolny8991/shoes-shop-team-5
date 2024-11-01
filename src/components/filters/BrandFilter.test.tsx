@@ -11,7 +11,7 @@ describe('Brand filter tests', () => {
       selected: ['nike', 'puma'],
     };
     render(
-      <BrandFilter 
+      <BrandFilter
         brands={filterProps.brands}
         selected={filterProps.selected}
         onChange={onChange}

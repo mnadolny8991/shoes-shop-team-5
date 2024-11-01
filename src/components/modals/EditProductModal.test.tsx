@@ -9,9 +9,9 @@ describe('edit product modal', () => {
     const editProductModalProps = {
       isOpen: true,
       onClose,
-      children: <h1>children</h1>
-    }
-    render(<EditProductModal {...editProductModalProps}/>);
+      children: <h1>children</h1>,
+    };
+    render(<EditProductModal {...editProductModalProps} />);
     expect(screen.getByText('children')).toBeInTheDocument();
   });
 });

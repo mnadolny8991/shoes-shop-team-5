@@ -79,7 +79,9 @@ export default function ProductForm({
       setAIError('');
 
       try {
-        const response = await fetchAISuggestion(`Generate an one short sentence (max 300 characters) product description for: ${productName}`)
+        const response = await fetchAISuggestion(
+          `Generate an one short sentence (max 300 characters) product description for: ${productName}`
+        );
         if (!response.ok) {
           throw new Error('Failed to generate description');
         }
@@ -113,7 +115,7 @@ export default function ProductForm({
     trigger,
     clearErrors,
   } = useForm<ProductFormData>({
-    mode: "onBlur",
+    mode: 'onBlur',
     defaultValues: {
       name: product?.name || '',
       price: product?.price,
@@ -144,7 +146,7 @@ export default function ProductForm({
     setError('images', {
       type: 'custom',
       message: 'At least one image must be uploaded',
-    })
+    });
   const handleImagesChange = ({
     images,
     uploadedImages,
@@ -178,8 +180,11 @@ export default function ProductForm({
     <form
       onSubmit={(e) => {
         if (getValues('sizes').length === 0) setSizesEmptyError();
-        if(getValues('images').length === 0 && getValues('uploadImages').length === 0)
-          setImagesEmptyError()
+        if (
+          getValues('images').length === 0 &&
+          getValues('uploadImages').length === 0
+        )
+          setImagesEmptyError();
 
         handleSubmit(onSubmitForm)(e);
       }}

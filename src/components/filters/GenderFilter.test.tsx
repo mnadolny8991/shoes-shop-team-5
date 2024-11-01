@@ -10,10 +10,7 @@ describe('Gender filter tests', () => {
     };
 
     render(
-      <GenderFilter
-        selected={filterProps.selected}
-        onChange={onChange}
-      />
+      <GenderFilter selected={filterProps.selected} onChange={onChange} />
     );
 
     const menCheckbox = screen.getByLabelText('Men');

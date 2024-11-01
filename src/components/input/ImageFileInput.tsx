@@ -11,7 +11,9 @@ export default function ImageFileInput({
   const [dragOver, setDragOver] = useState(false);
 
   const handleFiles = (files: FileList | null) =>
-    files && [...files].every(({type}) => type.startsWith("image/")) && onFileUpload(files);
+    files &&
+    [...files].every(({ type }) => type.startsWith('image/')) &&
+    onFileUpload(files);
 
   return (
     <Stack

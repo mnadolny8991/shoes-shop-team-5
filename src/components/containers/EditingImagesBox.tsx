@@ -51,13 +51,14 @@ export default function EditingImagesBox({
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    isMounted ?  
-    onChange({
-      images: images.filter(({ file }) => !file).map(({ id }) => id),
-      uploadedImages: images
-        .filter(({ file }) => !!file)
-        .map(({ file }) => file as File),
-    }) : setIsMounted(true);
+    isMounted
+      ? onChange({
+          images: images.filter(({ file }) => !file).map(({ id }) => id),
+          uploadedImages: images
+            .filter(({ file }) => !!file)
+            .map(({ file }) => file as File),
+        })
+      : setIsMounted(true);
   }, [images]);
 
   const deleteImage = (id: number) => {
@@ -65,7 +66,7 @@ export default function EditingImagesBox({
   };
 
   const handleImageUpload = (files: FileList) => {
-    [...files].forEach((file) => { 
+    [...files].forEach((file) => {
       const name: string = file.name.slice(0, file.name.lastIndexOf('.'));
       const reader = new FileReader();
       reader.onloadend = () => {
