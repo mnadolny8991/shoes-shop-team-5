@@ -39,20 +39,21 @@ const ProductOrder: FC<ProductOrderProps> = ({
       mapProduct(await fetchProductById(productRecord.productId)),
   }));
   const queries = useQueries({ queries: queriesData });
-  const totalPrice = records.reduce((total, recordData, index) => {
-    // Access the query result based on the index, which aligns with the records array
-    const productQuery = queries[index];
+  const totalPrice =
+    records.reduce((total, recordData, index) => {
+      // Access the query result based on the index, which aligns with the records array
+      const productQuery = queries[index];
 
-    // Check if the query has successfully fetched data
-    if (productQuery?.data) {
-      const productPrice = productQuery.data.price || 0;
-      // Assume recordData has a quantity field, adjust the total price calculation
-      return total + productPrice * recordData.quantity;
-    }
+      // Check if the query has successfully fetched data
+      if (productQuery?.data) {
+        const productPrice = productQuery.data.price || 0;
+        // Assume recordData has a quantity field, adjust the total price calculation
+        return total + productPrice * recordData.quantity;
+      }
 
-    // If the query data is not ready, return the current total without modification
-    return total;
-  }, 0) + shippingCost;
+      // If the query data is not ready, return the current total without modification
+      return total;
+    }, 0) + shippingCost;
   const isLoading = queries.some((query) => query.isLoading);
 
   const handleExpandClick = () => {

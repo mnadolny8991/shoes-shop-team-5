@@ -12,7 +12,9 @@ describe('filters component', () => {
 
     const genderExpandBtn = screen.getByRole('button', { name: /Gender/i });
     expect(genderExpandBtn).toBeInTheDocument();
-    const sizesExpandBtn = screen.getByRole('button', { name: /Sizes \(EU\)/i });
+    const sizesExpandBtn = screen.getByRole('button', {
+      name: /Sizes \(EU\)/i,
+    });
     expect(sizesExpandBtn).toBeInTheDocument();
     const brandsExpandBtn = screen.getByRole('button', { name: /Brand/i });
     expect(brandsExpandBtn).toBeInTheDocument();
@@ -37,14 +39,18 @@ describe('filters component', () => {
 
     const genderExpandBtn = screen.getByRole('button', { name: /Gender/i });
     fireEvent.click(genderExpandBtn);
-    const sizesExpandBtn = screen.getByRole('button', { name: /Sizes \(EU\)/i });
+    const sizesExpandBtn = screen.getByRole('button', {
+      name: /Sizes \(EU\)/i,
+    });
     fireEvent.click(sizesExpandBtn);
 
     await waitFor(() => {
       const sizeInputElements = screen.getAllByRole('checkbox');
       const expectedSizes = allSizes;
       sizeInputElements.forEach((inputEl, index) => {
-        expect(inputEl).toHaveAccessibleName(expectedSizes[index].name.slice(-2));
+        expect(inputEl).toHaveAccessibleName(
+          expectedSizes[index].name.slice(-2)
+        );
       });
     });
   });

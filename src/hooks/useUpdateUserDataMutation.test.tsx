@@ -38,16 +38,22 @@ describe('update user data', () => {
       phoneNumber: '7255555551',
     } as UserUpdateFormData;
     (updateUserData as jest.Mock).mockResolvedValue(mockUserData);
-    const { result } = renderHook(() => useUpdateUserDataMutation(1, 'token'), { wrapper });
+    const { result } = renderHook(() => useUpdateUserDataMutation(1, 'token'), {
+      wrapper,
+    });
 
     expect(result.current.status).toBe('idle');
     result.current.mutate(mockUserData);
 
-    await waitFor(
-      () => expect(updateUserData).toHaveBeenCalledWith(1, 'token', mockUserData)
+    await waitFor(() =>
+      expect(updateUserData).toHaveBeenCalledWith(1, 'token', mockUserData)
     );
-    expect(mockQueryClient.invalidateQueries).toHaveBeenCalledWith({ queryKey: ['userAvatar']});
-    expect(mockQueryClient.invalidateQueries).toHaveBeenCalledWith({ queryKey: ['user']});
+    expect(mockQueryClient.invalidateQueries).toHaveBeenCalledWith({
+      queryKey: ['userAvatar'],
+    });
+    expect(mockQueryClient.invalidateQueries).toHaveBeenCalledWith({
+      queryKey: ['user'],
+    });
   });
 
   test('mutation failure', () => {
@@ -58,15 +64,19 @@ describe('update user data', () => {
       phoneNumber: '7255555551',
     } as UserUpdateFormData;
     (updateUserData as jest.Mock).mockRejectedValue(new Error('message'));
-    const { result } = renderHook(() => useUpdateUserDataMutation(1, 'token'), { wrapper });
+    const { result } = renderHook(() => useUpdateUserDataMutation(1, 'token'), {
+      wrapper,
+    });
 
     expect(result.current.status).toBe('idle');
     result.current.mutate(mockUserData);
 
-    waitFor(
-      () => expect(result.current.error?.message).toBe('message')
-    );
-    expect(mockQueryClient.invalidateQueries).not.toHaveBeenCalledWith({ queryKey: ['userAvatar']});
-    expect(mockQueryClient.invalidateQueries).not.toHaveBeenCalledWith({ queryKey: ['user']});
+    waitFor(() => expect(result.current.error?.message).toBe('message'));
+    expect(mockQueryClient.invalidateQueries).not.toHaveBeenCalledWith({
+      queryKey: ['userAvatar'],
+    });
+    expect(mockQueryClient.invalidateQueries).not.toHaveBeenCalledWith({
+      queryKey: ['user'],
+    });
   });
 });

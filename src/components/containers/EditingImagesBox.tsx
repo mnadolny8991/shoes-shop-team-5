@@ -48,14 +48,17 @@ export default function EditingImagesBox({
     useState<(ProductImage & { file?: File })[]>(initialImages);
 
   const [imageIdToDelete, setImageIdToDelete] = useState<number | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    onChange({
-      images: images.filter(({ file }) => !file).map(({ id }) => id),
-      uploadedImages: images
-        .filter(({ file }) => !!file)
-        .map(({ file }) => file as File),
-    });
+    isMounted
+      ? onChange({
+          images: images.filter(({ file }) => !file).map(({ id }) => id),
+          uploadedImages: images
+            .filter(({ file }) => !!file)
+            .map(({ file }) => file as File),
+        })
+      : setIsMounted(true);
   }, [images]);
 
   const deleteImage = (id: number) => {
@@ -89,6 +92,7 @@ export default function EditingImagesBox({
           key={image.id}
           sx={{ '&:hover > .MuiBox-root': { display: 'flex' } }}
           {...(isMobile && { onClick: () => setImageIdToDelete(image.id) })}
+          data-testid={`imageBox${image.id}`}
         >
           <Image fill src={image.url} alt={image.alternativeText} />
           <Box

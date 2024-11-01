@@ -9,7 +9,12 @@ describe('Price filter tests', () => {
       value: [100, 500],
     };
 
-    render(<PriceFilter value={[initialProps.value[0], initialProps.value[1]]} onChange={onChange} />);
+    render(
+      <PriceFilter
+        value={[initialProps.value[0], initialProps.value[1]]}
+        onChange={onChange}
+      />
+    );
 
     // Check initial render
     expect(screen.getByText('Price Range: $100 - $500')).toBeInTheDocument();

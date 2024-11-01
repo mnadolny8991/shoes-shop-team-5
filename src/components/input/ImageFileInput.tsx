@@ -11,7 +11,9 @@ export default function ImageFileInput({
   const [dragOver, setDragOver] = useState(false);
 
   const handleFiles = (files: FileList | null) =>
-    files?.[0] && onFileUpload(files);
+    files &&
+    [...files].every(({ type }) => type.startsWith('image/')) &&
+    onFileUpload(files);
 
   return (
     <Stack
@@ -35,6 +37,7 @@ export default function ImageFileInput({
         setDragOver(false);
         handleFiles(e.dataTransfer.files);
       }}
+      data-testid="dropBox"
     >
       <img src="/gallery.svg" alt="gallery" width={38} height={38} />
       <Typography variant="subtitle2">
