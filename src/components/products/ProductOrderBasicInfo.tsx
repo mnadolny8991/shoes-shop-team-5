@@ -7,7 +7,7 @@ import { FC } from 'react';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 
-type ProductOrderBasicInfoProps = {
+export type ProductOrderBasicInfoProps = {
   orderNumber: number;
   date: Date;
   shipmentStatus: 'Shipped' | 'Recieved' | 'Cancelled';
@@ -108,7 +108,7 @@ const ProductOrderBasicInfo: FC<ProductOrderBasicInfoProps> = ({
           >
             {statusInfo}
           </Stack>
-          <IconButton onClick={onExpandClick} sx={{ p: 0 }}>
+          <IconButton data-testid="expand-button" onClick={onExpandClick} sx={{ p: 0 }}>
             {expand ? (
               <ExpandLessIcon sx={{ color: '#8C9196' }} />
             ) : (
