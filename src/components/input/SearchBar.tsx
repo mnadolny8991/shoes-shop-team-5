@@ -5,7 +5,7 @@ import IconButton from '@mui/material/IconButton';
 import { ForwardedRef, forwardRef, useRef } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 
-const variants = {
+export const variants = {
   header: {
     imgWidth: 17,
     fontSize: '15px',
