@@ -18,6 +18,7 @@ import { ApiPutProduct } from '@/types/api/apiTypes';
 import { useBrands, useColors, useGenders, useSizes } from '@/hooks/categories';
 import { useRef, useState } from 'react';
 import Image from 'next/image';
+import { fetchAISuggestion } from '@/lib/fetchAISuggestion';
 
 type ProductFormProps = {
   title: string;
@@ -78,16 +79,7 @@ export default function ProductForm({
       setAIError('');
 
       try {
-        const response = await fetch('/api/chat', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            prompt: `Generate an one short sentence (max 300 characters) product description for: ${productName}`,
-          }),
-        });
-
+        const response = await fetchAISuggestion(`Generate an one short sentence (max 300 characters) product description for: ${productName}`)
         if (!response.ok) {
           throw new Error('Failed to generate description');
         }
@@ -121,6 +113,7 @@ export default function ProductForm({
     trigger,
     clearErrors,
   } = useForm<ProductFormData>({
+    mode: "onBlur",
     defaultValues: {
       name: product?.name || '',
       price: product?.price,
