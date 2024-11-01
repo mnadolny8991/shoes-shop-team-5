@@ -1,4 +1,4 @@
-import { screen, render, getByAltText, getByRole, findByRole, fireEvent, act, waitFor } from "@testing-library/react";
+import { screen, render, getByAltText, fireEvent, waitFor } from "@testing-library/react";
 import '@testing-library/jest-dom';
 import EditingImagesBox from "./EditingImagesBox";
 import mockProduct from "@/testing/mocks/mockProduct";
@@ -28,7 +28,6 @@ describe('EditingImagesBox', () => {
 
         expect(screen.queryByText("Are you sure to delete product image")).toBeNull()
     })
-
     test('upload image', async() => {
         const onChange = jest.fn()
         render(<EditingImagesBox onChange={onChange}/>)
@@ -132,7 +131,7 @@ describe('EditingImagesBox', () => {
 
         await waitFor(() => expect(onChange).toHaveBeenCalled())
 
-        const imageBox = screen.getByTestId(`imageBox-1`)
+        const imageBox = screen.getByTestId("imageBox-1")
         const deleteButton = getByAltText(imageBox, "delete product image")
         fireEvent.click(deleteButton)
 
