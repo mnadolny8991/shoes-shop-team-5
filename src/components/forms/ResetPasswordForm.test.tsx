@@ -1,15 +1,25 @@
 import React from 'react';
-import { screen, fireEvent, waitFor } from '@testing-library/react';
+import { screen, fireEvent, waitFor, render } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { QueryClient } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ResetPasswordForm from './ResetPasswordForm';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { render } from '@/testing/testUtils';
+import { ThemeProvider } from '@mui/material';
+import theme from '@/styles/theme';
 
+const MockAppRouterCacheProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => <>{children}</>;
 // Mock the next/navigation hooks
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
   useSearchParams: jest.fn(),
+}));
+
+jest.mock('@mui/material-nextjs/v13-appRouter', () => ({
+  AppRouterCacheProvider: MockAppRouterCacheProvider,
 }));
 
 describe('ResetPasswordForm', () => {
@@ -24,7 +34,13 @@ describe('ResetPasswordForm', () => {
   });
 
   const renderComponent = () => {
-    render(<ResetPasswordForm />);
+    render(
+      <MockAppRouterCacheProvider>
+        <QueryClientProvider client={queryClient}>
+          <ThemeProvider theme={theme}><ResetPasswordForm /></ThemeProvider>
+        </QueryClientProvider>
+      </MockAppRouterCacheProvider>
+    );
   };
 
   test('validates password fields', async () => {
