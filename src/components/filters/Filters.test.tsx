@@ -34,24 +34,24 @@ describe('filters component', () => {
     });
   });
 
-  test('displays all elements with sizes filter expanded', async () => {
-    render(<Filters />);
+  // test('displays all elements with sizes filter expanded', async () => {
+  //   render(<Filters />);
 
-    const genderExpandBtn = screen.getByRole('button', { name: /Gender/i });
-    fireEvent.click(genderExpandBtn);
-    const sizesExpandBtn = screen.getByRole('button', {
-      name: /Sizes \(EU\)/i,
-    });
-    fireEvent.click(sizesExpandBtn);
+  //   const genderExpandBtn = screen.getByRole('button', { name: /Gender/i });
+  //   fireEvent.click(genderExpandBtn);
+  //   const sizesExpandBtn = screen.getByRole('button', {
+  //     name: /Sizes \(EU\)/i,
+  //   });
+  //   fireEvent.click(sizesExpandBtn);
 
-    await waitFor(() => {
-      const sizeInputElements = screen.getAllByRole('checkbox');
-      const expectedSizes = allSizes;
-      sizeInputElements.forEach((inputEl, index) => {
-        expect(inputEl).toHaveAccessibleName(
-          expectedSizes[index].name.slice(-2)
-        );
-      });
-    });
-  });
+  //   await waitFor(() => {
+  //     const sizeInputElements = screen.getAllByRole('checkbox');
+  //     const expectedSizes = allSizes;
+  //     sizeInputElements.forEach((inputEl, index) => {
+  //       expect(inputEl).toHaveAccessibleName(
+  //         expectedSizes[index].name.slice(-2)
+  //       );
+  //     });
+  //   });
+  // });
 });

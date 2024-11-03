@@ -6,6 +6,7 @@ import LastViewedContextProvider from '@/context/LastViewedContext';
 import { CartContextProvider } from '@/context/CartContext';
 import { SearchContextProvider } from '@/context/SearchContext';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { SessionProvider } from 'next-auth/react';
 
 // Mock AppRouterCacheProvider
 const MockAppRouterCacheProvider = ({

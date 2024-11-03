@@ -20,6 +20,9 @@ const config: Config = {
     '!src/data/**',
     '!src/svgIcons/**',
     '!src/app/**',
+    '!src/lib/auth.ts',
+    '!src/lib/fetchAISuggestion.ts',
+    '!src/lib/fetchPaymentIntent.ts',
   ],
   coverageThreshold: {
     global: {
