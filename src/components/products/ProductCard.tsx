@@ -52,6 +52,7 @@ export default function ProductCard({
       square
       elevation={0}
       sx={{ position: 'relative', cursor: !isAdmin ? 'pointer' : 'default' }}
+      data-testid="product-card"
       onClick={handleCardClick}
     >
       {isInWishlist ? (
