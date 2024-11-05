@@ -35,7 +35,7 @@ export default function SignupSlider() {
         }}
       >
         <Typography variant="body1">
-          Shose store is a really great company because the team is passionate
+          Shoes store is a really great company because the team is passionate
           about the projects they produce, the people they work with, the
           quality of the work they do!
         </Typography>

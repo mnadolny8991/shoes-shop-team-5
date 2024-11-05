@@ -63,7 +63,7 @@ describe('ShoeImageSlider', () => {
     render(<ShoeImageSlider images={mockImages} />);
 
     const bigImageElement = screen.getByRole('img', { name: 'shoe image' });
-    
+
     mockImages.reverse().forEach((image) => {
       const imgElement = screen.getByRole('img', {
         name: image.alternativeText,
