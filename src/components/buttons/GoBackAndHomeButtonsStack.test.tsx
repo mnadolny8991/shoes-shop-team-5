@@ -24,7 +24,9 @@ describe('GoBackAndHomeButtonsStack', () => {
   test('renders "Go back" and "Home" buttons', () => {
     render(<GoBackAndHomeButtonsStack />);
 
-    expect(screen.getByRole('button', { name: /Go back/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /Go back/i })
+    ).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Home/i })).toBeInTheDocument();
   });
 

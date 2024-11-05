@@ -37,7 +37,9 @@ describe('ResetPasswordForm', () => {
     render(
       <MockAppRouterCacheProvider>
         <QueryClientProvider client={queryClient}>
-          <ThemeProvider theme={theme}><ResetPasswordForm /></ThemeProvider>
+          <ThemeProvider theme={theme}>
+            <ResetPasswordForm />
+          </ThemeProvider>
         </QueryClientProvider>
       </MockAppRouterCacheProvider>
     );

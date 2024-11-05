@@ -8,7 +8,11 @@ describe('nothing found component', () => {
     render(<MyProductsEmptyState />);
     expect(screen.getByRole('button')).toBeInTheDocument();
     expect(screen.getByAltText(/bag icon/i)).toBeInTheDocument();
-    expect(screen.getByText(/You don't have any products yet/i)).toBeInTheDocument();
-    expect(screen.getByText(/Post can contain video, images and text./i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/You don't have any products yet/i)
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(/Post can contain video, images and text./i)
+    ).toBeInTheDocument();
   });
 });

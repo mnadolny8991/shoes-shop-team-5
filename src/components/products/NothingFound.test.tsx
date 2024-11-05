@@ -9,6 +9,8 @@ describe('nothing found component', () => {
     expect(screen.getByRole('button')).toBeInTheDocument();
     expect(screen.getByAltText(/bag icon/i)).toBeInTheDocument();
     expect(screen.getByText(/no products found/i)).toBeInTheDocument();
-    expect(screen.getByText(/We couldn't find what you searched for./i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/We couldn't find what you searched for./i)
+    ).toBeInTheDocument();
   });
 });

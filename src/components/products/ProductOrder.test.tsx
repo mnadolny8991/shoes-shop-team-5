@@ -1,7 +1,9 @@
 import { render } from '@/testing/testUtils';
 import { screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import ProductOrder, { ProductOrderProps } from '@/components/products/ProductOrder';
+import ProductOrder, {
+  ProductOrderProps,
+} from '@/components/products/ProductOrder';
 import { fetchProductById } from '@/lib/api/fetchProducts';
 import apiResponses from '@/testing/mocks/mockProductsById';
 
@@ -23,7 +25,7 @@ describe('product order tests', () => {
             productId: 2084,
             size: 35,
             quantity: 1,
-          }, 
+          },
           {
             id: '345',
             productId: 1564,
@@ -36,7 +38,7 @@ describe('product order tests', () => {
           delivery: 'delivery',
           contacts: 'contacts',
           paymentStatus: 'After payment',
-        }} 
+        }}
         discount={20}
       />
     );
@@ -45,8 +47,10 @@ describe('product order tests', () => {
   test('render all product entries', () => {
     apiResponses.forEach(async (response) => {
       await waitFor(() => {
-        expect(screen.getByText(response.data.attributes.name)).toBeInTheDocument();
+        expect(
+          screen.getByText(response.data.attributes.name)
+        ).toBeInTheDocument();
       });
-    })
+    });
   });
 });
