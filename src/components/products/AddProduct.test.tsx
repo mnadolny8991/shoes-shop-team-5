@@ -62,11 +62,13 @@ describe('AddProduct', () => {
     fireEvent.submit(screen.getByText('Save'));
 
     await waitFor(() => {
-      expect(mockAddProduct).toHaveBeenCalledWith(expect.objectContaining({
-        teamName: 'team-5',
-        userID: 'user123',
-        // Check other properties if necessary
-      }));
+      expect(mockAddProduct).toHaveBeenCalledWith(
+        expect.objectContaining({
+          teamName: 'team-5',
+          userID: 'user123',
+          // Check other properties if necessary
+        })
+      );
     });
   });
 
@@ -80,7 +82,13 @@ describe('AddProduct', () => {
       error: null,
     });
 
-    render(<AddProduct title="Test" description="Description" onSuccessClose={mockOnSuccessClose} />);
+    render(
+      <AddProduct
+        title="Test"
+        description="Description"
+        onSuccessClose={mockOnSuccessClose}
+      />
+    );
 
     waitFor(() => {
       expect(screen.getByRole('alert')).toHaveTextContent(/uploading files/i);
@@ -97,11 +105,19 @@ describe('AddProduct', () => {
       error: null,
     });
 
-    render(<AddProduct title="Test" description="Description" onSuccessClose={mockOnSuccessClose} />);
+    render(
+      <AddProduct
+        title="Test"
+        description="Description"
+        onSuccessClose={mockOnSuccessClose}
+      />
+    );
 
     expect(screen.getByText(/The Product/i)).toBeInTheDocument();
     waitFor(() => {
-      expect(screen.getByRole('alert')).toHaveTextContent('has been successfully added');
+      expect(screen.getByRole('alert')).toHaveTextContent(
+        'has been successfully added'
+      );
     });
   });
 
@@ -116,7 +132,13 @@ describe('AddProduct', () => {
       error: mockError,
     });
 
-    render(<AddProduct title="Test" description="Description" onSuccessClose={mockOnSuccessClose} />);
+    render(
+      <AddProduct
+        title="Test"
+        description="Description"
+        onSuccessClose={mockOnSuccessClose}
+      />
+    );
 
     expect(screen.getByRole('alert')).toHaveTextContent(/Server error/i);
   });

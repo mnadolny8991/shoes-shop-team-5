@@ -108,7 +108,11 @@ const ProductOrderBasicInfo: FC<ProductOrderBasicInfoProps> = ({
           >
             {statusInfo}
           </Stack>
-          <IconButton data-testid="expand-button" onClick={onExpandClick} sx={{ p: 0 }}>
+          <IconButton
+            data-testid="expand-button"
+            onClick={onExpandClick}
+            sx={{ p: 0 }}
+          >
             {expand ? (
               <ExpandLessIcon sx={{ color: '#8C9196' }} />
             ) : (

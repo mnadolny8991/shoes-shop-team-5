@@ -7,7 +7,7 @@ import mockProduct from '@/testing/mocks/mockProduct';
 describe('product order details test', () => {
   test('displays everything correctly', () => {
     render(
-      <ProductOrderDetails 
+      <ProductOrderDetails
         productInfo={{
           product: mockProduct,
           size: 40,

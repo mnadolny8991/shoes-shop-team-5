@@ -40,12 +40,10 @@ jest.mock('../../hooks/categories', () => ({
 }));
 
 jest.mock('../../lib/fetchAISuggestion', () => ({
-  fetchAISuggestion: jest
-    .fn()
-    .mockResolvedValue({
-      ok: true,
-      json: () => Promise.resolve({ code: aiDescription }),
-    }),
+  fetchAISuggestion: jest.fn().mockResolvedValue({
+    ok: true,
+    json: () => Promise.resolve({ code: aiDescription }),
+  }),
 }));
 
 const onSubmit = jest.fn();

@@ -54,7 +54,7 @@ describe('product card component', () => {
     expect(card).toBeInTheDocument();
     fireEvent.click(card);
     await waitFor(() => {
-      expect(push).toHaveBeenCalledWith(`/products/${mockProduct.id}`)
+      expect(push).toHaveBeenCalledWith(`/products/${mockProduct.id}`);
     });
   });
 });
