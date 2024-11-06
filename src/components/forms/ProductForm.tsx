@@ -4,6 +4,7 @@ import { Product } from '@/types/product';
 import {
   Button,
   Stack,
+  styled,
   Typography,
   useMediaQuery,
   useTheme,
@@ -19,6 +20,24 @@ import { useBrands, useColors, useGenders, useSizes } from '@/hooks/categories';
 import { useRef, useState } from 'react';
 import Image from 'next/image';
 import { fetchAISuggestion } from '@/lib/fetchAISuggestion';
+
+const StyledWrapper = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  flexDirection: 'column',
+  marginBottom: 48,
+  gap: 32,
+  [theme.breakpoints.down('md')]: {
+    marginBottom: 32,
+  },
+  '@container product-form (min-width: 790px)': {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+  },
+  '@container product-form (min-width: 820px)': {
+    gap: 80,
+  },
+}));
 
 type ProductFormProps = {
   title: string;
@@ -188,7 +207,11 @@ export default function ProductForm({
 
         handleSubmit(onSubmitForm)(e);
       }}
-      {...(isMobile && { style: { margin: '50px 20px 0' } })}
+      style={
+        isMobile
+          ? { margin: '50px auto', maxWidth: '320px' }
+          : { container: 'product-form / inline-size' }
+      }
     >
       <Stack
         direction={'row'}
@@ -206,12 +229,7 @@ export default function ProductForm({
       >
         {description}
       </Typography>
-      <Stack
-        spacing={{ xs: 4, md: 10 }}
-        alignItems={{ xs: 'center', md: 'flex-start' }}
-        direction={{ md: 'row' }}
-        mb={{ xs: 3, md: 6 }}
-      >
+      <StyledWrapper>
         <Stack spacing={3} maxWidth={{ xs: '320px', md: '436px' }}>
           <InputField
             id="name"
@@ -339,7 +357,7 @@ export default function ProductForm({
         />
 
         {isMobile && SaveButton}
-      </Stack>
+      </StyledWrapper>
     </form>
   );
 }

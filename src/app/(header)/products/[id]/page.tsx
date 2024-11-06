@@ -27,11 +27,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   return (
     <HydrationBoundary state={dehydratedState}>
-      {dehydratedState ? (
-        <SingleProductPage id={id} />
-      ) : (
-        notFound()
-      )}
+      {dehydratedState ? <SingleProductPage id={id} /> : notFound()}
     </HydrationBoundary>
   );
 }

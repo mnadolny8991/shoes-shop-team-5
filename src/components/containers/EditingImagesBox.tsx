@@ -14,15 +14,17 @@ import ImageFileInput from '@/components/input/ImageFileInput';
 import DeleteModal from '@/components/modals/DeleteModal';
 import ErrorMessage from '@/components/products/ErrorMessage';
 
-const ImagesBox = styled('div')(() => ({
+const ImagesBox = styled('div')(({ theme }) => ({
   display: 'grid',
   width: '100%',
-  gridTemplateColumns: 'repeat(auto-fill, 320px)',
   gridGap: 50,
   justifyContent: 'center',
   '&>*': {
     width: 320,
     height: 380,
+  },
+  [theme.breakpoints.up('lg')]: {
+    gridTemplateColumns: 'repeat(auto-fill, 320px)',
   },
 }));
 
