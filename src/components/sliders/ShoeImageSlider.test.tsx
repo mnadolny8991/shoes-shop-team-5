@@ -6,7 +6,11 @@ import { useMediaQuery } from '@mui/material';
 
 jest.mock(
   '../containers/ImageContainer',
-  () => (props: React.ImgHTMLAttributes<HTMLImageElement>) => <img {...props} />
+  () => {
+    const MockImageContainer = (props: React.ImgHTMLAttributes<HTMLImageElement>) => <img {...props} />;
+    MockImageContainer.displayName = 'ImageContainer';
+    return MockImageContainer;
+  }
 );
 
 const mockImages: ProductImage[] = [
