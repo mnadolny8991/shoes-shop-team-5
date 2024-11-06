@@ -1,28 +1,37 @@
 import SingleProductPage from '@/components/products/SingleProductPage';
 import { fetchProductById } from '@/lib/api/fetchProducts';
 import mapProduct from '@/mappers/productMappers';
-import { dehydrate, hydrate, QueryClient } from '@tanstack/query-core';
+import { dehydrate, QueryClient } from '@tanstack/query-core';
 import { HydrationBoundary } from '@tanstack/react-query';
-import { revalidatePath } from 'next/cache';
+import { notFound } from 'next/navigation';
 
 export const dynamic = 'force-dynamic';
 
 export default async function Page({ params }: { params: { id: string } }) {
   const id = parseInt(params.id);
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery({
-    queryKey: ['product', id],
-    queryFn: async () => {
-      const reqData = await fetchProductById(id, '*', { cache: 'no-store' });
-      return mapProduct(reqData);
-    },
-  });
+  let dehydratedState;
+
+  try {
+    await queryClient.fetchQuery({
+      queryKey: ['product', id],
+      queryFn: async () => {
+        const reqData = await fetchProductById(id, '*', { cache: 'no-store' });
+        return mapProduct(reqData);
+      },
+    });
+    dehydratedState = dehydrate(queryClient);
+  } catch (error) {
+    dehydratedState = null;
+  }
+
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <SingleProductPage id={id} />
+    <HydrationBoundary state={dehydratedState}>
+      {dehydratedState ? (
+        <SingleProductPage id={id} />
+      ) : (
+        notFound()
+      )}
     </HydrationBoundary>
   );
-
-  // const id = parseInt(params.id);
-  // return <SingleProductPage id={id} />;
 }
