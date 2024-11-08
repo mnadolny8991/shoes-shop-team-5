@@ -4,14 +4,13 @@ import ShoeImageSlider from './ShoeImageSlider';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { useMediaQuery } from '@mui/material';
 
-jest.mock(
-  '../containers/ImageContainer',
-  () => {
-    const MockImageContainer = (props: React.ImgHTMLAttributes<HTMLImageElement>) => <img {...props} />;
-    MockImageContainer.displayName = 'ImageContainer';
-    return MockImageContainer;
-  }
-);
+jest.mock('../containers/ImageContainer', () => {
+  const MockImageContainer = (
+    props: React.ImgHTMLAttributes<HTMLImageElement>
+  ) => <img {...props} />;
+  MockImageContainer.displayName = 'ImageContainer';
+  return MockImageContainer;
+});
 
 const mockImages: ProductImage[] = [
   { id: 1, name: 'image1', url: '/image1.jpg', alternativeText: 'Image 1' },

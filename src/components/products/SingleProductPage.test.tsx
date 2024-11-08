@@ -62,7 +62,9 @@ describe('single product page component', () => {
   test('triggers add to wishlist', async () => {
     render(<SingleProductPage id={1564} />);
 
-    const addToWishlistButton = screen.getByRole('button', { name: /add to wishlist/i });
+    const addToWishlistButton = screen.getByRole('button', {
+      name: /add to wishlist/i,
+    });
     expect(addToWishlistButton).toBeInTheDocument();
     fireEvent.click(addToWishlistButton);
     expect(onWishlistAdd).toHaveBeenCalledWith(1564);
@@ -77,7 +79,9 @@ describe('single product page component', () => {
 
     render(<SingleProductPage id={1564} />);
 
-    const removeFromWishlistButton = screen.getByRole('button', { name: /remove from wishlist/i });
+    const removeFromWishlistButton = screen.getByRole('button', {
+      name: /remove from wishlist/i,
+    });
     expect(removeFromWishlistButton).toBeInTheDocument();
     fireEvent.click(removeFromWishlistButton);
     expect(onWishlistRemove).toHaveBeenCalledWith(1564);
@@ -113,7 +117,9 @@ describe('single product page component', () => {
 
     expect(screen.getByText(`${mockProduct.name}`)).toBeInTheDocument();
     expect(screen.getByText(`$${mockProduct.price}`)).toBeInTheDocument();
-    expect(screen.getByText(`${mockProduct.gender.name}'s Shoes`)).toBeInTheDocument();
+    expect(
+      screen.getByText(`${mockProduct.gender.name}'s Shoes`)
+    ).toBeInTheDocument();
     expect(screen.getByText(/select size/i)).toBeInTheDocument();
     expect(screen.getByText(/description/i)).toBeInTheDocument();
     expect(screen.getByText(`${mockProduct.description}`)).toBeInTheDocument();
